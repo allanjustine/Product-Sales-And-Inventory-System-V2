@@ -1,0 +1,410 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+html {
+    font-size: 14px;
+    -webkit-scroll-behavior: smooth;
+    -moz-scroll-behavior: smooth;
+    -ms-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+}
+body {
+    background-color: #dce1de;
+    height: 100vh;
+    padding-right: 0 !important;
+}
+#dropdown-setting {
+    margin-top: 5px;
+    left: auto;
+    right: 0;
+    overflow-y: auto;
+    background-color: rgb(94, 90, 90);
+    width: 19rem;
+}
+@media screen and (max-width: 720px) {
+    #dropdown-setting {
+        width: 100%;
+    }
+}
+
+#dropdown-setting a {
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+}
+#dropdown-setting a:hover {
+    background-color: #9c9c9c9a;
+}
+#list-setting {
+    padding: 3px 14px;
+    border-radius: 50%;
+    background-color: rgba(128, 128, 128, 0.103);
+    cursor: pointer;
+}
+#list-setting:hover {
+    background-color: rgba(128, 128, 128, 0.308);
+}
+#post-card #list-setting {
+    display: none;
+}
+
+#post-card:hover #list-setting {
+    display: block;
+}
+.dropdown-click {
+    text-decoration: none;
+}
+
+#post-dropdown {
+    margin-top: 5px;
+    margin-right: 10px;
+}
+#login-pill {
+    font-size: 12px;
+}
+
+#branding-ajm {
+    background-image: linear-gradient(-320deg, #64e764, #5151d6, cyan);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.active2 {
+    border-bottom: 2px solid rgb(77, 89, 121) !important;
+    border-radius: 4px;
+}
+.navbar-nav a:hover {
+    background-color: rgb(77, 89, 121);
+    border-radius: 4px;
+}
+.navbar-nav a {
+    border-radius: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+.navbar {
+    background: transparent;
+    backdrop-filter: blur(10px);
+}
+
+.profile-dropdown {
+    cursor: pointer;
+}
+.profile-dropdown h6 {
+    padding: 0.5rem;
+    border: 1px solid white;
+    border-radius: 20px;
+    background-color: #49498f44;
+}
+.profile-dropdown h6:hover {
+    background-color: #49498f;
+}
+
+.cartdropdown {
+    cursor: pointer;
+}
+.cartdropdown h6 {
+    padding: 10px;
+    border: 1px solid white;
+    color: rgb(57, 64, 77);
+}
+#badge-cart {
+    top: 1;
+    right: 1;
+    position: absolute;
+}
+
+.cartmenu {
+    max-width: 550px;
+    min-width: 340px;
+    max-height: 450px;
+    overflow-y: auto;
+    border-radius: 20px;
+}
+
+.cartdropdown i {
+    font-size: 30px;
+    color: black;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Target the scrollbar thumb (the draggable handle) */
+::-webkit-scrollbar-thumb {
+    background-color: #cac6c6;
+    border-radius: 10px;
+}
+
+/* Target the scrollbar track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+button.close {
+    font-size: 20px;
+    color: #919191;
+    background-color: transparent;
+    border: none;
+}
+
+button.close:hover {
+    color: #3f3f3f;
+}
+
+#info-box {
+    display: relative;
+    z-index: -1;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: none;
+}
+
+.back-to-top #button {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top #button i {
+    margin-top: 2px;
+}
+
+.image-container {
+    overflow: hidden;
+    width: 100%;
+    height: 250px;
+}
+
+.image-container img {
+    width: 100%;
+    height: 250px;
+    object-fit: fill;
+    transition: transform 0.2s ease-out;
+}
+
+.image-container:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 767px) {
+    .image-container {
+        height: 150px;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 150px;
+    }
+}
+
+.product-card:hover {
+    margin-top: -7px;
+    transition: ease-in-out 0.3s all;
+}
+
+.carousel-caption {
+    margin-top: 20%;
+}
+
+.carousel img {
+    height: 530px;
+}
+
+.navbar {
+    z-index: 1000;
+}
+
+.carousel {
+    z-index: 0;
+}
+
+#cats {
+    z-index: 1;
+}
+#paginate {
+    z-index: 0;
+}
+
+.dropdown-menu {
+    z-index: 10000;
+}
+
+#select-cat {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 16px;
+    height: 40px;
+    padding: 6px 10px;
+}
+
+#select-cat:focus {
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9;
+}
+
+#select-cat option {
+    background-color: #868484;
+    color: #f5f1f1;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.fa-star {
+    color: #ffd700;
+}
+
+#info-box {
+    z-index: 0;
+}
+
+#car-title {
+    background-color: rgba(26, 25, 25, 0.24);
+    border-radius: 10px;
+}
+
+#view-btn {
+    background-color: rgba(0, 0, 0, 0.582);
+    color: white;
+    outline: 1px solid white;
+}
+
+.social-icons li a {
+    font-size: 25px;
+    margin-left: 20px;
+    color: white;
+}
+
+.rating {
+    float: left;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    font-size: 30px;
+    color: #8b8787;
+    float: right;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.rating label:hover,
+.rating label:hover ~ label,
+.rating input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+    opacity: 1;
+    transform: scale(1.25);
+}
+
+.grid {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+}
+
+.grid .grid-item {
+    scroll-snap-align: start;
+}
+
+.top-deals {
+    color: #ffd700;
+    font-size: 18px;
+}
+
+.top-deals-icon {
+    color: #ffd700;
+    font-size: 22px;
+}
+
+.top-deals-bg {
+    background-color: rgba(87, 85, 85, 0.712);
+}
+
+.top-popular {
+    color: rgba(255, 102, 0, 1);
+    font-size: 18px;
+}
+
+.top-popular-icon {
+    color: rgba(255, 102, 0, 1);
+    font-size: 22px;
+}
+
+.top-popular-bg {
+    background-color: rgba(87, 85, 85, 0.712);
+}
+
+.latest {
+    color: white;
+    font-size: 18px;
+}
+
+.latest-icon {
+    color: white;
+    font-size: 22px;
+}
+
+.latest-bg {
+    background-color: #0a4d68;
+}
+
+.location-text {
+    border-bottom: 1px solid black;
+}
+
+@media (max-width: 767px) {
+    .location-text {
+        font-size: 12px;
+    }
+}
+
+#facebook:hover {
+    color: #1877f2;
+}
+
+#twitter:hover {
+    color: #1da1f2;
+}
+
+#youtube:hover {
+    color: #ff0000;
+}
+
+#gmail:hover {
+    color: #db4437;
+}
+
+#instagram:hover {
+    color: #e4405f;
+}
+
+details summary::after {
+    content: "Open Filter";
+}
+
+details[open] summary::after {
+    content: "Close Filter";
+}
+
+textarea {
+    resize: none;
+}
