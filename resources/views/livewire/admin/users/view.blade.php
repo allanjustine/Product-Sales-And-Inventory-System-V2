@@ -16,7 +16,7 @@
                             <div class="card w-100 shadow-none">
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img src="{{ $userView->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url($userView->profile_image) }}"
+                                        <img src="{{ $userView->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url($userView->profile_image) }}"
                                             style="height: 180px; width: 180px; border-radius: 50%;"
                                             alt="Profile picture">
                                         <h4 class="mb-0 mt-3">{{ $userView->name }}</h4>

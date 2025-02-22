@@ -56,7 +56,7 @@ class Profile extends Component
 
         alert()->toast('Profile picture updated successfully', 'success');
 
-        return redirect('/admin/profile');
+        return $this->redirect('/admin/profile', navigate: true);
     }
 
     public function updateProfile()
@@ -78,7 +78,7 @@ class Profile extends Component
 
         alert()->toast('Your profile is updated successfully', 'success');
 
-        return redirect('admin/profile');
+        return $this->redirect('admin/profile', navigate: true);
     }
 
     public function rules()
@@ -111,7 +111,7 @@ class Profile extends Component
 
         alert()->toast('Your password has been changed successfully', 'success');
 
-        return redirect('admin/profile');
+        return $this->redirect('admin/profile', navigate: true);
     }
 
     public function updated($propertyData)

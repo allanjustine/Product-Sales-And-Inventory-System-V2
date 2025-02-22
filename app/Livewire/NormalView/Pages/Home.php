@@ -5,6 +5,7 @@ namespace App\Livewire\NormalView\Pages;
 use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\User;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -51,6 +52,12 @@ class Home extends Component
         $this->productView = Product::find($id);
     }
 
+    #[On('closedModal')]
+    public function closedModal()
+    {
+        $this->productView = null;
+    }
+
     public function addToFavorite($id)
     {
         $productFav = Product::findOrFail($id);
@@ -59,7 +66,11 @@ class Home extends Component
 
         if ($added) {
             $added->delete();
-            $this->dispatch('success', ['message' => 'Removed from favorites']);
+            $this->dispatch('toastr', data: [
+                'type'      =>      'success',
+                'message'   =>      'Removed from favorites'
+            ]);
+            return;
         } else {
             Favorite::create([
                 'user_id'           =>      auth()->user()->id,
@@ -67,7 +78,11 @@ class Home extends Component
                 'status'            =>      true
             ]);
 
-            $this->dispatch('success', ['message' => 'Added to favorites']);
+            $this->dispatch('toastr', data: [
+                'type'      =>      'success',
+                'message'   =>      'Added to favorites'
+            ]);
+            return;
         }
     }
 

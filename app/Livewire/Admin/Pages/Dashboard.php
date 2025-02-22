@@ -7,10 +7,12 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
+    #[Title('Dashboard')]
     public $salesData;
     public $productSalesData;
     public $morning;

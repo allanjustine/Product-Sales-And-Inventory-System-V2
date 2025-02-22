@@ -6,6 +6,7 @@ use App\Models\Order;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Dompdf\Dompdf;
+use Livewire\Attributes\Title;
 
 class ProductSales extends Component
 {
@@ -18,6 +19,8 @@ class ProductSales extends Component
     public $date_filter = 'All';
 
     use WithPagination;
+
+    #[Title('Product Sales')]
 
     public function downloadPdf()
     {

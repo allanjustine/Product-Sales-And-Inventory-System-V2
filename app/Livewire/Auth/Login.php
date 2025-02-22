@@ -5,20 +5,19 @@ namespace App\Livewire\Auth;
 use App\Events\UserLoginHistory;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
 class Login extends Component
 {
+    #[Title("Login")]
 
-    public $username_or_email, $password;
+    public $username_or_email;
+    public $password;
     public $remember = false;
-    public $newPassword;
     public $user;
 
     public function mount()
@@ -54,7 +53,7 @@ class Login extends Component
 
         if (!$user || $user->email_verified_at == null) {
 
-            $this->dispatch('alert', error: [
+            $this->dispatch('alert', alerts: [
                 'type'          =>          "error",
                 'title'         =>          "Something went wrong",
                 'message'       =>          "The email is either not verified yet or does not exist"
@@ -73,6 +72,8 @@ class Login extends Component
 
             $browser_address = $agent->platform() . ", " .  $agent->browser() ?? 'Unknown Browser';
 
+            session()->regenerate();
+
             if (auth()->user()->is_admin) {
 
                 event(new UserLoginHistory($ip_address, $browser_address));
@@ -86,7 +87,7 @@ class Login extends Component
             }
         } else {
 
-            $this->dispatch('alert', error: [
+            $this->dispatch('alert', alerts: [
                 'type'          =>          "warning",
                 'title'         =>          "Sorry",
                 'message'       =>          "Invalid Credentials"
@@ -94,36 +95,6 @@ class Login extends Component
             return;
         }
     }
-
-    public function sendNewPassword()
-    {
-        $this->validate([
-            'email' => 'required|email',
-        ]);
-
-        $user = User::where('email', $this->email)->first();
-
-        $random = Str::random(6);
-
-        if ($user) {
-            $newPassword = $random;
-            $user->password = Hash::make($newPassword);
-            $user->save();
-
-            Mail::send('pages.auth.new-password', ['user' => $user, 'newPassword' => $newPassword], function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject('Your new password');
-            });
-            alert()->success('Congrats', 'A new password has been sent to your email address.');
-        } else {
-            alert()->error('Error', 'We could not find a user with that email address.');
-        }
-
-        $this->reset('email');
-
-        return redirect('/login');
-    }
-
 
     public function render()
     {

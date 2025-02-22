@@ -53,7 +53,7 @@
                     <div class="outline mx-auto"
                         style="width: 48px; height: 50px; border-radius: 50%; border: 2px solid white;">
                         <img style="width: 45px; height: 45px; border-radius: 50%;"
-                            src="{{ auth()->user()->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url(auth()->user()->profile_image) }}"
+                            src="{{ auth()->user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(auth()->user()->profile_image) }}"
                             alt="{{ auth()->user()->name }}">
                     </div>
                 @else
@@ -69,7 +69,7 @@
                             <div class="outline mb-3"
                                 style="width: 45px; height: 46px; border-radius: 50%; border: 2px solid white;">
                                 <img style="width: 41px; height: 41px; border-radius: 50%;"
-                                    src="{{ auth()->user()->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url(auth()->user()->profile_image) }}"
+                                    src="{{ auth()->user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(auth()->user()->profile_image) }}"
                                     alt="{{ auth()->user()->name }}">
                             </div>
                             <div class="text-center">

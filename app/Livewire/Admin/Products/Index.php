@@ -84,7 +84,7 @@ class Index extends Component
 
         alert()->info('Product Added', 'The product "' . $product->product_name . '" is added to list.')->showConfirmButton('Okay');
 
-        return redirect('/admin/products');
+        return $this->redirect('/admin/products', navigate: true);
     }
 
     public function resetInputs()
@@ -135,7 +135,11 @@ class Index extends Component
             ]);
         }
 
-        $this->dispatch('success', ['message' => 'Status changed to ' . $product->product_status]);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'Status changed to ' . $product->product_status
+        ]);
+        return;
     }
 
 
@@ -164,9 +168,10 @@ class Index extends Component
 
         alert()->success('Product Updated', 'The product "' . $this->product_name .  '" is updated successfully');
 
-        return redirect('/admin/products');
-
         $this->reset();
+
+        return $this->redirect('/admin/products', navigate: true);
+
     }
 
     public function delete($id)
@@ -186,7 +191,7 @@ class Index extends Component
 
         alert()->success('Product Removed', 'The product "' . $product->product_name . '" has been removed successfully');
 
-        return redirect('/admin/products');
+        return $this->redirect('/admin/products', navigate: true);
     }
 
     public function view($id)

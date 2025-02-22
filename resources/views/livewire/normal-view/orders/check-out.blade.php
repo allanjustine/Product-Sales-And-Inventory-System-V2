@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h6>Are you sure you want to place this item to order?</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span class="float-right" aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -87,10 +87,10 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary form-control" wire:click="placeOrder()"><i
+                    <button class="btn btn-primary form-control" wire:click="placeOrder"><i
                             class="fa-solid fa-cart-circle-check"></i> Place Order
                     </button>
-                    <button type="button" class="btn btn-secondary form-control" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

@@ -79,11 +79,11 @@
                                             class="fas fa-plus-circle fa-fw rounded-circle"></i>
                                     </span>
                                     <div class="dropdown-menu text-center p-2" aria-labelledby="dropdownMenuButton">
-                                        <a href="" class="btn btn-primary mt-1 form-control" data-toggle="modal"
+                                        <a href="#" class="btn btn-primary mt-1 form-control" data-toggle="modal"
                                             data-target="#editProductCategory"
                                             wire:click="edit({{ $product_category->id }})"><i
                                                 class="fa-light fa-pen-to-square"></i> Update</a>
-                                        <a href="" class="btn btn-danger mt-1 form-control" data-toggle="modal"
+                                        <a href="#" class="btn btn-danger mt-1 form-control" data-toggle="modal"
                                             data-target="#deleteProductCategory"
                                             wire:click="delete({{ $product_category->id }})"><i
                                                 class="fa-solid fa-trash"></i> Remove</a>

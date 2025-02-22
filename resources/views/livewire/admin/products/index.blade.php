@@ -17,7 +17,7 @@
                     <option>100</option>
                 </select>
                 <label>Entries</label>
-                <button class="btn btn-primary mb-3 me-2 float-end" data-toggle="modal" data-target="#addProduct">
+                <button class="btn btn-primary mb-3 me-2 float-end" data-bs-toggle="modal" data-bs-target="#addProduct">
                     <i class="fa-solid fa-plus"></i> Add Product
                 </button>
                 <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;" placeholder="Search" wire:model.live="search">
@@ -185,14 +185,14 @@
                         @endif
                         <td>
                             <div class="dropdown dropup">
-                                <span class="badge badge-pill badge-primary py-2" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="badge badge-pill badge-primary py-2" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i style="font-size: 18px; cursor: pointer;" class="fas fa-plus-circle fa-fw rounded-circle"></i>
                                 </span>
                                 <div class="dropdown-menu text-center p-2" aria-labelledby="dropdownMenuButton">
-                                    <a href="" class="btn btn-warning mt-1 form-control" data-toggle="modal" data-target="#viewProduct" wire:click="view({{ $product->id }})"><i class="fa-solid fa-eye"></i>
+                                    <a href="#" class="btn btn-warning mt-1 form-control" data-bs-toggle="modal" data-bs-target="#viewProduct" wire:click="view({{ $product->id }})"><i class="fa-solid fa-eye"></i>
                                         View</a>
-                                    <a href="" class="btn btn-primary mt-1 form-control" data-toggle="modal" data-target="#updateProduct" wire:click="edit({{ $product->id }})"><i class="fa-light fa-pen-to-square"></i> Update</a>
-                                    <a href="" class="btn btn-danger mt-1 form-control" data-toggle="modal" data-target="#deleteProduct" wire:click="delete({{ $product->id }})"><i class="fa-solid fa-trash"></i> Remove</a>
+                                    <a href="#" class="btn btn-primary mt-1 form-control" data-bs-toggle="modal" data-bs-target="#updateProduct" wire:click="edit({{ $product->id }})"><i class="fa-light fa-pen-to-square"></i> Update</a>
+                                    <a href="#" class="btn btn-danger mt-1 form-control" data-bs-toggle="modal" data-bs-target="#deleteProduct" wire:click="delete({{ $product->id }})"><i class="fa-solid fa-trash"></i> Remove</a>
                                 </div>
                             </div>
                         </td>
@@ -220,11 +220,14 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('toastr', (event) => {
-                const data = event;
+        document.addEventListener('livewire:navigated', () => {
+            @this.on('toastr', (event) => {
+                const {
+                    type
+                    , message
+                } = event.data;
 
-                toastr[data[0].type](data[0].message, '', {
+                toastr[type](message, '', {
                     closeButton: true
                     , "progressBar": true
                 , })

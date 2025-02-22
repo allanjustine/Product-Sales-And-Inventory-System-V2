@@ -3,11 +3,12 @@
 namespace App\Livewire\NormalView\Pages;
 
 use App\Models\Contact;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class ContactUs extends Component
 {
-
+    #[Title("Contact Us")]
     public $user;
     public $name;
     public $email;
@@ -21,17 +22,20 @@ class ContactUs extends Component
             'message'       =>          ['required', 'string', 'max:65535']
         ]);
 
-        $contact = Contact::create([
+        Contact::create([
             'name'          =>          $this->name,
             'email'         =>          $this->email,
             'message'       =>          $this->message
         ]);
 
-        $contact->save();
+        $this->dispatch('alert', alerts: [
+            'type'          =>          'success',
+            'title'         =>          'Submitted',
+            'message'       =>          'Thank you for submitting feedbacks we appreciated it. Have a nice day.'
+        ]);
 
-        alert()->success('Submitted', 'Thank you for submitting feedbacks we appreciated it. Have a nice day.');
-
-        return redirect('/contact-us');
+        $this->reset('message');
+        return;
     }
 
     public function mount()

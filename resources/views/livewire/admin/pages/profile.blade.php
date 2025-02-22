@@ -9,12 +9,12 @@
                             <div class="text-center profile-pic-div">
                                 <div wire:loading wire:target="updatePhoto, profile_image">
                                     <img class="profile-user-img img-fluid img-circle"
-                                        src="{{ Storage::url('asset/loading.gif') }}" alt="loading"
+                                        src="https://assets-v2.lottiefiles.com/a/eca613de-1151-11ee-ab90-2708ab72937c/Pt7BWGiXJy.gif" alt="loading"
                                         style="height: 150px; width: 150px; border-radius: 50%;">
                                 </div>
                                 <div wire:loading wire:target="updateProfile, changePassword">
                                     <img class="profile-user-img img-fluid img-circle"
-                                        src="{{ Auth::user()->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url(Auth::user()->profile_image) }}"
+                                        src="{{ Auth::user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(Auth::user()->profile_image) }}"
                                         alt="loading" style="height: 150px; width: 150px; border-radius: 50%;">
                                 </div>
                                 <div wire:loading.remove>
@@ -25,13 +25,13 @@
                                     @else
                                         @if (!$profile_image)
                                             <img class="profile-user-img img-fluid img-circle"
-                                                src="{{ Auth::user()->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url(Auth::user()->profile_image) }}"
+                                                src="{{ Auth::user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(Auth::user()->profile_image) }}"
                                                 alt="{{ $user->name }} photo" id="photo"
                                                 style="height: 150px; width: 150px; border-radius: 50%;">
                                         @endif
                                         @if ($profile_image)
                                             <img class="profile-user-img img-fluid img-circle"
-                                                src="{{ Auth::user()->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url(Auth::user()->profile_image) }}"
+                                                src="{{ Auth::user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(Auth::user()->profile_image) }}"
                                                 alt="{{ $user->name }} photo" id="photo"
                                                 style="height: 150px; width: 150px; border-radius: 50%;"><br>
                                             <span
@@ -241,8 +241,8 @@
                 After you logout you will redirect to login page.
             </div>
             <div class="modal-footer">
-                <a href="/logout" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Yes,
-                    Logout</a>
+                <button type="button" wire:click="logout" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Yes,
+                    Logout</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>

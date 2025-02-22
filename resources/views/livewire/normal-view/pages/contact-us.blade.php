@@ -59,4 +59,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            Livewire.on('alert', function(event) {
+                const { title, type, message } = event.alerts;
+
+                Swal.fire({
+                    title: title,
+                    icon: type,
+                    text: message,
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: 'gray'
+                });
+            });
+        });
+    </script>
 </div>

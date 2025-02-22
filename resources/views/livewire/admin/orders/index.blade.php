@@ -115,11 +115,14 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('toastr', (event) => {
-                const data = event;
+        document.addEventListener('livewire:navigated', () => {
+            @this.on('toastr', (event) => {
+                const {
+                    type
+                    , message
+                } = event.data;
 
-                toastr[data[0].type](data[0].message, '', {
+                toastr[type](message, '', {
                     closeButton: true
                     , "progressBar": true
                 , })

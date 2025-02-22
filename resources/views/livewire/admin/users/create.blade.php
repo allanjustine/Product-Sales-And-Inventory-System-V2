@@ -16,10 +16,14 @@
                         <div class="form-group mb-3">
                             <label for="title">Profile Image:</label>
                             <input type="file" accept=".png, .jpg, .jpeg, .gif" class="form-control"
-                                id="create_profile_image" wire:model.live="profile_image" required>
+                                id="create_profile_image" wire:model.live.debounce.200ms="profile_image" required>
+                            <div wire:target='profile_image' class="mt-2" wire:loading>
+                                <div class="spinner-border"></div> Uploading...
+                            </div>
                             @if ($profile_image && in_array($profile_image->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']))
                                 <img src="{{ $profile_image->temporaryUrl() }}" style="width: 100px; height: 100px;"
                                     class="mt-1 rounded">
+                                    <button type="button" wire:click='removeImage' class="btn btn-danger">Remove</button>
                             @endif
                             @error('profile_image')
                                 <span class="text-danger">*{{ $message }} (jpg, jpeg, png, gif) is only
@@ -74,7 +78,7 @@
                         <div class="form-group mb-3">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" placeholder="Email" id="email"
-                                wire:model.live="email" required>
+                                wire:model.live.debounce.200ms="email" required>
                             @error('email')
                                 <span class="text-danger">*{{ $message }}</span>
                             @enderror
@@ -84,7 +88,7 @@
                                 <div class="form-group mb-3">
                                     <label for="phone_number">Phone Number:</label>
                                     <input type="number" class="form-control" id="phone_number"
-                                        placeholder="Phone Number (09-xxxxxxxxx)" wire:model.live="phone_number" required>
+                                        placeholder="Phone Number (09-xxxxxxxxx)" wire:model.live.debounce.200ms="phone_number" required>
                                     @error('phone_number')
                                         <span class="text-danger">*{{ $message }}</span>
                                     @enderror
@@ -108,11 +112,11 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" wire:click="addUser()">
-                        <div wire:loading><svg class="loading"></svg></div>&nbsp; <i class="fa-solid fa-plus"></i> Add User
+                    <button type="button" wire:loading.attr="disabled" wire:target='addUser,profile_image' type="button" class="btn btn-primary" wire:click="addUser">
+                        <div wire:loading class="spinner-border spinner-border-sm" wire:target='addUser'></div>&nbsp; <i class="fa-solid fa-plus" wire:loading.remove wire:target='addUser'></i> Add User
                     </button>
-                    <button class="btn btn-outline-warning" wire:click="resetInputs()"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-warning" wire:click="resetInputs"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
+                    <button type="button" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

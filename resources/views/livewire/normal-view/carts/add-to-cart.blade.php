@@ -7,7 +7,7 @@
                 <div class="modal-header">
                     <h3 class="modal-title" id="exampleModalLongTitle">Add to Cart <i class="fa-solid fa-cart-plus"></i>
                     </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span class="float-right" aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -68,7 +68,7 @@
                             </span>
                         </button>
                         <button type="button" class="btn btn-secondary form-control"
-                            data-dismiss="modal">Cancel</button>
+                            data-bs-dismiss="modal">Cancel</button>
 
                         <div wire:loading>
                             <div class="loading-overlay">

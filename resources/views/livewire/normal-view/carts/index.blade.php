@@ -20,51 +20,61 @@
                         <div class="col-4">
                             <p>
                                 @if (Storage::exists($item->product->product_image))
-                                <img style="width: 70px; height: 70px; border-radius:50%;" src="{{ Storage::url($item->product->product_image) }}" alt="">
+                                <img style="width: 70px; height: 70px; border-radius:50%;"
+                                    src="{{ Storage::url($item->product->product_image) }}" alt="">
                                 @else
-                                <img style="width: 70px; height: 70px; border-radius:50%;" src="{{ $item->product->product_image }}" alt="">
+                                <img style="width: 70px; height: 70px; border-radius:50%;"
+                                    src="{{ $item->product->product_image }}" alt="">
                                 @endif
                             </p>
-                            <p>
+                            <p class="fs-5">
                                 <span class="text-capitalize"><strong>{{ $item->product->product_name }}</strong></span>
                             </p>
-                            <p>
-                                <span>&#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}</span>
+                            <p class="fw-bold">
+                                &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}
                             </p>
-                            <p>
+                            <p class="fw-semibold">
                                 x{{ $item->quantity }}PC(s)
                             </p>
                             <hr>
-                            <p>
-                                <span class="item-price">Sub total: &#8369;{{ number_format($item->quantity * $item->product->product_price, 2, '.', ',') }}</span>
+                            <p class="fs-6">
+                                <strong class="item-price">Sub total: &#8369;{{ number_format($item->quantity *
+                                    $item->product->product_price, 2, '.', ',') }}</strong>
                             </p>
                         </div>
                         <div class="col-4 text-center">
                             <div class="btn-group">
-                                <button class="btn border" wire:click="decreaseQuantity({{ $item->id }})"><i class="far fa-minus"></i></button><span class="p-3">{{ $item->quantity }}</span><button class="btn border" wire:click="updateCartItem({{ $item->id }})"><i class="far fa-plus"></i></button>
+                                <button class="btn border" wire:click="decreaseQuantity({{ $item->id }})"><i
+                                        class="far fa-minus"></i></button><span class="p-3">{{ $item->quantity
+                                    }}</span><button class="btn border" wire:click="updateCartItem({{ $item->id }})"><i
+                                        class="far fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="col-4 d-flex flex-column align-items-end">
-                            <button class="btn btn-primary mt-2 checkout" data-toggle="modal" data-target="#checkOut" wire:click="checkOut({{ $item->id }})">Checkout</button>
-                            <button class="btn btn-danger mt-2" data-toggle="modal" data-target="#remove" wire:click="remove({{ $item->id }})">Remove</button>
+                            <button class="btn btn-primary mt-2 checkout" data-bs-toggle="modal"
+                                data-bs-target="#checkOut" wire:click="checkOut({{ $item->id }})">Checkout</button>
+                            <button class="btn btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#remove"
+                                wire:click="remove({{ $item->id }})">Remove</button>
                         </div>
                     </div>
                     <hr>
                     @empty
                     <h5 class="text-center"><i class="fa-regular fa-cart-xmark" style="font-size: 50px;"></i><br>
-                        Your cart is empty. <a href="/products">Click
+                        Your cart is empty. <a wire:navigate href="/products">Click
                             here to add an product to cart.</a></h5>
                     @endforelse
                     <div class="row mt-4">
-                        <div class="col text-right">
-                            <h4>Grand total: &#8369;<span id="total-price">{{ number_format(
-                                $cartItems->sum(function ($cart) {
-                                return $cart->product->product_price * $cart->quantity;
-                                }),
-                                2,
-                                ) }}
-                                </span>
-                            </h4>
+                        <div class="col">
+                            <h2><strong>
+                                    Grand total: &#8369;<strong id="total-price">{{ number_format(
+                                        $cartItems->sum(function ($cart) {
+                                        return $cart->product->product_price * $cart->quantity;
+                                        }),
+                                        2,
+                                        ) }}
+                                    </strong>
+                                </strong>
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -74,11 +84,14 @@
 
 
     <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('toastr', (event) => {
-                const data = event;
+        document.addEventListener('livewire:navigated', () => {
+            @this.on('toastr', (event) => {
+                const {
+                    type
+                    , message
+                } = event.data;
 
-                toastr[data[0].type](data[0].message, '', {
+                toastr[type](message, '', {
                     closeButton: true
                     , "progressBar": true
                 , })
@@ -110,7 +123,6 @@
             font-size: 18px;
             color: #333;
         }
-
     </style>
 
 </div>

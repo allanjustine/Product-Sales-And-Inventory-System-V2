@@ -4,6 +4,7 @@ namespace App\Livewire\NormalView\Orders;
 
 use App\Models\Order;
 use App\Models\Product;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component
@@ -29,6 +30,7 @@ class Index extends Component
 
     protected $listeners = ['resetInputs'];
 
+    #[On('isRefresh')]
     public function mount()
     {
 
@@ -92,7 +94,7 @@ class Index extends Component
 
     //     alert()->info('Removed', 'The order has been removed successfully');
 
-    //     return redirect('/orders');
+    //     return $this->redirect('/orders', navigate: true);
     // }
 
     public function toCancel($orderId)
@@ -106,36 +108,69 @@ class Index extends Component
     {
         $order = Order::where('id', $this->cancelled)->first();
 
-        if ($order->order_status == 'Pending') {
-            $product = Product::find($order->product_id);
+        $data = [
+            'title',
+            'type',
+            'message'
+        ];
 
-            $order->order_status = 'Cancelled';
-            $order->save();
+        switch ($order->order_status) {
+            case 'Pending':
+                $product = Product::find($order->product_id);
 
-            $product->product_stock += $order->order_quantity;
-            $product->product_sold -= $order->order_quantity;
-            $product->save();
+                $order->order_status = 'Cancelled';
+                $order->save();
 
-            alert()->info('Cancelled', 'The order has been cancelled successfully');
+                $product->product_stock += $order->order_quantity;
+                $product->product_sold -= $order->order_quantity;
+                $product->save();
 
-            return redirect('/orders');
-        } elseif ($order->order_status == 'To Deliver') {
+                $data['title'] = 'Cancelled';
+                $data['type'] = 'success';
+                $data['message'] = 'The order has been cancelled successfully';
 
-            alert()->error('Sorry', 'The order you are trying to cancel is on going to deliver');
-            return redirect('/orders');
-        } elseif ($order->order_status == 'Delivered') {
+                break;
 
-            alert()->error('Sorry', 'The order you are trying to cancel is already delivered');
-            return redirect('/orders');
-        } elseif ($order->order_status == 'Complete') {
+            case 'To Deliver':
+                $data['title'] = 'Sorry';
+                $data['type'] = 'error';
+                $data['message'] = 'The order you are trying to cancel is on going to deliver';
 
-            alert()->error('Sorry', 'The order you are trying to cancel is already complete');
-            return redirect('/orders');
-        } else {
-            alert()->error('Sorry', 'The order you are trying to cancel does not exist');
+                break;
 
-            return redirect('/orders');
+            case 'Delivered':
+                $data['title'] = 'Sorry';
+                $data['type'] = 'error';
+                $data['message'] = 'The order you are trying to cancel is already delivered';
+
+                break;
+
+            case 'Complete':
+                $data['title'] = 'Sorry';
+                $data['type'] = 'error';
+                $data['message'] = 'The order you are trying to cancel is already complete';
+
+                break;
+
+            default:
+                $data['title'] = 'Sorry';
+                $data['type'] = 'error';
+                $data['message'] = 'The order you are trying to cancel does not exist';
+
+                break;
         }
+
+        $this->dispatch('alert', alerts: [
+            'title'         =>          $data['title'],
+            'type'          =>          $data['type'],
+            'message'       =>          $data['message']
+        ]);
+
+        $this->dispatch('closeModal');
+
+        $this->dispatch('isRefresh');
+
+        return;
     }
 
     public function toReceived($orderId)
@@ -149,28 +184,38 @@ class Index extends Component
     {
         $order = Order::find($orderId);
 
+        $data = [
+            'title',
+            'type',
+            'message'
+        ];
+
         if (!$order) {
-            alert()->error('Sorry', 'The order does not exist');
-            return redirect('/orders');
+            $data['title'] = 'Sorry';
+            $data['type'] = 'error';
+            $data['message'] = 'The order you are trying to re-pruchase does not exist';
         }
 
         $product = Product::find($order->product_id);
 
         if (!$product) {
-            alert()->error('Sorry', 'The product you trying to re-pruchase is does not exist');
-            return redirect('/orders');
+            $data['title'] = 'Sorry';
+            $data['type'] = 'error';
+            $data['message'] = 'The product you are trying to re-pruchase does not exist';
         }
 
         if ($product->product_status == 'Not Available') {
-            alert()->error('Sorry', 'The product you trying to re-pruchase is Not Available');
-            return redirect('/orders');
+            $data['title'] = 'Sorry';
+            $data['type'] = 'error';
+            $data['message'] = 'The product you are trying to re-pruchase is Not Available';
         }
 
         $availableStock = $product->product_stock;
 
         if ($availableStock < $order->order_quantity) {
-            alert()->error('Sorry', 'The product you trying to re-pruchase is not enough stock');
-            return redirect('/products');
+            $data['title'] = 'Sorry';
+            $data['type'] = 'error';
+            $data['message'] = 'The product you are trying to re-pruchase is out of stock';
         }
 
         $order->order_status = 'Pending';
@@ -181,8 +226,18 @@ class Index extends Component
         $product->product_sold += $order->order_quantity;
         $product->save();
 
-        alert()->success('Congrats', 'You purchased the cancelled order again.');
-        return redirect('/orders');
+        $data['title'] = 'Congrats';
+        $data['type'] = 'success';
+        $data['message'] = 'You re-purchased your cancelled order successfully.';
+
+        $this->dispatch('alert', alerts: [
+            'title'         =>          $data['title'],
+            'type'          =>          $data['type'],
+            'message'       =>          $data['message']
+        ]);
+
+        $this->dispatch('isRefresh');
+        return;
     }
 
 
@@ -194,17 +249,17 @@ class Index extends Component
 
         if ($received->order_status === 'Paid') {
             alert()->info('Sorry', 'The order was already been paid');
-            return redirect('/orders');
+            return $this->redirect('/orders', navigate: true);
         }
 
         if ($received->order_status === 'Complete') {
             alert()->warning('Sorry', 'You can submit a rating at once');
-            return redirect('/orders');
+            return $this->redirect('/orders', navigate: true);
         }
 
         if ($received->order_status === 'Cancelled') {
             alert()->warning('Sorry', 'You can`t submit a rating on cancelled orders');
-            return redirect('/orders');
+            return $this->redirect('/orders', navigate: true);
         }
 
         $this->validate([
@@ -222,7 +277,7 @@ class Index extends Component
         $newRating = $this->product_rating;
         alert()->success('Success', 'Thank you for rating us ' . $newRating . ' Star(s).');
 
-        return redirect('/orders');
+        return $this->redirect('/orders', navigate: true);
     }
 
     public function resetInputs()

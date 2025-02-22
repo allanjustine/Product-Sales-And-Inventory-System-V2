@@ -10,32 +10,44 @@
             @forelse ($allFavorites as $favorite)
             <div class="col-md-3 mt-2 col-sm-4 col-6 p-1">
 
-                <a href="#" class="text-black" data-toggle="modal" data-target="#viewProduct" wire:click="view({{ $favorite->product->id }})">
-                    <div class="card shadow product-card" style="min-width: 50px;">
-                        <div style="position: relative;">
+                <div class="card shadow product-card" style="min-width: 50px;">
+                    <div style="position: relative;">
+                        <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
+                            wire:click="view({{ $favorite->product->id }})">
                             <div class="image-container">
                                 @if (Storage::exists($favorite->product->product_image))
-                                <img class="card-img-top" src="{{ Storage::url($favorite->product->product_image) }}" alt="{{ $favorite->product->product_name }}">
+                                <img class="card-img-top" src="{{ Storage::url($favorite->product->product_image) }}"
+                                    alt="{{ $favorite->product->product_name }}">
                                 @else
-                                <img class="card-img-top" src="{{ url($favorite->product->product_image) }}" alt="{{ $favorite->product->product_name }}">
+                                <img class="card-img-top" src="{{ url($favorite->product->product_image) }}"
+                                    alt="{{ $favorite->product->product_name }}">
                                 @endif
                             </div>
-                            <a href="#" title="@if ($favorite->user_id == auth()->user()->id) {{ $favorite->where('product_id', $favorite->product->id)->count() }} people added this to favorites @else Add to favorites @endif" class="btn btn-link position-absolute top-0 start-0" wire:click.prevent="removeToFavorite({{ $favorite->id }})">
-                                <h2 class="text-danger"><i class="{{ $favorite->user_id == auth()->user()->id ? 'fas' : 'far' }} fa-heart"></i>
-                                </h2>
-                            </a>
+                        </a>
+                        <a href="#"
+                            title="@if ($favorite->user_id == auth()->user()->id) {{ $favorite->where('product_id', $favorite->product->id)->count() }} people added this to favorites @else Add to favorites @endif"
+                            class="btn btn-link position-absolute top-0 start-0"
+                            wire:click="removeToFavorite({{ $favorite->id }})">
+                            <h2 class="text-danger"><i
+                                    class="{{ $favorite->user_id == auth()->user()->id ? 'fas' : 'far' }} fa-heart"></i>
+                            </h2>
+                        </a>
 
-                            <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
-                                @if ($favorite->product->product_stock >= 20)
-                                <span class="badge badge-success badge-pill">{{ number_format($favorite->product->product_stock) }}</span>
-                                @elseif ($favorite->product->product_stock)
-                                <span class="badge badge-warning badge-pill">{{ number_format($favorite->product->product_stock) }}</span>
-                                @else
-                                <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
-                                @endif
-                            </div>
-
+                        <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
+                            @if ($favorite->product->product_stock >= 20)
+                            <span class="badge badge-success badge-pill">{{
+                                number_format($favorite->product->product_stock) }}</span>
+                            @elseif ($favorite->product->product_stock)
+                            <span class="badge badge-warning badge-pill">{{
+                                number_format($favorite->product->product_stock) }}</span>
+                            @else
+                            <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
+                            @endif
                         </div>
+
+                    </div>
+                    <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
+                        wire:click="view({{ $favorite->product->id }})">
                         <div class="card-footer text-center mb-3 mt-auto">
                             <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
                                 {{ $favorite->product->product_category->category_name }}</h6>
@@ -43,7 +55,8 @@
                                 <h5 id="product_name">{{ $favorite->product->product_name }}</h5>
                             </h3>
                             <div class="d-block font-size-1 mb-2">
-                                <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{ number_format($favorite->product->product_price, 2, '.', ',') }}</span>
+                                <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                    number_format($favorite->product->product_price, 2, '.', ',') }}</span>
                             </div>
                             <div class="d-block font-size-1 mb-2">
                                 <span class="font-weight-medium">
@@ -56,24 +69,34 @@
                             </div>
                             @role('user')
                             @if ($favorite->product->product_status === 'Not Available')
-                            <a wire:click="notAvailable()" class="btn btn-warning mt-1 form-control"><i class="fa-solid fa-cart-plus"></i>
+                            <a wire:click="notAvailable()" class="btn btn-warning mt-1 form-control"><i
+                                    class="fa-solid fa-cart-plus"></i>
                                 Add to Cart</a>
-                            <a wire:click="notAvailable()" class="btn btn-primary mt-1 form-control"><i class="fa-solid fa-cart-shopping"></i>
+                            <a wire:click="notAvailable()" class="btn btn-primary mt-1 form-control"><i
+                                    class="fa-solid fa-cart-shopping"></i>
                                 Buy Now</a>
                             @elseif ($favorite->product->product_stock == 0)
-                            <a wire:click="outOfStock()" class="btn btn-warning mt-1 form-control"><i class="fa-solid fa-cart-plus"></i>
+                            <a wire:click="outOfStock()" class="btn btn-warning mt-1 form-control"><i
+                                    class="fa-solid fa-cart-plus"></i>
                                 Add to Cart</a>
-                            <a wire:click="outOfStock()" class="btn btn-primary mt-1 form-control"><i class="fa-solid fa-cart-shopping"></i>
+                            <a wire:click="outOfStock()" class="btn btn-primary mt-1 form-control"><i
+                                    class="fa-solid fa-cart-shopping"></i>
                                 Buy Now</a>
                             @else
-                            <a class="btn btn-warning mt-1 form-control" data-toggle="modal" data-target="#addToCart" wire:click.prevent="addToCart({{ $favorite->product->id }})"><i class="fa-solid fa-cart-plus"></i>
+                            <a class="btn btn-warning mt-1 form-control" data-bs-toggle="modal" data-bs-target="#addToCart"
+                                wire:click="addToCart({{ $favorite->product->id }})"><i
+                                    class="fa-solid fa-cart-plus"></i>
                                 Add to Cart</a>
 
-                            <a class="btn btn-primary mt-1 form-control btn-block" data-toggle="modal" data-target="#toBuyNow" wire:click.prevent="toBuyNow({{ $favorite->product->id }})"><i class="fa-solid fa-cart-shopping"></i> Buy Now</a>
+                            <a class="btn btn-primary mt-1 form-control btn-block" data-bs-toggle="modal"
+                                data-bs-target="#toBuyNow" wire:click="toBuyNow({{ $favorite->product->id }})"><i
+                                    class="fa-solid fa-cart-shopping"></i> Buy Now</a>
                             @endif
                             @endrole
                             @role('admin')
-                            <a href="/admin/products" class="btn btn-primary mt-1 form-control btn-block"><i class="fa-light fa-pen-to-square"></i> Update</a>
+                            <a wire:navigate href="/admin/products"
+                                class="btn btn-primary mt-1 form-control btn-block"><i
+                                    class="fa-light fa-pen-to-square"></i> Update</a>
                             @endrole
 
                             <div class="d-flex font-size-1 mb-2">
@@ -84,10 +107,10 @@
                                 {{-- <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">
                                     Sold:
                                     @if ($favorite->product->product_sold >= 1000)
-                                        {{ number_format($favorite->product->product_sold / 1000, 1) }}k
-                                @else
-                                {{ $favorite->product->product_sold }}
-                                @endif
+                                    {{ number_format($favorite->product->product_sold / 1000, 1) }}k
+                                    @else
+                                    {{ $favorite->product->product_sold }}
+                                    @endif
                                 </strong> --}}
                                 <span class="font-weight-medium pr-2" style="position: absolute; bottom:0; right: 0;">
                                     <i class="fa-solid fa-star"></i>
@@ -98,8 +121,8 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
             @empty
             <span class="text-center">
@@ -116,15 +139,17 @@
 
             text-transform: capitalize;
         }
-
     </style>
 
     <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('toastr', (event) => {
-                const data = event;
+        document.addEventListener('livewire:navigated', () => {
+            @this.on('toastr', (event) => {
+                const {
+                    type
+                    , message
+                } = event.data;
 
-                toastr[data[0].type](data[0].message, '', {
+                toastr[type](message, '', {
                     closeButton: true
                     , "progressBar": true
                 , })
@@ -135,8 +160,8 @@
 
 
     {{-- @if (session('message'))
-        <script>
-            toastr.options = {
+    <script>
+        toastr.options = {
                 "progressBar": true,
                 "closeButton": true,
             }
@@ -162,6 +187,5 @@
             font-size: 18px;
             color: #333;
         }
-
     </style>
 </div>

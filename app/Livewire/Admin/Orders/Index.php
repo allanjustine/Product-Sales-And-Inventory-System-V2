@@ -3,11 +3,12 @@
 namespace App\Livewire\Admin\Orders;
 
 use App\Models\Order;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Index extends Component
 {
-
+    #[Title(('Orders'))]
     public function processOrder($id)
     {
         $order = Order::findOrFail($id);
@@ -15,19 +16,22 @@ class Index extends Component
 
             alert()->warning('Sorry', 'The order does not exist or been cancelled by the user');
 
-            return redirect('/admin/orders');
+            return $this->redirect('/admin/orders', navigate: true);
         }
 
         $order->update([
             'order_status' => 'Processing Order'
         ]);
         // session()->flash('message', 'The order is now processing');
-
-        $this->dispatch('success', ['message' => 'The order is now processing']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'The order is now processing.'
+        ]);
+        return;
 
         // alert()->success('Congrats', 'The order is now processing');
 
-        // return redirect('/admin/orders');
+        // return $this->redirect('/admin/orders', navigate: true);
 
     }
     public function markAsDeliver($id)
@@ -38,7 +42,7 @@ class Index extends Component
 
             $this->alert()->warning('Sorry', 'The order does not exist or been cancelled by the user');
 
-            return redirect('/admin/orders');
+            return $this->redirect('/admin/orders', navigate: true);
         }
 
         $order->update([
@@ -46,10 +50,14 @@ class Index extends Component
         ]);
         // session()->flash('message', 'The order is on going to deliver');
 
-        $this->dispatch('success', ['message' => 'The order is on going to deliver']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'The order is on going to deliver.'
+        ]);
         // alert()->success('Congrats', 'The order is on going to deliver');
 
-        // return redirect('/admin/orders');
+        // return $this->redirect('/admin/orders', navigate: true);
+        return;
     }
 
     public function markAsDelivered($id)
@@ -60,17 +68,21 @@ class Index extends Component
 
             alert()->warning('Sorry', 'The order does not exist or been cancelled by the user');
 
-            return redirect('/admin/orders');
+            return $this->redirect('/admin/orders', navigate: true);
         }
 
         $order->update([
             'order_status' => 'Delivered'
         ]);
-        $this->dispatch('success', ['message' => 'The order is now delivered']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'The order is now delivered.'
+        ]);
         // session()->flash('message', 'The order is now delivered');
         // alert()->success('Congrats', 'The order is now delivered');
 
-        // return redirect('/admin/orders');
+        // return $this->redirect('/admin/orders', navigate: true);
+        return;
     }
 
 
@@ -82,10 +94,14 @@ class Index extends Component
             'order_status' => 'Paid'
         ]);
         // session()->flash('message', 'The order is now paid');
-        $this->dispatch('success', ['message' => 'The order is now paid']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'The order is now paid'
+        ]);
         // alert()->success('Congrats', 'The order is now paid');
 
-        // return redirect('/admin/orders');
+        // return $this->redirect('/admin/orders', navigate: true);
+        return;
     }
     public function orderDetails()
     {

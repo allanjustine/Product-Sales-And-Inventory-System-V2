@@ -4,13 +4,28 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminSiteController;
 use App\Http\Controllers\Normal_View\SiteController;
+use App\Livewire\Admin\Orders\Index as AdminOrdersIndex;
+use App\Livewire\Admin\Orders\ProductSales;
+use App\Livewire\Admin\Pages\ContactUs as PagesContactUs;
 use App\Livewire\Admin\Pages\Dashboard;
+use App\Livewire\Admin\Pages\Profile as PagesProfile;
+use App\Livewire\Admin\ProductCategories\Index as ProductCategoriesIndex;
+use App\Livewire\Admin\Products\Index as AdminProductsIndex;
+use App\Livewire\Admin\Users\Index as UsersIndex;
 use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Auth\Verification;
 use App\Livewire\NormalView\Carts\Index;
+use App\Livewire\NormalView\Favorites\Index as FavoritesIndex;
+use App\Livewire\NormalView\Orders\Index as OrdersIndex;
+use App\Livewire\NormalView\Orders\RecentOrders;
 use App\Livewire\NormalView\Pages\About;
+use App\Livewire\NormalView\Pages\ContactUs;
 use App\Livewire\NormalView\Pages\Home;
+use App\Livewire\NormalView\Pages\Profile;
 use App\Livewire\NormalView\Products\Index as ProductsIndex;
-use App\Models\Product;
+use App\Livewire\NormalView\Products\ViewOnly;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,32 +40,33 @@ use App\Models\Product;
 
 
 Route::get('/login', Login::class)->name('login');
-Route::get('/register', [AuthController::class, 'register']);
-Route::get('/verification/{token}/{user}', [AuthController::class, 'verification']);
+Route::get('/register', Register::class);
+Route::get("/verification/{token}/{user}", action: Verification::class);
 
 Route::get('/', Home::class);
 Route::get('/about-us', About::class);
-Route::get('/contact-us', [SiteController::class, 'contact']);
-Route::get('/view-products', [SiteController::class, 'viewProducts']);
+Route::get('/contact-us', ContactUs::class);
+Route::get('/view-products', ViewOnly::class);
+Route::get('/reset-password', ResetPassword::class)->name('password.reset');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/profile', [SiteController::class, 'profile']);
+    Route::get('/profile', Profile::class);
     Route::get('/products', ProductsIndex::class);
-    Route::get('/orders', [SiteController::class, 'order']);
-    Route::get('/favorites', [SiteController::class, 'favorite']);
-    Route::get('/recent-orders', [SiteController::class, 'recentOrder']);
+    Route::get('/orders',  OrdersIndex::class);
+    Route::get('/favorites',  FavoritesIndex::class);
+    Route::get('/recent-orders', RecentOrders::class);
     Route::get('/carts', Index::class);
     // Route::get('/cart', [SiteController::class, 'myCart']);
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
-    Route::get('/admin/feedbacks', [AdminSiteController::class, 'contact']);
+    Route::get('/admin/feedbacks', PagesContactUs::class);
     // Route::get('/admin/about', [AdminSiteController::class, 'about']);
-    Route::get('/admin/profile', [AdminSiteController::class, 'profile']);
-    Route::get('/admin/users', [AdminSiteController::class, 'user']);
-    Route::get('/admin/products', [AdminSiteController::class, 'product']);
-    Route::get('/admin/product-categories', [AdminSiteController::class, 'category']);
-    Route::get('/admin/orders', [AdminSiteController::class, 'order']);
-    Route::get('/admin/product-sales', [AdminSiteController::class, 'productSales']);
+    Route::get('/admin/profile', PagesProfile::class);
+    Route::get('/admin/users', UsersIndex::class);
+    Route::get('/admin/products', AdminProductsIndex::class);
+    Route::get('/admin/product-categories', ProductCategoriesIndex::class);
+    Route::get('/admin/orders', AdminOrdersIndex::class);
+    Route::get('/admin/product-sales', ProductSales::class);
 });

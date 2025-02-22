@@ -32,10 +32,14 @@ class Index extends Component
                 'quantity' => $cart->quantity + 1,
             ]);
         }
-        $this->dispatch('success', ['message' => 'Quantity updated']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'Quantity updated'
+        ]);
         // alert()->toast('Updated cart quantity successfully', 'success');
 
-        // return redirect('/products');
+        // return $this->redirect('/products', navigate: true);
+        return;
     }
 
     public function decreaseQuantity($itemId)
@@ -53,14 +57,21 @@ class Index extends Component
                 ]);
 
                 // alert()->toast('Updated cart quantity successfully', 'success');
-                // return redirect('/products');
-                $this->dispatch('success', ['message' => 'Quantity updated']);
+                // return $this->redirect('/products', navigate: true);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'success',
+                    'message'   =>      'Quantity updated'
+                ]);
+                return;
             } else {
                 $cart->delete();
-
-                $this->dispatch('success', ['message' => 'Cart item deleted']);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'success',
+                    'message'   =>      'Cart item deleted'
+                ]);
 
                 $this->reset();
+                return;
             }
         }
     }
@@ -85,9 +96,13 @@ class Index extends Component
 
         $product->delete();
 
-        $this->dispatch('success', ['message' => 'Removed from cart successfully']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'Removed from cart successfully'
+        ]);
 
         $this->reset();
+        return;
     }
 
     public function placeOrder()
@@ -144,36 +159,48 @@ class Index extends Component
             $cartItem->delete();
 
             if ($existingOrder) {
-                alert()->html('Congrats', 'The product is added/changed' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                alert()->html('Congrats', 'The product is added/changed' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
             } else {
-                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
             }
 
-            return redirect('/carts');
+            return $this->redirect('/carts', navigate: true);
         } else {
 
             if ($productStatus == 'Not Available') {
                 // alert()->error('Sorry', 'The product is Not Available');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
 
-                $this->dispatch('error', ['message' => 'The product is Not Available']);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'error',
+                    'message'   =>      'The product is Not Available'
+                ]);
+                return;
             } elseif ($product->product_stock == 0) {
                 // alert()->error('Sorry', 'The product is out of stock');
 
-                // return redirect('/products');
-                $this->dispatch('warning', ['message' => 'The product is out of stock']);
+                // return $this->redirect('/products', navigate: true);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'warning',
+                    'message'   =>      'The product is out of stock'
+                ]);
+                return;
             } else {
                 // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
 
-                // return redirect('/products');
-                $this->dispatch('info', ['message' => 'The product stock is insufficient please reduce your cart quantity']);
+                // return $this->redirect('/products', navigate: true);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'info',
+                    'message'   =>      'The product stock is insufficient please reduce your cart quantity'
+                ]);
+                return;
             }
         }
     }
 
     public function render()
     {
-        return view('livewire.normal-view.carts.index', $this->carts())->layout('pages.normal-view.layout.base');
+        return view('livewire.normal-view.carts.index', $this->carts());
     }
 }

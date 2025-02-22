@@ -2,19 +2,34 @@
 
 namespace App\Livewire\Auth;
 
+use App\Mail\EmailVerification;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Register extends Component
 {
+    #[Title("Register")]
+    public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image;
 
     use WithFileUploads;
-    public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image;
+
+    public function mount()
+    {
+        if (auth()->check()) {
+            session()->flash('already_login', [
+                'title' => 'Ops!',
+                'type' => 'warning',
+                'message' => 'You are already login'
+            ]);
+            return $this->redirect('/', navigate: true);
+        }
+    }
 
     public function register()
     {
@@ -25,7 +40,7 @@ class Register extends Component
             'password'          =>          'required|string|min:4|confirmed',
             'gender'            =>          ['required', 'string', Rule::in('Male', 'Female')],
             'phone_number'      =>          'required|numeric|regex:/(0)[0-9]/|digits:11',
-            'profile_image'     =>          'required|image|max:10000|mimes:jpeg,png,gif,webp,svg|not_in:ico'
+            'profile_image'     =>          'required|mimes:jpeg,jpg,png,gif,ico|max:1020'
         ]);
 
         $token = Str::random(24);
@@ -44,21 +59,28 @@ class Register extends Component
 
         $user->assignRole('user');
 
-        Mail::send('pages.auth.verification-email', ['user' => $user, 'token' => $token], function ($mail) use ($user) {
-            $mail->to($user->email);
-            $mail->subject('Account verification');
-        });
+        // Mail::send(view: 'livewire.auth.verification-email', ['user' => $user, 'token' => $token], function ($mail) use ($user) {
+        //     $mail->to($user->email);
+        //     $mail->subject('Account verification');
+        // });
+
+        Mail::to($user->email)->send(new EmailVerification($user));
 
         alert()->info('Registered', 'We sent you a verification email. Please check your inbox for the verification.')->showConfirmButton('Okay');
 
-        return redirect('/login');
+        return $this->redirect('/login', navigate: true);
     }
+
+    public function removeProfileImage() {
+        $this->profile_image = null;
+    }
+
     public function updated($propertyData)
     {
         $this->validateOnly($propertyData, [
             'email'                 =>      ['required', 'email', 'unique:users'],
             'phone_number'          =>      ['required', 'numeric', 'regex:/(0)[0-9]/', 'digits:11'],
-            'profile_image'         =>      'required|image|max:10000|mimes:jpeg,png,gif,webp,svg|not_in:ico'
+            'profile_image'         =>      'required|mimes:jpeg,jpg,png,gif,ico|max:1020'
         ]);
     }
 

@@ -47,7 +47,7 @@
             <img src="https://www.cyberlink.com/support-center/something_wrong.png" alt="Sad Cartoon Image" class="error-image w-25">
             <p class="lead">The page you are looking for might have been removed, had its name changed, or is
                 temporarily unavailable.</p>
-            <a href="/" class="btn btn-primary">Back to Home</a>
+            <a wire:navigate href="/" class="btn btn-primary">Back to Home</a>
         </div>
     </div>
 </body>

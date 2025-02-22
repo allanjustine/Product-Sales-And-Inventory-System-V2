@@ -57,7 +57,7 @@ class Index extends Component
         ]);
 
         alert()->success('Product Category Added', '"' . $product_category->category_name . '" is added to the list ');
-        return redirect('/admin/product-categories');
+        return $this->redirect('/admin/product-categories', navigate: true);
     }
 
     public function resetInputs()
@@ -88,7 +88,7 @@ class Index extends Component
         ]);
 
         alert()->success('Product Category Updated', '"' . $this->category_name . '" is updated successfully');
-        return redirect('/admin/product-categories');
+        return $this->redirect('/admin/product-categories', navigate: true);
     }
 
     public function delete($id)
@@ -106,7 +106,7 @@ class Index extends Component
 
         alert()->success('Product Category Removed', 'The product category "' . $productCategory->category_name .'" has been removed successfully');
 
-        return redirect('/admin/product-categories');
+        return $this->redirect('/admin/product-categories', navigate: true);
     }
 
     public function render()

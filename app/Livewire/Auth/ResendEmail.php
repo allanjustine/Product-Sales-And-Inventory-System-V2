@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Mail\EmailVerification;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -20,9 +21,19 @@ class ResendEmail extends Component
         $user = User::where('email', $this->email)->first();
 
         if (!$user) {
-            session()->flash('error', 'Email not found. Please input valid email');
+            $this->dispatch('alert', alerts: [
+                'type'          =>          "error",
+                'title'         =>          "Email not found",
+                'message'       =>          "Email not found. Please input valid email"
+            ]);
+            return;
         } elseif ($user->email_verified_at != null) {
-            session()->flash('error', 'This email is already verified. You can login now!');
+            $this->dispatch('alert', alerts: [
+                'type'          =>          "error",
+                'title'         =>          "Already verified",
+                'message'       =>          "This email is already verified. You can login now!"
+            ]);
+            return;
         } else {
             $token = Str::random(24);
 
@@ -30,14 +41,18 @@ class ResendEmail extends Component
                 'remember_token'    =>      $token
             ]);
 
-            Mail::send('pages.auth.verification-email', ['user' => $user, 'token' => $token], function ($mail) use ($user) {
-                $mail->to($user->email);
-                $mail->subject('Account verification');
-            });
+            Mail::to($user->email)->send(new EmailVerification($user));
 
-            alert()->info('Resend Email Verification', 'You request a resend email verification. Please check your inbox.')->showConfirmButton('Okay');
+            $this->dispatch( 'alert', alerts: [
+                'type'          =>          "info",
+                'title'         =>          "Resend Email Verification",
+                'message'       =>          "You request a resend email verification. Please check your inbox."
+            ]);
 
-            return redirect('/login');
+            $this->dispatch('closeModal');
+
+            $this->reset('email');
+            return;
         }
     }
 

@@ -7,7 +7,7 @@
                 <div class="modal-header">
                     <h3 class="modal-title" id="exampleModalLongTitle">Buy Now <i class="fa-solid fa-cart-shopping"></i>
                     </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span class="float-right" aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -110,7 +110,7 @@
                                 class="fa-solid fa-cart-circle-check"></i> Place Order</button>
 
                         <button type="button" class="btn btn-secondary form-control"
-                            data-dismiss="modal">Cancel</button>
+                            data-bs-dismiss="modal">Cancel</button>
                     </div>
                 @endif
             </div>

@@ -12,52 +12,67 @@
                             <span style="cursor: pointer;"
                                 class="position-absolute bottom-0 translate-middle badge rounded-pill bg-dark"
                                 id="login-pill">
-                                <i class="fa-solid fa-question" data-toggle="tooltip" data-placement="top"
-                                    title="Register an account to continue"></i>
+                                <i class="fa-solid fa-question" wire:ignore.self data-toggle="tooltip"
+                                    data-placement="top" title="Register an account to continue"></i>
                             </span>
                         </span></h3>
                     <hr>
                     <form wire:submit="register">
-                        <div class="form-floating">
-                            <input type="file" class="form-control" accept=".png, .jpg, .jpeg, .gif"
+                        <div class="d-flex flex-column gap-2 align-items-center justify-content-center">
+                            <div class="position-relative">
+                                @if($profile_image)
+                                <button type="button"
+                                    class="btn btn-secondary px-2 py-1 rounded-circle btn-sm position-absolute top-0 end-0"
+                                    wire:click="removeProfileImage"><i class="far fa-xmark"></i></button>
+                                @endif
+                                <img wire:target="profile_image" style="width: 120px; height: 120px;" wire:loading
+                                    class="rounded-circle img-fluid"
+                                    src="https://assets-v2.lottiefiles.com/a/eca613de-1151-11ee-ab90-2708ab72937c/Pt7BWGiXJy.gif"
+                                    alt="loading">
+                                <img wire:target="profile_image" style="width: 120px; height: 120px;"
+                                    wire:loading.remove src="{{ $profile_image ? $profile_image->temporaryUrl() : "
+                                    https://cdn-icons-png.flaticon.com/512/2919/2919906.png" }}" alt=""
+                                    class="rounded-circle img-fluid">
+                            </div>
+                            <button wire:loading.attr='disabled' wire:target='profile_image' type="button"
+                                class="btn btn-primary" onclick="document.getElementById('profile_image').click()">
+                                <span wire:loading wire:target='profile_image'><span
+                                        class="spinner-border spinner-border-sm"></span> Uploading...</span>
+                                <span wire:loading.remove wire:target='profile_image'>Upload photo</span>
+                            </button>
+                            <input type="file" hidden class="form-control" accept=".png, .jpg, .jpeg, .gif"
                                 id="profile_image" wire:model.live="profile_image">
-                            <label for="profile_image" class=" p-2">Select Profile Image: (jpg, jpeg, png,
-                                gif)</label>
-                            @if ($profile_image && in_array($profile_image->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']))
-                                <img src="{{ $profile_image->temporaryUrl() }}" style="width: 120px; height:120px;"
-                                    class="mt-1">
-                            @endif
+                            @error('profile_image')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                        @error('profile_image')
-                            <span class="text-danger">{{ $message }} (jpg, jpeg, png, gif) is only accepted.</span>
-                        @enderror
                         <div class="form-floating mt-3">
                             <input type="text" id="name" wire:model.live.debounce.200ms="name" class="form-control"
-                                placeholder="Name" required>
+                                placeholder="Name">
                             <label for="name">Name</label>
                         </div>
                         @error('name')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="text" id="address" wire:model.live.debounce.200ms="address" class="form-control"
-                                placeholder="Address" required>
+                            <input type="text" id="address" wire:model.live.debounce.200ms="address"
+                                class="form-control" placeholder="Address">
                             <label for="address">Address</label>
                         </div>
                         @error('name')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
                             <input type="email" id="email" wire:model.live="email" class="form-control"
-                                placeholder="Email" required>
+                                placeholder="Email">
                             <label for="email">Email</label>
                         </div>
                         @error('email')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="password" id="password" wire:model.live.debounce.200ms="password" placeholder="Password"
-                                class="form-control" required>
+                            <input type="password" id="password" wire:model.live.debounce.200ms="password"
+                                placeholder="Password" class="form-control">
                             <button type="button"
                                 class="position-absolute no-focus top-50 end-0 mr-2 translate-middle-y"
                                 onclick="togglePasswordVisibility()">
@@ -66,11 +81,11 @@
                             <label for="password">Password</label>
                         </div>
                         @error('password')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
                             <input type="password" id="password_confirmation" placeholder="Confirm Password"
-                                wire:model.live.debounce.200ms="password_confirmation" class="form-control" required>
+                                wire:model.live.debounce.200ms="password_confirmation" class="form-control">
                             <button type="button"
                                 class="position-absolute no-focus top-50 end-0 mr-2 translate-middle-y"
                                 onclick="toggleConfirmPasswordVisibility()">
@@ -79,11 +94,11 @@
                             <label for="password_confirmation">Confirm Password</label>
                         </div>
                         @error('password')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
                             <select name="gender" id="" class="form-select" wire:model.live.debounce.200ms="gender"
-                                required>
+                            >
                                 <option hidden="true">Select Gender</option>
                                 <option selected disabled>Select Gender</option>
                                 <option value="Male">Male</option>
@@ -91,59 +106,62 @@
                             </select>
                             <label for="password_confirmation">Select Gender</label>
                             @error('gender')
-                                <p class="text-danger" id="messagee">{{ $message }}</p>
+                            <p class="text-danger" id="messagee">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="form-floating mt-3">
                             <input type="number" id="phone_number" wire:model.live="phone_number" class="form-control"
-                                placeholder="Phone Number" required>
+                                placeholder="Phone Number">
                             <label for="phone_number">Phone Number: (09-xxxxxxxxx) (must 11 digits)</label>
                         </div>
                         @error('phone_number')
-                            <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="d-flex mt-3">
                             <div class="flex-grow-1">
                                 <p><input type="checkbox"> I agree to the <a href="/terms-and-conditions"
                                         target="_" class="text-primary">Terms &
                                         Conditions</a>.</p>
-                                <p href="/register">Already have an account? <a href="/login">Login</a></p>
+                                <p>Already have an account? <a href="/login" wire:navigate>Login</a></p>
                             </div>
                         </div>
-                        <button type="submit" class="mt-3 btn btn-primary form-control">Register</button>
+                        <button type="submit" class="mt-3 btn btn-primary form-control">
+                            <span wire:loading wire:target='register'><span class="spinner-border spinner-border-sm"></span> Registering...</span>
+                            <span wire:loading.remove wire:target='register'>Register</span>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .no-focus:focus {
-        outline: none;
-    }
 
-    .no-focus {
-        border: none;
-        background: transparent;
-        font-size: 18px;
-    }
+    <style>
+        .no-focus:focus {
+            outline: none;
+        }
 
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+        .no-focus {
+            border: none;
+            background: transparent;
+            font-size: 18px;
+        }
 
-    /* Firefox */
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-<script>
-    $(document).ready(function() {
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
@@ -176,4 +194,8 @@
             passwordToggleIcon.classList.add("fa-eye-slash");
         }
     }
-</script>
+
+
+
+    </script>
+</div>

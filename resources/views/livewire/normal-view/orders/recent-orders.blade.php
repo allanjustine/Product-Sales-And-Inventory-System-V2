@@ -43,13 +43,13 @@
                         <td>{{ date_format($order->created_at, 'F j, Y g:i A') }}</td>
                         <td>
                             @if ($order->order_status === 'Pending')
-                                <a href="" class="btn btn-danger" data-toggle="modal" data-target="#cancel"
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#cancel"
                                     wire:click="toCancel({{ $order->id }})">
                                     <i class="fa-solid fa-xmark"></i>
                                     Cancel Order
                                 </a>
                             @else
-                                <a href="" class="btn btn-warning">
+                                <a href="#" class="btn btn-warning">
                                     <i class="fa-solid fa-eye"></i>
                                     View
                                 </a>

@@ -91,7 +91,7 @@
                     @foreach ($users as $user)
                     <tr>
                         <td>
-                            <img src="{{ $user->profile_image === null ? Storage::url('asset/profile-pic.jpg') : Storage::url($user->profile_image) }}" style="height: 50px; width: 60px; border-radius: 5px;" alt="{{ $user->profile_name }}">
+                            <img src="{{ $user->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url($user->profile_image) }}" style="height: 50px; width: 60px; border-radius: 5px;" alt="{{ $user->profile_name }}">
                         </td>
                         <td>
                             {{ $user->name }}
@@ -123,9 +123,9 @@
                                 </span>
                                 <div class="dropdown-menu text-center p-2" aria-labelledby="dropdownMenuButton">
 
-                                    <a href="" class="btn btn-warning mt-1 form-control" data-toggle="modal" data-target="#viewUser" wire:click="view({{ $user->id }})"><i class="fa-solid fa-eye"></i> View</a>
-                                    <a href="" class="btn btn-primary mt-1 form-control" data-toggle="modal" data-target="#updateUser" wire:click="edit({{ $user->id }})"><i class="fa-light fa-pen-to-square"></i> Update</a>
-                                    <a href="" class="btn btn-danger mt-1 form-control" data-toggle="modal" data-target="#deleteUser" wire:click="delete({{ $user->id }})"><i class="fa-solid fa-trash"></i> Remove</a>
+                                    <a href="#" class="btn btn-warning mt-1 form-control" data-toggle="modal" data-target="#viewUser" wire:click="view({{ $user->id }})"><i class="fa-solid fa-eye"></i> View</a>
+                                    <a href="#" class="btn btn-primary mt-1 form-control" data-toggle="modal" data-target="#updateUser" wire:click="edit({{ $user->id }})"><i class="fa-light fa-pen-to-square"></i> Update</a>
+                                    <a href="#" class="btn btn-danger mt-1 form-control" data-toggle="modal" data-target="#deleteUser" wire:click="delete({{ $user->id }})"><i class="fa-solid fa-trash"></i> Remove</a>
                                 </div>
                             </div>
                         </td>

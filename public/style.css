@@ -1,9 +1,11 @@
 * {
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
+    font-family: Poppins, Helvetica, "sans-serif";
+    font-weight: 400;
 }
 html {
-    font-size: 14px;
+    font-size: 13px !important;
     -webkit-scroll-behavior: smooth;
     -moz-scroll-behavior: smooth;
     -ms-scroll-behavior: smooth;
@@ -73,7 +75,7 @@ body {
     border-bottom: 2px solid rgb(77, 89, 121) !important;
     border-radius: 4px;
 }
-.navbar-nav a:hover {
+.navbar-nav-item a:hover {
     background-color: rgb(77, 89, 121);
     border-radius: 4px;
 }
@@ -109,17 +111,22 @@ body {
     color: rgb(57, 64, 77);
 }
 #badge-cart {
-    top: 1;
-    right: 1;
+    top: 1 !important;
+    right: 1 !important;
+    margin-top: 7px;
     position: absolute;
 }
 
-.cartmenu {
+#myDiv {
     max-width: 550px;
     min-width: 340px;
     max-height: 450px;
     overflow-y: auto;
     border-radius: 20px;
+    z-index: 1;
+    top: 0;
+    margin-top: 50px;
+    margin-right: 20px;
 }
 
 .cartdropdown i {
@@ -220,8 +227,12 @@ button.close:hover {
     margin-top: 20%;
 }
 
+#carouselExampleIndicators {
+    height: calc(100vh - 153px);
+}
+
 .carousel img {
-    height: 530px;
+    height: calc(100vh - 153px);
 }
 
 .navbar {
@@ -407,4 +418,10 @@ details[open] summary::after {
 
 textarea {
     resize: none;
+}
+
+#nprogress {
+    .bar {
+        z-index: 2000 !important;
+    }
 }

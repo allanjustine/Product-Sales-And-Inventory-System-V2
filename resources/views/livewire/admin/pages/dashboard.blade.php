@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">
-                <a href="/admin/users" style="color: black">
+                <a wire:navigate href="/admin/users" style="color: black">
                     <div class="info-box dash elevation-3" style="height: 110px;">
                         <div class="info-box-content">
                             <span class="info-box-text" style="font-size: 11px;">USERS</span>
@@ -35,7 +35,7 @@
                 </a>
             </div>
             <div class="col-lg-3 col-md-4">
-                <a href="/admin/products" style="color: black">
+                <a wire:navigate href="/admin/products" style="color: black">
                     <div class="info-box dash elevation-3" style="height: 110px;">
                         <div class="info-box-content">
                             <span class="info-box-text" style="font-size: 11px;">PRODUCTS</span>
@@ -46,7 +46,7 @@
                 </a>
             </div>
             <div class="col-lg-3 col-md-4">
-                <a href="/admin/product-categories" style="color: black">
+                <a wire:navigate href="/admin/product-categories" style="color: black">
                     <div class="info-box dash elevation-3" style="height: 110px;">
                         <div class="info-box-content">
                             <span class="info-box-text" style="font-size: 11px;">CATEGORIES</span>
@@ -57,18 +57,19 @@
                 </a>
             </div>
             <div class="col-lg-3 col-md-4">
-                <a href="/admin/orders" style="color: black">
+                <a wire:navigate href="/admin/orders" style="color: black">
                     <div class="info-box dash elevation-3" style="height: 110px;">
                         <div class="info-box-content">
                             <span class="info-box-text" style="font-size: 11px;">ORDERS</span>
                             <span class="info-box-number">{{ $ordersCount }}</span>
                         </div>
-                        <span class="info-box-icon"><i class="fa-solid fa-bag-shopping" style="font-size: 43px;"></i></span>
+                        <span class="info-box-icon"><i class="fa-solid fa-bag-shopping"
+                                style="font-size: 43px;"></i></span>
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-4">
-                <a href="/admin/product-sales" style="color: black">
+                <a wire:navigate href="/admin/product-sales" style="color: black">
                     <div class="info-box dash elevation-3" style="height: 110px;">
                         <div class="info-box-content">
                             <span class="info-box-text" style="font-size: 11px;">PRODUCT SALES</span>
@@ -79,7 +80,7 @@
                 </a>
             </div>
             <div class="col-lg-3 col-md-4">
-                <a href="/admin/feedbacks" style="color: black">
+                <a wire:navigate href="/admin/feedbacks" style="color: black">
                     <div class="info-box dash elevation-3" style="height: 110px;">
                         <div class="info-box-content">
                             <span class="info-box-text" style="font-size: 11px;">FEED BACKS</span>
@@ -102,7 +103,8 @@
                             <span class="info-box-text" style="font-size: 11px;">TOTAL REVENUE</span>
                             <span class="info-box-number">&#8369;{{ number_format($grandTotal, 2, '.', ',') }}</span>
                         </div>
-                        <span class="info-box-icon"><i class="fa-solid fa-hand-holding-dollar" style="font-size: 43px;"></i></span>
+                        <span class="info-box-icon"><i class="fa-solid fa-hand-holding-dollar"
+                                style="font-size: 43px;"></i></span>
                     </div>
                 </a>
             </div>
@@ -113,7 +115,8 @@
                             <span class="info-box-text" style="font-size: 11px;">TODAY REVENUE</span>
                             <span class="info-box-number">&#8369;{{ number_format($todaysTotal, 2, '.', ',') }}</span>
                         </div>
-                        <span class="info-box-icon"><i class="fa-solid fa-calendar-day" style="font-size: 43px;"></i></span>
+                        <span class="info-box-icon"><i class="fa-solid fa-calendar-day"
+                                style="font-size: 43px;"></i></span>
                     </div>
                 </a>
             </div>
@@ -126,7 +129,8 @@
                             </span>
                             <span class="info-box-number">&#8369;{{ number_format($monthlyTotal, 2, '.', ',') }}</span>
                         </div>
-                        <span class="info-box-icon"><i class="fa-solid fa-calendar-days" style="font-size: 43px;"></i></span>
+                        <span class="info-box-icon"><i class="fa-solid fa-calendar-days"
+                                style="font-size: 43px;"></i></span>
                     </div>
                 </a>
             </div>
@@ -148,17 +152,48 @@
         <hr>
         <div class="row">
             <div class="col-lg-6">
-                <canvas id="net-worth-chart" style="width: 100%; height: 100%;"></canvas>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="position-relative mb-4">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="sales-chart" height="200" width="487"
+                                style="display: block; width: 487px; height: 200px;"
+                                class="chartjs-render-monitor"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-6">
-                <canvas id="product-sales-chart" style="width: 100%; height: 100%;"></canvas>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="position-relative mb-4">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="product-sales-chart" height="200" width="487"
+                                style="display: block; width: 487px; height: 200px;"
+                                class="chartjs-render-monitor"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            <canvas id="net-worth-chart1"></canvas>
-        </div>
-
     </div>
+
     <style>
         .dash {
             border-left: 8px solid #343a40;
@@ -178,57 +213,28 @@
             transform: scale(1.03);
             background-color: #343a400a;
         }
-
     </style>
 
     <script>
-        var canvas = document.getElementById("net-worth-chart");
-        var salesData = {
-            !!json_encode($salesData) !!
-        };
+        document.addEventListener('livewire:navigated', function() {
 
-        // Create the chart object
+        var canvas = document.getElementById("sales-chart");
+        var salesData = @json($salesData);
+
         var chart = new Chart(canvas, {
-            type: "bar"
-            , data: {
-                labels: salesData.map(data => `Month of ${data.month}`)
-                , datasets: [{
-                    label: "Net Worth"
-                    , data: salesData.map(data => data.sales)
-                    , backgroundColor: "#007bff"
-                , }, ]
-            , }
-            , options: {
+            type: "bar",
+            data: {
+                labels: salesData.map(data => `Month of ${data.month}`),
+                datasets: [{
+                    label: "Net Worth",
+                    data: salesData.map(data => data.sales),
+                    backgroundColor: "#007bff"
+                }]
+            },
+            options: {
                 legend: {
                     display: false
-                , }
-                , scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        , }
-                    , }, ]
-                , }
-            , }
-        , });
-        var productSalesData = {
-            !!json_encode($productSalesData) !!
-        };
-
-        var ctx = document.getElementById('product-sales-chart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'line'
-            , data: {
-                labels: productSalesData.map(data => `Month of ${data.month}`)
-                , datasets: [{
-                    label: 'Monthly Product Sales'
-                    , backgroundColor: 'rgba(255, 99, 132, 0.2)'
-                    , borderColor: 'red'
-                    , data: productSalesData.map(data => data.product_sales)
-                    , fill: true
-                }]
-            }
-            , options: {
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -239,6 +245,31 @@
             }
         });
 
+        var productSalesData = @json($productSalesData);
+        var ctx = document.getElementById('product-sales-chart').getContext('2d');
+        
+        var productSalesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: productSalesData.map(data => `Month of ${data.month}`),
+                datasets: [{
+                    label: 'Monthly Product Sales',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'red',
+                    data: productSalesData.map(data => data.product_sales),
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    })
     </script>
-
 </div>

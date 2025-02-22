@@ -92,7 +92,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="gender">Role:</label>
-                                    <select class="form-select" wire:model.live.blur="role" required>
+                                    <select class="form-select" wire:model.live.debounce.200ms="role" required>
                                         <option hidden="true">Select Role</option>
                                         <option selected disabled>Select Role</option>
                                         @foreach ($roles as $role)

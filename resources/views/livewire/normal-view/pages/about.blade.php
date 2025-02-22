@@ -1,5 +1,5 @@
 <div>
-    <h3 class="mt-3">About AJM Restaurant</h3>
+    <h3 class="mt-3 text-center">About AJM Restaurant</h3>
     <hr>
     <div class="container mt-5">
         <div class="row">

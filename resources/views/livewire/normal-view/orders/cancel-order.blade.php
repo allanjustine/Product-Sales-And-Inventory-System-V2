@@ -18,9 +18,9 @@
                     </div>
                 @endif
                 <div class="modal-footer">
-                    <button class="btn btn-danger form-control" wire:click="cancelOrder()"><i class="fa-solid fa-circle-xmark"></i> Yes, Cancel
+                    <button class="btn btn-danger form-control" wire:click="cancelOrder"><i class="fa-solid fa-circle-xmark"></i> Yes, Cancel
                     </button>
-                    <button type="button" class="btn btn-secondary form-control" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

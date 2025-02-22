@@ -9,13 +9,12 @@ class Navbar extends Component
 {
     public function logout()
     {
+
         Auth::logout();
 
-        session()->flash('logout', [
-            'title'         =>          'Logout',
-            'type'          =>          'success',
-            'message'       =>          'Logout Successfully',
-        ]);
+        session()->invalidate();
+
+        session()->regenerateToken();
 
         return $this->redirect('/login', navigate: true);
     }

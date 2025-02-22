@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Profile extends Component
 {
-    use WithFileUploads;
+    #[Title("Profile")]
+
 
     public $profile_image;
     public $user;
@@ -24,6 +26,8 @@ class Profile extends Component
     public $oldPassword;
     public $password;
     public $password_confirmation;
+
+    use WithFileUploads;
 
     public function mount()
     {
@@ -57,9 +61,13 @@ class Profile extends Component
         $this->user->profile_image = $path;
         $this->user->save();
 
-        alert()->toast('Profile picture updated successfully', 'success');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Updated",
+            'message'       =>          "Profile picture updated successfully"
+        ]);
 
-        return redirect('/profile');
+        return;
     }
 
     public function updateProfile()
@@ -80,42 +88,40 @@ class Profile extends Component
         $this->user->email = $this->email;
         $this->user->save();
 
-        alert()->toast('Your profile is updated successfully', 'success');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Updated",
+            'message'       =>          "Your profile is updated successfully"
+        ]);
 
-        return redirect('/profile');
+        return;
     }
 
-    public function rules()
-    {
-        return [
-            'oldPassword' => ['required', function ($attribute, $value, $fail) {
-                if (!Hash::check($value, auth()->user()->password)) {
-                    $fail('The old password is incorrect.');
-                }
-            }],
-            'password' => [
-                'required', 'string', 'min:4', 'confirmed',
-                function ($attribute, $value, $fail) {
-                    if ($value == $this->oldPassword) {
-                        $fail('You cannot use your old password as your new password.');
-                    }
-                },
-            ],
-        ];
-    }
 
     public function changePassword()
     {
+        $this->validate([
+            'oldPassword'       =>          ['required', 'required_with:password', 'min:6'],
+            'password'          =>          ['required', 'required_with:oldPassword', 'min:6', 'confirmed', 'different:oldPassword']
+        ]);
 
-
-        $this->validate();
+        if(!Hash::check($this->oldPassword, $this->user->password)) {
+            $this->addError('oldPassword', 'The old password is incorrect.');
+            return;
+        }
 
         $this->user->password = bcrypt($this->password);
         $this->user->save();
 
-        alert()->toast('Your password has been changed successfully', 'success');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Updated",
+            'message'       =>          "Your password has been changed successfully"
+        ]);
 
-        return redirect('/profile');
+        $this->reset(['oldPassword', 'password', 'password_confirmation']);
+
+        return;
     }
 
     public function updated($propertyData)

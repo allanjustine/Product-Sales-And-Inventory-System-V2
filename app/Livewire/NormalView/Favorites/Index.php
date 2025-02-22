@@ -34,23 +34,32 @@ class Index extends Component
 
     public function notAvailable()
     {
-        $this->dispatch('error', ['message' => 'This product is not available.']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'error',
+            'message'   =>      'This product is not available.'
+        ]);
+        return;
     }
 
     public function outOfStock()
     {
-        $this->dispatch('error', ['message' => 'This product is out of stock.']);
+        $this->dispatch('toastr', data: [
+            'type'      =>      'error',
+            'message'   =>      'This product is out of stock.'
+        ]);
+        return;
     }
 
     public function removeToFavorite($id)
     {
         Favorite::findOrFail($id)->delete();
 
-        $this->dispatch('toastr', [
+        $this->dispatch('toastr', data: [
             'type'      =>      'success',
             'message'   =>      'Removed from favorites.'
         ]);
         $this->dispatch('isRefresh');
+        return;
     }
 
     public function view($id)
@@ -84,7 +93,7 @@ class Index extends Component
             ]);
         }
 
-        $this->dispatch('toastr', [
+        $this->dispatch('toastr', data: [
             'type'      =>      'success',
             'message'   =>      'Product added to cart successfully.'
         ]);
@@ -92,7 +101,14 @@ class Index extends Component
 
         // alert()->success('Success', 'Product added to cart successfully.');
 
-        // return redirect('/favorites');
+        // return $this->redirect('/favorites', navigate: true);
+        return;
+    }
+
+    #[On('closedModal')]
+    public function closedModal()
+    {
+        $this->productView = null;
     }
 
     public function toBuyNow($productId)
@@ -166,30 +182,41 @@ class Index extends Component
 
             if ($existingOrder) {
                 // alert()->success('Congrats', 'The product is added/changed to your existing order.');
-                alert()->html('Congrats', 'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                alert()->html('Congrats', 'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
             } else {
-                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
             }
 
-            return redirect('/favorites');
+            return $this->redirect('/favorites', navigate: true);
         } else {
 
             if ($productStatus == 'Not Available') {
                 // alert()->error('Sorry', 'The product is Not Available');
 
-                // return redirect('/favorites');
+                // return $this->redirect('/favorites', navigate: true);
 
-                $this->dispatch('error', ['message' => 'The product is Not Available']);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'error',
+                    'message'   =>      'The product is Not Available'
+                ]);
             } elseif ($product->product_stock == 0) {
                 // alert()->error('Sorry', 'The product is out of stock');
 
-                // return redirect('/favorites');
-                $this->dispatch('warning', ['message' => 'The product is out of stock']);
+                // return $this->redirect('/favorites', navigate: true);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'warning',
+                    'message'   =>      'The product is out of stock'
+                ]);
+                return;
             } else {
                 // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
 
-                // return redirect('/favorites');
-                $this->dispatch('info', ['message' => 'The product stock is insufficient please reduce your cart quantity']);
+                // return $this->redirect('/favorites', navigate: true);
+                $this->dispatch('toastr', data: [
+                    'type'      =>      'info',
+                    'message'   =>      'The product stock is insufficient please reduce your cart quantity'
+                ]);
+                return;
             }
         }
     }

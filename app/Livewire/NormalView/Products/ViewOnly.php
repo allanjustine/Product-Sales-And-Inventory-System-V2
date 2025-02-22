@@ -4,13 +4,15 @@ namespace App\Livewire\NormalView\Products;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ViewOnly extends Component
 {
 
-    use WithPagination;
+    #[Title("Products")]
 
     protected $paginationTheme = 'bootstrap';
 
@@ -19,13 +21,15 @@ class ViewOnly extends Component
     public $category_name = 'All';
     public $sort = 'low_to_high';
     public $product_rating = 'All';
-    public $productView;
+    public $productView = null;
     public $allDisplayProducts;
-    public $loadMore = 20;
+    public $defaultPage = 20;
+    public $loadMorePlus = 20;
+    use WithPagination;
 
     public function loadMore()
     {
-        $this->loadMore += $this->loadMore;
+        $this->defaultPage += $this->loadMorePlus;
     }
 
     public function mount()
@@ -66,7 +70,7 @@ class ViewOnly extends Component
         }
 
 
-        $products = $query->paginate($this->loadMore);
+        $products = $query->paginate($this->defaultPage);
 
         return compact('products');
     }
@@ -74,6 +78,11 @@ class ViewOnly extends Component
     public function view($id)
     {
         $this->productView = Product::find($id);
+    }
+
+    #[On('closedModal')]
+    public function closedModal() {
+        $this->productView = null;
     }
 
     public function clearFilters()

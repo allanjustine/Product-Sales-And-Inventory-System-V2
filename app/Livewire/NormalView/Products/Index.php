@@ -12,15 +12,14 @@ use App\Models\SearchLog;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
 
-    protected $listeners = ['resetInputs'];
-
-    use WithPagination;
+    #[Title("Products")]
 
     protected $paginationTheme = 'bootstrap';
 
@@ -29,7 +28,7 @@ class Index extends Component
     public $category_name = 'All';
     public $sort = 'low_to_high';
     public $product_rating = 'All';
-    public $productView;
+    public $productView = null;
     public $productToBeCart;
     public $selectedProductID, $productId, $product_name, $product_price;
     public $quantity = 1;
@@ -47,10 +46,14 @@ class Index extends Component
     public $orderPlaceOrder;
     public $order;
     public $loadMore = 20;
+    public $loadMorePlus = 20;
+    public $searchLogs = [];
 
-    public function loadMore()
+    use WithPagination;
+
+    public function loadMorePage()
     {
-        $this->loadMore += $this->loadMore;
+        $this->loadMore += $this->loadMorePlus;
     }
 
     public function displayProducts()
@@ -92,35 +95,43 @@ class Index extends Component
 
         $products = $query->take($this->loadMore)->latest()->get();
 
-        $searchLogs = SearchLog::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->take(5)->get();
-
         if ($this->search) {
             $searchLog = SearchLog::where('log_entry', $this->search)->first();
 
             if (!$searchLog) {
                 $log_entry = $this->search;
                 event(new UserSearchLog($log_entry));
+                $this->dispatch('refreshSearchDataLog');
             }
         }
 
-        return compact('products', 'carts', 'allDisplayProducts', 'searchLogs');
+        return compact('products', 'carts', 'allDisplayProducts');
+    }
+
+    #[On('refreshSearchDataLog')]
+    public function searchData()
+    {
+        $this->searchLogs = SearchLog::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->take(5)->get();
+    }
+
+    public function mount()
+    {
+        $this->searchData();
     }
 
     public function searchDelete($id)
     {
         SearchLog::findOrFail($id)->delete();
+        $this->dispatch('refreshSearchDataLog');
         $this->reset();
     }
 
 
     public function clearAllLogs()
     {
-        $logs = SearchLog::all();
-
-        foreach ($logs as $log) {
-            $log->where('user_id', auth()->user()->id)->delete();
-            $this->reset();
-        }
+        SearchLog::where('user_id', auth()->user()->id)->delete();
+        $this->dispatch('refreshSearchDataLog');
+        $this->reset();
     }
 
     // public function notAvailable()
@@ -145,6 +156,7 @@ class Index extends Component
                 'type'          =>          'success',
                 'message'       =>          'Removed from favorites'
             ]);
+            return;
         } else {
             Favorite::create([
                 'user_id'           =>      auth()->user()->id,
@@ -156,6 +168,7 @@ class Index extends Component
                 'type'      =>      'success',
                 'message'   =>      'Added to favorites'
             ]);
+            return;
         }
     }
 
@@ -169,6 +182,12 @@ class Index extends Component
     public function view($id)
     {
         $this->productView = Product::find($id);
+    }
+
+    #[On('closedModal')]
+    public function closedModal()
+    {
+        $this->productView = null;
     }
 
     public function addToCart($id)
@@ -199,11 +218,13 @@ class Index extends Component
         }
 
         $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Product added to cart successfully.']);
+        $this->dispatch('closeModal');
         // $this->reset();
 
         // alert()->success('Success', 'Product added to cart successfully.');
 
-        // return redirect('/products');
+        // return $this->redirect('/products', navigate: true);
+        return;
     }
 
 
@@ -256,7 +277,8 @@ class Index extends Component
         $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Quantity updated']);
         // alert()->toast('Updated cart quantity successfully', 'success');
 
-        // return redirect('/products');
+        // return $this->redirect('/products', navigate: true);
+        return;
     }
 
     public function decreaseQuantity($itemId)
@@ -274,12 +296,14 @@ class Index extends Component
                 ]);
 
                 // alert()->toast('Updated cart quantity successfully', 'success');
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
                 $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Quantity updated']);
+                return;
             } else {
                 $cart->delete();
 
                 $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Cart item deleted']);
+                return;
             }
         }
     }
@@ -299,7 +323,7 @@ class Index extends Component
 
         alert()->toast('Removed from cart successfully', 'success');
 
-        return redirect('/products');
+        return $this->redirect('/products', navigate: true);
     }
 
 
@@ -389,30 +413,43 @@ class Index extends Component
             $cartItem->delete();
 
             if ($existingOrder) {
-                alert()->html('Congrats', 'The product is added/changed' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
+                $this->dispatch('closeModal');
+                return;
             } else {
-                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
+                $this->dispatch('closeModal');
+                return;
             }
-
-            return redirect('/products');
         } else {
 
             if ($productStatus == 'Not Available') {
                 // alert()->error('Sorry', 'The product is Not Available');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
 
                 $this->dispatch('toastr', data: ['type' => 'error', 'message' => 'The product is Not Available']);
+                return;
             } elseif ($product->product_stock == 0) {
                 // alert()->error('Sorry', 'The product is out of stock');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
                 $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The product is out of stock']);
+                return;
             } else {
                 // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
                 $this->dispatch('toastr', data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity']);
+                return;
             }
         }
     }
@@ -487,34 +524,46 @@ class Index extends Component
 
 
             if ($existingOrder) {
-                // alert()->success('Congrats', 'The product is added/changed to your existing order.');
-                alert()->html('Congrats', 'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
+                $this->dispatch('closeModal');
+                return;
             } else {
-                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" href="/orders">Go to Orders</a>', 'success');
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
+                $this->dispatch('closeModal');
+                return;
             }
-
-            return redirect('/products');
         } else {
 
             if ($productStatus == 'Not Available') {
                 // alert()->error('Sorry', 'The product is Not Available');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
 
                 $this->dispatch('toastr',  data: [
                     'type' => 'error',
                     'message' => 'The product is Not Available'
                 ]);
+                return;
             } elseif ($product->product_stock == 0) {
                 // alert()->error('Sorry', 'The product is out of stock');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
                 $this->dispatch('toastr',  data: ['type' => 'warning', 'message' => 'The product is out of stock']);
+                return;
             } else {
                 // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
 
-                // return redirect('/products');
+                // return $this->redirect('/products', navigate: true);
                 $this->dispatch('toastr',  data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity']);
+                return;
             }
         }
     }
@@ -529,7 +578,7 @@ class Index extends Component
         $this->resetPage();
     }
 
-
+    #[On('resetInputs')]
     public function resetInputs()
     {
         $this->order_payment_method = '';

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -16,9 +17,9 @@ use Spatie\Permission\Models\Role;
 
 class Index extends Component
 {
-
     use WithPagination;
 
+    #[Title('Users')]
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['resetInputs'];
 
@@ -94,7 +95,7 @@ class Index extends Component
 
         alert()->info('User Added', 'We sent an email to "' . $user->email . '" for verification.')->showConfirmButton('Okay');
 
-        return redirect('/admin/users');
+        return $this->redirect('/admin/users', navigate: true);
     }
 
     public function resetInputs()
@@ -160,9 +161,10 @@ class Index extends Component
 
         alert()->success('User Updated', 'The user is updated successfully');
 
-        return redirect('/admin/users');
-
         $this->reset();
+
+        return $this->redirect('/admin/users', navigate: true);
+
     }
 
     public function delete($id)
@@ -172,7 +174,7 @@ class Index extends Component
 
         if ($id === Auth::id()) {
             alert()->toast('Sorry, you cannot remove your own account', 'warning');
-            return redirect('/admin/users');
+            return $this->redirect('/admin/users', navigate: true);
         }
         $this->userRemove = $id;
     }
@@ -189,7 +191,7 @@ class Index extends Component
 
         alert()->success('User Removed', 'The user "' . $user->name . '" has been removed successfully');
 
-        return redirect('/admin/users');
+        return $this->redirect('/admin/users', navigate: true);
     }
 
     public function view($id)
@@ -197,13 +199,8 @@ class Index extends Component
         $this->userView = User::find($id);
     }
 
-    public function updated($propertyData)
-    {
-        $this->validateOnly($propertyData, [
-            'email'                 =>      ['required', 'email', 'unique:users,email,' . $this->id],
-            'phone_number'          =>      ['required', 'numeric', 'digits:11', 'regex:/(0)[0-9]/'],
-            'profile_image'         =>      'required|image|max:10000|mimes:jpeg,png,gif,webp,svg|not_in:ico'
-        ]);
+    public function removeImage() {
+        $this->profile_image = null;
     }
 
     public function render()
