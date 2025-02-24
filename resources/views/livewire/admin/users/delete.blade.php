@@ -10,14 +10,16 @@
                         <span class="float-right" aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                @if ($userToDelete)
-                    <div class="modal-body">
-                        This user <strong>"{{ $userToDelete->name }}"</strong> will be removed to the table and will deleted permanently.
-                    </div>
-                @endif
+                <div class="modal-body">
+                    @if ($userToDelete)
+                            This user <strong>"{{ $userToDelete->name }}"</strong> will be removed to the table and will deleted permanently.
+                    @else
+                            Getting the user's information
+                    @endif
+                </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" wire:click="deleteUser()"><div wire:loading><svg class="loading"></svg></div>&nbsp;<i
-                        class="fa-solid fa-trash"></i> Yes, Remove</button>
+                    <button class="btn btn-danger" wire:target='deleteUser' wire:loading.attr='disabled' wire:click="deleteUser"><div wire:loading wire:target="deleteUser" class="spinner-border spinner-border-sm"></div>&nbsp;<i
+                        wire:target='deleteUser' wire:loading.remove class="fa-solid fa-trash"></i> Yes, Remove</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

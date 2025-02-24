@@ -58,7 +58,7 @@
                 <span id="date"></span>
                 <span id="time"></span></span>
             </div>
-            <strong>Copyright &copy; 2023-2024 <a href="https://facebook.com/1down" target="_blank">Allan Justine
+            <strong>Copyright &copy; 2023 - {{ now()->year }} <a href="https://facebook.com/1down" target="_blank">Allan Justine
                     Mascariñas</a>.</strong> All rights
             reserved.
         </footer>

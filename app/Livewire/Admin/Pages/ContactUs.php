@@ -3,19 +3,22 @@
 namespace App\Livewire\Admin\Pages;
 
 use App\Models\Contact;
+use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ContactUs extends Component
 {
+    use WithPagination;
+    #[Title('Feedbacks')]
 
-    public $feedbacks;
-
-    public function mount()
+    public function feedbacksLists()
     {
-        $this->feedbacks = Contact::latest()->get();
+        $feedbacks = Contact::latest()->paginate(10);
+        return compact('feedbacks');
     }
     public function render()
     {
-        return view('livewire.admin.pages.contact-us');
+        return view('livewire.admin.pages.contact-us', $this->feedbacksLists());
     }
 }

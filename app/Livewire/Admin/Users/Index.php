@@ -93,9 +93,15 @@ class Index extends Component
             $mail->subject('Account verification');
         });
 
-        alert()->info('User Added', 'We sent an email to "' . $user->email . '" for verification.')->showConfirmButton('Okay');
+        $this->dispatch('alert', alerts: [
+            'title'         =>          'User Added',
+            'type'          =>          'success',
+            'message'       =>          "We sent an email to \"{$user->email}\" for verification."
+        ]);
 
-        return $this->redirect('/admin/users', navigate: true);
+        $this->dispatch('closeModal');
+
+        return;
     }
 
     public function resetInputs()
@@ -137,7 +143,7 @@ class Index extends Component
     {
         $this->validate([
             'email'             =>      ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->userEdit->id],
-            'profile_image'     =>      $this->profile_image ? ['image', 'max:10000'] : '',
+            'profile_image'     =>      ['nullable', 'image', 'max:10000'],
             'phone_number'      =>      'required|string|numeric|regex:/(0)[0-9]/|digits:11',
             'gender'            =>      ['required', 'string', Rule::in('Male', 'Female')],
         ]);
@@ -159,11 +165,17 @@ class Index extends Component
 
         $this->userEdit->save();
 
-        alert()->success('User Updated', 'The user is updated successfully');
+        $this->dispatch('alert', alerts: [
+            'title'         =>          'User Updated',
+            'type'          =>          'success',
+            'message'       =>          "The user is updated successfully."
+        ]);
+
+        $this->dispatch('closeModal');
 
         $this->reset();
 
-        return $this->redirect('/admin/users', navigate: true);
+        return;
 
     }
 
@@ -189,9 +201,15 @@ class Index extends Component
 
         $user->delete();
 
-        alert()->success('User Removed', 'The user "' . $user->name . '" has been removed successfully');
+        $this->dispatch('alert', alerts: [
+            'title'         =>          'User Removed',
+            'type'          =>          'success',
+            'message'       =>          "The user \"{$user->name}\" has been removed successfully."
+        ]);
 
-        return $this->redirect('/admin/users', navigate: true);
+        $this->dispatch('closeModal');
+
+        return;
     }
 
     public function view($id)

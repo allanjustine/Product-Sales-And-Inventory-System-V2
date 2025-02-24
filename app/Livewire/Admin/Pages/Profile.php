@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Profile extends Component
 {
     use WithFileUploads;
+    #[Title('Profile')]
 
     public $profile_image;
     public $user;

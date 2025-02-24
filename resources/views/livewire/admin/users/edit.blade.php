@@ -23,18 +23,21 @@
                             <input type="file" accept=".png, .jpg, .jpeg, .gif" class="form-control"
                                 id="profile_image" wire:model.live="profile_image" required>
                             @if ($profile_image && in_array($profile_image->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']))
-                                <img src="{{ $profile_image->temporaryUrl() }}" style="width: 100px; height: 100px;"
+                                <img wire:target='profile_image' wire:loading.remove src="{{ $profile_image->temporaryUrl() }}" style="width: 100px; height: 100px;"
                                     class="mt-1 rounded">
                             @else
-                                <img src="{{ $profile_image_url }}" style="width: 100px; height: 100px;"
+                                <img wire:target='profile_image' wire:loading.remove src="{{ $profile_image_url }}" style="width: 100px; height: 100px;"
                                     class="mt-1 rounded">
                             @endif
+                            <div wire:target='profile_image' class="mt-2" wire:loading>
+                                <span class="spinner-border"></span> Uploading...
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="name">Name:</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Name"
+                                    <input type="text" class="form-control" id="name-edit" placeholder="Name"
                                         wire:model.live.debounce.200ms="name" required>
                                     @error('name')
                                         <span class="text-danger">*{{ $message }}</span>
@@ -44,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="address">Address:</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Address"
+                                    <input type="text" class="form-control" id="address-edit" placeholder="Address"
                                         wire:model.live.debounce.200ms="address" required>
                                     @error('address')
                                         <span class="text-danger">*{{ $message }}</span>
@@ -56,7 +59,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="email">Email:</label>
-                                    <input type="email" class="form-control" placeholder="Email" id="email"
+                                    <input type="email" class="form-control" placeholder="Email" id="email-edit"
                                         wire:model.live="email" required>
                                     @error('email')
                                         <span class="text-danger">*{{ $message }}</span>
@@ -66,7 +69,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="phone_number">Phone Number:</label>
-                                    <input type="number" class="form-control" id="phone_number"
+                                    <input type="number" class="form-control" id="phone_number-edit"
                                         placeholder="Phone Number (09-xxxxxxxxx)" wire:model.live="phone_number" required>
                                     @error('phone_number')
                                         <span class="text-danger">*{{ $message }}</span>
@@ -78,7 +81,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="gender">Gender:</label>
-                                    <select class="form-select" id="gender" wire:model.live.debounce.200ms="gender" required>
+                                    <select class="form-select" id="gender-edit" wire:model.live.debounce.200ms="gender" required>
                                         <option selected hidden="true">Select Gender</option>
                                         <option disabled>Select Gender</option>
                                         <option value="Male">Male</option>
@@ -109,10 +112,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" wire:click="update()">
-                        <div wire:loading><svg class="loading"></svg></div>&nbsp;<i class="fa-solid fa-pen-to-square"></i> Update
+                    <button type="button" wire:loading.attr='disabled' class="btn btn-primary" wire:click="update">
+                        <div wire:loading wire:target='update' class="spinner-border spinner-border-sm"></div>&nbsp;<i wire:loading.remove wire:target='update' class="fa-solid fa-pen-to-square"></i> Update
                     </button>
-                    <button class="btn btn-outline-warning" wire:click="resetInputs()"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
+                    <button class="btn btn-outline-warning" wire:click="resetInputs"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
