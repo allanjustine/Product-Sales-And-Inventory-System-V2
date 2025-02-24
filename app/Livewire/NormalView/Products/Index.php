@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\SearchLog;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -101,28 +102,18 @@ class Index extends Component
             if (!$searchLog) {
                 $log_entry = $this->search;
                 event(new UserSearchLog($log_entry));
-                $this->dispatch('refreshSearchDataLog');
             }
         }
 
-        return compact('products', 'carts', 'allDisplayProducts');
-    }
 
-    #[On('refreshSearchDataLog')]
-    public function searchData()
-    {
         $this->searchLogs = SearchLog::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->take(5)->get();
-    }
 
-    public function mount()
-    {
-        $this->searchData();
+        return compact('products', 'carts', 'allDisplayProducts');
     }
 
     public function searchDelete($id)
     {
         SearchLog::findOrFail($id)->delete();
-        $this->dispatch('refreshSearchDataLog');
         $this->reset();
     }
 
@@ -130,7 +121,6 @@ class Index extends Component
     public function clearAllLogs()
     {
         SearchLog::where('user_id', auth()->user()->id)->delete();
-        $this->dispatch('refreshSearchDataLog');
         $this->reset();
     }
 
@@ -227,37 +217,17 @@ class Index extends Component
         return;
     }
 
-
-    public function getProductTotalAmount($productId)
-    {
-        $totalAmount = 0;
-
-        $cartItems = Cart::with('product')
-            ->where('user_id', auth()->id())
-            ->get();
-
-        foreach ($cartItems as $item) {
-            if ($item->product_id == $productId) {
-                $totalAmount += $item->product->product_price * $item->quantity;
-            }
-        }
-
-        return $totalAmount;
-    }
-
     public function getTotal()
     {
-        $total = 0;
+        $cartTotal = Cart::query()
+        ->with('product')
+        ->where('user_id', Auth::id())
+        ->get()
+        ->sum(function($item) {
+            return $item->product->product_price * $item->quantity;
+        });
 
-        $cartItems = Cart::with('product')
-            ->where('user_id', auth()->id())
-            ->get();
-
-        foreach ($cartItems as $item) {
-            $total += $item->product->product_price * $item->quantity;
-        }
-
-        return $total;
+        return $cartTotal;
     }
 
     public function increaseQuantity($cartItemId)

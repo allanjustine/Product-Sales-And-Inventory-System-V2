@@ -98,7 +98,7 @@ class ProductSales extends Component
 
 
         $grandTotal = $query->where('order_status', 'Paid')
-            ->paginate($this->perPage)
+            ->simplePaginate($this->perPage)
             ->sum('order_total_amount');
 
         return compact('orders', 'grandTotal');

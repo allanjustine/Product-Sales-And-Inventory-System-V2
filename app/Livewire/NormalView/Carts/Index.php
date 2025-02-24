@@ -5,10 +5,12 @@ namespace App\Livewire\NormalView\Carts;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Index extends Component
 {
+    #[Title('My Carts')]
     public $cartItemToRemove;
     public $cartItemToCheckOut;
     public $user_location;
@@ -100,7 +102,7 @@ class Index extends Component
             'type'      =>      'success',
             'message'   =>      'Removed from cart successfully'
         ]);
-
+        $this->dispatch('closeModal');
         $this->reset();
         return;
     }
@@ -159,12 +161,23 @@ class Index extends Component
             $cartItem->delete();
 
             if ($existingOrder) {
-                alert()->html('Congrats', 'The product is added/changed' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
+                $this->dispatch('alert', alerts: [
+                    'title'         =>          'Success',
+                    'type'          =>          'success',
+                    'message'       =>          "The product is added/changed. <br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
+                ]);
+                $this->dispatch('closeModal');
+                return;
             } else {
-                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
+                $transactionCode = "\"{$order->transaction_code}\"";
+                $this->dispatch('alert', alerts: [
+                    'title'         =>          'Success',
+                    'type'          =>          'success',
+                    'message'       =>          "The product ordered successfully. Your transaction code is {$transactionCode}. <br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
+                ]);
+                $this->dispatch('closeModal');
+                return;
             }
-
-            return $this->redirect('/carts', navigate: true);
         } else {
 
             if ($productStatus == 'Not Available') {

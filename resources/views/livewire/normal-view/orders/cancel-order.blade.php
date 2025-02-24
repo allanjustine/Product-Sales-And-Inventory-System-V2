@@ -16,6 +16,12 @@
                             x{{ $cancel->order_quantity }}PC(s)"</strong> will be
                         removed from your pending orders.
                     </div>
+                    @else
+                    <div class="loading-overlay mt-3">
+                        <div class="loading-message card p-3 bg-dark">
+                            <span class="spinner-border"></span>
+                        </div>
+                    </div>
                 @endif
                 <div class="modal-footer">
                     <button class="btn btn-danger form-control" wire:click="cancelOrder"><i class="fa-solid fa-circle-xmark"></i> Yes, Cancel

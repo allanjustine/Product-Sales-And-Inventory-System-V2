@@ -6,28 +6,31 @@
     @include('livewire.normal-view.orders.buy-now')
     <div class="col-md-5 col-sm-6 offset-md-4 offset-sm-3 mt-4">
         <div class="dropdown" id="mainDropdown">
-            <input type="search" class="form-control dropdown-toggle" id="searchInput" placeholder="Search"
-                wire:model.live.debounce.200ms="search" style="border-radius: 30px; height: 50px;"
-                aria-bs-haspopup="true" aria-bs-expanded="false">
-
-            <div id="searchDropdown" class="dropdown-menu w-100 {{ count($searchLogs) === 0 ? 'd-none' : '' }}"
-                aria-bs-labelledby="searchInput">
-                @foreach ($searchLogs as $log)
-                <div class="d-flex align-items-center" key={{ $log->id }}>
-                    <button id="searchLogButton" class="dropdown-item p-3 flex-grow-1 text-truncate" type="button"
-                        wire:click="searchLog({{ $log->id }})">
-                        {{ $log->log_entry }}
-                    </button>
-                    <button class="mr-2" id="removeSearchLogButton" style="background-color: transparent; border: none;"
-                        wire:click="searchDelete({{ $log->id }})">
-                        <i class="far fa-times"></i>
-                    </button>
-                </div>
-                @endforeach
-                <div>
-                    <a href="#" class="float-end px-3" id="clearAllSearchLogsButton"
-                        wire:click="clearAllLogs({{ auth()->user()->id }})">Clear
-                        all</a>
+            <div x-data="{ open: false }">
+                <input type="search" class="form-control" id="searchInput" placeholder="Search" x-on:input="open = true"
+                    wire:model.live.debounce.200ms="search" style="border-radius: 30px; height: 50px;">
+                <div id="searchDropdown" class="dropdown-menu w-100" @if(count($searchLogs) !==0)
+                    :class="{ 'show': open }" @click.outside="open = false" x-cloak x-transition @else
+                    style="display: none !important" @endif aria-bs-labelledby="searchInput">
+                    @foreach ($searchLogs as $log)
+                    <div class="d-flex align-items-center" key={{ $log->id }}>
+                        <button type="button" @click="open = false" id="searchLogButton"
+                            class="dropdown-item p-3 flex-grow-1 text-truncate" type="button"
+                            wire:click="searchLog({{ $log->id }})">
+                            {{ $log->log_entry }}
+                        </button>
+                        <button type="button" wire:loading.attr='disabled' wire:target='searchDelete' class="mr-2"
+                            id="removeSearchLogButton" style="background-color: transparent; border: none;"
+                            wire:click="searchDelete({{ $log->id }})">
+                            <i class="fa-regular fa-times"></i>
+                        </button>
+                    </div>
+                    @endforeach
+                    <div>
+                        <a href="#" class="float-end px-3" id="clearAllSearchLogsButton"
+                            wire:click="clearAllLogs({{ auth()->user()->id }})">Clear
+                            all</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,33 +89,33 @@
         </div>
     </div>
     @role('user')
-    <div class="position-fixed" style="right: 0; margin-top: -180px; z-index: 1;">
+    <div class="position-fixed" style="right: 0; margin-top: -180px; z-index: 1;" id="cartIcon">
         <div class="position-relative d-flex justify-content-end mr-5" id="main-cart" x-data="{ open: false }">
             <button type="button" class="btn btn-link p-2 cartdropdown position-relative" id="cart-dropdown"
                 @click="open = !open">
                 <i class="fa-regular fa-cart-shopping pt-3"></i>
+                @if($carts->count() > 0)
                 <span class="badge badge-pill badge-danger" id="badge-cart">
                     <span style="font-size: 12px;">{{ $carts->count() }}</span>
                 </span>
+                @endif
             </button>
 
-            <ul id="myDiv" class="bg-white border shadow-sm position-absolute p-3" style="list-style: none;" x-cloak
+            <ul id="myDiv" class="bg-white border shadow-sm position-absolute" style="list-style: none;" x-cloak
                 x-show="open" @click.outside="open = false">
-                <h4 class="pl-3"><strong><i class="fa-regular fa-cart-shopping"></i> My Cart ({{ $carts->count()
-                        }})</strong></h4>
+                <h4 class="sticky-top bg-white py-3"><strong><i class="fa-regular fa-cart-shopping"></i> My Cart
+                        @if($carts->count() > 0) ({{ $carts->count() }}) @endif</strong></h4>
                 <hr>
                 @foreach ($carts as $item)
-                <li class="cart-item px-3 py-2">
+                <li class="cart-item px-3 py-2 mr-5">
                     <div class="cart-item-image">
                         <button class="btn btn-link text-primary" type="button"
-                            wire:click="decreaseQuantity({{ $item->id }})"
-                            onclick="handleButtonClick(event, {{ $item->id }})">
+                            wire:click="decreaseQuantity({{ $item->id }})">
                             <i class="fas fa-minus text-black"></i>
                         </button>
                         x{{ number_format($item->quantity) }}
                         <button type="button" class="btn btn-link text-primary"
-                            wire:click="increaseQuantity({{ $item->id }})"
-                            onclick="handleButtonClick(event, {{ $item->id }})">
+                            wire:click="increaseQuantity({{ $item->id }})">
                             <i class="fas fa-plus text-black"></i>
                         </button>
                         @if (Storage::exists($item->product->product_image))
@@ -122,7 +125,8 @@
                         <img style="width: 70px; height: 70px; border-radius: 10%;"
                             src="{{ url($item->product->product_image) }}" alt="">
                         @endif
-                        &nbsp;&nbsp;<span><strong class="text-capitalize">{{ $item->product->product_name }}</strong></span>
+                        &nbsp;&nbsp;<span><strong class="text-capitalize">{{ $item->product->product_name
+                                }}</strong></span>
                     </div>
                     <div class="cart-item-price mt-2">
                         &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}
@@ -134,18 +138,19 @@
                             wire:click="checkOut({{ $item->id }})">
                             <i class="fas fa-check"></i>&nbsp;Checkout
                         </button><br>
-                        <span><strong>Sub total: &#8369;{{ number_format($this->getProductTotalAmount($item->product_id), 2,
+                        <span><strong>Sub total: &#8369;{{ number_format($item->product->product_price *
+                                $item->quantity, 2,
                                 '.', ',') }}</strong></span>
                     </div>
                 </li>
                 <li class="dropdown-divider"></li>
                 @endforeach
-                <li>
+                <li class="mr-5">
                     @if ($carts->count() === 0)
                     <p class="text-center">
                         <i class="fa-regular fa-cart-xmark mt-5" style="font-size: 50px;"></i>
                     </p>
-                    <p class="text-center mb-5">No Product Added Yet.</p>
+                    <p class="text-center mb-5 fs-5">Your cart is empty.</p>
                     @else
                     <span class="px-3 py-2"><strong>Grand total: &#8369;{{ number_format($total, 2, '.', ',')
                             }}</strong></span>
@@ -168,7 +173,7 @@
         <div class="row">
 
             @foreach ($products as $product)
-            <div class="col-md-3 mt-2 col-sm-4 col-6 p-1">
+            <div class="p-1 col-md-3 mt-2 col-sm-4 col-6">
                 <div class="card shadow product-card" style="min-width: 50px;">
                     <div style="position: relative;">
 
@@ -288,7 +293,7 @@
             {{ $products->links('pagination::bootstrap-4') }}</span>
     </div> --}}
     <div class="d-flex mb-2 align-items-center overflow-auto">
-        <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts &&
+        <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
             $search ? 'hidden' : '' }} id="paginate">
             <span wire:loading class="spinner-border"></span><span wire:loading.remove>Load more...</span></a>
     </div>
@@ -333,49 +338,6 @@
             });
         });
     </script>
-    <script>
-        function handleButtonClick(event, itemId) {
-        // Prevent event propagation to the dropdown container
-        event.stopPropagation();
-    }
-
-    </script>
-
-    <script>
-        document.addEventListener('livewire:navigated', function() {
-            const mainDropdown = document.getElementById('mainDropdown');
-            const searchDropdown = document.getElementById('searchDropdown');
-            const searchInput = document.getElementById('searchInput');
-            const searchLogButton = document.getElementById('searchLogButton');
-            const removeSearchLogButton = document.getElementById('removeSearchLogButton');
-            const clearAllSearchLogsButton = document.getElementById('clearAllSearchLogsButton');
-
-            if(mainDropdown && searchInput) {
-                searchInput.addEventListener('focus', function() {
-                    searchDropdown.classList.add('show');
-                });
-
-                searchLogButton.addEventListener('click', function() {
-                    searchDropdown.classList.remove('show');
-                });
-
-                removeSearchLogButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    searchDropdown.classList.add('show');
-                });
-
-                clearAllSearchLogsButton.addEventListener('click', function() {
-                    searchDropdown.classList.remove('show');
-                });
-
-                document.addEventListener('mousedown', function(event) {
-                    if(!mainDropdown.contains(event.target) && !searchInput.contains(event.target)) {
-                        searchDropdown.classList.remove('show');
-                    }
-                });
-            }
-        })
-    </script>
 
 
     {{-- @if (session('message'))
@@ -412,5 +374,28 @@
             color: black !important;
         }
     </style>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            const cartIcon = document.getElementById('cartIcon');
+
+            if(window.pageYOffset > 85) {
+                cartIcon.style.marginTop = '-270px';
+                cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
+            } else {
+                cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
+                cartIcon.style.marginTop = '-180px';
+            }
+            document.addEventListener('scroll', () => {
+                if (window.scrollY > 85) {
+                    cartIcon.style.marginTop = '-270px';
+                    cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
+                } else {
+                    cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
+                    cartIcon.style.marginTop = '-180px';
+                }
+            });
+        });
+    </script>
 
 </div>

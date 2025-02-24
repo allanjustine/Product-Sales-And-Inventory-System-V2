@@ -5,11 +5,12 @@ namespace App\Livewire\NormalView\Orders;
 use App\Models\Order;
 use App\Models\Product;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Index extends Component
 {
-
+    #[Title('My Orders')]
     public $recents;
     public $pendings;
     public $grandTotalPending;
@@ -180,6 +181,8 @@ class Index extends Component
         $this->received = $orderId;
     }
 
+
+    #[On('handleClick')]
     public function rePurchaseOrder($orderId)
     {
         $order = Order::find($orderId);
@@ -248,18 +251,33 @@ class Index extends Component
         $product = Product::find($received->product_id);
 
         if ($received->order_status === 'Paid') {
-            alert()->info('Sorry', 'The order was already been paid');
-            return $this->redirect('/orders', navigate: true);
+            $this->dispatch('alert', alerts: [
+                'title'         =>          'Sorry',
+                'type'          =>          'info',
+                'message'       =>          "The order was already been paid"
+            ]);
+            $this->dispatch('closeModal');
+            return;
         }
 
         if ($received->order_status === 'Complete') {
-            alert()->warning('Sorry', 'You can submit a rating at once');
-            return $this->redirect('/orders', navigate: true);
+            $this->dispatch('alert', alerts: [
+                'title'         =>          'Sorry',
+                'type'          =>          'warning',
+                'message'       =>          "You can submit a rating at once"
+            ]);
+            $this->dispatch('closeModal');
+            return;
         }
 
         if ($received->order_status === 'Cancelled') {
-            alert()->warning('Sorry', 'You can`t submit a rating on cancelled orders');
-            return $this->redirect('/orders', navigate: true);
+            $this->dispatch('alert', alerts: [
+                'title'         =>          'Sorry',
+                'type'          =>          'warning',
+                'message'       =>          "You can`t submit a rating on cancelled orders"
+            ]);
+            $this->dispatch('closeModal');
+            return;
         }
 
         $this->validate([
@@ -275,9 +293,13 @@ class Index extends Component
         $received->save();
 
         $newRating = $this->product_rating;
-        alert()->success('Success', 'Thank you for rating us ' . $newRating . ' Star(s).');
-
-        return $this->redirect('/orders', navigate: true);
+        $this->dispatch('alert', alerts: [
+            'title'         =>          'Rating Submitted',
+            'type'          =>          'success',
+            'message'       =>          "Thank you for rating us \"{$newRating}\" Star(s)."
+        ]);
+        $this->dispatch('closeModal');
+        return;
     }
 
     public function resetInputs()

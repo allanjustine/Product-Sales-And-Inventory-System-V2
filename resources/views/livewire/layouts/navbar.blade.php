@@ -1,4 +1,4 @@
-<div class="sticky-top">
+<div>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow">
         <h1 class="ms-5">
             <strong id="branding-ajm">AJM</strong>
@@ -124,7 +124,7 @@
                             class="fa-light fa-right-to-bracket"></i>&nbsp;
                         <span>Login</span></a>
                     <div class="dropdown-divider"></div>
-                    <a wire:navigate class="nav-link p-3" href="/register"><i class="fa-light fa-registered"></i>&nbsp;
+                    <a wire:navigate class="nav-link p-3" href="/register"><i class="fa-light fa-user-plus"></i>&nbsp;
                         <span>Register</span></a>
                     @endif
                 </div>

@@ -15,6 +15,12 @@
                         This product <strong class="text-capitalize">,"{{ $cartItemToRemove->product->product_name}} - x{{ $cartItemToRemove->quantity}}PC(s)"</strong> will be
                         removed to the cart and will deleted permanently.
                     </div>
+                @else
+                <div class="loading-overlay mt-3">
+                    <div class="loading-message card p-3 bg-dark">
+                        <span class="spinner-border"></span>
+                    </div>
+                </div>
                 @endif
                 <div class="modal-footer">
                     <button class="btn btn-danger form-control" wire:click="removeItemToCart()"><i class="fa-solid fa-cart-xmark"></i> Yes, Remove

@@ -45,9 +45,9 @@
                         <div class="col-4 text-center">
                             <div class="btn-group">
                                 <button class="btn border" wire:click="decreaseQuantity({{ $item->id }})"><i
-                                        class="far fa-minus"></i></button><span class="p-3">{{ $item->quantity
+                                        class="fa-regular fa-minus"></i></button><span class="p-3">{{ $item->quantity
                                     }}</span><button class="btn border" wire:click="updateCartItem({{ $item->id }})"><i
-                                        class="far fa-plus"></i></button>
+                                        class="fa-regular fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="col-4 d-flex flex-column align-items-end">
@@ -94,14 +94,26 @@
                 toastr[type](message, '', {
                     closeButton: true
                     , "progressBar": true
-                , })
-            })
+                , });
+            });
+
+            @this.on('alert', function(event) {
+                const { title, type, message } = event.alerts;
+
+                Swal.fire({
+                    showConfirmButton: false,
+                    title: title,
+                    icon: type,
+                    html: message
+                });
+            });
 
             Livewire.on('closeModal', () => {
                 $('#addToCart').modal('hide');
                 $('#remove').modal('hide');
-            })
-        })
+                $('#checkOut').modal('hide');
+            });
+        });
 
     </script>
 

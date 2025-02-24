@@ -18,9 +18,9 @@
                                 <div wire:loading.remove wire:target="updatePhoto, profile_image">
                                     <img class="profile-user-img img-fluid img-circle" @if ($profile_image)
                                         src="{{ $profile_image->temporaryUrl() }}" @else
-                                        src="{{ Auth::user()->profile_image === null ? "
+                                        src="{{ $profile_picture === null ? "
                                         https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
-                                        Storage::url(Auth::user()->profile_image) }}"
+                                        Storage::url($profile_picture) }}"
                                     @endif
                                     alt="{{ $user->name }} photo"
                                     id="photo" style="height: 150px; width: 150px; border-radius: 50%;">

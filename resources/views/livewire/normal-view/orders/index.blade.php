@@ -314,11 +314,10 @@
                                             Cancelled
                                         </a>
 
-                                        <a href="#" class="btn btn-primary mt-1"
-                                            wire:click="rePurchaseOrder({{ $order->id }})">
+                                        <button type="button" onclick="rePurchase({{ $order->id }})" class="btn btn-primary mt-1">
                                             <i class="fa-solid fa-rotate-right"></i>
                                             Re-purchase
-                                        </a>
+                                        </button>
                                         @endif
                                     </span>
                                 </div>
@@ -346,6 +345,26 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
     <script>
         document.addEventListener('livewire:navigated', function() {
             @this.on('alert', function(event) {
@@ -362,7 +381,24 @@
 
             @this.on('closeModal', function() {
                 $('#cancel').modal('hide');
+                $('#order-received').modal('hide');
             })
         });
+    </script>
+    <script>
+        function rePurchase(orderId) {
+            Swal.fire({
+                title: 'Are you sure you want to re-purchase this order?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, re-purchase it!',
+            }).then((result) => {
+               if(result.isConfirmed) {
+                @this.dispatch('handleClick', { orderId });
+               }
+            });
+        }
     </script>
 </div>

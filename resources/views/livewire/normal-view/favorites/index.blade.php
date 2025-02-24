@@ -152,9 +152,25 @@
                 toastr[type](message, '', {
                     closeButton: true
                     , "progressBar": true
-                , })
-            })
-        })
+                , });
+            });
+
+            @this.on('alert', function(event) {
+                const { title, type, message } = event.alerts;
+
+                Swal.fire({
+                    showConfirmButton: false,
+                    icon: type,
+                    title: title,
+                    html: message
+                });
+            });
+
+            @this.on('closeModal', function() {
+                $("#addToCart").modal('hide');
+                $("#toBuyNow").modal('hide');
+            });
+        });
 
     </script>
 

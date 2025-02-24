@@ -155,7 +155,7 @@
                         class="border-bottom"><span id="date"></span>
                         <span id="time"></span></span></p>
                 <hr>
-                <p>&copy; 2023 <strong>AJM</strong>. All rights reserved.</p>
+                <p>&copy; 2023 - {{ now()->year }} <strong>AJM</strong>. All rights reserved.</p>
             </div>
         </div>
     </div>

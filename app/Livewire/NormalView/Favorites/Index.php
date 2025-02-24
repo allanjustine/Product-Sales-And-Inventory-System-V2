@@ -9,10 +9,12 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Index extends Component
 {
+    #[Title('My Favorites')]
 
     public $productToBeCart;
     public $productView;
@@ -22,7 +24,6 @@ class Index extends Component
     public $order_quantity = 1;
     public $order_payment_method;
     public $orderPlaceOrder;
-
 
     #[On('isRefresh')]
     public function displayAllFavorites()
@@ -97,6 +98,7 @@ class Index extends Component
             'type'      =>      'success',
             'message'   =>      'Product added to cart successfully.'
         ]);
+        $this->dispatch('closeModal');
         $this->reset();
 
         // alert()->success('Success', 'Product added to cart successfully.');
@@ -123,7 +125,7 @@ class Index extends Component
         $this->orderPlaceOrder = $productId;
     }
 
-    public function orderPlaceOrder()
+    public function orderPlaceOrderItem()
     {
 
         $product = Product::find($this->orderPlaceOrder);
@@ -152,7 +154,7 @@ class Index extends Component
                 ]);
                 $existingOrder->created_at = now();
                 $existingOrder->order_quantity += $this->order_quantity;
-                $existingOrder->order_total_amount += ($this->order_quantity * $product->product_price);
+                $existingOrder->order_total_amount += $this->order_quantity * $product->product_price;
                 $existingOrder->save();
             } else {
                 $transactionCode = 'AJM-' . Str::random(10);
@@ -181,13 +183,23 @@ class Index extends Component
 
 
             if ($existingOrder) {
-                // alert()->success('Congrats', 'The product is added/changed to your existing order.');
-                alert()->html('Congrats', 'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
+                $this->dispatch('alert', alerts: [
+                    'title'         =>          'Success',
+                    'type'          =>          'success',
+                    'message'       =>          "The product is added/changed to your existing order.<br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
+                ]);
+                $this->dispatch('closeModal');
+                return;
             } else {
-                alert()->html('Congrats', 'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>', 'success');
+                $transactionCode = "\"{$order->transaction_code}\"";
+                $this->dispatch('alert', alerts: [
+                    'title'         =>          'Success',
+                    'type'          =>          'success',
+                    'message'       =>          "The product ordered successfully. Your transaction code is {$transactionCode} <br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
+                ]);
+                $this->dispatch('closeModal');
+                return;
             }
-
-            return $this->redirect('/favorites', navigate: true);
         } else {
 
             if ($productStatus == 'Not Available') {
@@ -199,6 +211,7 @@ class Index extends Component
                     'type'      =>      'error',
                     'message'   =>      'The product is Not Available'
                 ]);
+                return;
             } elseif ($product->product_stock == 0) {
                 // alert()->error('Sorry', 'The product is out of stock');
 

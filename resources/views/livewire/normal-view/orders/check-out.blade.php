@@ -59,6 +59,12 @@
                                         PC(s)</strong>
                                 </span><br>
                             @endif
+                        @else
+                        <div class="loading-overlay mt-3">
+                            <div class="loading-message card p-3 bg-dark">
+                                <span class="spinner-border"></span>
+                            </div>
+                        </div>
                         @endif
                     </div>
                     <hr>

@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Profile extends Component
 {
     #[Title("Profile")]
-
 
     public $profile_image;
     public $user;
@@ -26,6 +26,7 @@ class Profile extends Component
     public $oldPassword;
     public $password;
     public $password_confirmation;
+    public $profile_picture;
 
     use WithFileUploads;
 
@@ -38,6 +39,13 @@ class Profile extends Component
         $this->user_location = $this->user->user_location;
         $this->phone_number = $this->user->phone_number;
         $this->email = $this->user->email;
+    }
+
+    #[On('profileRefresh')]
+    public function profilePicture()
+    {
+        return $this->profile_picture = Auth::user()->profile_image;
+        // return compact('profile_picture');
     }
 
     public function show()
@@ -66,6 +74,10 @@ class Profile extends Component
             'title'         =>          "Updated",
             'message'       =>          "Profile picture updated successfully"
         ]);
+
+        $this->reset('profile_image');
+
+        $this->dispatch('profileRefresh');
 
         return;
     }
@@ -97,7 +109,6 @@ class Profile extends Component
         return;
     }
 
-
     public function changePassword()
     {
         $this->validate([
@@ -105,7 +116,7 @@ class Profile extends Component
             'password'          =>          ['required', 'required_with:oldPassword', 'min:6', 'confirmed', 'different:oldPassword']
         ]);
 
-        if(!Hash::check($this->oldPassword, $this->user->password)) {
+        if (!Hash::check($this->oldPassword, $this->user->password)) {
             $this->addError('oldPassword', 'The old password is incorrect.');
             return;
         }
@@ -133,6 +144,8 @@ class Profile extends Component
 
     public function render()
     {
-        return view('livewire.normal-view.pages.profile');
+        return view('livewire.normal-view.pages.profile', [
+            $this->profilePicture()
+        ]);
     }
 }
