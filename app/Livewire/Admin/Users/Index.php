@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -37,7 +38,7 @@ class Index extends Component
     public $profile_image_url;
 
 
-    public function sortBy($field)
+    public function sortItemBy($field)
     {
         if ($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
@@ -62,6 +63,40 @@ class Index extends Component
             ->paginate($this->perPage);
 
         return compact('users');
+    }
+
+    #[On('verifyUser')]
+    public function verifyUser($id) {
+        $user = User::find($id);
+
+        if(!$user) {
+            $this->dispatch('alert', alerts: [
+                'title'     =>      'Not Found',
+                'message'   =>      'Sorry the user you\'re trying to verify does not exists.',
+                'type'      =>      'error'
+            ]);
+            return;
+        }
+
+        if($user->email_verified_at !== null) {
+            $this->dispatch('alert', alerts: [
+                'title'     =>      'Ops.',
+                'message'   =>      'Sorry the user you\'re trying to verify is already verified.',
+                'type'      =>      'warning'
+            ]);
+            return;
+        }
+
+        $user->update([
+            'email_verified_at'     =>      now()
+        ]);
+
+        $this->dispatch('alert', alerts: [
+            'title'     =>      'Verified',
+            'message'   =>      "{$user->name} is successfully verified.",
+            'type'      =>      'success'
+        ]);
+        return;
     }
 
     public function addUser()
@@ -178,7 +213,6 @@ class Index extends Component
         $this->dispatch('closeModal');
 
         return;
-
     }
 
     public function delete($id)
@@ -212,7 +246,7 @@ class Index extends Component
 
         $this->dispatch('closeModal');
 
-        
+
         $this->userView = null;
         $this->userEdit = null;
         $this->userToDelete = null;
@@ -225,7 +259,8 @@ class Index extends Component
         $this->userView = User::find($id);
     }
 
-    public function removeImage() {
+    public function removeImage()
+    {
         $this->profile_image = null;
     }
 

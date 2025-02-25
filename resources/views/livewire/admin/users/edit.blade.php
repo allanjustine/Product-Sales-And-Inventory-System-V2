@@ -16,7 +16,7 @@
                         <label for="title">Profile Image:</label>
                         <br>
                         @error('profile_image')
-                        <span class="text-danger">*{{ $message }} (jpg, jpeg, png, gif) is only
+                        <span class="text-danger">*{{ $message ?? '' }} (jpg, jpeg, png, gif) is only
                             accepted.</span>
                         @enderror
                         <input type="file" accept=".png, .jpg, .jpeg, .gif" class="form-control" id="profile_image"
@@ -40,7 +40,7 @@
                                 <input type="text" class="form-control" id="name-edit" placeholder="Name"
                                     wire:model.live.debounce.200ms="name" required>
                                 @error('name')
-                                <span class="text-danger">*{{ $message }}</span>
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                 <input type="text" class="form-control" id="address-edit" placeholder="Address"
                                     wire:model.live.debounce.200ms="address" required>
                                 @error('address')
-                                <span class="text-danger">*{{ $message }}</span>
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                 <input type="email" class="form-control" placeholder="Email" id="email-edit"
                                     wire:model.live="email" required>
                                 @error('email')
-                                <span class="text-danger">*{{ $message }}</span>
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                                 <input type="number" class="form-control" id="phone_number-edit"
                                     placeholder="Phone Number (09-xxxxxxxxx)" wire:model.live="phone_number" required>
                                 @error('phone_number')
-                                <span class="text-danger">*{{ $message }}</span>
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                                     <option value="Female">Female</option>
                                 </select>
                                 @error('gender')
-                                <span class="text-danger">*{{ $message }}</span>
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                     @endforeach
                                 </select>
                                 @error('role')
-                                <span class="text-danger">*{{ $message }}</span>
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -116,8 +116,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" wire:loading.attr='disabled' class="btn btn-primary" wire:click="updateUser">
-                        <div wire:loading wire:target='update' class="spinner-border spinner-border-sm"></div>&nbsp;<i
-                            wire:loading.remove wire:target='update' class="fa-solid fa-pen-to-square"></i> Update
+                        <div wire:loading wire:target='updateUser' class="spinner-border spinner-border-sm"></div>&nbsp;<i
+                            wire:loading.remove wire:target='updateUser' class="fa-solid fa-pen-to-square"></i> Update
                     </button>
                     <button class="btn btn-outline-warning" wire:click="resetInputs"><i class="fa-solid fa-rotate"></i>
                         Reset Inputs</button>

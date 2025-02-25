@@ -30,7 +30,7 @@
                             <th>
                                 Profile Picture
                             </th>
-                            <th wire:click="sortBy('name')" style="cursor: pointer;">
+                            <th wire:click="sortItemBy('name')" style="cursor: pointer;">
                                 @if ($sortBy === 'name')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -42,7 +42,7 @@
                                 @endif
                                 Name
                             </th>
-                            <th wire:click="sortBy('email')" style="cursor: pointer;">
+                            <th wire:click="sortItemBy('email')" style="cursor: pointer;">
                                 @if ($sortBy === 'email')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -54,7 +54,7 @@
                                 @endif
                                 Email
                             </th>
-                            <th wire:click="sortBy('gender')" style="cursor: pointer;">
+                            <th wire:click="sortItemBy('gender')" style="cursor: pointer;">
                                 @if ($sortBy === 'gender')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -66,7 +66,7 @@
                                 @endif
                                 Gender
                             </th>
-                            <th wire:click="sortBy('email_verified_at')" style="cursor: pointer;">
+                            <th wire:click="sortItemBy('email_verified_at')" style="cursor: pointer;">
                                 @if ($sortBy === 'email_verified_at')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -81,7 +81,16 @@
                             <th>
                                 Role
                             </th>
-                            <th>
+                            <th wire:click="sortItemBy('created_at')" style="cursor: pointer;">
+                                @if ($sortBy === 'created_at')
+                                @if ($sortDirection === 'asc')
+                                <i class="fa-light fa-sort-alpha-up"></i>
+                                @else
+                                <i class="fa-light fa-arrow-down-z-a"></i>
+                                @endif
+                                @else
+                                <i class="fa-thin fa-sort"></i>
+                                @endif
                                 Account Created
                             </th>
                             <th>
@@ -93,6 +102,9 @@
                         @foreach ($users as $user)
                         <tr key="{{ $user->id }}">
                             <td>
+                                <button onclick="verifyUser({{ $user->id }}, '{{ $user->name }}')" class="btn btn-sm btn-link">
+                                    <i class="fas fa-check text-success"></i>
+                                </button>
                                 <img src="{{ $user->profile_image === null ? "
                                     https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
                                     Storage::url($user->profile_image) }}" style="height: 50px; width: 60px;
@@ -155,17 +167,9 @@
                         @endif
                     </tbody>
                 </table>
+                {{ $users->links() }}
             </div>
         </div>
-    </div>
-    <div class="d-flex align-items-center">
-        <span class="me-auto p-1 rounded">Showing: <span class="p-1 rounded"
-                style="border: 1px solid rgba(156, 154, 154, 0.356); background-color:rgba(150, 209, 248, 0.384);"><strong>{{
-                    $users->firstItem() }}-{{ $users->lastItem() }}</strong>
-                of
-                <strong>{{ $users->total() }}</strong></span> Entries</span>
-        <span class="ms-auto pt-3">
-            {{ $users->links('pages.admin.layout.pagination') }}</span>
     </div>
 
     <style>
@@ -189,7 +193,7 @@
             text-transform: capitalize !important;
         }
     </style>
-    
+
     <script>
         document.addEventListener('livewire:init', function() {
             $('#updateUser').on('hidden.bs.modal', function() {
@@ -220,12 +224,49 @@
             });
         });
     </script>
-    
+
     <script>
         document.addEventListener('livewire:init', function() {
             $('#addUser').on('hidden.bs.modal', function() {
                 Livewire.dispatch('resetInputs');
             });
+        });
+    </script>
+
+    <script>
+        function verifyUser(id, name, email) {
+            Swal.fire({
+                title: 'Verifying',
+                icon: 'info',
+                text: `Are you sure you want to verify ${name}?`,
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: 'Yes, Verify it!',
+                confirmButtonColor: '#0000FF',
+                showCloseButton: true
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    @this.dispatch('verifyUser', { id })
+                }
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            @this.on('alert', (event) => {
+                const { title, message, type } = event.alerts;
+
+                Swal.fire({
+                    title: title,
+                    icon: type,
+                    text: message,
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    cancelButtonText: 'Close'
+                });
+            })
         });
     </script>
 

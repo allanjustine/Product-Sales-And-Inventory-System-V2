@@ -1,5 +1,3 @@
-@section('title', '| My Carts')
-
 <div>
     @include('livewire.normal-view.carts.delete')
     @include('livewire.normal-view.orders.check-out')
