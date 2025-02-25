@@ -14,13 +14,13 @@
                     @if ($userToDelete)
                             This user <strong>"{{ $userToDelete->name }}"</strong> will be removed to the table and will deleted permanently.
                     @else
-                            Getting the user's information
+                            <p class="text-center fs-4"><span class="spinner-border"></span> Getting the user's information...</p>
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" wire:target='deleteUser' wire:loading.attr='disabled' wire:click="deleteUser"><div wire:loading wire:target="deleteUser" class="spinner-border spinner-border-sm"></div>&nbsp;<i
+                    <button class="btn btn-danger" type="button" wire:target='deleteUser' wire:loading.attr='disabled' wire:click="deleteUser"><div wire:loading wire:target="deleteUser" class="spinner-border spinner-border-sm"></div>&nbsp;<i
                         wire:target='deleteUser' wire:loading.remove class="fa-solid fa-trash"></i> Yes, Remove</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModalDelete">Cancel</button>
                 </div>
             </div>
         </div>

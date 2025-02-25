@@ -91,7 +91,7 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                        <tr>
+                        <tr key="{{ $user->id }}">
                             <td>
                                 <img src="{{ $user->profile_image === null ? "
                                     https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
@@ -185,7 +185,18 @@
         .perPageSelect:focus {
             outline: none;
         }
+        select .role-name {
+            text-transform: capitalize !important;
+        }
     </style>
+    
+    <script>
+        document.addEventListener('livewire:init', function() {
+            $('#updateUser').on('hidden.bs.modal', function() {
+                Livewire.dispatch('resetInputs');
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('livewire:navigated', function() {
@@ -202,9 +213,18 @@
             });
 
             @this.on('closeModal', function() {
-                $('#deleteUser').modal('hide');
-                $('#updateUser').modal('hide');
-                $('#addUser').modal('hide');
+                console.log('test');
+                document.getElementById('closeModalAdd')?.click();
+                document.getElementById('closeModalUpdate')?.click();
+                document.getElementById('closeModalDelete')?.click();
+            });
+        });
+    </script>
+    
+    <script>
+        document.addEventListener('livewire:init', function() {
+            $('#addUser').on('hidden.bs.modal', function() {
+                Livewire.dispatch('resetInputs');
             });
         });
     </script>

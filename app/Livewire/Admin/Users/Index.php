@@ -20,14 +20,18 @@ class Index extends Component
     use WithPagination;
 
     #[Title('Users')]
-    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['resetInputs'];
 
     use WithFileUploads;
 
     public $perPage = 5;
     public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image;
-    public $userEdit, $userRemove, $userView, $userToDelete, $roles, $role, $search;
+    public $userEdit;
+    public $userView;
+    public $userToDelete;
+    public $roles;
+    public $role;
+    public $search;
     public $sortBy = 'name';
     public $sortDirection = 'asc';
     public $profile_image_url;
@@ -69,11 +73,11 @@ class Index extends Component
             'password'          =>          'required|string|min:4|confirmed',
             'gender'            =>          ['required', 'string', Rule::in('Male', 'Female')],
             'phone_number'      =>          'required|string|numeric|regex:/(0)[0-9]/|digits:11',
-            'profile_image'     =>          'required|image|max:10000'
+            'profile_image'     =>          'nullable|image|max:10000'
         ]);
 
         $token = Str::random(24);
-        $path = $this->profile_image->store('public/profile/images');
+        $path = $this->profile_image?->store('public/profile/images');
 
         $user = User::create([
             'name'              => $this->name,
@@ -106,7 +110,7 @@ class Index extends Component
 
     public function resetInputs()
     {
-        $this->profile_image = '';
+        $this->profile_image = null;
         $this->name = '';
         $this->address = '';
         $this->email = '';
@@ -139,7 +143,7 @@ class Index extends Component
         }
     }
 
-    public function update()
+    public function updateUser()
     {
         $this->validate([
             'email'             =>      ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->userEdit->id],
@@ -173,41 +177,45 @@ class Index extends Component
 
         $this->dispatch('closeModal');
 
-        $this->reset();
-
         return;
 
     }
 
     public function delete($id)
     {
-
         $this->userToDelete = User::find($id);
 
         if ($id === Auth::id()) {
-            alert()->toast('Sorry, you cannot remove your own account', 'warning');
-            return $this->redirect('/admin/users', navigate: true);
+            $this->dispatch('alert', alerts: [
+                'title'         =>          'Ops.',
+                'type'          =>          'warning',
+                'message'       =>          "Sorry, you cannot remove your own account."
+            ]);
+            $this->dispatch("closeModal");
+            return;
         }
-        $this->userRemove = $id;
     }
 
     public function deleteUser()
     {
-        $user = User::where('id', $this->userRemove)->first();
-
-        if ($user->profile_image && is_string($user->profile_image)) {
-            Storage::delete($user->profile_image);
+        if ($this->userToDelete->profile_image && is_string($this->userToDelete->profile_image)) {
+            Storage::delete($this->userToDelete->profile_image);
         }
 
-        $user->delete();
+        $this->userToDelete->delete();
 
         $this->dispatch('alert', alerts: [
             'title'         =>          'User Removed',
             'type'          =>          'success',
-            'message'       =>          "The user \"{$user->name}\" has been removed successfully."
+            'message'       =>          "The user \"{$this->userToDelete->name}\" has been removed successfully."
         ]);
 
         $this->dispatch('closeModal');
+
+        
+        $this->userView = null;
+        $this->userEdit = null;
+        $this->userToDelete = null;
 
         return;
     }

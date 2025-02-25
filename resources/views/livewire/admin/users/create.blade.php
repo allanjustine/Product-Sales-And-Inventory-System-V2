@@ -116,17 +116,9 @@
                         <div wire:loading class="spinner-border spinner-border-sm" wire:target='addUser'></div>&nbsp; <i class="fa-solid fa-plus" wire:loading.remove wire:target='addUser'></i> Add User
                     </button>
                     <button type="button" class="btn btn-outline-warning" wire:click="resetInputs"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
-                    <button type="button" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" type="button" class="btn btn-secondary" id="closeModalAdd" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('livewire:init', function() {
-        $('#addUser').on('hidden.bs.modal', function() {
-            Livewire.dispatch('resetInputs');
-        });
-    });
-</script>
