@@ -119,10 +119,6 @@
                         <span wire:loading.remove wire:target='updateUser'><i class="fa-solid fa-pen-to-square"></i> Update</span>
                         <span wire:loading wire:target='updateUser'><span wire:loading wire:target='updateUser' class="spinner-border spinner-border-sm"></span> Updating...</span>
                     </button>
-                    <button class="btn btn-outline-warning" wire:target='resetInputs' wire:loading.attr='disabled' wire:click="resetInputs">
-                        <span wire:target='resetInputs' wire:loading.remove><i class="fa-solid fa-rotate"></i> Reset Inputs</span>
-                        <span wire:target='resetInputs' wire:loading><span class="spinner-border spinner-border-sm"></span> Resetting..</span>
-                    </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="closeModalUpdate">Cancel</button>
                 </div>

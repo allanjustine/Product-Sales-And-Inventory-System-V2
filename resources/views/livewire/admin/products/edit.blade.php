@@ -229,15 +229,6 @@
                             <i class="fa-solid fa-pen-to-square"></i> Update Product
                         </div>
                     </button>
-                    <button class="btn btn-outline-warning" wire:target='resetInputs' wire:loading.attr='disabled'
-                        wire:click="resetInputs">
-                        <div wire:target='resetInputs' wire:loading>
-                            <span class="spinner-border spiner"></span> Resetting...
-                        </div>
-                        <div wire:target='resetInputs' wire:loading.remove>
-                            <i class="fa-solid fa-rotate"></i> Reset Inputs
-                        </div>
-                    </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
