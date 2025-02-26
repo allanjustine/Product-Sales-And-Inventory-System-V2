@@ -87,14 +87,14 @@ class Index extends Component
         $path = $this->product_image->store('public/product/images');
 
         $product = Product::create([
-            'product_name'                  => $validatedData['product_name'],
-            'product_description'           => $validatedData['product_description'],
-            'product_price'                 => $validatedData['product_price'],
-            'product_stock'                 => $validatedData['product_stock'],
-            'product_status'                => $validatedData['product_status'],
-            'product_category_id'           => $validatedData['product_category_id'],
-            'product_image'                 => $path,
-            'product_code'                  => $this->product_code
+            'product_name'                  =>          $validatedData['product_name'],
+            'product_description'           =>          $validatedData['product_description'],
+            'product_price'                 =>          $validatedData['product_price'],
+            'product_stock'                 =>          $validatedData['product_stock'],
+            'product_status'                =>          $validatedData['product_status'],
+            'product_category_id'           =>          $validatedData['product_category_id'],
+            'product_image'                 =>          $path,
+            'product_code'                  =>          $this->product_code
         ]);
 
         $this->sweetAlert('Product Added', 'success', message: "The product \"{$product->product_name}\" is added to list.");
@@ -173,13 +173,13 @@ class Index extends Component
         }
 
         $this->productEdit->update([
-            'product_name' => $this->product_name,
-            'product_description' => $this->product_description,
-            'product_price' => $this->product_price,
-            'product_stock' => $this->product_stock,
-            'product_status' => $this->product_status,
-            'product_category_id' => $this->product_category_id,
-            'product_image' => $this->product_image ? $this->product_image->store('public/product/images') : $this->productEdit->product_image
+            'product_name'              =>          $this->product_name,
+            'product_description'       =>          $this->product_description,
+            'product_price'             =>          $this->product_price,
+            'product_stock'             =>          $this->product_stock,
+            'product_status'            =>          $this->product_status,
+            'product_category_id'       =>          $this->product_category_id,
+            'product_image'             =>          $this->product_image ? $this->product_image->store('public/product/images') : $this->productEdit->product_image
         ]);
 
         $this->sweetAlert('Product Updated', 'success', message: "The product \"{$this->productEdit->product_name}\" is updated successfully.");

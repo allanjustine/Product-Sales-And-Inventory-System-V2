@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\ProductCategories;
 
 use App\Models\ProductCategory;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,6 +12,8 @@ class Index extends Component
 
     use WithPagination;
 
+    #[Title('Product Categories')]
+    
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = ['resetInputs'];
