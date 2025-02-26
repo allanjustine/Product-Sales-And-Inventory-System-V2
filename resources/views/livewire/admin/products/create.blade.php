@@ -40,8 +40,9 @@
                                 </div>
                                 <div class="col-2 form-group">
                                     <label for="btn">-</label>
-                                    <button type="button" onclick="generateProductCode()" class="btn btn-primary">
-                                        <i class="fas fa-rotate"></i>
+                                    <button type="button" wire:loading.attr="disabled" wire:target='generateProductCode' wire:click="generateProductCode" class="btn btn-primary">
+                                        <span wire:target='generateProductCode' wire:loading.remove><i class="fas fa-rotate"></i></span>
+                                        <span wire:target='generateProductCode' wire:loading><i class="fas fa-rotate fa-spin"></i></span>
                                     </button>
                                 </div>
                             </div>

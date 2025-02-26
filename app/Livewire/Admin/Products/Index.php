@@ -68,8 +68,7 @@ class Index extends Component
 
         return compact('products', 'product_categories');
     }
-
-    #[On('generateProductCode')]
+    
     public function generateProductCode() {
         $this->product_code = 'AJM-' . substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 5);
     }

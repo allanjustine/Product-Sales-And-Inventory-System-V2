@@ -321,10 +321,4 @@
             });
         });
     </script>
-
-    <script>
-        function generateProductCode() {
-            @this.dispatch('generateProductCode');
-        }
-    </script>
 </div>
