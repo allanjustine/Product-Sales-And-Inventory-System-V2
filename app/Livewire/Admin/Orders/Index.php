@@ -3,118 +3,108 @@
 namespace App\Livewire\Admin\Orders;
 
 use App\Models\Order;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
-    #[Title(('Orders'))]
+    use WithPagination;
+
+    #[Title('Orders')]
+
+    public $perPage = 5;
+    public $search;
+    public $filterStatus = 'All';
+    public $sortBy = 'orders.created_at';
+    public $sortDirection = 'desc';
+
+    public function ordersStatus($id, $status, $message)
+    {
+        $order = Order::findOrFail($id);
+        if ($order->order_status == 'Cancelled') {
+            $this->dispatch('alert', alerts: [
+                'title'         =>          'Sorry',
+                'type'          =>          'warning',
+                'message'       =>          'The order does not exist or been cancelled by the user'
+            ]);
+            return;
+        }
+
+        $order->update([
+            'order_status' => $status
+        ]);
+
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      $message
+        ]);
+        return;
+    }
+
+    #[On('processOrder')]
     public function processOrder($id)
     {
-        $order = Order::findOrFail($id);
-        if ($order->order_status == 'Cancelled') {
-
-            alert()->warning('Sorry', 'The order does not exist or been cancelled by the user');
-
-            return $this->redirect('/admin/orders', navigate: true);
-        }
-
-        $order->update([
-            'order_status' => 'Processing Order'
-        ]);
-        // session()->flash('message', 'The order is now processing');
-        $this->dispatch('toastr', data: [
-            'type'      =>      'success',
-            'message'   =>      'The order is now processing.'
-        ]);
-        return;
-
-        // alert()->success('Congrats', 'The order is now processing');
-
-        // return $this->redirect('/admin/orders', navigate: true);
-
+        $this->ordersStatus($id, 'Processing Order', 'The order is now processing.');
     }
+
+    #[On('markAsDeliver')]
     public function markAsDeliver($id)
     {
-        $order = Order::findOrFail($id);
-
-        if ($order->order_status == 'Cancelled') {
-
-            $this->alert()->warning('Sorry', 'The order does not exist or been cancelled by the user');
-
-            return $this->redirect('/admin/orders', navigate: true);
-        }
-
-        $order->update([
-            'order_status' => 'To Deliver'
-        ]);
-        // session()->flash('message', 'The order is on going to deliver');
-
-        $this->dispatch('toastr', data: [
-            'type'      =>      'success',
-            'message'   =>      'The order is on going to deliver.'
-        ]);
-        // alert()->success('Congrats', 'The order is on going to deliver');
-
-        // return $this->redirect('/admin/orders', navigate: true);
-        return;
+        $this->ordersStatus($id, 'To Deliver', 'The order is on going to deliver.');
     }
 
+    #[On('markAsDelivered')]
     public function markAsDelivered($id)
     {
-        $order = Order::findOrFail($id);
-
-        if ($order->order_status == 'Cancelled') {
-
-            alert()->warning('Sorry', 'The order does not exist or been cancelled by the user');
-
-            return $this->redirect('/admin/orders', navigate: true);
-        }
-
-        $order->update([
-            'order_status' => 'Delivered'
-        ]);
-        $this->dispatch('toastr', data: [
-            'type'      =>      'success',
-            'message'   =>      'The order is now delivered.'
-        ]);
-        // session()->flash('message', 'The order is now delivered');
-        // alert()->success('Congrats', 'The order is now delivered');
-
-        // return $this->redirect('/admin/orders', navigate: true);
-        return;
+        $this->ordersStatus($id, 'Delivered', 'The order is now delivered.');
     }
 
-
+    #[On('markAsPaid')]
     public function markAsPaid($id)
     {
-        $order = Order::findOrFail($id);
-
-        $order->update([
-            'order_status' => 'Paid'
-        ]);
-        // session()->flash('message', 'The order is now paid');
-        $this->dispatch('toastr', data: [
-            'type'      =>      'success',
-            'message'   =>      'The order is now paid'
-        ]);
-        // alert()->success('Congrats', 'The order is now paid');
-
-        // return $this->redirect('/admin/orders', navigate: true);
-        return;
+        $this->ordersStatus($id, 'Paid', 'The order is now paid.');
     }
+
+    public function sortItemBy($field)
+    {
+        $this->sortBy = $field;
+
+        if ($this->sortDirection === 'asc') {
+            $this->sortDirection = 'desc';
+        } else {
+
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function orderDetails()
     {
-        $grandTotal = Order::whereNotIn('order_status', ['Paid'])
-            ->whereNotIn('order_status', ['Cancelled'])
-            ->sum('order_total_amount');
+        $orders = Order::query()
+            ->with('product')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where(function ($query) {
+                $query->where('transaction_code', 'like', '%' . $this->search . '%')
+                    ->orWhere('order_status', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('product', function ($subQuery) {
+                        $subQuery->where('product_name', 'like', '%' . $this->search . '%');
+                    })
+                    ->orWhereHas('user', function ($subQuery) {
+                        $subQuery->where('name', 'like', '%' . $this->search . '%');
+                    });
+            })
+            ->whereNotIn('order_status', ['Cancelled', 'Paid']);
 
-        $orders = Order::orderBy('created_at', 'desc')->where('order_status', 'Pending')
-            ->orWhere('order_status', 'Processing Order')
-            ->orWhere('order_status', 'To Deliver')
-            ->orWhere('order_status', 'Delivered')
-            ->orWhere('order_status', 'Complete')
-            ->get();
+        if ($this->filterStatus !== 'All') {
+            $orders->where('order_status', $this->filterStatus);
+        }
+
+        $orders = $orders->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage);
+
+        $grandTotal = $orders->sum('order_total_amount');
 
         return compact('orders', 'grandTotal');
     }

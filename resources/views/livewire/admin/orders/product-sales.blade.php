@@ -15,7 +15,7 @@
                 </select>
                 <label>Entries</label>
                 <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;" placeholder="Search"
-                    wire:model.live="search">
+                    wire:model.live.debounse.200ms="search">
                 <select name="product_category" id="product_category" class="form-select mb-3 float-end"
                     style="width: 180px;" wire:model.live="date_filter">
                     <option value="All">(Filter date) All</option>

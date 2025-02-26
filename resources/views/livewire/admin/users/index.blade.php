@@ -23,7 +23,7 @@
                 <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;" placeholder="Search"
                     wire:model.live="search">
             </div>
-            <div class="table-responsive" style="height: 500px;">
+            <div class="table-responsive" style="max-height: 500px;">
                 <table class="table table-bordered" style="overflow: none;">
                     <thead>
                         <tr class="bg-dark bg-light" style="text-transform: uppercase;">
@@ -103,7 +103,8 @@
                         <tr key="{{ $user->id }}">
                             <td>
                                 @if ($user->email_verified_at === null)
-                                <button onclick="verifyUser({{ $user->id }}, '{{ $user->name }}')" class="btn btn-sm btn-link">
+                                <button onclick="verifyUser({{ $user->id }}, '{{ $user->name }}')"
+                                    class="btn btn-sm btn-link">
                                     <i class="fas fa-check text-success"></i>
                                 </button>
                                 @endif
@@ -191,6 +192,7 @@
         .perPageSelect:focus {
             outline: none;
         }
+
         select .role-name {
             text-transform: capitalize !important;
         }

@@ -46,7 +46,9 @@
         @livewire('layouts.sidebar')
         <div class="content-wrapper px-4 py-2" style="max-height: 84vh; overflow-y: auto;">
             <div class="content-header">
-                {{ $title ?? 'No title' }}
+                <h1>
+                    {{ $title ?? 'No title' }}
+                </h1>
             </div>
             <hr>
             <div class="content px-2">
