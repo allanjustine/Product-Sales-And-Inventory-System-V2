@@ -9,36 +9,42 @@
                             <div class="text-center profile-pic-div">
                                 <div wire:loading wire:target="updatePhoto, profile_image">
                                     <img class="profile-user-img img-fluid img-circle"
-                                        src="https://assets-v2.lottiefiles.com/a/eca613de-1151-11ee-ab90-2708ab72937c/Pt7BWGiXJy.gif" alt="loading"
-                                        style="height: 150px; width: 150px; border-radius: 50%;">
+                                        src="https://assets-v2.lottiefiles.com/a/eca613de-1151-11ee-ab90-2708ab72937c/Pt7BWGiXJy.gif"
+                                        alt="loading" style="height: 150px; width: 150px; border-radius: 50%;">
                                 </div>
                                 <div wire:loading wire:target="updateProfile, changePassword">
                                     <img class="profile-user-img img-fluid img-circle"
-                                        src="{{ Auth::user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(Auth::user()->profile_image) }}"
-                                        alt="loading" style="height: 150px; width: 150px; border-radius: 50%;">
+                                        src="{{ Auth::user()->profile_image === null ? "
+                                        https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
+                                        Storage::url(Auth::user()->profile_image) }}"
+                                    alt="loading" style="height: 150px; width: 150px; border-radius: 50%;">
                                 </div>
                                 <div wire:loading.remove>
-                                    @if ($profile_image && in_array($profile_image->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']))
-                                        <img class="profile-user-img img-fluid img-circle"
-                                            src="{{ $profile_image->temporaryUrl() }}" alt="{{ $user->name }} photo"
-                                            id="photo" style="height: 150px; width: 150px; border-radius: 50%;">
+                                    @if ($profile_image && in_array($profile_image->getClientOriginalExtension(),
+                                    ['jpg', 'jpeg', 'png', 'gif']))
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="{{ $profile_image->temporaryUrl() }}" alt="{{ $user->name }} photo"
+                                        id="photo" style="height: 150px; width: 150px; border-radius: 50%;">
                                     @else
-                                        @if (!$profile_image)
-                                            <img class="profile-user-img img-fluid img-circle"
-                                                src="{{ Auth::user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(Auth::user()->profile_image) }}"
-                                                alt="{{ $user->name }} photo" id="photo"
-                                                style="height: 150px; width: 150px; border-radius: 50%;">
-                                        @endif
-                                        @if ($profile_image)
-                                            <img class="profile-user-img img-fluid img-circle"
-                                                src="{{ Auth::user()->profile_image === null ? "https://cdn-icons-png.flaticon.com/512/2919/2919906.png" : Storage::url(Auth::user()->profile_image) }}"
-                                                alt="{{ $user->name }} photo" id="photo"
-                                                style="height: 150px; width: 150px; border-radius: 50%;"><br>
-                                            <span
-                                                class="text-danger">*{{ $profile_image->getClientOriginalExtension() }}
-                                                is not a valid image type. Only (jpg, jpeg, png, gif) are
-                                                accepted.</span><br>
-                                        @endif
+                                    @if (!$profile_image)
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="{{ Auth::user()->profile_image === null ? "
+                                        https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
+                                        Storage::url(Auth::user()->profile_image) }}"
+                                    alt="{{ $user->name }} photo" id="photo"
+                                    style="height: 150px; width: 150px; border-radius: 50%;">
+                                    @endif
+                                    @if ($profile_image)
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="{{ Auth::user()->profile_image === null ? "
+                                        https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
+                                        Storage::url(Auth::user()->profile_image) }}"
+                                    alt="{{ $user->name }} photo" id="photo"
+                                    style="height: 150px; width: 150px; border-radius: 50%;"><br>
+                                    <span class="text-danger">*{{ $profile_image->getClientOriginalExtension() }}
+                                        is not a valid image type. Only (jpg, jpeg, png, gif) are
+                                        accepted.</span><br>
+                                    @endif
                                     @endif
                                 </div>
                                 <form id="myform" wire:submit="updatePhoto" enctype="multipart/form-data">
@@ -47,22 +53,25 @@
                                             wire:model.live="profile_image" wire:loading.attr="disabled" />
                                         <label for="profile_image"></label>
                                     </div>
-                                    @if ($profile_image && in_array($profile_image->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']))
-                                        <button type="submit" class="btn btn-primary btn-sm mt-2">
-                                            <span wire:loading.remove><i class="fa-solid fa-cloud-arrow-up"></i>Save
-                                                Photo</span>
-                                            <span wire:loading>Please wait...</span>
-                                        </button>
+                                    @if ($profile_image && in_array($profile_image->getClientOriginalExtension(),
+                                    ['jpg', 'jpeg', 'png', 'gif']))
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2">
+                                        <span wire:loading.remove><i class="fa-solid fa-cloud-arrow-up"></i>Save
+                                            Photo</span>
+                                        <span wire:loading>Please wait...</span>
+                                    </button>
                                     @endif
                                 </form>
                             </div>
-                            <h3 class="profile-username text-center">{{ $user->name }} <i class="fas fa-badge-check text-primary" {{ auth()->user()->email_verified_at ?? 'hidden' }} style="font-size: 14px;"></i></h3>
+                            <h3 class="profile-username text-center">{{ $user->name }} <i
+                                    class="fas fa-badge-check text-primary" {{ auth()->user()->email_verified_at ??
+                                    'hidden' }} style="font-size: 14px;"></i></h3>
 
                             <p class="text-muted text-center">
                                 @if ($user->isAdmin())
-                                    Admin
+                                Admin
                                 @else
-                                    User
+                                User
                                 @endif
                             </p>
                             <hr>
@@ -86,9 +95,9 @@
 
                                 <strong>
                                     @if ($user->gender === 'Male')
-                                        <i class="fas fa-mars mr-1"></i>
+                                    <i class="fas fa-mars mr-1"></i>
                                     @else
-                                        <i class="fas fa-venus mr-1"></i>
+                                    <i class="fas fa-venus mr-1"></i>
                                     @endif
                                     Gender
                                 </strong>
@@ -128,7 +137,7 @@
                                         <input type="text" class="form-control" id="inputName" name="name"
                                             placeholder="Name" wire:model.live.debounce.200ms="name" required>
                                         @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -138,7 +147,7 @@
                                         <input type="text" class="form-control" id="inputAddress" name="address"
                                             placeholder="Address" wire:model.live.debounce.200ms="address" required>
                                         @error('address')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -148,7 +157,7 @@
                                         <input type="number" class="form-control" name="phone" id="inputPhone"
                                             placeholder="Phone" wire:model.live.debounce.200ms="phone_number" required>
                                         @error('phone_number')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -158,7 +167,7 @@
                                         <input type="email" class="form-control" name="email" id="inputEmail"
                                             placeholder="Email" wire:model.live.debounce.200ms="email" required>
                                         @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -171,7 +180,7 @@
                                             <option value="Female">Female</option>
                                         </select>
                                         @error('gender')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -194,7 +203,7 @@
                                         <input type="password" class="form-control" name="oldPass" id="oldPassword"
                                             placeholder="Old Password" wire:model.live.debounce.200ms="oldPassword">
                                         @error('oldPassword')
-                                            <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -204,7 +213,7 @@
                                         <input type="password" class="form-control" name="newpass" id="password"
                                             placeholder="New Password" wire:model.live.debounce.200ms="password">
                                         @error('password')
-                                            <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -215,7 +224,7 @@
                                             id="password_confirmation" placeholder="Confirm Password"
                                             wire:model.live.debounce.200ms="password_confirmation">
                                         @error('password_confirmation')
-                                            <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -225,70 +234,97 @@
                 </div>
             </div>
     </section>
-</div>
 
-<div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>Are you sure you want to logout?</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span class="float-right" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                After you logout you will redirect to login page.
-            </div>
-            <div class="modal-footer">
-                <button type="button" wire:click="logout" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Yes,
-                    Logout</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Are you sure you want to logout?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="float-right" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    After you logout you will redirect to login page.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" wire:click="logout" class="btn btn-danger"><i
+                            class="fa-solid fa-arrow-right-from-bracket"></i> Yes,
+                        Logout</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .profile-pic-div .avatar-edit {
+            position: absolute;
+            right: 12px;
+            z-index: 1;
+            top: 10px;
+        }
+
+        .profile-pic-div .avatar-edit input {
+            display: none;
+        }
+
+        .profile-pic-div .avatar-edit input+label {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 0;
+            border-radius: 100%;
+            background: #FFFFFF;
+            border: 1px solid transparent;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-weight: normal;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .profile-pic-div .avatar-edit input+label:hover {
+            background: #f1f1f1;
+            border-color: #d6d6d6;
+        }
+
+        .profile-pic-div .avatar-edit input+label:after {
+            content: "\f040";
+            font-family: 'FontAwesome';
+            color: #757575;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            @this.on('alert', function(event) {
+                const {type, message, title} = event.alerts;
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 3000,
+                    timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+
+                Toast.fire({
+                    title: title,
+                    text: message,
+                    icon: type,
+                })
+            })
+        })
+    </script>
 </div>
-
-<style>
-    .profile-pic-div .avatar-edit {
-        position: absolute;
-        right: 12px;
-        z-index: 1;
-        top: 10px;
-    }
-
-    .profile-pic-div .avatar-edit input {
-        display: none;
-    }
-
-    .profile-pic-div .avatar-edit input+label {
-        display: inline-block;
-        width: 34px;
-        height: 34px;
-        margin-bottom: 0;
-        border-radius: 100%;
-        background: #FFFFFF;
-        border: 1px solid transparent;
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        cursor: pointer;
-        font-weight: normal;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .profile-pic-div .avatar-edit input+label:hover {
-        background: #f1f1f1;
-        border-color: #d6d6d6;
-    }
-
-    .profile-pic-div .avatar-edit input+label:after {
-        content: "\f040";
-        font-family: 'FontAwesome';
-        color: #757575;
-        position: absolute;
-        top: 10px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        margin: auto;
-    }
-</style>

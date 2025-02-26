@@ -56,9 +56,17 @@ class Profile extends Component
         $this->user->profile_image = $path;
         $this->user->save();
 
-        alert()->toast('Profile picture updated successfully', 'success');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Updated",
+            'message'       =>          "Profile picture updated successfully"
+        ]);
 
-        return $this->redirect('/admin/profile', navigate: true);
+        $this->reset('profile_image');
+
+        $this->dispatch('profileRefresh');
+
+        return;
     }
 
     public function updateProfile()
@@ -78,9 +86,13 @@ class Profile extends Component
         $this->user->email = $this->email;
         $this->user->save();
 
-        alert()->toast('Your profile is updated successfully', 'success');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Updated",
+            'message'       =>          "Your profile is updated successfully"
+        ]);
 
-        return $this->redirect('admin/profile', navigate: true);
+        return;
     }
 
     public function rules()
@@ -105,15 +117,20 @@ class Profile extends Component
     public function changePassword()
     {
 
-
         $this->validate();
 
         $this->user->password = bcrypt($this->password);
         $this->user->save();
 
-        alert()->toast('Your password has been changed successfully', 'success');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Updated",
+            'message'       =>          "Your password has been changed successfully"
+        ]);
 
-        return $this->redirect('admin/profile', navigate: true);
+        $this->reset(['oldPassword', 'password', 'password_confirmation']);
+
+        return;
     }
 
     public function updated($propertyData)

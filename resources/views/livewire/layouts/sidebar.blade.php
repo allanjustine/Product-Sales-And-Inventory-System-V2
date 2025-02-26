@@ -16,7 +16,7 @@
                     style="border-radius: 50%; width: 40px; height: 40px;">
                 </div>
                 <div class="info">
-                    <a wire:navigate href="/admin/profile" class="d-block">Welcome, {{ Auth::user()->name }}</a>
+                    <a wire:navigate href="/profile" class="d-block">Welcome, {{ Auth::user()->name }}</a>
                 </div>
             </div>
             <nav class="mt-2">
@@ -171,7 +171,7 @@
                             </li>
                             <li class="nav-item">
                                 <a wire:navigate href="/profile"
-                                    class="nav-link {{ 'admin/profile' == request()->path() ? 'active2' : '' }}">
+                                    class="nav-link {{ 'profile' == request()->path() ? 'active2' : '' }}">
                                     <i class="fa-solid fa-user nav-icon"></i>
                                     <p>My Profile</p>
                                 </a>
@@ -206,7 +206,7 @@
                             }}
                         </h6>
                     </div>
-                    <a wire:navigate href="/admin/profile" class="dropdown-item">
+                    <a wire:navigate href="/profile" class="dropdown-item">
                         <i class="fa fa-user mr-2"></i>
                         <span>My profile</span>
                     </a>
