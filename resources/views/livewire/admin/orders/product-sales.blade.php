@@ -28,7 +28,7 @@
                     <option value="Last year">Last year</option>
                 </select>
             </div>
-            <div class="table-responsive card card-primary card-outline card-outline-tabs" id="product-table"
+            <div class="table-responsive" id="product-table"
                 style="max-height: 515px;">
                 <table class="table table-bordered">
                     <thead class="bg-dark">
