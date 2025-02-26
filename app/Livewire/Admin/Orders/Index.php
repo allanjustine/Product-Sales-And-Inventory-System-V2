@@ -33,7 +33,7 @@ class Index extends Component
         }
 
         $order->update([
-            'order_status' => $status
+            'order_status'  =>   $status
         ]);
 
         $this->dispatch('toastr', data: [
@@ -82,7 +82,8 @@ class Index extends Component
     public function orderDetails()
     {
         $orders = Order::query()
-            ->with('product')
+            ->select('orders.*')
+            ->with(['product', 'user'])
             ->join('products', 'orders.product_id', '=', 'products.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where(function ($query) {
