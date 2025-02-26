@@ -145,7 +145,7 @@
                     <button class="btn btn-outline-warning" wire:target='resetInputs' wire:loading.attr='disabled'
                         wire:click="resetInputs">
                         <div wire:target='resetInputs' wire:loading>
-                            <span class="spinner-border spiner"></span> Resetting...
+                            <span class="spinner-border spinner-border-sm"></span> Resetting...
                         </div>
                         <div wire:target='resetInputs' wire:loading.remove>
                             <i class="fa-solid fa-rotate"></i> Reset Inputs
