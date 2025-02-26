@@ -237,7 +237,6 @@
             });
 
             @this.on('closeModal', function() {
-                console.log('test');
                 document.getElementById('closeModalAdd')?.click();
                 document.getElementById('closeModalUpdate')?.click();
                 document.getElementById('closeModalDelete')?.click();

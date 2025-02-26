@@ -3,20 +3,16 @@
 namespace App\Livewire\Admin\ProductCategories;
 
 use App\Models\ProductCategory;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
-
     use WithPagination;
 
     #[Title('Product Categories')]
-    
-    protected $paginationTheme = 'bootstrap';
-
-    protected $listeners = ['resetInputs'];
 
     public $perPage = 5;
     public $search;
@@ -47,11 +43,27 @@ class Index extends Component
         return compact('product_categories');
     }
 
+    public function sweetAlert($title, $icon, $message) {
+        $this->dispatch('alert', alerts: [
+            'title'         =>          $title,
+            'type'          =>          $icon,
+            'message'       =>          $message
+        ]);
+
+        $this->dispatch('closeModal');
+
+        $this->reset();
+
+        return;
+    }
+
     public function addProductCategory()
     {
         $this->validate([
-            'category_name'         =>      'required|string|max:255|unique:product_categories',
+            'category_name'         =>      'required|string|max:255|unique:product_categories|not_in:Manual',
             'category_description'  =>      'required|string|max:65535'
+        ], [
+            'category_name.not_in'  =>      'Category name cannot be "Manual"'
         ]);
 
         $product_category = ProductCategory::create([
@@ -59,14 +71,16 @@ class Index extends Component
             'category_description'         =>      $this->category_description,
         ]);
 
-        alert()->success('Product Category Added', '"' . $product_category->category_name . '" is added to the list ');
-        return $this->redirect('/admin/product-categories', navigate: true);
+        $this->sweetAlert('Product Category Added', 'success', "\"{$product_category->category_name}\" is added to the list ");
     }
 
+    #[On('resetInputs')]
     public function resetInputs()
     {
         $this->category_name = '';
         $this->category_description = '';
+        $this->productCategoryEdit = null;
+        $this->productCategoryToDelete = null;
 
         $this->resetValidation();
     }
@@ -90,26 +104,20 @@ class Index extends Component
             'category_description'         =>      $this->category_description,
         ]);
 
-        alert()->success('Product Category Updated', '"' . $this->category_name . '" is updated successfully');
-        return $this->redirect('/admin/product-categories', navigate: true);
+        $this->sweetAlert('Product Category Updated', 'success', "\"{$this->category_name}\" is updated successfully");
     }
 
     public function delete($id)
     {
         $this->productCategoryToDelete = ProductCategory::find($id);
-
-        $this->productCategoryRemove = $id;
     }
 
     public function deleteProductCategory()
     {
-        $productCategory = ProductCategory::where('id', $this->productCategoryRemove)->first();
 
-        $productCategory->delete();
+        $this->productCategoryToDelete->delete();
 
-        alert()->success('Product Category Removed', 'The product category "' . $productCategory->category_name .'" has been removed successfully');
-
-        return $this->redirect('/admin/product-categories', navigate: true);
+        $this->sweetAlert('Product Category Removed', 'success', "The product category \"{$this->productCategoryToDelete->category_name}\" has been removed successfully");
     }
 
     public function render()

@@ -2,8 +2,7 @@
     @include('livewire.admin.product-categories.delete')
     @include('livewire.admin.product-categories.edit')
     @include('livewire.admin.product-categories.create')
-    <div class="table-responsive card card-primary card-outline card-outline-tabs" id="category-table"
-        style="height: 500px;">
+    <div class="card card-primary card-outline card-outline-tabs" id="category-table">
         <div class="card-body">
             <div class="col-sm-12">
                 <label>Show:</label>
@@ -17,56 +16,58 @@
                     <option>100</option>
                 </select>
                 <label>Entries</label>
-                <button class="btn btn-primary mb-3 me-2 float-end" data-toggle="modal" data-target="#addProductCategory">
+                <button class="btn btn-primary mb-3 me-2 float-end" data-toggle="modal"
+                    data-target="#addProductCategory">
                     <i class="fa-solid fa-plus"></i> Add Category
                 </button>
-                <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;"
-                    placeholder="Search" id="search" wire:model.live="search">
+                <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;" placeholder="Search"
+                    id="search" wire:model.live="search">
             </div>
-            <table class="table table-hovered table-bordered">
-                <thead class="bg-dark">
-                    <tr>
-                        <th wire:click="sortBy('id')" style="cursor: pointer;">
-                            @if ($sortBy === 'id')
+            <div class="table-responsive" style="max-height: 500px;">
+                <table class="table table-hovered table-bordered">
+                    <thead class="bg-dark">
+                        <tr>
+                            <th wire:click="sortBy('id')" style="cursor: pointer;">
+                                @if ($sortBy === 'id')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif
-                            ID.
-                        </th>
-                        <th wire:click="sortBy('category_name')" style="cursor: pointer;">
-                            @if ($sortBy === 'category_name')
+                                @endif
+                                ID.
+                            </th>
+                            <th wire:click="sortBy('category_name')" style="cursor: pointer;">
+                                @if ($sortBy === 'category_name')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif
-                            Category Name
-                        </th>
-                        <th wire:click="sortBy('category_description')" style="cursor: pointer;">
-                            @if ($sortBy === 'category_description')
+                                @endif
+                                Category Name
+                            </th>
+                            <th wire:click="sortBy('category_description')" style="cursor: pointer;">
+                                @if ($sortBy === 'category_description')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif
-                            Category Description
-                        </th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($product_categories as $product_category)
+                                @endif
+                                Category Description
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($product_categories as $product_category)
                         <tr>
                             <td>{{ $product_category->id }}</td>
                             <td>{{ $product_category->category_name }}</td>
@@ -91,27 +92,21 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
-                    @if (!empty($search) && $product_categories->count() === 0)
+                        @endforeach
+                        @if (!empty($search) && $product_categories->count() === 0)
                         <td colspan="4" class="text-center">
                             <h6>"{{ $search }}" not found.</h6>
                         </td>
-                    @elseif($product_categories->count() === 0)
+                        @elseif($product_categories->count() === 0)
                         <td colspan="4" class="text-center">
                             <h6>No data found.</h6>
                         </td>
-                    @endif
-                </tbody>
-            </table>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+            {{ $product_categories->links() }}
         </div>
-    </div>
-    <div class="d-flex align-items-center">
-        <span class="me-auto p-1 rounded">Showing: <span class="p-1 rounded"
-                style="border: 1px solid rgba(156, 154, 154, 0.356); background-color:rgba(150, 209, 248, 0.384);"><strong>{{ $product_categories->firstItem() }}-{{ $product_categories->lastItem() }}</strong>
-                of
-                <strong>{{ $product_categories->total() }}</strong></span> Entries</span>
-        <span class="ms-auto pt-3">
-            {{ $product_categories->links('pages.admin.layout.pagination') }}</span>
     </div>
 
     <style>
@@ -132,4 +127,40 @@
             outline: none;
         }
     </style>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            $('#addProductCategory').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
+            });
+            $('#deleteProductCategory').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
+            });
+            $('#editProductCategory').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('livewire:navigated', () => {
+            @this.on('closeModal', () => {
+                document.getElementById('closeModalAdd')?.click();
+                document.getElementById('closeModalUpdate')?.click();
+                document.getElementById('closeModalDelete')?.click();
+            });
+
+            @this.on('alert', (event) => {
+                const { title, type, message } = event.alerts;
+
+                Swal.fire({
+                    confirmButtonColor: '#0000FF',
+                    confirmButtonText: 'Close',
+                    title: title,
+                    icon: type,
+                    text: message
+                });
+            });
+        })
+    </script>
 </div>

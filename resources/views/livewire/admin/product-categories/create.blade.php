@@ -1,7 +1,7 @@
 <div>
     <!-- Modal Add Product Category-->
     <div wire:ignore.self class="modal fade" id="addProductCategory" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,13 +11,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <label for="category_name">Category Name:</label>
-                                    <select name="category_name" wire:model.live.debounce.200ms="category_name" class="form-select"
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <label for="category_name">Category Name:</label>
+                                <div x-data="{ selectedCategory: '', selected: false }">
+                                    <select name="category_name" wire:model="category_name" x-model="selectedCategory"
+                                        x-on:change="selected = (selectedCategory === 'Manual')" class="form-select"
                                         required>
                                         <option selected hidden="true">Select Category Name</option>
                                         <option disabled>Select Category Name</option>
@@ -37,43 +37,58 @@
                                         <optgroup label="Others">
                                             <option value="Others">Others</option>
                                         </optgroup>
+                                        <optgroup label="Manual">
+                                            <option value="Manual">Manual</option>
+                                        </optgroup>
                                     </select>
+                                    <div x-show="selected" x-cloak>
+                                        <input type="text" wire:model='category_name' class="form-control mt-2"
+                                            placeholder="Enter Category Name">
+                                    </div>
                                     @error('category_name')
-                                        <span class="text-danger">*{{ $message }}</span>
+                                    <span class="text-danger">*{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <label for="category_description">Category Description:</label>
-                                    <textarea id="category_description" name="category_description" wire:model.live.debounce.200ms="category_description"
-                                        placeholder="Description" class="form-control" rows="5" required></textarea>
-                                    @error('category_description')
-                                        <span class="text-danger">*{{ $message }}</span>
-                                    @enderror
-                                </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <label for="category_description">Category Description:</label>
+                                <textarea id="category_description" name="category_description"
+                                    wire:model="category_description" placeholder="Description" class="form-control"
+                                    rows="5" required></textarea>
+                                @error('category_description')
+                                <span class="text-danger">*{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" wire:click="addProductCategory()">
-                        <div wire:loading><svg class="loading"></svg></div>&nbsp;<i class="fa-solid fa-plus"></i> Add Product Category
+                    <button type="button" class="btn btn-primary" wire:loading.attr='disabled'
+                        wire:target='addProductCategory' wire:click="addProductCategory">
+                        <div wire:loading wire:target='addProductCategory'>
+                            <span class="spinner-border spinner-border-sm"></span> Adding...
+                        </div>
+                        <div wire:loading.remove wire:target='addProductCategory'>
+                            <i class="fa-solid fa-plus"></i> Add Product Category
+                        </div>
                     </button>
-                    <button class="btn btn-outline-warning" wire:click="resetInputs()"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-warning" wire:target='resetInputs' wire:loading.attr='disabled'
+                        wire:click="resetInputs">
+                        <div wire:target='resetInputs' wire:loading>
+                            <span class="spinner-border spinner-border-sm"></span> Resetting...
+                        </div>
+                        <div wire:target='resetInputs' wire:loading.remove>
+                            <i class="fa-solid fa-rotate"></i> Reset Inputs
+                        </div>
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id='closeModalAdd'>Close</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('livewire:init', function() {
-        $('#addProductCategory').on('hidden.bs.modal', function() {
-            Livewire.dispatch('resetInputs');
-        });
-    });
-</script>
