@@ -250,8 +250,8 @@
                         </tr>
                     </tfoot>
                 </table>
-                {{ $orders->links() }}
             </div>
+            {{ $orders->links() }}
         </div>
     </div>
 
