@@ -1,6 +1,5 @@
 <div>
-    <div class="table-responsive card card-primary card-outline card-outline-tabs" id="product-table"
-        style="height: 515px;">
+    <div class="card">
         <div class="card-body">
             <div class="col-sm-12">
                 <label>Show:</label>
@@ -29,102 +28,104 @@
                     <option value="Last year">Last year</option>
                 </select>
             </div>
-            <table class="table table-bordered">
-                <thead class="bg-dark">
-                    <tr>
-                        <th wire:click="sortBy('transaction_code')" style="cursor: pointer;">
-                            @if ($sortBy === 'transaction_code')
+            <div class="table-responsive card card-primary card-outline card-outline-tabs" id="product-table"
+                style="max-height: 515px;">
+                <table class="table table-bordered">
+                    <thead class="bg-dark">
+                        <tr>
+                            <th wire:click="handleSortBy('transaction_code')" style="cursor: pointer;">
+                                @if ($sortBy === 'transaction_code')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Transaction Code
-                        </th>
-                        <th wire:click="sortBy('name')" style="cursor: pointer;">
-                            @if ($sortBy === 'name')
+                                @endif Transaction Code
+                            </th>
+                            <th wire:click="handleSortBy('name')" style="cursor: pointer;">
+                                @if ($sortBy === 'name')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Buyer
-                        </th>
-                        <th class="text-capitalize" wire:click="sortBy('product_name')" style="cursor: pointer;">
-                            @if ($sortBy === 'product_name')
+                                @endif Buyer
+                            </th>
+                            <th class="text-capitalize" wire:click="handleSortBy('product_name')" style="cursor: pointer;">
+                                @if ($sortBy === 'product_name')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Product Name
-                        </th>
-                        <th wire:click="sortBy('order_price')" style="cursor: pointer;">
-                            @if ($sortBy === 'order_price')
+                                @endif Product Name
+                            </th>
+                            <th wire:click="handleSortBy('order_price')" style="cursor: pointer;">
+                                @if ($sortBy === 'order_price')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Price
-                        </th>
-                        <th wire:click="sortBy('order_quantity')" style="cursor: pointer;">
-                            @if ($sortBy === 'order_quantity')
+                                @endif Price
+                            </th>
+                            <th wire:click="handleSortBy('order_quantity')" style="cursor: pointer;">
+                                @if ($sortBy === 'order_quantity')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Quantity
-                        </th>
-                        <th wire:click="sortBy('order_total_amount')" style="cursor: pointer;">
-                            @if ($sortBy === 'order_total_amount')
+                                @endif Quantity
+                            </th>
+                            <th wire:click="handleSortBy('order_total_amount')" style="cursor: pointer;">
+                                @if ($sortBy === 'order_total_amount')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Total
-                        </th>
-                        <th wire:click="sortBy('order_payment_method')" style="cursor: pointer;">
-                            @if ($sortBy === 'order_payment_method')
+                                @endif Total
+                            </th>
+                            <th wire:click="handleSortBy('order_payment_method')" style="cursor: pointer;">
+                                @if ($sortBy === 'order_payment_method')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Payment Method
-                        </th>
-                        <th>Status</th>
-                        <th wire:click="sortBy('orders.created_at')" style="cursor: pointer;">
-                            @if ($sortBy === 'orders.created_at')
+                                @endif Payment Method
+                            </th>
+                            <th>Status</th>
+                            <th wire:click="handleSortBy('orders.created_at')" style="cursor: pointer;">
+                                @if ($sortBy === 'orders.created_at')
                                 @if ($sortDirection === 'asc')
-                                    <i class="fa-light fa-sort-alpha-up"></i>
+                                <i class="fa-light fa-sort-alpha-up"></i>
                                 @else
-                                    <i class="fa-light fa-arrow-down-z-a"></i>
+                                <i class="fa-light fa-arrow-down-z-a"></i>
                                 @endif
-                            @else
+                                @else
                                 <i class="fa-thin fa-sort"></i>
-                            @endif Date Order
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($orders as $order)
+                                @endif Date Order
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $order)
                         <tr>
                             <td><strong>{{ $order->transaction_code }}</strong></td>
                             <td>{{ $order->user->name }}</td>
@@ -134,42 +135,44 @@
                             <td>&#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}</td>
                             <td>{{ $order->order_payment_method }}</td>
                             @if ($order->order_status === 'Pending')
-                                <td><span class="badge badge-warning">PENDING</span></td>
+                            <td><span class="badge badge-warning">PENDING</span></td>
                             @else
-                                <td><span class="badge badge-success"><i class="fa fa-solid fa-check"></i> PAID</span>
-                                </td>
+                            <td><span class="badge badge-success"><i class="fa fa-solid fa-check"></i> PAID</span>
+                            </td>
                             @endif
                             <td>{{ date_format($order->created_at, 'F j, Y g:i A') }}</td>
                         </tr>
-                    @endforeach
-                    @if (!empty($search) && $orders->count() === 0)
+                        @endforeach
+                        @if (!empty($search) && $orders->count() === 0)
                         <td colspan="9" class="text-center">"{{ $search }}" not found.</td>
-                    @elseif($orders->count() === 0)
+                        @elseif($orders->count() === 0)
                         <td colspan="9" class="text-center">No product sales yet.</td>
                         </td>
-                    @endif
-                </tbody>
-                <tfoot class="bg-dark">
-                    <tr>
-                        <td colspan="5">
-                            <h5>Grand Total:</h5>
-                        </td>
-                        <td>
-                            &#8369;{{ number_format($grandTotal, 2, '.', ',') }}
-                        </td>
-                        <td colspan="4"><button class="btn btn-info float-end" wire:click="downloadPdf">Download
-                                PDF</button></td>
-                    </tr>
-                </tfoot>
-            </table>
+                        @endif
+                    </tbody>
+                    <tfoot class="bg-dark">
+                        <tr>
+                            <td colspan="5">
+                                <h5>Grand Total:</h5>
+                            </td>
+                            <td>
+                                &#8369;{{ number_format($grandTotal, 2, '.', ',') }}
+                            </td>
+                            <td colspan="4"><button class="btn btn-info float-end" wire:click="downloadPdf">Download
+                                    PDF</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="me-auto p-1 rounded">Showing: <span class="p-1 rounded"
+                        style="border: 1px solid rgba(156, 154, 154, 0.356); background-color:rgba(150, 209, 248, 0.384);"><strong>{{
+                            $orders->firstItem() }}-{{ $orders->lastItem() }}</strong>
+                        of
+                        <strong>{{ $orders->total() }}</strong></span> Entries</span>
+                <span class="ms-auto pt-3">
+                    {{ $orders->links('pages.admin.layout.pagination') }}</span>
+            </div>
         </div>
-    </div>
-    <div class="d-flex align-items-center">
-        <span class="me-auto p-1 rounded">Showing: <span class="p-1 rounded"
-                style="border: 1px solid rgba(156, 154, 154, 0.356); background-color:rgba(150, 209, 248, 0.384);"><strong>{{ $orders->firstItem() }}-{{ $orders->lastItem() }}</strong>
-                of
-                <strong>{{ $orders->total() }}</strong></span> Entries</span>
-        <span class="ms-auto pt-3">
-            {{ $orders->links('pages.admin.layout.pagination') }}</span>
     </div>
 </div>

@@ -26,8 +26,10 @@ class ProductSales extends Component
     {
         $orders = Order::orderBy('created_at', 'desc')->where('order_status', 'Paid')->get();
 
+        $grandTotal = $orders->sum('order_total_amount');
+
         $pdf = new Dompdf();
-        $pdf->loadHtml(view('pages.admin.orders.download-pdf', compact('orders'))->render());
+        $pdf->loadHtml(view('livewire.admin.orders.download-pdf', compact('orders', 'grandTotal'))->render());
         $pdf->set_option('isHtml5ParserEnabled', true);
         $pdf->set_option('defaultFont', 'Helvetica');
         $pdf->set_option('isRemoteEnabled', true);
@@ -41,7 +43,7 @@ class ProductSales extends Component
         }, $filename);
     }
 
-    public function sortBy($field)
+    public function handleSortBy($field)
     {
         if ($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
