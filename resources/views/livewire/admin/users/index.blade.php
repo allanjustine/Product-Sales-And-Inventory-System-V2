@@ -102,9 +102,11 @@
                         @foreach ($users as $user)
                         <tr key="{{ $user->id }}">
                             <td>
+                                @if ($user->email_verified_at === null)
                                 <button onclick="verifyUser({{ $user->id }}, '{{ $user->name }}')" class="btn btn-sm btn-link">
                                     <i class="fas fa-check text-success"></i>
                                 </button>
+                                @endif
                                 <img src="{{ $user->profile_image === null ? "
                                     https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
                                     Storage::url($user->profile_image) }}" style="height: 50px; width: 60px;

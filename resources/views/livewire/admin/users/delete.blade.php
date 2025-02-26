@@ -18,8 +18,10 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" wire:target='deleteUser' wire:loading.attr='disabled' wire:click="deleteUser"><div wire:loading wire:target="deleteUser" class="spinner-border spinner-border-sm"></div>&nbsp;<i
-                        wire:target='deleteUser' wire:loading.remove class="fa-solid fa-trash"></i> Yes, Remove</button>
+                    <button class="btn btn-danger" type="button" wire:target='deleteUser' wire:loading.attr='disabled' wire:click="deleteUser">
+                        <span wire:loading wire:target="deleteUser"><span class="spinner-border spinner-border-sm"></span> Removing...</span>
+                        <span wire:target='deleteUser' wire:loading.remove><i class="fa-solid fa-trash"></i> Yes, Remove</span>
+                    </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModalDelete">Cancel</button>
                 </div>
             </div>

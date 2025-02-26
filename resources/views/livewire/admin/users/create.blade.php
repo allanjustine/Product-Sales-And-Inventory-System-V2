@@ -113,9 +113,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" wire:loading.attr="disabled" wire:target='addUser,profile_image' type="button" class="btn btn-primary" wire:click="addUser">
-                        <div wire:loading class="spinner-border spinner-border-sm" wire:target='addUser'></div>&nbsp; <i class="fa-solid fa-plus" wire:loading.remove wire:target='addUser'></i> Add User
+                        <div wire:loading class="spinner-border spinner-border-sm" wire:target='addUser'></div>&nbsp; <i class="fa-solid fa-plus" wire:loading.remove wire:target='addUser'></i> <span wire:loading.remove wire:target='addUser'>Add User</span> <span wire:loading wire:target='addUser'>Adding...</span>
                     </button>
-                    <button type="button" class="btn btn-outline-warning" wire:click="resetInputs"><i class="fa-solid fa-rotate"></i> Reset Inputs</button>
+                    <button type="button" class="btn btn-outline-warning" wire:click="resetInputs" wire:loading.attr='disabled' wire:target='resetInputs'><span wire:target='resetInputs' wire:loading.remove><i class="fa-solid fa-rotate"></i> Reset Inputs</span><span wire:target='resetInputs' wire:loading><span class="spinner-border spinner-border-sm"></span> Resetting..</span></button>
                     <button type="button" type="button" class="btn btn-secondary" id="closeModalAdd" data-dismiss="modal">Close</button>
                 </div>
             </div>
