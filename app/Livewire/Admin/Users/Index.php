@@ -20,10 +20,9 @@ class Index extends Component
 {
     use WithPagination;
 
-    #[Title('Users')]
-    protected $listeners = ['resetInputs'];
-
     use WithFileUploads;
+
+    #[Title('Users')]
 
     public $perPage = 5;
     public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image;
@@ -36,7 +35,6 @@ class Index extends Component
     public $sortBy = 'name';
     public $sortDirection = 'asc';
     public $profile_image_url;
-
 
     public function sortItemBy($field)
     {
@@ -143,6 +141,7 @@ class Index extends Component
         return;
     }
 
+    #[On('resetInputs')]
     public function resetInputs()
     {
         $this->profile_image = null;
@@ -153,6 +152,9 @@ class Index extends Component
         $this->password_confirmation = '';
         $this->gender = '';
         $this->phone_number = '';
+        $this->userView = null;
+        $this->userEdit = null;
+        $this->userToDelete = null;
 
         $this->resetValidation();
     }

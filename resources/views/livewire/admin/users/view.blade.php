@@ -1,7 +1,7 @@
 <div>
     <!-- Modal User Info -->
     <div wire:ignore.self class="modal fade" id="viewUser" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
@@ -137,9 +137,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .dark-mode .list-group-item {
-        color: white !important;
-    }
-</style>

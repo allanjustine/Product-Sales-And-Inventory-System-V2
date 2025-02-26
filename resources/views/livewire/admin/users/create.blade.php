@@ -1,7 +1,7 @@
 <div>
     <!-- Modal Add User-->
     <div wire:ignore.self class="modal fade" id="addUser" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

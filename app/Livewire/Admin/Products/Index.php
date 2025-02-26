@@ -5,6 +5,8 @@ namespace App\Livewire\Admin\Products;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,19 +17,16 @@ class Index extends Component
 
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
-
-    protected $listeners = ['resetInputs'];
-
+    #[Title('Products')]
     public $category_name = 'All';
     public $perPage = 5;
     public $search;
     public $sortBy = 'product_name';
     public $sortDirection = 'asc';
     public $product_category_id, $product_image, $product_name, $product_description, $product_status, $product_stock, $product_price, $product_code;
-    public $productEdit, $product_image_url, $productToDelete, $productRemove, $productView;
+    public $productEdit, $product_image_url, $productToDelete, $productView;
 
-    public function sortBy($field)
+    public function handleSortBy($field)
     {
         if ($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
@@ -35,6 +34,20 @@ class Index extends Component
             $this->sortBy = $field;
             $this->sortDirection = 'asc';
         }
+    }
+
+    public function sweetAlert($title, $icon, $message) {
+        $this->dispatch('alert', alerts: [
+            'title'         =>          $title,
+            'type'          =>          $icon,
+            'message'       =>          $message
+        ]);
+
+        $this->dispatch('closeModal');
+
+        $this->reset();
+
+        return;
     }
 
     public function displayProducts()
@@ -56,6 +69,11 @@ class Index extends Component
         return compact('products', 'product_categories');
     }
 
+    #[On('generateProductCode')]
+    public function generateProductCode() {
+        $this->product_code = 'AJM-' . substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 5);
+    }
+
     public function addProduct()
     {
         $validatedData = $this->validate([
@@ -69,8 +87,6 @@ class Index extends Component
         ]);
         $path = $this->product_image->store('public/product/images');
 
-        $this->product_code = 'AJM-' . substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 5);
-
         $product = Product::create([
             'product_name'                  => $validatedData['product_name'],
             'product_description'           => $validatedData['product_description'],
@@ -82,11 +98,11 @@ class Index extends Component
             'product_code'                  => $this->product_code
         ]);
 
-        alert()->info('Product Added', 'The product "' . $product->product_name . '" is added to list.')->showConfirmButton('Okay');
+        $this->sweetAlert('Product Added', 'success', message: "The product \"{$product->product_name}\" is added to list.");
 
-        return $this->redirect('/admin/products', navigate: true);
     }
 
+    #[On('resetInputs')]
     public function resetInputs()
     {
         $this->product_name = '';
@@ -96,6 +112,9 @@ class Index extends Component
         $this->product_status = '';
         $this->product_category_id = '';
         $this->product_image = '';
+        $this->productEdit = null;
+        $this->productView = null;
+        $this->productToDelete = null;
 
         $this->resetValidation();
     }
@@ -137,7 +156,7 @@ class Index extends Component
 
         $this->dispatch('toastr', data: [
             'type'      =>      'success',
-            'message'   =>      'Status changed to ' . $product->product_status
+            'message'   =>      "Status changed to {$product->product_status}"
         ]);
         return;
     }
@@ -164,34 +183,25 @@ class Index extends Component
             'product_image' => $this->product_image ? $this->product_image->store('public/product/images') : $this->productEdit->product_image
         ]);
 
-        $this->productEdit->save();
-
-        alert()->success('Product Updated', 'The product "' . $this->product_name .  '" is updated successfully');
-
-        $this->reset();
-
-        return $this->redirect('/admin/products', navigate: true);
-
+        $this->sweetAlert('Product Updated', 'success', message: "The product \"{$this->productEdit->product_name}\" is updated successfully.");
     }
 
     public function delete($id)
     {
         $this->productToDelete = Product::find($id);
-
-        $this->productRemove = $id;
     }
 
     public function deleteProduct()
     {
-        $product = Product::where('id', $this->productRemove)->first();
 
-        Storage::delete($product->product_image);
+        Storage::delete($this->productToDelete->product_image);
 
-        $product->delete();
+        $this->productToDelete->delete();
 
-        alert()->success('Product Removed', 'The product "' . $product->product_name . '" has been removed successfully');
+        $this->productView = null;
+        $this->productEdit = null;
 
-        return $this->redirect('/admin/products', navigate: true);
+        $this->sweetAlert('Product Removed', 'success', message: "The product \"{$this->productToDelete?->product_name}\" has been removed successfully.");
     }
 
     public function view($id)

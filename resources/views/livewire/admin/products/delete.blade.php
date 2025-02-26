@@ -6,22 +6,31 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4>Are you sure you want to remove this product?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span class="float-right" aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                @if ($productToDelete)
-                    <div class="modal-body">
-                        This product  <strong class="text-capitalize">"{{ $productToDelete->product_name }}"</strong> will be
-                        removed to the table and will deleted permanently.
+                <div class="modal-body">
+                    @if ($productToDelete)
+                    This product <strong class="text-capitalize">"{{ $productToDelete->product_name }}"</strong> will be
+                    removed to the table and will deleted permanently.
+                    @else
+                    <div class="text-center fw-4 fs-4">
+                        <span class="spinner-border"></span> Getting the product's information...
                     </div>
-                @endif
+                    @endif
+                </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" wire:click="deleteProduct()">
-                        <div wire:loading><svg class="loading"></svg></div>&nbsp;<i
-                        class="fa-solid fa-trash"></i> Yes, Remove
+                    <button class="btn btn-danger" wire:click="deleteProduct" wire:target="deleteProduct"
+                        wire:loading.attr='disabled'>
+                        <div wire:target='deleteProduct' wire:loading>
+                            <span class="spinner-border spinner-border-sm"></span> Deleting...
+                        </div>
+                        <div wire:target='deleteProduct' wire:loading.remove>
+                            <i class="fa-solid fa-trash"></i> Yes, Remove
+                        </div>
                     </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

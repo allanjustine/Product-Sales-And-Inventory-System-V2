@@ -196,12 +196,28 @@
         select .role-name {
             text-transform: capitalize !important;
         }
+
+        .dark-mode .list-group-item {
+            color: white !important;
+        }
     </style>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:navigated', function() {
             $('#updateUser').on('hidden.bs.modal', function() {
-                Livewire.dispatch('resetInputs');
+                @this.dispatch('resetInputs');
+            });
+            $('#addUser').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
+            });
+            $('#deleteUser').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
+            });
+            $('#updateUser').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
+            });
+            $('#viewUser').on('hidden.bs.modal', function() {
+                @this.dispatch('resetInputs');
             });
         });
     </script>
@@ -225,14 +241,6 @@
                 document.getElementById('closeModalAdd')?.click();
                 document.getElementById('closeModalUpdate')?.click();
                 document.getElementById('closeModalDelete')?.click();
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('livewire:init', function() {
-            $('#addUser').on('hidden.bs.modal', function() {
-                Livewire.dispatch('resetInputs');
             });
         });
     </script>
