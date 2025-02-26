@@ -27,7 +27,7 @@
                 <table class="table table-hovered table-bordered">
                     <thead class="bg-dark">
                         <tr>
-                            <th wire:click="sortBy('id')" style="cursor: pointer;">
+                            <th wire:click="handleSortBy('id')" style="cursor: pointer;">
                                 @if ($sortBy === 'id')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -39,7 +39,7 @@
                                 @endif
                                 ID.
                             </th>
-                            <th wire:click="sortBy('category_name')" style="cursor: pointer;">
+                            <th wire:click="handleSortBy('category_name')" style="cursor: pointer;">
                                 @if ($sortBy === 'category_name')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -51,7 +51,7 @@
                                 @endif
                                 Category Name
                             </th>
-                            <th wire:click="sortBy('category_description')" style="cursor: pointer;">
+                            <th wire:click="handleSortBy('category_description')" style="cursor: pointer;">
                                 @if ($sortBy === 'category_description')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>

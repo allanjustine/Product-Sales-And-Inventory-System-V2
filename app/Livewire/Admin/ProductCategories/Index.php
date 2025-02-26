@@ -21,7 +21,7 @@ class Index extends Component
     public $category_name, $category_description;
     public $productCategoryEdit, $productCategoryToDelete, $productCategoryRemove;
 
-    public function sortBy($field)
+    public function handleSortBy($field)
     {
         if ($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
