@@ -61,7 +61,7 @@
             @empty
             <div class="p-5">
                 <h6 class="text-center">
-                    Drop your testimony and share your experience with us <a href="/contact-us" wire:navigate
+                    Drop your testimony and share your experience with us <a href="/feedbacks" wire:navigate
                         class="btn btn-link">Click Here</a>
                 </h6>
             </div>
