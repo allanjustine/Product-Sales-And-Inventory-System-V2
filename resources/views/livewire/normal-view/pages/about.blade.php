@@ -45,7 +45,7 @@
         <div class="d-flex gap-2 justify-content-center">
             @forelse ($testimonies as $testimony)
             <div class="col-sm-12 col-md-6 shadow-md my-2">
-                <div class="row border justify-items-center shadow-sm">
+                <div class="row border justify-items-center align-items-center shadow-sm">
                     <div class="col-3">
                         <img src="images/profile.png" alt="image" class="img-fluid rounded-circle"
                             style="width: 130px; height: 130px;">
