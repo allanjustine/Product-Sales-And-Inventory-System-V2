@@ -11,12 +11,16 @@ services:
     environment:
       - APP_ENV=production
       - DB_CONNECTION=mysql
-      - DB_HOST=172.17.0.1
+      - DB_HOST=127.0.0.1
       - DB_PORT=3306
       - DB_DATABASE=psaisv2
       - DB_USERNAME=smct
       - DB_PASSWORD=smct
-
+    command: >
+      sh -c "composer install --no-dev --optimize-autoloader &&
+             npm install &&
+             npm run build &&
+             php-fpm"
   e-commerce-nginx:
     image: nginx:alpine
     container_name: e-commerce-nginx
