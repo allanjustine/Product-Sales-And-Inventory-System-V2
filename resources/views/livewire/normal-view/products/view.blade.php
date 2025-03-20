@@ -177,7 +177,7 @@
         const modal = document?.getElementById("viewProduct");
         if(modal) {
             modal?.addEventListener('hidden.bs.modal', function () {
-            Livewire.dispatch('closedModal');
+            @this.dispatch('closedModal');
         });
         }
     })

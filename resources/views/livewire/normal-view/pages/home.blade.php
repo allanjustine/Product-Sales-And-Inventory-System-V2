@@ -431,7 +431,7 @@
                     , "progressBar": true
                 , })
             })
-            Livewire.on('closeModal', () => {
+            @this.on('closeModal', () => {
 
                 $('#addToCart').modal('hide');
             })

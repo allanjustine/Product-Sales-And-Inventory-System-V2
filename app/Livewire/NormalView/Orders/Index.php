@@ -299,6 +299,7 @@ class Index extends Component
             'message'       =>          "Thank you for rating us \"{$newRating}\" Star(s)."
         ]);
         $this->dispatch('closeModal');
+        $this->dispatch('isRefresh');
         return;
     }
 

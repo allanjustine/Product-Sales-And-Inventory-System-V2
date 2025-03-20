@@ -41,26 +41,26 @@
     <div class="container mt-5">
         <h2 class="text-center">Testimonials</h2>
     </div>
-    <div class="container mt-2">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="images/profile.png" alt="image" class="img-fluid rounded-circle">
-                            </div>
-                            <div class="col-md-8">
-                                <blockquote class="blockquote mb-0">
-                                    <p>"I am extremely satisfied with the service I received. The team was very
-                                        professional and helpful throughout the process."</p>
-                                    <footer class="blockquote-footer">Allan Justine Mascariñas</footer>
-                                </blockquote>
-                            </div>
-                        </div>
+    <div class="container my-2" style="overflow-x: auto;">
+        <div class="d-flex gap-2">
+            @forelse ($testimonies as $testimony)
+            <div class="col-sm-12 col-md-6 shadow-md my-2">
+                <div class="row border justify-items-center shadow-sm">
+                    <div class="col-3">
+                        <img src="images/profile.png" alt="image" class="img-fluid rounded-circle"
+                            style="width: 130px; height: 130px;">
+                    </div>
+                    <div class="col-9">
+                        <blockquote class="blockquote mb-0">
+                            <p>"{{ $testimony->message }}"</p>
+                            <footer class="blockquote-footer">{{ $testimony->name }}</footer>
+                        </blockquote>
                     </div>
                 </div>
             </div>
+            @empty
+
+            @endforelse
         </div>
     </div>
 </div>

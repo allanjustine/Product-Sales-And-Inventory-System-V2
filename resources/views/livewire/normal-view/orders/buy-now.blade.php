@@ -119,9 +119,9 @@
 </div>
 
 <script>
-    document.addEventListener('livewire:init', function() {
+    document.addEventListener('livewire:navigated', function() {
         $('#toBuyNow').on('hidden.bs.modal', function() {
-            Livewire.dispatch('resetInputs');
+            @this.dispatch('resetInputs');
         });
     });
 </script>

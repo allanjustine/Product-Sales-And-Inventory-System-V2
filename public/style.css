@@ -134,22 +134,6 @@ body {
     color: black;
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-/* Target the scrollbar thumb (the draggable handle) */
-::-webkit-scrollbar-thumb {
-    background-color: #cac6c6;
-    border-radius: 10px;
-}
-
-/* Target the scrollbar track (the area behind the thumb) */
-::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-    border-radius: 10px;
-}
-
 button.close {
     font-size: 20px;
     color: #919191;

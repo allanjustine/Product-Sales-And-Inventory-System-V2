@@ -62,7 +62,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', function() {
-            Livewire.on('alert', function(event) {
+            @this.on('alert', function(event) {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({

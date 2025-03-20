@@ -106,7 +106,7 @@
                 });
             });
 
-            Livewire.on('closeModal', () => {
+            @this.on('closeModal', () => {
                 $('#addToCart').modal('hide');
                 $('#remove').modal('hide');
                 $('#checkOut').modal('hide');
