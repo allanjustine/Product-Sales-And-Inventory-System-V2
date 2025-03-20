@@ -42,7 +42,7 @@
         <h2 class="text-center">Testimonials</h2>
     </div>
     <div class="container my-2" style="overflow-x: auto;">
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 justify-content-center">
             @forelse ($testimonies as $testimony)
             <div class="col-sm-12 col-md-6 shadow-md my-2">
                 <div class="row border justify-items-center shadow-sm">
@@ -59,7 +59,12 @@
                 </div>
             </div>
             @empty
-
+            <div class="p-5">
+                <h6 class="text-center">
+                    Drop your testimony and share your experience with us <a href="/contact-us" wire:navigate
+                        class="btn btn-link">Click Here</a>
+                </h6>
+            </div>
             @endforelse
         </div>
     </div>

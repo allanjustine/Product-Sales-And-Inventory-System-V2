@@ -19,11 +19,6 @@
                         class="nav-link text-white text-center {{ 'about-us' == request()->path() ? 'active2' : '' }}"
                         href="/about-us"><i class="fa-light fa-question"></i> About Us</a>
                 </li>
-                <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center {{ 'contact-us' == request()->path() ? 'active2' : '' }}"
-                        href="/contact-us"><i class="fa-light fa-users"></i> Contact Us</a>
-                </li>
                 @if (auth()->check())
                 <li class="nav-item p-2">
                     <a wire:navigate
@@ -54,6 +49,11 @@
                         href="/view-products"><i class="fa-light fa-box-open"></i> View Products</a>
                 </li>
                 @endif
+                <li class="nav-item p-2">
+                    <a wire:navigate
+                        class="nav-link text-white text-center {{ 'feedbacks' == request()->path() ? 'active2' : '' }}"
+                        href="/feedbacks"><i class="fa-light fa-comment-dots"></i> Your Feedback</a>
+                </li>
             </ul>
             <div class="dropdown me-5">
                 <a href="#" class="nav-link text-white text-center profile-dropdown ms-5" id="dropdownMenuButton"
@@ -148,7 +148,7 @@
                 <div class="modal-footer">
                     <button type="button" wire:click="logout" class="btn btn-danger"><i
                             class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

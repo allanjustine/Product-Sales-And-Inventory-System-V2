@@ -45,7 +45,7 @@ Route::get("/verification/{token}/{user}", action: Verification::class);
 
 Route::get('/', Home::class);
 Route::get('/about-us', About::class);
-Route::get('/contact-us', ContactUs::class);
+Route::get('/feedbacks', ContactUs::class);
 Route::get('/view-products', ViewOnly::class);
 Route::get('/reset-password', ResetPassword::class)->name('password.reset');
 
