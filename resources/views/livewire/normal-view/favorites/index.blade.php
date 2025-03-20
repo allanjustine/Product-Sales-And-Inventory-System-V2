@@ -2,7 +2,7 @@
     @include('livewire.normal-view.products.view')
     @include('livewire.normal-view.carts.add-to-cart')
     @include('livewire.normal-view.orders.buy-now')
-    <div class="container">
+    <div class="container-md">
         <h3 class="mt-5"><i class="fa-light fa-heart"></i> My Favorites</h3>
         <hr>
         <div class="row">
@@ -27,7 +27,7 @@
                         <a href="#"
                             title="@if ($favorite->user_id == auth()->user()->id) {{ $favorite->where('product_id', $favorite->product->id)->count() }} people added this to favorites @else Add to favorites @endif"
                             class="btn btn-link position-absolute top-0 start-0"
-                            wire:click="removeToFavorite({{ $favorite->id }})">
+                            wire:click.prevent="removeToFavorite({{ $favorite->id }})">
                             <h2 class="text-danger"><i
                                     class="{{ $favorite->user_id == auth()->user()->id ? 'fas' : 'far' }} fa-heart"></i>
                             </h2>
@@ -55,7 +55,7 @@
                                 <h5 id="product_name">{{ $favorite->product->product_name }}</h5>
                             </h3>
                             <div class="d-block font-size-1 mb-2">
-                                <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                <span class="font-weight-medium">₱{{
                                     number_format($favorite->product->product_price, 2, '.', ',') }}</span>
                             </div>
                             <div class="d-block font-size-1 mb-2">
@@ -68,21 +68,6 @@
                                 </span>
                             </div>
                             @role('user')
-                            @if ($favorite->product->product_status === 'Not Available')
-                            <a wire:click="notAvailable()" class="btn btn-warning mt-1 form-control"><i
-                                    class="fa-solid fa-cart-plus"></i>
-                                Add to Cart</a>
-                            <a wire:click="notAvailable()" class="btn btn-primary mt-1 form-control"><i
-                                    class="fa-solid fa-cart-shopping"></i>
-                                Buy Now</a>
-                            @elseif ($favorite->product->product_stock == 0)
-                            <a wire:click="outOfStock()" class="btn btn-warning mt-1 form-control"><i
-                                    class="fa-solid fa-cart-plus"></i>
-                                Add to Cart</a>
-                            <a wire:click="outOfStock()" class="btn btn-primary mt-1 form-control"><i
-                                    class="fa-solid fa-cart-shopping"></i>
-                                Buy Now</a>
-                            @else
                             <a class="btn btn-warning mt-1 form-control" data-bs-toggle="modal" data-bs-target="#addToCart"
                                 wire:click="addToCart({{ $favorite->product->id }})"><i
                                     class="fa-solid fa-cart-plus"></i>
@@ -91,7 +76,6 @@
                             <a class="btn btn-primary mt-1 form-control btn-block" data-bs-toggle="modal"
                                 data-bs-target="#toBuyNow" wire:click="toBuyNow({{ $favorite->product->id }})"><i
                                     class="fa-solid fa-cart-shopping"></i> Buy Now</a>
-                            @endif
                             @endrole
                             @role('admin')
                             <a wire:navigate href="/admin/products"

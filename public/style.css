@@ -166,11 +166,7 @@ button.close:hover {
     z-index: -1;
 }
 .back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
     z-index: 9999;
-    display: none;
 }
 
 .back-to-top #button {
@@ -183,7 +179,11 @@ button.close:hover {
     border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
+    position: fixed;
+    bottom: -50px;
+    right: 20px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: bottom 0.3s ease-in-out;
 }
 
 .back-to-top #button i {

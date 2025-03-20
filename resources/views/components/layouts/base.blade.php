@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<head lang="en">
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,7 +62,8 @@
                 <span id="date"></span>
                 <span id="time"></span></span>
             </div>
-            <strong>Copyright &copy; 2023 - {{ now()->year }} <a href="https://facebook.com/1down" target="_blank">Allan Justine
+            <strong>Copyright &copy; 2023 - {{ now()->year }} <a href="https://facebook.com/1down" target="_blank">Allan
+                    Justine
                     Mascariñas</a>.</strong> All rights
             reserved.
         </footer>
@@ -163,32 +166,39 @@
 @endunlessrole
 
 <div class="back-to-top">
-    <a id="button" class="btn" href="#">
+    <button type="button" id="button" onclick="backToTop()" class="btn">
         <i class="fas fa-arrow-up"></i>
-    </a>
+    </button>
 </div>
 <script>
-    window.addEventListener('scroll', function() {
-        var backToTopButton = document.querySelector('.back-to-top');
+    document.addEventListener('livewire:navigated', function() {
+        const backToTopButton = document.getElementById('button');
 
-        if (backToTopButton) {
-            if (window.scrollY > 400) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
+        window.addEventListener('scroll', function() {
+            if (backToTopButton) {
+                if (window.scrollY > 400) {
+                    backToTopButton.style.bottom = "30px";
+                } else {
+                    backToTopButton.style.bottom = "-50px";
+                }
             }
+        });
+
+        if (window.pageYOffset > 400) {
+            backToTopButton.style.bottom = "30px";
+        } else {
+            backToTopButton.style.bottom = "-50px";
         }
     });
+</script>
 
-    document.addEventListener('livewire:init', function() {
-        Livewire.on('backToTop', function() {
-            window.scrollTo({
-                top: 0
-                , behavior: 'smooth'
-            });
+<script>
+    function backToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
-    });
-
+    }
 </script>
 
 <script>

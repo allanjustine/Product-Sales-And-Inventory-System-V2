@@ -221,7 +221,7 @@
                                 {{ $product->product_name }}
                             </h5>
                             <div class="d-block font-size-1 mb-2">
-                                <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                <span class="font-weight-medium">₱{{
                                     number_format($product->product_price, 2, '.', ',') }}</span>
                             </div>
                             <div class="d-block font-size-1 mb-2">

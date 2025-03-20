@@ -1,4 +1,4 @@
-<div>
+<div style="overflow-x: hidden;">
     @include('livewire.normal-view.products.view')
     <div class="col-md-5 col-sm-6 offset-md-4 offset-sm-3 mt-4">
         <input type="search" class="form-control" placeholder="Search" wire:model.live.debounce.200ms="search"
@@ -104,7 +104,7 @@
                                 {{ $product->product_name }}
                             </h5>
                             <div class="d-block font-size-1 mb-2">
-                                <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                <span class="font-weight-medium">₱{{
                                     number_format($product->product_price, 2, '.', ',') }}</span>
                             </div>
                             <div class="d-block font-size-1 mb-2">
