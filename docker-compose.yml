@@ -1,33 +1,33 @@
 version: '3.8'
 
 services:
-  e-commerce-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: e-commerce-app
-    volumes:
-      - .:/var/www/html
-    environment:
-      - APP_ENV=production
-      - DB_CONNECTION=mysql
-      - DB_HOST=127.0.0.1
-      - DB_PORT=3306
-      - DB_DATABASE=psaisv2
-      - DB_USERNAME=smct
-      - DB_PASSWORD=smct
-    command: >
-      sh -c "composer install --no-dev --optimize-autoloader &&
-             npm install &&
-             npm run build &&
-             php-fpm"
-  e-commerce-nginx:
-    image: nginx:alpine
-    container_name: e-commerce-nginx
-    ports:
-      - "9000:9000"
-    volumes:
-      - .:/var/www/html
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - e-commerce-app
+    e-commerce-app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: e-commerce-app
+        volumes:
+            - .:/var/www/html
+        environment:
+            APP_ENV: production
+            DB_CONNECTION: mysql
+            DB_HOST: 172.17.0.1
+            DB_PORT: 3306
+            DB_DATABASE: psaisv2
+            DB_USERNAME: smct
+            DB_PASSWORD: smct
+        command: >
+            sh -c "composer install --no-dev --optimize-autoloader &&
+                   npm install &&
+                   npm run build &&
+                   php-fpm"
+    e-commerce-nginx:
+        image: nginx:alpine
+        container_name: e-commerce-nginx
+        ports:
+            - "9000:9000"
+        volumes:
+            - .:/var/www/html
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - e-commerce-app
