@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      container_name: e-commerce-app
+    container_name: e-commerce-app
     volumes:
       - .:/var/www/html
     environment:
