@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      container-name: e-commerce-app
+      container_name: e-commerce-app
     volumes:
       - .:/var/www/html
     environment:
@@ -19,7 +19,7 @@ services:
 
   e-commerce-nginx:
     image: nginx:alpine
-    container-name: e-commerce-nginx
+    container_name: e-commerce-nginx
     ports:
       - "9000:9000"
     volumes:
