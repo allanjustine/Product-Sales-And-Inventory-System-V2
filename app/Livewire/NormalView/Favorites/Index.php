@@ -24,8 +24,8 @@ class Index extends Component
     public $order_quantity = 1;
     public $order_payment_method;
     public $orderPlaceOrder;
-    public $loadMore = 10;
-    public $loadMorePlus = 10;
+    public $loadMore = 20;
+    public $loadMorePlus = 20;
 
     public function loadMorePages()
     {
