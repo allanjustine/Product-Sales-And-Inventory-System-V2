@@ -243,7 +243,7 @@
                 of
                 <strong>{{ $products->total() }}</strong></span> Entries</span>
         <span class="ms-auto pt-3">
-            {{ $products->links('pages.admin.layout.pagination') }}</span>
+            {{ $products->links() }}</span>
     </div>
 
 

@@ -171,7 +171,7 @@
                         of
                         <strong>{{ $orders->total() }}</strong></span> Entries</span>
                 <span class="ms-auto pt-3">
-                    {{ $orders->links('pages.admin.layout.pagination') }}</span>
+                    {{ $orders->links() }}</span>
             </div>
         </div>
     </div>
