@@ -237,9 +237,8 @@
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center">
-        {{ $products->links() }}
-    </div>
+
+    {{ $products->links() }}
 
 
     <style>

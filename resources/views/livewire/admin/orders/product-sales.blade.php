@@ -28,8 +28,7 @@
                     <option value="Last year">Last year</option>
                 </select>
             </div>
-            <div class="table-responsive" id="product-table"
-                style="max-height: 515px;">
+            <div class="table-responsive" id="product-table" style="max-height: 515px;">
                 <table class="table table-bordered">
                     <thead class="bg-dark">
                         <tr>
@@ -55,7 +54,8 @@
                                 <i class="fa-thin fa-sort"></i>
                                 @endif Buyer
                             </th>
-                            <th class="text-capitalize" wire:click="handleSortBy('product_name')" style="cursor: pointer;">
+                            <th class="text-capitalize" wire:click="handleSortBy('product_name')"
+                                style="cursor: pointer;">
                                 @if ($sortBy === 'product_name')
                                 @if ($sortDirection === 'asc')
                                 <i class="fa-light fa-sort-alpha-up"></i>
@@ -164,9 +164,8 @@
                     </tfoot>
                 </table>
             </div>
-            <div class="d-flex align-items-center">
-                {{ $orders->links() }}
-            </div>
+
+            {{ $orders->links() }}
         </div>
     </div>
 </div>
