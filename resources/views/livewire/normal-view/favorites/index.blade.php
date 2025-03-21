@@ -117,10 +117,10 @@
         </div>
     </div>
     <div class="d-flex mb-2 align-items-center overflow-auto">
-        @if ($allFavorites->count() < $allFavoritesData) <div class="mx-auto" id="sentinel" wire:loading.remove>
+        @if ($allFavorites->count() < $allFavoritesData) <div class="mx-auto" id="sentinel" wire:loading.remove wire:target='loadMorePages'>
     </div>
     @endif
-    <button wire:loading type="button" class="btn btn-link mx-auto">
+    <button wire:loading type="button" class="btn btn-link mx-auto" wire:click='loadMorePages' id="loadMoreData" wire:target='loadMorePages'>
         <span class="spinner-border"></span>
     </button>
     {{-- <a wire:click="loadMore" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
@@ -143,10 +143,11 @@
 <script>
     document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
+            const button = document.getElementById('loadMoreData');
 
             const observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
-                    @this.call('loadMorePages');
+                    button?.click();
                 }
             });
 

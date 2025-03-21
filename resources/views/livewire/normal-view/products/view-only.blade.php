@@ -158,7 +158,7 @@
         @if($products->count() < $allDisplayProducts)
             <div class="mx-auto" id="sentinel" wire:loading.remove wire:target='loadMore'></div>
         @endif
-        <button wire:loading type="button" wire:target='loadMore' class="btn btn-link mx-auto">
+        <button wire:loading type="button" wire:target='loadMore' class="btn btn-link mx-auto" wire:click="loadMore" id="loadMoreData">
             <span class="spinner-border"></span>
         </button>
         {{-- <a wire:click="loadMore" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
@@ -172,23 +172,27 @@
 
     <script>
         let search = '';
+        let sentinelObserver = null;
         document.addEventListener('searchData', function(e) {
             search = e.detail.search;
         });
 
         document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
+            const button = document.getElementById('loadMoreData');
             if(!sentinel) return;
 
-            if(!window.sentinelObserver) {
-                window.sentinelObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting && !search) {
-                        @this.call('loadMore');
-                    }
-                });
+            if(sentinelObserver) {
+                sentinelObserver.disconnect();
             }
 
-            window.sentinelObserver.observe(sentinel);
+            sentinelObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !search) {
+                    button?.click();
+                }
+            });
+
+            sentinelObserver.observe(sentinel);
 
         });
     </script>
