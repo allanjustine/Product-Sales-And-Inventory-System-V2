@@ -165,13 +165,7 @@
                 </table>
             </div>
             <div class="d-flex align-items-center">
-                <span class="me-auto p-1 rounded">Showing: <span class="p-1 rounded"
-                        style="border: 1px solid rgba(156, 154, 154, 0.356); background-color:rgba(150, 209, 248, 0.384);"><strong>{{
-                            $orders->firstItem() }}-{{ $orders->lastItem() }}</strong>
-                        of
-                        <strong>{{ $orders->total() }}</strong></span> Entries</span>
-                <span class="ms-auto pt-3">
-                    {{ $orders->links() }}</span>
+                {{ $orders->links() }}
             </div>
         </div>
     </div>

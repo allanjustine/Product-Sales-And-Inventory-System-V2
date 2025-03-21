@@ -17,7 +17,8 @@
                     <option>100</option>
                 </select>
                 <label>Entries</label>
-                <button class="btn btn-primary mb-3 me-2 float-end" data-bs-toggle="modal" onclick="generateProductCode()" data-bs-target="#addProduct">
+                <button class="btn btn-primary mb-3 me-2 float-end" data-bs-toggle="modal"
+                    onclick="generateProductCode()" data-bs-target="#addProduct">
                     <i class="fa-solid fa-plus"></i> Add Product
                 </button>
                 <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;" placeholder="Search"
@@ -237,13 +238,7 @@
         </div>
     </div>
     <div class="d-flex align-items-center">
-        <span class="me-auto p-1 rounded">Showing: <span class="p-1 rounded"
-                style="border: 1px solid rgba(156, 154, 154, 0.356); background-color:rgba(150, 209, 248, 0.384);"><strong>{{
-                    $products->firstItem() }}-{{ $products->lastItem() }}</strong>
-                of
-                <strong>{{ $products->total() }}</strong></span> Entries</span>
-        <span class="ms-auto pt-3">
-            {{ $products->links() }}</span>
+        {{ $products->links() }}
     </div>
 
 
