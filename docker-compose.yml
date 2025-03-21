@@ -11,6 +11,7 @@ services:
             - /home/webserver/systems/Product-Sales-And-Inventory-System-V2/config/livewire.php:/var/www/html/config/livewire.php
         environment:
             APP_ENV: production
+            APP_URL: https://e-commerce.smctgroup.ph
             DB_CONNECTION: mysql
             DB_HOST: 172.17.0.1
             DB_PORT: 3306
