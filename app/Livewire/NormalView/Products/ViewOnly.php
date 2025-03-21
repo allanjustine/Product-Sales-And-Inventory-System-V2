@@ -16,7 +16,7 @@ class ViewOnly extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $search;
+    public $search = '';
     // public $perPage = 15;
     public $category_name = 'All';
     public $sort = 'low_to_high';
@@ -31,6 +31,10 @@ class ViewOnly extends Component
     public function loadMore()
     {
         $this->defaultPage += $this->loadMorePlus;
+    }
+
+    public function updatedSearch($value) {
+        $this->dispatch('searchData', search: $value);
     }
 
     public function mount()

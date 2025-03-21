@@ -300,12 +300,12 @@
 
     <div class="d-flex mb-2 align-items-center overflow-auto">
         @if($products->count() < $allDisplayProducts)
-            <div class="mx-auto" id="sentinel" wire:loading.remove></div>
+            <div class="mx-auto" id="sentinel" wire:loading.remove wire:target='loadMorePage'></div>
         @endif
-        <button wire:loading type="button" class="btn btn-link mx-auto">
+        <button wire:loading type="button" wire:target='loadMorePage' class="btn btn-link mx-auto">
             <span class="spinner-border"></span>
         </button>
-        {{-- <a wire:click="loadMore" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
+        {{-- <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
             $search
             ?
             'hidden' : '' }} id="paginate">
@@ -315,22 +315,24 @@
     </div>
 
     <script>
+        let search = '';
+        document.addEventListener('searchData', function(e) {
+            search = e.detail.search;
+        });
+
         document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
+            if(!sentinel) return;
 
-            console.log(sentinel);
-
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    @this.call('loadMorePage');
-                }
-            });
-
-            observer.observe(sentinel);
-
-            return () => {
-                observer.disconnect();
+            if(!window.sentinelObserver) {
+                window.sentinelObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !search) {
+                        @this.call('loadMorePage');
+                    }
+                });
             }
+
+            window.sentinelObserver.observe(sentinel);
 
         });
     </script>

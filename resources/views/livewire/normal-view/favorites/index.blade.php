@@ -144,8 +144,6 @@
     document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
 
-            console.log(sentinel);
-
             const observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
                     @this.call('loadMorePages');

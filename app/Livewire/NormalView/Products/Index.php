@@ -52,6 +52,10 @@ class Index extends Component
 
     use WithPagination;
 
+    public function updatedSearch($value) {
+        $this->dispatch('searchData', search: $value);
+    }
+
     public function loadMorePage()
     {
         $this->loadMore += $this->loadMorePlus;
