@@ -68,8 +68,8 @@
                                 </span>
                             </div>
                             @role('user')
-                            <a class="btn btn-warning mt-1 form-control" data-bs-toggle="modal" data-bs-target="#addToCart"
-                                wire:click="addToCart({{ $favorite->product->id }})"><i
+                            <a class="btn btn-warning mt-1 form-control" data-bs-toggle="modal"
+                                data-bs-target="#addToCart" wire:click="addToCart({{ $favorite->product->id }})"><i
                                     class="fa-solid fa-cart-plus"></i>
                                 Add to Cart</a>
 
@@ -116,17 +116,53 @@
             @endforelse
         </div>
     </div>
+    <div class="d-flex mb-2 align-items-center overflow-auto">
+        @if ($allFavorites->count() < $allFavoritesData) <div class="mx-auto" id="sentinel" wire:loading.remove>
+    </div>
+    @endif
+    <button wire:loading type="button" class="btn btn-link mx-auto">
+        <span class="spinner-border"></span>
+    </button>
+    {{-- <a wire:click="loadMore" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
+        $search
+        ?
+        'hidden' : '' }} id="paginate">
+        <span wire:loading.remove>Load more...</span>
+        <span wire:loading class="spinner-border"></span>
+    </a> --}}
+</div>
 
 
-    <style>
-        #product_name {
+<style>
+    #product_name {
 
-            text-transform: capitalize;
-        }
-    </style>
+        text-transform: capitalize;
+    }
+</style>
 
-    <script>
-        document.addEventListener('livewire:navigated', () => {
+<script>
+    document.addEventListener('livewire:navigated', function() {
+            const sentinel = document.getElementById('sentinel');
+
+            console.log(sentinel);
+
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    @this.call('loadMorePages');
+                }
+            });
+
+            observer.observe(sentinel);
+
+            return () => {
+                observer.disconnect();
+            }
+
+        });
+</script>
+
+<script>
+    document.addEventListener('livewire:navigated', () => {
             @this.on('toastr', (event) => {
                 const {
                     type
@@ -156,36 +192,36 @@
             });
         });
 
-    </script>
+</script>
 
 
-    {{-- @if (session('message'))
-    <script>
-        toastr.options = {
+{{-- @if (session('message'))
+<script>
+    toastr.options = {
                 "progressBar": true,
                 "closeButton": true,
             }
             toastr.success("{{ session('message') }}");
-    </script>
-    @endif --}}
+</script>
+@endif --}}
 
-    <style>
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
+<style>
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
 
-        .loading-message {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
-        }
-    </style>
+    .loading-message {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+    }
+</style>
 </div>

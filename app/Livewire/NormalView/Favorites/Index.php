@@ -24,13 +24,21 @@ class Index extends Component
     public $order_quantity = 1;
     public $order_payment_method;
     public $orderPlaceOrder;
+    public $loadMore = 10;
+    public $loadMorePlus = 10;
+
+    public function loadMorePages()
+    {
+        $this->loadMore += $this->loadMorePlus;
+    }
 
     #[On('isRefresh')]
     public function displayAllFavorites()
     {
-        $allFavorites = Favorite::where(['user_id' => auth()->user()->id, 'status' => true])->latest()->get();
+        $allFavorites = Favorite::where(['user_id' => auth()->user()->id, 'status' => true])->latest()->take($this->loadMore)->get();
+        $allFavoritesData = Favorite::where(['user_id' => auth()->user()->id, 'status' => true])->count();
 
-        return compact('allFavorites');
+        return compact('allFavorites', 'allFavoritesData');
     }
 
     public function notAvailable()

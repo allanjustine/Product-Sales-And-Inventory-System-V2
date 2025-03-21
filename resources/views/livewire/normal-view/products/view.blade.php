@@ -176,7 +176,6 @@
             const modal = document?.getElementById("viewProduct");
             if(modal) {
                 modal?.addEventListener('hidden.bs.modal', function () {
-                    console.log('asd');
                     @this.dispatch('closedModal');
                 });
             }
