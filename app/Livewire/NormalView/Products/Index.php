@@ -220,12 +220,12 @@ class Index extends Component
     public function getTotal()
     {
         $cartTotal = Cart::query()
-        ->with('product')
-        ->where('user_id', Auth::id())
-        ->get()
-        ->sum(function($item) {
-            return $item->product->product_price * $item->quantity;
-        });
+            ->with('product')
+            ->where('user_id', Auth::id())
+            ->get()
+            ->sum(function ($item) {
+                return $item->product->product_price * $item->quantity;
+            });
 
         return $cartTotal;
     }

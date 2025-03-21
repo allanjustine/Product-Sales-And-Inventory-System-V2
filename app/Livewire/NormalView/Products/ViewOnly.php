@@ -25,6 +25,7 @@ class ViewOnly extends Component
     public $allDisplayProducts;
     public $defaultPage = 20;
     public $loadMorePlus = 20;
+
     use WithPagination;
 
     public function loadMore()
@@ -81,7 +82,8 @@ class ViewOnly extends Component
     }
 
     #[On('closedModal')]
-    public function closedModal() {
+    public function closedModal()
+    {
         $this->productView = null;
     }
 

@@ -28,7 +28,7 @@
                     @endforeach
                     <div>
                         <a href="#" class="float-end px-3" id="clearAllSearchLogsButton"
-                            wire:click="clearAllLogs({{ auth()->user()->id }})">Clear
+                            wire:click="clearAllLogs({{ auth()?->user()?->id }})">Clear
                             all</a>
                     </div>
                 </div>
@@ -190,11 +190,11 @@
                             </div>
                         </a>
                         <button type="button"
-                            title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
+                            title="@if ($product->favorites->contains('user_id', auth()?->user()?->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
                             class="btn btn-link position-absolute top-0 start-0"
                             wire:click="addToFavorite({{ $product->id }})">
                             <h2 class="text-danger"><i
-                                    class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
+                                    class="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'fas' : 'far' }} fa-heart"></i>
                             </h2>
                         </button>
 

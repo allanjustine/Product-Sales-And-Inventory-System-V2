@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminSiteController;
-use App\Http\Controllers\Normal_View\SiteController;
 use App\Livewire\Admin\Orders\Index as AdminOrdersIndex;
 use App\Livewire\Admin\Orders\ProductSales;
 use App\Livewire\Admin\Pages\ContactUs as PagesContactUs;
@@ -50,8 +47,8 @@ Route::get('/view-products', ViewOnly::class);
 Route::get('/reset-password', ResetPassword::class)->name('password.reset');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/profile', Profile::class);
     Route::get('/products', ProductsIndex::class);
+    Route::get('/profile', Profile::class);
     Route::get('/orders',  OrdersIndex::class);
     Route::get('/favorites',  FavoritesIndex::class);
     Route::get('/recent-orders', RecentOrders::class);

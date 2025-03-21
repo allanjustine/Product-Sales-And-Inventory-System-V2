@@ -155,10 +155,34 @@
             {{ $products->links('pagination::bootstrap-4') }}</span>
     </div> --}}
     <div class="d-flex mb-2 align-items-center overflow-auto">
-        <a wire:click="loadMore()" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts || $search ?
+        <div id="sentinel">asda</div>
+        <a wire:click="loadMore" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts || $search
+            ?
             'hidden' : '' }} id="paginate">
             <span wire:loading.remove>Load more...</span>
             <span wire:loading class="spinner-border"></span>
         </a>
     </div>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            const sentinel = document.getElementById('sentinel');
+
+            console.log(sentinel);
+
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    console.log('test');
+                }
+            });
+
+            observer.observe(sentinel);
+
+            return () => {
+                observer.disconnect();
+            }
+
+        });
+    </script>
+
 </div>

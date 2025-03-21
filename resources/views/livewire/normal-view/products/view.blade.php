@@ -163,22 +163,23 @@
             </div>
         </div>
     </div>
-</div>
 
 
-<style>
-    #product_name {
-        text-transform: capitalize;
-    }
-</style>
-
-<script>
-    document?.addEventListener('livewire:navigated', function() {
-        const modal = document?.getElementById("viewProduct");
-        if(modal) {
-            modal?.addEventListener('hidden.bs.modal', function () {
-            @this.dispatch('closedModal');
-        });
+    <style>
+        #product_name {
+            text-transform: capitalize;
         }
-    })
-</script>
+    </style>
+
+    <script>
+        document?.addEventListener('livewire:navigated', function() {
+            const modal = document?.getElementById("viewProduct");
+            if(modal) {
+                modal?.addEventListener('hidden.bs.modal', function () {
+                    console.log('asd');
+                    @this.dispatch('closedModal');
+                });
+            }
+        })
+    </script>
+</div>
