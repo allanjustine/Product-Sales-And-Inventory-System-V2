@@ -9,7 +9,6 @@ services:
         restart: unless-stopped
         volumes:
             - .:/var/www/html
-            - /home/webserver/systems/Product-Sales-And-Inventory-System-V2/config/livewire.php:/var/www/html/config/livewire.php
             - /home/webserver/uploads/e-commerce-uploads:/var/www/html/public/storage
         environment:
             APP_ENV: production
