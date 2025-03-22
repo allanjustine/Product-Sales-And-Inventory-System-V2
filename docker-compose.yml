@@ -6,6 +6,7 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: e-commerce-app
+        restart: unless-stopped
         volumes:
             - .:/var/www/html
             - /home/webserver/systems/Product-Sales-And-Inventory-System-V2/config/livewire.php:/var/www/html/config/livewire.php
@@ -26,6 +27,7 @@ services:
     e-commerce-nginx:
         image: nginx:alpine
         container_name: e-commerce-nginx
+        restart: unless-stopped
         ports:
             - "9003:9003"
         volumes:
