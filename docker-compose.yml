@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-    e-commerce-app2:
+    e-commerce-app:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: e-commerce-app2
+        container_name: e-commerce-app
         restart: unless-stopped
         volumes:
             - .:/var/www/html
@@ -24,9 +24,9 @@ services:
                    npm install &&
                    npm run build &&
                    php-fpm"
-    e-commerce-nginx2:
+    e-commerce-nginx:
         image: nginx:alpine
-        container_name: e-commerce-nginx2
+        container_name: e-commerce-nginx
         restart: unless-stopped
         ports:
             - "80:80"
