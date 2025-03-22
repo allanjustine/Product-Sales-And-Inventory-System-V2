@@ -5,7 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: e-commerce-app
+        container_name: e-commerce-app2
         restart: unless-stopped
         volumes:
             - .:/var/www/html
@@ -26,7 +26,7 @@ services:
                    php-fpm"
     e-commerce-nginx2:
         image: nginx:alpine
-        container_name: e-commerce-nginx
+        container_name: e-commerce-nginx2
         restart: unless-stopped
         ports:
             - "80:80"
