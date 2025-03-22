@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-    e-commerce-app-2:
+    e-commerce-app2:
         build:
             context: .
             dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
                    npm install &&
                    npm run build &&
                    php-fpm"
-    e-commerce-nginx-2:
+    e-commerce-nginx2:
         image: nginx:alpine
         container_name: e-commerce-nginx
         restart: unless-stopped
