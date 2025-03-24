@@ -139,6 +139,8 @@ class Profile extends Component
     {
         $this->validateOnly($propertyData, [
             'profile_image'         =>      'required|image|max:10000|mimes:jpeg,png,gif,webp,svg|not_in:ico'
+        ], [
+            'profile_image.max'     =>      'The profile image field must not be greater than 5MB.'
         ]);
     }
 
