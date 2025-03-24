@@ -2,13 +2,7 @@
 FROM node:20.14.0 AS build
 
 # Set working directory
-WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package.json package-lock.json ./
-
-# Stage 2: PHP-FPM runtime
-FROM php:8.2-fpm
+WORKDIR /var/www/html
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -22,8 +16,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     && docker-php-ext-install pdo_mysql zip exif pcntl bcmath gd
 
-# Set working directory
-WORKDIR /var/www/html
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
 
 # Copy application files
 COPY . .
