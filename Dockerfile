@@ -50,8 +50,8 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 9000 for PHP-FPM
-EXPOSE 9000
+# Expose port 9003 for PHP-FPM
+EXPOSE 9003
 
 # Start PHP-FPM
 CMD ["php-fpm"]
