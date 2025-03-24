@@ -14,6 +14,8 @@ RUN apk --no-cache add \
 # Remove default www-data user (UID 82) and create a new one with UID 33
 RUN deluser www-data && addgroup -g 33 www-data && adduser -D -u 33 -G www-data www-data
 
+COPY package.json package-lock.json /var/www/html/
+
 # Set working directory
 WORKDIR /var/www/html
 
