@@ -1,6 +1,9 @@
 # Use the official PHP image with FPM (Alpine-based)
 FROM php:8.2-fpm-alpine
 
+# Set working directory
+WORKDIR /var/www/html
+
 # Install system dependencies
 RUN apk --no-cache add \
     zlib-dev \
@@ -20,17 +23,11 @@ RUN deluser www-data && addgroup -g 33 www-data && adduser -D -u 33 -G www-data 
 # Install Node.js and npm
 RUN apk add --no-cache nodejs npm
 
-# Set working directory
-WORKDIR /var/www/html
-
 # Install Composer (Laravel's dependency manager)
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy your Laravel project into the container
-COPY . /var/www/html
-
-# Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
+COPY . .
 
 # Install npm dependencies and build assets
 RUN npm install && npm run build
