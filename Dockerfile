@@ -1,5 +1,5 @@
 # Stage 1: Build assets
-FROM node:16 AS build
+FROM node:20.14.0 AS build
 
 # Set working directory
 WORKDIR /app
