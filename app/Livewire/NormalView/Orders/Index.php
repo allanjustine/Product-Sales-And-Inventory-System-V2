@@ -2,8 +2,12 @@
 
 namespace App\Livewire\NormalView\Orders;
 
+use App\Events\CancelOrder;
+use App\Events\RepurchaseAndSubmitRating;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -11,6 +15,7 @@ use Livewire\Component;
 class Index extends Component
 {
     #[Title('My Orders')]
+
     public $recents;
     public $pendings;
     public $grandTotalPending;
@@ -29,12 +34,9 @@ class Index extends Component
     public $order_quantity;
     public $user_rating;
 
-    protected $listeners = ['resetInputs'];
-
     #[On('isRefresh')]
     public function mount()
     {
-
         $userId = auth()->id();
 
         $this->pendings = Order::orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
@@ -171,6 +173,12 @@ class Index extends Component
 
         $this->dispatch('isRefresh');
 
+        $adminId = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->pluck('id')->first();
+
+        event(new CancelOrder($order, $adminId));
+
         return;
     }
 
@@ -240,6 +248,11 @@ class Index extends Component
         ]);
 
         $this->dispatch('isRefresh');
+        $adminId = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->pluck('id')->first();
+
+        event(new RepurchaseAndSubmitRating($order, $adminId));
         return;
     }
 
@@ -300,9 +313,15 @@ class Index extends Component
         ]);
         $this->dispatch('closeModal');
         $this->dispatch('isRefresh');
+        $adminId = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->pluck('id')->first();
+
+        event(new RepurchaseAndSubmitRating($received, $adminId));
         return;
     }
 
+    #[On('resetInputs')]
     public function resetInputs()
     {
         $this->product_rating = '';

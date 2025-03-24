@@ -420,7 +420,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('toastr', (event) => {
+            Livewire.on('toastr', (event) => {
                 const {
                     type
                     , message
@@ -431,7 +431,7 @@
                     , "progressBar": true
                 , })
             })
-            @this.on('closeModal', () => {
+            Livewire.on('closeModal', () => {
 
                 $('#addToCart').modal('hide');
             })

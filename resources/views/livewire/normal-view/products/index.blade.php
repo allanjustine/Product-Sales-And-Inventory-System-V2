@@ -107,8 +107,8 @@
                         @if($carts->count() > 0) ({{ $carts->count() }}) @endif</strong></h4>
                 <hr>
                 @foreach ($carts as $item)
-                <li class="cart-item px-3 py-2 mr-5">
-                    <div class="cart-item-image">
+                <li class="cart-item px-3 py-2 mr-2" key="{{ $item->id }}">
+                    <div class="cart-item-image d-flex gap-1 align-items-center">
                         <button class="btn btn-link text-primary" type="button"
                             wire:click="decreaseQuantity({{ $item->id }})">
                             <i class="fas fa-minus text-black"></i>
@@ -125,8 +125,9 @@
                         <img style="width: 70px; height: 70px; border-radius: 10%;"
                             src="{{ url($item->product->product_image) }}" alt="">
                         @endif
-                        &nbsp;&nbsp;<span><strong class="text-capitalize">{{ $item->product->product_name
-                                }}</strong></span>
+                        &nbsp;&nbsp;<div class="text-truncate" style="max-width: 100px;"><strong
+                                class="text-capitalize">{{ $item->product->product_name
+                                }}</strong></div>
                     </div>
                     <div class="cart-item-price mt-2">
                         &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}
@@ -173,7 +174,7 @@
         <div class="row">
 
             @foreach ($products as $product)
-            <div class="p-1 col-md-3 mt-2 col-sm-4 col-6">
+            <div class="p-1 col-md-3 mt-2 col-sm-4 col-6" key="{{ $product->id }}">
                 <div class="card shadow product-card" style="min-width: 50px;">
                     <div style="position: relative;">
 
@@ -215,9 +216,11 @@
                     <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
                         wire:click="view({{ $product->id }})">
                         <div class="card-footer text-center mb-3 mt-auto">
-                            <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
+                            <h6 class="d-inline-block text-secondary font-weight-medium mb-1 text-truncate"
+                                style="max-width: 150px;" title="{{ $product->product_category->category_name }}">
                                 {{ $product->product_category->category_name }}</h6>
-                            <h5 class="font-size-1 font-weight-normal text-capitalize">
+                            <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
+                                style="max-width: 150px;" title="{{ $product->product_name }}">
                                 {{ $product->product_name }}
                             </h5>
                             <div class="d-block font-size-1 mb-2">
@@ -299,49 +302,79 @@
     </div> --}}
 
     <div class="d-flex mb-2 align-items-center overflow-auto">
-        @if($products->count() < $allDisplayProducts)
-            <div class="mx-auto" id="sentinel" wire:loading.remove wire:target='loadMorePage'></div>
-        @endif
-        <button wire:loading type="button" wire:target='loadMorePage' class="btn btn-link mx-auto" wire:click='loadMorePage' id="loadMoreData">
-            <span class="spinner-border"></span>
-        </button>
-        {{-- <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
-            $search
-            ?
-            'hidden' : '' }} id="paginate">
-            <span wire:loading.remove>Load more...</span>
-            <span wire:loading class="spinner-border"></span>
-        </a> --}}
+        @if($products->count() < $allDisplayProducts) <div class="mx-auto" id="sentinel" wire:loading.remove
+            wire:target='loadMorePage'>
     </div>
+    @endif
+    <button wire:loading type="button" wire:target='loadMorePage' class="btn btn-link mx-auto" wire:click='loadMorePage'
+        id="loadMoreData">
+        <span class="spinner-border"></span>
+    </button>
+    {{-- <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
+        $search
+        ?
+        'hidden' : '' }} id="paginate">
+        <span wire:loading.remove>Load more...</span>
+        <span wire:loading class="spinner-border"></span>
+    </a> --}}
+</div>
 
-    <script>
-        let search = '';
-        document.addEventListener('searchData', function(e) {
-            search = e.detail.search;
-        });
+<style>
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
 
-        document.addEventListener('livewire:navigated', function() {
-            const sentinel = document.getElementById('sentinel');
-            const button = document.getElementById('loadMoreData');
-            if(!sentinel) return;
+    .loading-message {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+    }
 
-            if(!window.sentinelObserver) {
-                window.sentinelObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting && !search) {
-                        button?.click();
-                    }
-                });
+    .dropdown-menu .dropdown-item:focus {
+        background-color: transparent !important;
+        color: black !important;
+    }
+</style>
+
+<script>
+    let search = '';
+    let sentinelObserver = null;
+    document.addEventListener('searchData', function(e) {
+        search = e.detail.search;
+    });
+
+    document.addEventListener('livewire:navigated', function() {
+        const sentinel = document.getElementById('sentinel');
+        const button = document.getElementById('loadMoreData');
+        if(!sentinel) return;
+
+        if(sentinelObserver) {
+            sentinelObserver.disconnect();
+        }
+
+        sentinelObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !search) {
+                button?.click();
             }
-
-            window.sentinelObserver.observe(sentinel);
-
         });
-    </script>
 
-    <script>
-        document.addEventListener('livewire:navigated', () => {
+        sentinelObserver.observe(sentinel);
 
-            @this.on('toastr', (event) => {
+    });
+</script>
+
+<script>
+    document.addEventListener('livewire:navigated', () => {
+
+            Livewire.on('toastr', (event) => {
                 const {
                     type
                     , message
@@ -352,15 +385,15 @@
                     , "progressBar": true
                 , });
             });
-            @this.on('closeModal', () => {
+            Livewire.on('closeModal', () => {
                 $('#addToCart').modal('hide');
             });
         });
-    </script>
+</script>
 
-    <script>
-        document.addEventListener('livewire:navigated', () => {
-            @this.on('alert', function(event) {
+<script>
+    document.addEventListener('livewire:navigated', () => {
+            Livewire.on('alert', function(event) {
                 const { title, type, message} = event.alerts;
 
                 Swal.fire({
@@ -372,51 +405,26 @@
                 })
             });
 
-            @this.on('closeModal', function() {
+            Livewire.on('closeModal', function() {
                 $('#toBuyNow').modal('hide');
                 $('#checkOut').modal('hide');
             });
         });
-    </script>
+</script>
 
 
-    {{-- @if (session('message'))
-    <script>
-        toastr.options = {
+{{-- @if (session('message'))
+<script>
+    toastr.options = {
                 "progressBar": true,
                 "closeButton": true,
             }
             toastr.success("{{ session('message') }}");
-    </script>
-    @endif --}}
+</script>
+@endif --}}
 
-    <style>
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .loading-message {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
-        }
-
-        .dropdown-menu .dropdown-item:focus {
-            background-color: transparent !important;
-            color: black !important;
-        }
-    </style>
-
-    <script>
-        document.addEventListener('livewire:navigated', function() {
+<script>
+    document.addEventListener('livewire:navigated', function() {
             const cartIcon = document.getElementById('cartIcon');
 
             if(window.pageYOffset > 85) {
@@ -436,6 +444,14 @@
                 }
             });
         });
-    </script>
+</script>
+
+<script>
+    document.addEventListener('livewire:navigated', function() {
+            Livewire.on('closeModalCart', function() {
+                $('#checkOut').modal('hide');
+            });
+        });
+</script>
 
 </div>

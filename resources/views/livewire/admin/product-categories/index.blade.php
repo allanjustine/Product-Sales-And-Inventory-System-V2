@@ -131,26 +131,26 @@
     <script>
         document.addEventListener('livewire:navigated', function() {
             $('#addProductCategory').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#deleteProductCategory').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#editProductCategory').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
         });
     </script>
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('closeModal', () => {
+            Livewire.on('closeModal', () => {
                 document.getElementById('closeModalAdd')?.click();
                 document.getElementById('closeModalUpdate')?.click();
                 document.getElementById('closeModalDelete')?.click();
             });
 
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({

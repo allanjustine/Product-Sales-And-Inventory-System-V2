@@ -262,7 +262,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('toastr', (event) => {
+            Livewire.on('toastr', (event) => {
                 const {
                     type
                     , message
@@ -280,29 +280,29 @@
     <script>
         document.addEventListener('livewire:navigated', function() {
             $('#addProduct').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#updateProduct').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#deleteProduct').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#viewProduct').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
         });
     </script>
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('closeModal', () => {
+            Livewire.on('closeModal', () => {
                 $('#addProduct').modal('hide');
                 $('#deleteProduct').modal('hide');
                 $('#updateProduct').modal('hide');
             });
 
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({

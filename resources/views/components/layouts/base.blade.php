@@ -437,4 +437,11 @@
 
 </script>
 
+<script>
+    toastr.options = {
+        "preventDuplicates": true,
+        "preventOpenDuplicates": true,
+    };
+</script>
+
 </html>

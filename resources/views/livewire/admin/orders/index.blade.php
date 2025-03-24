@@ -257,7 +257,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('toastr', (event) => {
+            Livewire.on('toastr', (event) => {
                 const {
                     type
                     , message
@@ -274,7 +274,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({
@@ -316,10 +316,28 @@
                     text: `Are you sure you want to make this order as ${titles[status]}?`
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        @this.dispatch(statusTitle[status], { id });
+                        Livewire.dispatch(statusTitle[status], { id });
                     }
                 });
             }
         }
+    </script>
+
+    <script>
+        document.addEventListener("livewire:navigated", function () {
+
+            window.Echo.private(`cancel-order-{{ auth()->id() }}`)
+            .listen('.cancel-order-event', (e) => {
+                Livewire.dispatch('cancelOrderByUser');
+            });
+            window.Echo.private(`repurchase-and-submit-rating-{{ auth()->id() }}`)
+            .listen('.repurchase-and-submit-rating-event', (e) => {
+                Livewire.dispatch('repurchaseAndSubmitRating');
+            });
+            window.Echo.private(`place-order-{{ auth()->id() }}`)
+            .listen('.place-order-event', (e) => {
+                Livewire.dispatch('placeOrderByUser');
+            });
+        });
     </script>
 </div>

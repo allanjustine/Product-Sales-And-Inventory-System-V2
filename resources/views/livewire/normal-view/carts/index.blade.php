@@ -83,7 +83,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('toastr', (event) => {
+            Livewire.on('toastr', (event) => {
                 const {
                     type
                     , message
@@ -95,7 +95,7 @@
                 , });
             });
 
-            @this.on('alert', function(event) {
+            Livewire.on('alert', function(event) {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({
@@ -106,7 +106,7 @@
                 });
             });
 
-            @this.on('closeModal', () => {
+            Livewire.on('closeModal', () => {
                 $('#addToCart').modal('hide');
                 $('#remove').modal('hide');
                 $('#checkOut').modal('hide');

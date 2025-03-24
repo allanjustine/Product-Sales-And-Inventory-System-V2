@@ -2,6 +2,7 @@
 
 namespace App\Livewire\NormalView\Products;
 
+use App\Events\PlaceOrder;
 use App\Events\UserSearchLog;
 use App\Models\Cart;
 use App\Models\Favorite;
@@ -35,16 +36,15 @@ class Index extends Component
     public $quantity = 1;
     public $product;
     public $cartItems;
-    public $cartItemToRemove;
-    public $cartItemToCheckOut;
-    public $itemRemove;
-    public $itemPlaceOrder;
+    public $cartItemToRemove = null;
+    public $cartItemToCheckOut = null;
+    public $itemRemove = null;
     public $item, $updateCartItem;
     public $order_payment_method, $order_quantity = 1;
-    public $user_location;
+    public $user_location = "";
     public $product_sold;
-    public $orderToBuy;
-    public $orderPlaceOrder;
+    public $orderToBuy = null;
+    public $orderPlaceOrder = null;
     public $order;
     public $loadMore = 20;
     public $loadMorePlus = 20;
@@ -52,7 +52,8 @@ class Index extends Component
 
     use WithPagination;
 
-    public function updatedSearch($value) {
+    public function updatedSearch($value)
+    {
         $this->dispatch('searchData', search: $value);
     }
 
@@ -94,6 +95,7 @@ class Index extends Component
 
         $carts = Cart::with('product')
             ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $allDisplayProducts = Product::count();
@@ -178,10 +180,17 @@ class Index extends Component
         $this->productView = Product::find($id);
     }
 
-    #[On('closedModal')]
+    #[On('closeModal')]
+    #[On('closeModalCart')]
     public function closedModal()
     {
         $this->productView = null;
+        $this->cartItemToRemove = null;
+        $this->cartItemToCheckOut = null;
+        $this->itemRemove = null;
+        $this->orderToBuy = null;
+        $this->orderPlaceOrder = null;
+        $this->user_location = "";
     }
 
     public function addToCart($id)
@@ -305,7 +314,6 @@ class Index extends Component
     {
         $this->cartItemToCheckOut = Cart::find($itemId);
         $this->user_location = $this->cartItemToCheckOut->user->user_location;
-        $this->itemPlaceOrder = $itemId;
     }
 
     // public function checkOutAll()
@@ -335,7 +343,7 @@ class Index extends Component
 
     public function placeOrder()
     {
-        $cartItem = Cart::find($this->itemPlaceOrder);
+        $cartItem = $this->cartItemToCheckOut;
 
         $this->validate([
             'order_payment_method'  =>      'required',
@@ -362,6 +370,12 @@ class Index extends Component
                 $existingOrder->order_quantity += $cartItem->quantity;
                 $existingOrder->order_total_amount += ($cartItem->quantity * $product->product_price);
                 $existingOrder->save();
+
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
             } else {
                 $transactionCode = 'AJM-' . Str::random(10);
                 $order = new Order();
@@ -379,6 +393,12 @@ class Index extends Component
                 $cartItem->user->update([
                     'user_location' => $this->user_location
                 ]);
+
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
             }
 
             $product->product_stock -= $cartItem->quantity;
@@ -386,23 +406,16 @@ class Index extends Component
             $product->save();
             $cartItem->delete();
 
-            if ($existingOrder) {
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            } else {
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            }
+
+            $adminId = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+            })->pluck('id')->first();
+
+            event(new PlaceOrder($product, $adminId));
+
+
+            $this->dispatch('closeModalCart');
+            return;
         } else {
 
             if ($productStatus == 'Not Available') {
@@ -471,6 +484,12 @@ class Index extends Component
                 $existingOrder->order_quantity += $this->order_quantity;
                 $existingOrder->order_total_amount += ($this->order_quantity * $product->product_price);
                 $existingOrder->save();
+
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
             } else {
                 $transactionCode = 'AJM-' . Str::random(10);
 
@@ -490,6 +509,12 @@ class Index extends Component
                 $user->update([
                     'user_location' => $this->user_location
                 ]);
+
+                $this->dispatch('alert', alerts: [
+                    'type'          =>          'success',
+                    'title'         =>          'Ordered',
+                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
+                ]);
             }
 
             $product->product_stock -= $this->order_quantity;
@@ -497,23 +522,13 @@ class Index extends Component
             $product->save();
 
 
-            if ($existingOrder) {
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            } else {
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            }
+            $this->dispatch('closeModal');
+            $adminId = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+            })->pluck('id')->first();
+
+            event(new PlaceOrder($product, $adminId));
+            return;
         } else {
 
             if ($productStatus == 'Not Available') {

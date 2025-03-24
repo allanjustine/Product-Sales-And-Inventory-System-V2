@@ -9,7 +9,7 @@ use Livewire\Attributes\On;
 class Navbar extends Component
 {
     public $profile_picture;
-    
+
     #[On('profileRefresh')]
     public function profilePicture()
     {

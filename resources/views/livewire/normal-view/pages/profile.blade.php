@@ -307,7 +307,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', function() {
-            @this.on('alert', function(event) {
+            Livewire.on('alert', function(event) {
                 const {type, message, title} = event.alerts;
                 const Toast = Swal.mixin({
                     toast: true,

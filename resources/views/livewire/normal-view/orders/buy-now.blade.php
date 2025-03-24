@@ -121,7 +121,7 @@
 <script>
     document.addEventListener('livewire:navigated', function() {
         $('#toBuyNow').on('hidden.bs.modal', function() {
-            @this.dispatch('resetInputs');
+            Livewire.dispatch('resetInputs');
         });
     });
 </script>

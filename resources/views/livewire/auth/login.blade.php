@@ -164,7 +164,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const {
                     title
                     , type
@@ -179,7 +179,7 @@
 
                 });
             });
-            @this.on('closeModal', () => {
+            Livewire.on('closeModal', () => {
                $('#resend').modal('hide');
                $('#forgotPassword').modal('hide');
             });

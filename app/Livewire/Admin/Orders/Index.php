@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Orders;
 
+use App\Events\ProcessOrder;
 use App\Models\Order;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -22,7 +23,7 @@ class Index extends Component
 
     public function ordersStatus($id, $status, $message)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('product')->findOrFail($id);
         if ($order->order_status == 'Cancelled') {
             $this->dispatch('alert', alerts: [
                 'title'         =>          'Sorry',
@@ -40,6 +41,9 @@ class Index extends Component
             'type'      =>      'success',
             'message'   =>      $message
         ]);
+
+        event(new ProcessOrder($order, $status, $message));
+
         return;
     }
 
@@ -79,6 +83,9 @@ class Index extends Component
         }
     }
 
+    #[On('cancelOrderByUser')]
+    #[On('repurchaseAndSubmitRating')]
+    #[On('placeOrderByUser')]
     public function orderDetails()
     {
         $orders = Order::query()

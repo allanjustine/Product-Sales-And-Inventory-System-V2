@@ -8,10 +8,15 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Sidebar extends Component
 {
+
+    #[On('cancelOrderByUser')]
+    #[On('repurchaseAndSubmitRating')]
+    #[On('placeOrderByUser')]
     public function count()
     {
         $usersCount = User::where('id', '<>', auth()->id())->count();

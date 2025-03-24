@@ -205,26 +205,26 @@
     <script>
         document.addEventListener('livewire:navigated', function() {
             $('#updateUser').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#addUser').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#deleteUser').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#updateUser').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
             $('#viewUser').on('hidden.bs.modal', function() {
-                @this.dispatch('resetInputs');
+                Livewire.dispatch('resetInputs');
             });
         });
     </script>
 
     <script>
         document.addEventListener('livewire:navigated', function() {
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({
@@ -236,7 +236,7 @@
                 });
             });
 
-            @this.on('closeModal', function() {
+            Livewire.on('closeModal', function() {
                 document.getElementById('closeModalAdd')?.click();
                 document.getElementById('closeModalUpdate')?.click();
                 document.getElementById('closeModalDelete')?.click();
@@ -257,7 +257,7 @@
                 showCloseButton: true
             }).then((result) => {
                 if(result.isConfirmed) {
-                    @this.dispatch('verifyUser', { id })
+                    Livewire.dispatch('verifyUser', { id })
                 }
             });
         }
@@ -265,7 +265,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', function() {
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const { title, message, type } = event.alerts;
 
                 Swal.fire({

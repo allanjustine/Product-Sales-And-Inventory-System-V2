@@ -314,7 +314,8 @@
                                             Cancelled
                                         </a>
 
-                                        <button type="button" onclick="rePurchase({{ $order->id }})" class="btn btn-primary mt-1">
+                                        <button type="button" onclick="rePurchase({{ $order->id }})"
+                                            class="btn btn-primary mt-1">
                                             <i class="fa-solid fa-rotate-right"></i>
                                             Re-purchase
                                         </button>
@@ -367,7 +368,7 @@
     </style>
     <script>
         document.addEventListener('livewire:navigated', function() {
-            @this.on('alert', function(event) {
+            Livewire.on('alert', function(event) {
                 const { title, type, message } = event.alerts;
 
                 Swal.fire({
@@ -379,10 +380,10 @@
                 });
             });
 
-            @this.on('closeModal', function() {
+            Livewire.on('closeModal', function() {
                 $('#cancel').modal('hide');
                 $('#order-received').modal('hide');
-            })
+            });
         });
     </script>
     <script>
@@ -396,9 +397,27 @@
                 confirmButtonText: 'Yes, re-purchase it!',
             }).then((result) => {
                if(result.isConfirmed) {
-                @this.dispatch('handleClick', { orderId });
+                Livewire.dispatch('handleClick', { orderId });
                }
             });
         }
     </script>
+    <script>
+        document.addEventListener("livewire:navigated", function () {
+            window.Echo.private(`order-user-{{ auth()->id() }}`)
+            .listen('.process-order-event', (e) => {
+                Livewire.dispatch('isRefresh');
+                const { message, status, order } = e;
+                toastrData(message, status, order);
+            });
+        });
+
+        function toastrData(message, status, order) {
+            toastr['success'](`${message} - Product code: ${order?.product?.product_code} - Product Name: ${order?.product?.product_name}`, status, {
+                closeButton: true,
+                "progressBar": true,
+            });
+        }
+    </script>
+
 </div>

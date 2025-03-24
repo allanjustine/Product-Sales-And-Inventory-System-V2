@@ -59,6 +59,10 @@
                                         PC(s)</strong>
                                 </span><br>
                             @endif
+                            @if ($cartItemToCheckOut->product->product_status === 'Not Available')
+                                <span class="text-center text-danger">The product is not available right now. Please check back later.</strong>
+                                </span><br>
+                            @endif
                         @else
                         <div class="loading-overlay mt-3">
                             <div class="loading-message card p-3 bg-dark">
@@ -106,7 +110,7 @@
 <script>
     document.addEventListener('livewire:navigated', function() {
         $('#checkOut').on('hidden.bs.modal', function() {
-            @this.dispatch('resetInputs');
+            Livewire.dispatch('resetInputs');
         });
     });
 </script>

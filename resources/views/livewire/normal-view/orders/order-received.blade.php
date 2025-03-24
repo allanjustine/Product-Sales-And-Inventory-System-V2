@@ -46,7 +46,7 @@
 <script>
     document.addEventListener('livewire:navigated', function() {
         $('#order-received').on('hidden.bs.modal', function() {
-            @this.dispatch('resetInputs');
+            Livewire.dispatch('resetInputs');
         });
     });
 </script>

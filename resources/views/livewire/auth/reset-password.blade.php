@@ -57,7 +57,7 @@
     </div>
     <script>
         document.addEventListener('livewire:navigated', () => {
-            @this.on('alert', (event) => {
+            Livewire.on('alert', (event) => {
                 const {
                     title
                     , type
