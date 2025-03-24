@@ -6,6 +6,10 @@ git unzip libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libzip-dev zip cur
 RUN apt-get update && apt-get install -y \
 git unzip curl nodejs npm
 
+# Install Node.js 20 (replace apt's outdated version)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
 RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
 WORKDIR /var/www/html
