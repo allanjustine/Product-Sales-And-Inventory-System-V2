@@ -57,7 +57,7 @@ class Profile extends Component
     public function updatePhoto()
     {
         $this->validate([
-            'profile_image' => 'image|max:10000',
+            'profile_image' => 'image|max:5120',
         ]);
 
         if ($this->profile_image && is_string($this->user->profile_image)) {
@@ -138,7 +138,7 @@ class Profile extends Component
     public function updated($propertyData)
     {
         $this->validateOnly($propertyData, [
-            'profile_image'         =>      'required|image|max:10000|mimes:jpeg,png,gif,webp,svg|not_in:ico'
+            'profile_image'         =>      'required|image|max:5120|mimes:jpeg,png,gif,webp,svg|not_in:ico'
         ], [
             'profile_image.max'     =>      'The profile image field must not be greater than 5MB.'
         ]);
