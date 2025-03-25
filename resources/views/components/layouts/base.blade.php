@@ -10,7 +10,7 @@
     <title>My Web | {{ $title ?? 'Not Set' }}</title>
     <meta property="og:title" content="My Web | {{ $title ?? 'Not Set' }}">
     <meta property="og:description" content="AJM E-Commerce Web App">
-    <meta property="og:image" content="favicon.ico">
+    <meta property="og:image" content="/images/slide1.jpg">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AJM E-Commerce Web App">
