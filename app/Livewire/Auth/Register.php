@@ -15,7 +15,7 @@ use Livewire\WithFileUploads;
 class Register extends Component
 {
     #[Title("Register")]
-    public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image;
+    public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image, $username;
 
     use WithFileUploads;
 
@@ -40,8 +40,8 @@ class Register extends Component
             'password'          =>          'required|string|min:4|confirmed',
             'gender'            =>          ['required', 'string', Rule::in('Male', 'Female')],
             'phone_number'      =>          'required|numeric|regex:/(0)[0-9]/|digits:11',
+            'username'          =>          'required|string|max:255|unique:users|lowercase',
             'profile_image'     =>          'required|mimes:jpeg,jpg,png,gif,ico|max:1020',
-            'username'          =>          'required|string|max:255|unique:users|lowercase'
         ]);
 
         $token = Str::random(24);
@@ -81,6 +81,7 @@ class Register extends Component
     {
         $this->validateOnly($propertyData, [
             'email'                 =>      ['required', 'email', 'unique:users'],
+            'username'              =>      ['required', 'lowercase', 'unique:users'],
             'phone_number'          =>      ['required', 'numeric', 'regex:/(0)[0-9]/', 'digits:11'],
             'profile_image'         =>      'required|mimes:jpeg,jpg,png,gif,ico|max:1020'
         ]);
