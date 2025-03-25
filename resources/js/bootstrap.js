@@ -25,9 +25,11 @@ window.Echo = new Echo({
     key: import.meta.env.VITE_PUSHER_APP_KEY,
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? "mt1",
     wsHost: window.location.hostname,
+    encrypted: true,
     wsPort: 6001,
-    wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-    forceTLS: true,
+    wssPort: 6001,
+    forceTLS: false,
+    disableStats: true,
     enabledTransports: ["ws", "wss"],
     authEndpoint: '/broadcasting/auth',
     auth: {
