@@ -76,12 +76,14 @@ class Login extends Component
 
             if (auth()->user()->is_admin) {
 
-                event(new UserLoginHistory($ip_address, $browser_address));
+                // event(new UserLoginHistory($ip_address, $browser_address));
+                UserLoginHistory::dispatch($ip_address, $browser_address);
 
                 return $this->redirect('/admin/dashboard', navigate: true);
             } else {
 
-                event(new UserLoginHistory($ip_address, $browser_address));
+                // event(new UserLoginHistory($ip_address, $browser_address));
+                UserLoginHistory::dispatch($ip_address, $browser_address);
 
                 return $this->redirect('/', navigate: true);
             }

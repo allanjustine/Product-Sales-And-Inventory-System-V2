@@ -107,7 +107,8 @@ class Index extends Component
 
             if (!$searchLog) {
                 $log_entry = $this->search;
-                event(new UserSearchLog($log_entry));
+                // event(new UserSearchLog($log_entry));
+                UserSearchLog::dispatch($log_entry);
             }
         }
 
@@ -411,8 +412,8 @@ class Index extends Component
                 $query->where('name', 'admin');
             })->pluck('id')->first();
 
-            event(new PlaceOrder($product, $adminId));
-
+            // event(new PlaceOrder($product, $adminId));
+            PlaceOrder::dispatch($product, $adminId);
 
             $this->dispatch('closeModalCart');
             return;
@@ -527,7 +528,8 @@ class Index extends Component
                 $query->where('name', 'admin');
             })->pluck('id')->first();
 
-            event(new PlaceOrder($product, $adminId));
+            // event(new PlaceOrder($product, $adminId));
+            PlaceOrder::dispatch($product, $adminId);
             return;
         } else {
 

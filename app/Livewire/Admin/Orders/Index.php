@@ -42,7 +42,8 @@ class Index extends Component
             'message'   =>      $message
         ]);
 
-        event(new ProcessOrder($order, $status, $message));
+        // event(new ProcessOrder($order, $status, $message));
+        ProcessOrder::dispatch($order, $status, $message);
 
         return;
     }

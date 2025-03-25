@@ -177,7 +177,8 @@ class Index extends Component
             $query->where('name', 'admin');
         })->pluck('id')->first();
 
-        event(new CancelOrder($order, $adminId));
+        // event(new CancelOrder($order, $adminId));
+        CancelOrder::dispatch($order, $adminId);
 
         return;
     }
@@ -252,7 +253,8 @@ class Index extends Component
             $query->where('name', 'admin');
         })->pluck('id')->first();
 
-        event(new RepurchaseAndSubmitRating($order, $adminId));
+        // event(new RepurchaseAndSubmitRating($order, $adminId));
+        RepurchaseAndSubmitRating::dispatch($order, $adminId);
         return;
     }
 
@@ -317,7 +319,8 @@ class Index extends Component
             $query->where('name', 'admin');
         })->pluck('id')->first();
 
-        event(new RepurchaseAndSubmitRating($received, $adminId));
+        // event(new RepurchaseAndSubmitRating($received, $adminId));
+        RepurchaseAndSubmitRating::dispatch($received, $adminId);
         return;
     }
 
