@@ -45,10 +45,18 @@ window.Echo = new Echo({
     }
 });
 
-window.Echo.connection.bind('error', function (err) {
-    console.error('Pusher Error:', err);
-  });
-window.Echo.connection.bind('state_change', function (states) {
-    console.log('Pusher State Change:', states);
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.Echo && window.Echo.connector && window.Echo.connector.pusher) {
+        window.Echo.connector.pusher.connection.bind('error', function (err) {
+            console.error('Pusher Error:', err);
+        });
+
+        window.Echo.connector.pusher.connection.bind('state_change', function (states) {
+            console.log('Pusher State Change:', states);
+        });
+    } else {
+        console.error('Echo is not initialized');
+    }
 });
+
 
