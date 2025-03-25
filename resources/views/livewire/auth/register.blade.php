@@ -209,7 +209,7 @@
 
     <script>
         document.addEventListener('livewire:navigated', function() {
-            Livewire.on('alerts', (event) => {
+            Livewire.on('alert', (event) => {
                 const { title, message, type } = event.alerts;
 
                 Swal.fire({
