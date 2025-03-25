@@ -31,7 +31,7 @@ window.Echo = new Echo({
     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? "https") === "https",
     enabledTransports: ["ws", "wss"],
-    authEndpoint: 'http://localhost:8002/broadcasting/auth',
+    authEndpoint: 'https://e-commerce.smctgroup.ph/broadcasting/auth',
     auth: {
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
