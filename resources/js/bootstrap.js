@@ -20,32 +20,11 @@ import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 window.Pusher = Pusher;
 
-// window.Echo = new Echo({
-//     broadcaster: "pusher",
-//     key: import.meta.env.VITE_PUSHER_APP_KEY,
-//     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? "mt1",
-//     wsHost: import.meta.env.VITE_PUSHER_HOST
-//         ? import.meta.env.VITE_PUSHER_HOST
-//         : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
-//     wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
-//     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-//     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? "https") === "https",
-//     encrypted: true,
-//     disableStats: true,
-//     enabledTransports: ["ws", "wss"],
-//     authEndpoint: '/broadcasting/auth',
-//     auth: {
-//         headers: {
-//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-//         }
-//     }
-// });
-
 window.Echo = new Echo({
     broadcaster: "pusher",
     key: import.meta.env.VITE_PUSHER_APP_KEY,
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? "mt1",
-    forceTLS: true,
+    forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? "https") === "https",
     encrypted: true,
     disableStats: true,
     enabledTransports: ["ws", "wss"],
@@ -54,20 +33,6 @@ window.Echo = new Echo({
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         }
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.Echo && window.Echo.connector && window.Echo.connector.pusher) {
-        window.Echo.connector.pusher.connection.bind('error', function (err) {
-            console.error('Pusher Error:', err);
-        });
-
-        window.Echo.connector.pusher.connection.bind('state_change', function (states) {
-            console.log('Pusher State Change:', states);
-        });
-    } else {
-        console.error('Echo is not initialized');
     }
 });
 
