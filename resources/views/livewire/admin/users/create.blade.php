@@ -83,6 +83,14 @@
                                 <span class="text-danger">*{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" placeholder="Username" id="username"
+                                wire:model.live.debounce.200ms="username" required>
+                            @error('username')
+                                <span class="text-danger">*{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">

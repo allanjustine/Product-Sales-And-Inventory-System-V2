@@ -125,6 +125,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="username" class="col-sm-2 col-form-label">Username</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            placeholder="Username" wire:model.live.debounce.200ms="username" required>
+                                        @error('username')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputAddress" name="address"

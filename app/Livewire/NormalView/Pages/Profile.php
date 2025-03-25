@@ -27,6 +27,7 @@ class Profile extends Component
     public $password;
     public $password_confirmation;
     public $profile_picture;
+    public $username;
 
     use WithFileUploads;
 
@@ -39,6 +40,7 @@ class Profile extends Component
         $this->user_location = $this->user->user_location;
         $this->phone_number = $this->user->phone_number;
         $this->email = $this->user->email;
+        $this->username = $this->user->username;
     }
 
     #[On('profileRefresh')]
@@ -90,6 +92,7 @@ class Profile extends Component
             'address' => 'required',
             'phone_number' => 'required|numeric',
             'email' => 'required|email|unique:users,email,' . $this->user->id,
+            'username' => 'required|string|lowercase|unique:users,username,' . $this->user->id,
         ]);
 
         $this->user->name = $this->name;
@@ -98,6 +101,7 @@ class Profile extends Component
         $this->user->user_location = $this->user_location;
         $this->user->phone_number = $this->phone_number;
         $this->user->email = $this->email;
+        $this->user->username = $this->username;
         $this->user->save();
 
         $this->dispatch('alert', alerts: [

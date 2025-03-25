@@ -35,6 +35,7 @@ class Index extends Component
     public $sortBy = 'name';
     public $sortDirection = 'asc';
     public $profile_image_url;
+    public $username;
 
     public function sortItemBy($field)
     {
@@ -103,10 +104,11 @@ class Index extends Component
             'name'              =>          'required|string|max:255',
             'address'           =>          'required|string|max:255',
             'email'             =>          'required|string|email|max:255|unique:users',
+            'username'          =>          'required|string|max:255|unique:users|lowercase',
             'password'          =>          'required|string|min:4|confirmed',
             'gender'            =>          ['required', 'string', Rule::in('Male', 'Female')],
             'phone_number'      =>          'required|string|numeric|regex:/(0)[0-9]/|digits:11',
-            'profile_image'     =>          'nullable|image|max:10000'
+            'profile_image'     =>          'nullable|image|max:10000',
         ]);
 
         $token = Str::random(24);
@@ -119,6 +121,7 @@ class Index extends Component
             'password'          => Hash::make($this->password),
             'gender'            => $this->gender,
             'phone_number'      => $this->phone_number,
+            'username'          => $this->username,
             'remember_token'    => $token,
             'profile_image'     => $path
         ]);
@@ -155,6 +158,7 @@ class Index extends Component
         $this->userView = null;
         $this->userEdit = null;
         $this->userToDelete = null;
+        $this->username = '';
 
         $this->resetValidation();
     }
@@ -170,6 +174,7 @@ class Index extends Component
         $this->password_confirmation = $this->userEdit->password_confirmation;
         $this->gender = $this->userEdit->gender;
         $this->phone_number = $this->userEdit->phone_number;
+        $this->username = $this->userEdit->username;
         $this->role = $this->userEdit->roles->pluck('id')->toArray();
 
         if (is_string($this->userEdit->profile_image)) {
@@ -184,6 +189,7 @@ class Index extends Component
     {
         $this->validate([
             'email'             =>      ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->userEdit->id],
+            'username'          =>      ['required', 'string', 'lowercase', 'max:255', 'unique:users,username,' . $this->userEdit->id],
             'profile_image'     =>      ['nullable', 'image', 'max:10000'],
             'phone_number'      =>      'required|string|numeric|regex:/(0)[0-9]/|digits:11',
             'gender'            =>      ['required', 'string', Rule::in('Male', 'Female')],
@@ -198,6 +204,7 @@ class Index extends Component
             'address' => $this->address,
             'email' => $this->email,
             'gender' => $this->gender,
+            'username' => $this->username,
             'phone_number' => $this->phone_number,
             'profile_image' => $this->profile_image ? $this->profile_image->store('public/profile/images') : $this->userEdit->profile_image
         ]);

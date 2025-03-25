@@ -34,7 +34,17 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username-edit" placeholder="Username"
+                                    wire:model.live.debounce.200ms="username" required>
+                                @error('username')
+                                <span class="text-danger">*{{ $message ?? '' }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label for="name">Name:</label>
                                 <input type="text" class="form-control" id="name-edit" placeholder="Name"
@@ -44,7 +54,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label for="address">Address:</label>
                                 <input type="text" class="form-control" id="address-edit" placeholder="Address"

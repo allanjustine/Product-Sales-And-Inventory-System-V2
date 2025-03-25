@@ -63,11 +63,19 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="email" id="email" wire:model.live="email" class="form-control"
+                            <input type="email" id="email" wire:model.live.debounce.200ms="email" class="form-control"
                                 placeholder="Email">
                             <label for="email">Email</label>
                         </div>
                         @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        <div class="form-floating mt-3">
+                            <input type="text" id="username" wire:model.live.debounce.200ms="username" class="form-control"
+                                placeholder="Username">
+                            <label for="username">Username</label>
+                        </div>
+                        @error('username')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
