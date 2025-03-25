@@ -34,7 +34,7 @@ window.Echo = new Echo({
     wssPort: 6001,
     wsPort: 6001,
     // forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? "https") === "https",
-    forceTLS: true,
+    forceTLS: false,
     disableStats: true,
     enabledTransports: ["ws", "wss"],
     authEndpoint: '/broadcasting/auth',
@@ -44,3 +44,11 @@ window.Echo = new Echo({
         }
     }
 });
+
+window.Echo.connection.bind('error', function (err) {
+    console.error('Pusher Error:', err);
+  });
+window.Echo.connection.bind('state_change', function (states) {
+    console.log('Pusher State Change:', states);
+});
+
