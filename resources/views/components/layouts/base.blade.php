@@ -9,7 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Web | {{ $title ?? 'Not Set' }}</title>
     <meta property="og:title" content="My Web | {{ $title ?? 'Not Set' }}">
-    <meta property="og:description" content="AJM E-Commerce Web App">
+    <meta property="og:description"
+        content="A powerful, real-time eCommerce platform designed for simplicity and speed. Seamlessly manage products, process orders, and track inventory with instant updates. Whether you're a small business or a growing enterprise, our user-friendly interface makes online selling effortless — no technical expertise required.">
     <meta property="og:image" content="https://e-commerce.smctgroup.ph/images/slide1.jpg">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
