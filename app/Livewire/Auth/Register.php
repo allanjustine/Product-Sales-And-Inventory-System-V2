@@ -81,15 +81,15 @@ class Register extends Component
         $this->profile_image = null;
     }
 
-    // public function updated($propertyData)
-    // {
-    //     $this->validateOnly($propertyData, [
-    //         'email'                 =>      ['required', 'email', 'unique:users'],
-    //         'username'              =>      ['required', 'lowercase', 'unique:users'],
-    //         'phone_number'          =>      ['required', 'numeric', 'regex:/(0)[0-9]/', 'digits:11'],
-    //         'profile_image'         =>      'required|mimes:jpeg,jpg,png,gif,ico|max:1020'
-    //     ]);
-    // }
+    public function updated($propertyData)
+    {
+        $this->validateOnly($propertyData, [
+            'email'                 =>      ['required', 'email', 'unique:users'],
+            'username'              =>      ['required', 'lowercase', 'unique:users'],
+            'phone_number'          =>      ['required', 'numeric', 'regex:/(0)[0-9]/', 'digits:11'],
+            'profile_image'         =>      'required|mimes:jpeg,jpg,png,gif,ico|max:1020'
+        ]);
+    }
 
     public function render()
     {
