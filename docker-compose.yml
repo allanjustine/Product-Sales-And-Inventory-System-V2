@@ -22,6 +22,13 @@ services:
         DB_DATABASE: psaisv2
         DB_USERNAME: smct
         DB_PASSWORD: smct
+        PUSHER_APP_ID: 1962323
+        PUSHER_APP_KEY: 4a7679920b500c68c69c
+        PUSHER_APP_SECRET: 1aaea6fab0da6050d8eb
+        PUSHER_HOST: e-commerce.smctgroup.ph
+        PUSHER_PORT: 443
+        PUSHER_SCHEME: https
+        PUSHER_APP_CLUSTER: ap1
     networks:
       - e-commerce-network
 
