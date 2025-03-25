@@ -68,9 +68,13 @@ class Register extends Component
 
         Mail::to($user->email)->send(new EmailVerification($user));
 
-        alert()->info('Registered', 'We sent you a verification email. Please check your inbox for the verification.')->showConfirmButton('Okay');
+        $this->dispatch('alert', alerts: [
+            'type'          =>          "success",
+            'title'         =>          "Registered",
+            'message'       =>          "We sent you a verification email. Please check your inbox for the verification."
+        ]);
 
-        return $this->redirect('/login', navigate: true);
+        return;
     }
 
     public function removeProfileImage() {

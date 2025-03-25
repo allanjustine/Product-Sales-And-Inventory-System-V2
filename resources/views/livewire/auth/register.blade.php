@@ -206,4 +206,27 @@
 
 
     </script>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            Livewire.on('alerts', (event) => {
+                const { title, message, type } = event.alerts;
+
+                Swal.fire({
+                    icon: type,
+                    title: title,
+                    text: message,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Okay',
+                    showCloseButton: true,
+                    showCancelButton: false,
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        Livewire.navigate('/login');
+                    }
+                });
+            });
+        });
+    </script>
 </div>
