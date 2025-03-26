@@ -249,10 +249,10 @@
                     After you logout you will redirect to login page.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click="logout" class="btn btn-danger"><i
-                            class="fa-solid fa-arrow-right-from-bracket"></i> Yes,
-                        Logout</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" wire:click="logout" class="btn btn-danger" wire:target='logout' wire:loading.attr='disabled'>
+                        <span  wire:target='logout' wire:loading.remove><i class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</span>
+                        <span  wire:target='logout' wire:loading><span class="spinner-border spinner-border-sm"></span> Logging out...</span>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
