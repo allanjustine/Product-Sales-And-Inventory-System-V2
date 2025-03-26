@@ -12,7 +12,7 @@ services:
       - .:/var/www/html
       - ./default.conf:/etc/nginx/conf.d/default.conf
       - ./php.ini:/usr/local/etc/php/php.ini
-      - /home/webserver/uploads/e-commerce-uploads/public:/var/www/html/storage/app/public
+      - ./storage:/var/www/html/storage
     environment:
         APP_ENV: production
         APP_URL: https://e-commerce.smctgroup.ph
@@ -42,7 +42,7 @@ services:
       - .:/var/www/html
       - ./default.conf:/etc/nginx/conf.d/default.conf
       - ./php.ini:/usr/local/etc/php/php.ini
-      - /home/webserver/uploads/e-commerce-uploads/public:/var/www/html/storage/app/public
+      - ./storage:/var/www/html/storage
     networks:
       - e-commerce-network
     depends_on:
