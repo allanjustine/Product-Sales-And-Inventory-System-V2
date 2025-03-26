@@ -77,7 +77,7 @@
                         </ul>
                     </li>
                     <li class="nav-header">PRODUCT MANAGEMENT</li>
-                    <li x-data="{ open: window.location.pathname === 'admin/products' || window.location.pathname === 'admin/product-categories' }"
+                    <li x-data="{ open: window.location.pathname === '/admin/products' || window.location.pathname === '/admin/product-categories' }"
                         class="nav-item" x-bind:class="{ 'menu-open': open }">
                         <a href="#" class="nav-link" @click="open = !open">
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
@@ -246,8 +246,6 @@
             const links = document.querySelectorAll('.nav-link');
 
             links.forEach(link => {
-                console.log('window location', window.location.pathname);
-                console.log('link.getAttribute', link.getAttribute('href'));
                 if(link.getAttribute('href') === window.location.pathname) {
                     link.classList.add('active2');
                 }
