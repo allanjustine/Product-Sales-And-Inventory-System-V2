@@ -14,9 +14,9 @@ use Livewire\Component;
 class Sidebar extends Component
 {
 
-    #[On('cancelOrderByUser')]
-    #[On('repurchaseAndSubmitRating')]
-    #[On('placeOrderByUser')]
+    // #[On('cancelOrderByUser')]
+    // #[On('repurchaseAndSubmitRating')]
+    // #[On('placeOrderByUser')]
     public function count()
     {
         $usersCount = User::where('id', '<>', auth()->id())->count();
