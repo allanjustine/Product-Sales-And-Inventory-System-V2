@@ -23,7 +23,9 @@
                 </div>
                 @endif
                 <div class="modal-footer">
-                    <button class="btn btn-danger form-control" wire:click="removeItemToCart()"><i class="fa-solid fa-cart-xmark"></i> Yes, Remove
+                    <button class="btn btn-danger form-control" wire:click="removeItemToCart" type="button" wire:target='removeItemToCart' wire:loading.attr='disabled'>
+                        <span wire:target='removeItemToCart' wire:loading.remove><i class="fa-solid fa-cart-xmark"></i> Yes, Remove</span>
+                        <span wire:target='removeItemToCart' wire:loading><span class="spinner-border spinner-border-sm"></span> Removing...</span>
                     </button>
                     <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">Cancel</button>
                 </div>

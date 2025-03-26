@@ -97,8 +97,9 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary form-control" wire:click="placeOrder"><i
-                            class="fa-solid fa-cart-circle-check"></i> Place Order
+                    <button class="btn btn-primary form-control" wire:click="placeOrder" wire:target='placeOrder' type="button" wire:loading.attr='disabled'>
+                        <span wire:target='placeOrder' wire:loading.remove><i class="fa-solid fa-cart-circle-check"></i> Place Order</span>
+                        <span wire:target='placeOrder' wire:loading><span class="spinner-border spinner-border-sm"></span> Please wait...</span>
                     </button>
                     <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">Cancel</button>
                 </div>

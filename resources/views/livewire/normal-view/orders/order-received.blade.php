@@ -34,7 +34,9 @@
                     @enderror
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary form-control" type="button" wire:click="submitRating"><i class="fa-sharp fa-solid fa-thumbs-up"></i> Submit
+                    <button class="btn btn-primary form-control" type="button" wire:click="submitRating" wire:loading.attr='disabled' wire:target='submitRating'>
+                       <span wire:target='submitRating' wire:loading.remove><i class="fa-sharp fa-solid fa-thumbs-up"></i> Submit</span>
+                       <span wire:target='submitRating' wire:loading><span class="spinner-border spinner-border-sm"></span> Submitting...</span>
                     </button>
                     <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">Close</button>
                 </div>

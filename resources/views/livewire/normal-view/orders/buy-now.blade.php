@@ -106,8 +106,9 @@
                 </div>
                 @if ($orderToBuy)
                     <div class="modal-footer">
-                        <button type="button" wire:loading.attr="disabled" class="btn btn-primary form-control" wire:click="orderPlaceOrderItem"><i
-                                class="fa-solid fa-cart-circle-check"></i> Place Order</button>
+                        <button type="button" wire:loading.attr="disabled" class="btn btn-primary form-control" wire:click="orderPlaceOrderItem" wire:target='orderPlaceOrderItem'>
+                            <span wire:target='orderPlaceOrderItem' wire:loading.remove><i class="fa-solid fa-cart-circle-check"></i> Place Order</span>
+                            <span wire:target='orderPlaceOrderItem' wire:loading><span class="spinner-border spinner-border-sm"></span> Please wait...</span>
 
                         <button type="button" class="btn btn-secondary form-control"
                             data-bs-dismiss="modal">Cancel</button>

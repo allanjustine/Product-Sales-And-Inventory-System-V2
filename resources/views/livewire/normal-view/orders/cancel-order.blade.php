@@ -24,7 +24,9 @@
                     </div>
                 @endif
                 <div class="modal-footer">
-                    <button class="btn btn-danger form-control" wire:click="cancelOrder"><i class="fa-solid fa-circle-xmark"></i> Yes, Cancel
+                    <button class="btn btn-danger form-control" wire:click="cancelOrder" wire:target='cancelOrder' wire:loading.attr='disabled' type="button">
+                        <span wire:target='cancelOrder' wire:loading.remove><i class="fa-solid fa-circle-xmark"></i> Yes, Cancel</span>
+                        <span wire:target='cancelOrder' wire:loading><span class="spinner-border spinner-border-sm"></span> Canceling...</span>
                     </button>
                     <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">Close</button>
                 </div>

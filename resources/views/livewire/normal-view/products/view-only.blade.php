@@ -51,8 +51,10 @@
         </div>
         <div class="col-md-3 col-sm-4 col-6 text-center">
             <label for="Clear Filters">Clear Filters</label>
-            <button style="height: 40px;" wire:click="clearFilters" class="btn btn-secondary form-control"><i
-                    class="fa-solid fa-broom-wide"></i> Clear Filters</button>
+            <button style="height: 40px;" type="button" wire:loading.attr='disabled' wire:target='clearFilters' wire:click="clearFilters" class="btn btn-secondary form-control">
+                <span wire:target='clearFilters' wire:loading.remove='clearFilters'><i class="fa-solid fa-broom-wide"></i> Clear Filters</span>
+                <span wire:target='clearFilters' wire:loading='clearFilters'><span class="spinner-border spinner-border-sm"></span> Clearing...</span>
+            </button>
         </div>
     </div>
     <div class="container mt-5">
