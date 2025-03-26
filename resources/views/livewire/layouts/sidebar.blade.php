@@ -22,7 +22,7 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" role="menu">
                     <li class="nav-item">
-                        <a wire:navigate href="/admin/dashboard" data-path="/admin/dashboard"
+                        <a wire:navigate href="/admin/dashboard"
                             class="nav-link">
                             <i class="nav-icon fa-solid fa-gauge-max"></i>
                             <p>
@@ -246,8 +246,7 @@
             const links = document.querySelectorAll('.nav-link');
 
             links.forEach(link => {
-                const path = link.getAttribute('data-path');
-                if(path === window.location.pathname) {
+                if(link.getAttribute('href') === window.location.pathname) {
                     link.classList.add('active2');
                 }
             })
