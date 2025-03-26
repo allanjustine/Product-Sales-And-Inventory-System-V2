@@ -246,6 +246,8 @@
             const links = document.querySelectorAll('.nav-link');
 
             links.forEach(link => {
+                console.log('window location', window.location.pathname);
+                console.log('link.getAttribute', link.getAttribute('href'));
                 if(link.getAttribute('href') === window.location.pathname) {
                     link.classList.add('active2');
                 }
