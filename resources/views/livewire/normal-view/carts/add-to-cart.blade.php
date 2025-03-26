@@ -67,7 +67,7 @@
                                 <i class="fa-solid fa-cart-plus"></i> Add to Cart
                             </span>
                             <span wire:target='addToCartNow' wire:loading>
-                                <span class="spinner-border spinner-br"></span> Adding...
+                                <span class="spinner-border spinner-border-sm"></span> Adding...
                             </span>
                         </button>
                         <button type="button" class="btn btn-secondary form-control"
