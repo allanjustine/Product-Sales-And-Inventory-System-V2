@@ -11,47 +11,47 @@
             <ul class="navbar-nav mx-auto p-3 navbar-nav-item">
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ '/' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/"><i class="fa-light fa-house"></i> Home</a>
                 </li>
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'about-us' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/about-us"><i class="fa-light fa-question"></i> About Us</a>
                 </li>
                 @if (auth()->check())
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'products' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/products"><i class="fa-light fa-box-open"></i> Products</a>
                 </li>
                 @role('user')
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'orders' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/orders"><i class="fa-light fa-bag-shopping"></i> My Orders</a>
                 </li>
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'carts' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/carts"><i class="fa-light fa-shopping-cart"></i> My Carts</a>
                 </li>
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'favorites' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/favorites"><i class="fa-light fa-heart"></i> My Favorites</a>
                 </li>
                 @endrole
                 @else
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'view-products' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/view-products"><i class="fa-light fa-box-open"></i> View Products</a>
                 </li>
                 @endif
                 <li class="nav-item p-2">
                     <a wire:navigate
-                        class="nav-link text-white text-center {{ 'feedbacks' == request()->path() ? 'active2' : '' }}"
+                        class="nav-link text-white text-center"
                         href="/feedbacks"><i class="fa-light fa-comment-dots"></i> Your Feedback</a>
                 </li>
             </ul>
@@ -160,4 +160,16 @@
             z-index: 1 !important;
         }
     </style>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            const links = document.querySelectorAll('.nav-link');
+
+            links.forEach(link => {
+                if(link.getAttribut('href') === window.location.pathname) {
+                    link.classList.add('active2');
+                }
+            })
+        });
+    </script>
 </div>

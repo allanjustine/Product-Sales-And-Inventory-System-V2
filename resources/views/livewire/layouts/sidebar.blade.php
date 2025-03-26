@@ -23,7 +23,7 @@
                 <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" role="menu">
                     <li class="nav-item">
                         <a wire:navigate href="/admin/dashboard"
-                            class="nav-link {{ 'admin/dashboard' == request()->path() ? 'active2' : '' }}">
+                            class="nav-link">
                             <i class="nav-icon fa-solid fa-gauge-max"></i>
                             <p>
                                 Dashboard
@@ -32,7 +32,7 @@
                     </li>
                     <li class="nav-item">
                         <a wire:navigate href="/admin/users"
-                            class="nav-link {{ 'admin/users' == request()->path() ? 'active2' : '' }}">
+                            class="nav-link">
                             <i class="nav-icon fa-solid fa-users"></i>
                             <p>
                                 Users
@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav-header">ORDERS MANAGEMENT</li>
-                    <li x-data="{ open: @json(request()->is('admin/orders') || request()->is('admin/product-sales')) }" class="nav-item"
+                    <li x-data="{ open: window.location.pathname === '/admin/orders' || window.location.pathname === '/admin/product-sales' }" class="nav-item"
                         x-bind:class="{ 'menu-open': open }">
                         <a href="#" @click="open = !open" class="nav-link">
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
@@ -54,7 +54,7 @@
                         <ul class="nav nav-treeview" x-cloak x-show="open" x-transition>
                             <li class="nav-item">
                                 <a wire:navigate href="/admin/orders"
-                                    class="nav-link {{ 'admin/orders' == request()->path() ? 'active2' : '' }}">
+                                    class="nav-link">
                                     <i class="nav-icon fa-solid fa-bag-shopping"></i>
                                     <p>
                                         Users Order
@@ -65,7 +65,7 @@
                             </li>
                             <li class="nav-item">
                                 <a wire:navigate href="/admin/product-sales"
-                                    class="nav-link {{ 'admin/product-sales' == request()->path() ? 'active2' : '' }}">
+                                    class="nav-link">
                                     <i class="nav-icon fa-solid fa-database"></i>
                                     <p>
                                         Product Sales
@@ -77,7 +77,7 @@
                         </ul>
                     </li>
                     <li class="nav-header">PRODUCT MANAGEMENT</li>
-                    <li x-data="{ open: @json(request()->is('admin/products') || request()->is('admin/product-categories')) }"
+                    <li x-data="{ open: window.location.pathname === 'admin/products' || window.location.pathname === 'admin/product-categories' }"
                         class="nav-item" x-bind:class="{ 'menu-open': open }">
                         <a href="#" class="nav-link" @click="open = !open">
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
@@ -89,7 +89,7 @@
                         <ul class="nav nav-treeview" x-cloak x-show="open" x-transition>
                             <li class="nav-item">
                                 <a wire:navigate href="/admin/products"
-                                    class="nav-link {{ 'admin/products' == request()->path() ? 'active2' : '' }}">
+                                    class="nav-link">
                                     <i class="nav-icon fa-solid fa-box-open"></i>
                                     <p>Products</p>
                                     <span class="right badge badge-info">{{ $productsCount }}</span>
@@ -97,7 +97,7 @@
                             </li>
                             <li class="nav-item">
                                 <a wire:navigate href="/admin/product-categories"
-                                    class="nav-link {{ 'admin/product-categories' == request()->path() ? 'active2' : '' }}">
+                                    class="nav-link">
                                     <i class="nav-icon fa-solid fa-list"></i>
                                     <p>Product Categories</p>
                                     <span class="right badge badge-info">{{ $categoriesCount }}</span>
@@ -117,7 +117,7 @@
                     </li> --}}
                     <li class="nav-item">
                         <a wire:navigate href="/admin/feedbacks"
-                            class="nav-link {{ 'admin/feedbacks' == request()->path() ? 'active2' : '' }}">
+                            class="nav-link">
                             <i class="nav-icon fa-solid fa-comments"></i>
                             <p>
                                 Feed Backs
@@ -171,7 +171,7 @@
                             </li>
                             <li class="nav-item">
                                 <a wire:navigate href="/profile"
-                                    class="nav-link {{ 'profile' == request()->path() ? 'active2' : '' }}">
+                                    class="nav-link">
                                     <i class="fa-solid fa-user nav-icon"></i>
                                     <p>My Profile</p>
                                 </a>
@@ -240,4 +240,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:navigated', function() {
+            const links = document.querySelectorAll('.nav-link');
+
+            links.forEach(link => {
+                if(link.getAttribut('href') === window.location.pathname) {
+                    link.classList.add('active2');
+                }
+            })
+        });
+    </script>
 </div>
