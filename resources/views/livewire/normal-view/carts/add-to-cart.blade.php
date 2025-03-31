@@ -37,6 +37,11 @@
                                         @endif
                                         <h6 class="mt-5 text-capitalize"><strong>{{ $productToBeCart->product_name }}</strong></h6>
                                         <p><strong>&#8369;{{ number_format($productToBeCart->product_price, 2, '.', ',') }}</strong>
+                                            @if($productToBeCart->product_old_price !== null)
+                                            <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                                number_format($productToBeCart->product_old_price, 2, '.', ',') }})</span><span
+                                                class="flag-discount"> {{ $productToBeCart->discount }}</span>
+                                            @endif
                                         </p>
                                         <p><strong>Stock: {{ number_format($productToBeCart->product_price) }}
                                                 PC(s)</strong>

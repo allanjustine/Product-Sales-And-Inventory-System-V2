@@ -71,6 +71,7 @@ class Index extends Component
                     'type'      =>      'success',
                     'message'   =>      'Cart item deleted'
                 ]);
+                $this->dispatch('addTocartRefresh');
 
                 $this->reset();
                 return;
@@ -103,6 +104,7 @@ class Index extends Component
             'message'   =>      'Removed from cart successfully'
         ]);
         $this->dispatch('closeModal');
+        $this->dispatch('addTocartRefresh');
         $this->reset();
         return;
     }
@@ -159,6 +161,7 @@ class Index extends Component
             $product->product_sold += $cartItem->quantity;
             $product->save();
             $cartItem->delete();
+            $this->dispatch('addTocartRefresh');
 
             if ($existingOrder) {
                 $this->dispatch('alert', alerts: [

@@ -54,15 +54,17 @@ class ProductFactory extends Factory
         ];
         $product_nameFake = fake()->numberBetween(4, 8);
         $randomTimestamp = now()->subDays(rand(1, 30))->addHours(rand(0, 23))->addMinutes(rand(0, 59))->addSeconds(rand(0, 59));
+        $price = fake()->randomFloat(2, 10, 1000);
 
         return [
             'product_category_id' => fake()->numberBetween(1, 12),
-            'product_name' => fake()->word($product_nameFake, true),
+            'product_name' => fake()->words($product_nameFake, true),
             'product_description' => fake()->sentence(),
             'product_status' => fake()->randomElement(['Available', 'Not Available']),
             'product_stock' => fake()->numberBetween(1, 500),
             'product_sold' => fake()->numberBetween(0, 1000),
-            'product_price' => fake()->randomFloat(2, 10, 1000),
+            'product_price' => $price,
+            'product_old_price' => $price + fake()->randomFloat(2, 0.00, 100.00),
             'product_rating' =>  fake()->numberBetween(0, 5),
             'product_votes' =>  fake()->numberBetween(0, 1000),
             'product_code' => 'AJM-' . fake()->unique()->bothify('??#?#?##'),

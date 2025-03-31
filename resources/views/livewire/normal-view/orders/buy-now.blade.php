@@ -45,6 +45,11 @@
                                         @endif
                                         <h6 class="mt-5"><strong class="text-capitalize">{{ $orderToBuy->product_name }}</strong></h6>
                                         <p><strong>&#8369;{{ number_format($orderToBuy->product_price, 2, '.', ',') }}</strong>
+                                            @if($orderToBuy->product_old_price !== null)
+                                            <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                                number_format($orderToBuy->product_old_price, 2, '.', ',') }})</span><span
+                                                class="flag-discount"> {{ $orderToBuy->discount }}</span>
+                                            @endif
                                         </p>
                                         <p><strong>Stock: x{{ number_format($orderToBuy->product_stock) }}
                                                 PC(s)</strong>

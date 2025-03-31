@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('product_status');
             $table->string('product_stock');
             $table->decimal('product_price', 10, 2);
+            $table->decimal('product_old_price', 10, 2)->nullable();
             $table->decimal('product_rating', 3, 1)->default(0);
             $table->string('product_code');
             $table->unsignedInteger('product_sold')->default(0);

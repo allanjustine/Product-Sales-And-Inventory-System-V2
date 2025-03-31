@@ -36,7 +36,10 @@ class Product extends Model
         return $this->hasMany(Favorite::class);
     }
 
-
+    public function getDiscountAttribute()
+    {
+        return round((($this->product_old_price - $this->product_price) / $this->product_old_price) * 100, 2) . "%";
+    }
 
     public function scopeSearch($query, $terms)
     {
