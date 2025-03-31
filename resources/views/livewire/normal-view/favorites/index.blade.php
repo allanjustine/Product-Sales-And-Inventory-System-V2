@@ -93,7 +93,7 @@
                                     class="fa-light fa-pen-to-square"></i> Update</a>
                             @endrole
 
-                            <div class="d-flex font-size-1 mb-2">
+                            <div class="d-flex text-sm mb-2">
                                 <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                     {{ $favorite->product->product_sold }}
