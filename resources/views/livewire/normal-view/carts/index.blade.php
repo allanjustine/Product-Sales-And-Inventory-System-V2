@@ -7,29 +7,65 @@
         <div class="d-flex justify-content-center">
             <div class="card col-md-10 mt-3 shadow rounded">
                 <div class="card-body table-responsive">
-                    <div class="row">
-                        <h5 class="col-4">Description</h5>
-                        <h5 class="col-4 text-center">Quantity</h5>
-                        <h5 class="col-4 text-end">Action</h5>
+                    <div class="d-none d-md-block">
+                        <div class="row">
+                            <h5 class="col-4">Description</h5>
+                            <h5 class="col-4 text-center">Quantity</h5>
+                            <h5 class="col-4 text-end">Action</h5>
+                        </div>
                     </div>
                     <hr>
                     @forelse ($cartItems as $item)
-                    <div class="row mb-3 mt-3">
-                        <div class="col-4">
-                            <p>
-                                @if (Storage::exists($item->product->product_image))
-                                <img style="width: 70px; height: 70px; border-radius:50%;"
-                                    src="{{ Storage::url($item->product->product_image) }}" alt="">
-                                @else
-                                <img style="width: 70px; height: 70px; border-radius:50%;"
-                                    src="{{ $item->product->product_image }}" alt="">
-                                @endif
-                            </p>
-                            <p class="fs-5">
-                                <span class="text-capitalize"><strong>{{ $item->product->product_name }}</strong></span>
+                    <div class="d-flex flex-column">
+                        <div class="row mb-3 mt-3">
+                            <div class="col-4">
+                                <p>
+                                    @if (Storage::exists($item->product->product_image))
+                                    <img style="width: 70px; height: 70px; border-radius:10%;"
+                                        src="{{ Storage::url($item->product->product_image) }}" alt="">
+                                    @else
+                                    <img style="width: 70px; height: 70px; border-radius:10%;"
+                                        src="{{ $item->product->product_image }}" alt="">
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="btn-group">
+                                    <button class="btn border" wire:click="decreaseQuantity({{ $item->id }})"><i
+                                            class="fa-regular fa-minus"></i></button><span class="p-3">{{
+                                        $item->quantity
+                                        }}</span><button class="btn border"
+                                        wire:click="updateCartItem({{ $item->id }})"><i
+                                            class="fa-regular fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex flex-column align-items-end">
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-primary mt-2 checkout d-flex gap-1 align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#checkOut"
+                                        wire:click="checkOut({{ $item->id }})"><i
+                                            class="fa-regular fa-cart-circle-check"></i> <span
+                                            class="d-none d-md-block">Checkout</span></button>
+                                    <button class="btn btn-danger mt-2 d-flex gap-1 align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#remove"
+                                        wire:click="remove({{ $item->id }})"><i class="fa-regular fa-trash-alt"></i>
+                                        <span class="d-none d-md-block">Remove</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="fs-5" style="cursor: pointer;" :class="{ 'text-truncate': !showText }"
+                                x-data="{ showText: false }">
+                                <span class="text-capitalize" x-cloak x-on:click="showText = !showText"><strong>{{
+                                        $item->product->product_name }}</strong></span>
                             </p>
                             <p class="fw-bold">
                                 &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}
+                                @if($item->product->product_old_price !== null)
+                                <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                    number_format($item->product->product_old_price, 2, '.', ',') }})</span><span
+                                    class="flag-discount"> {{ $item->product->discount }}</span>
+                                @endif
                             </p>
                             <p class="fw-semibold">
                                 x{{ $item->quantity }}PC(s)
@@ -38,21 +74,12 @@
                             <p class="fs-6">
                                 <strong class="item-price">Sub total: &#8369;{{ number_format($item->quantity *
                                     $item->product->product_price, 2, '.', ',') }}</strong>
+                                @if($item->product->product_old_price !== null)
+                                <span class="text-muted">(save &#8369;{{ number_format(($item->quantity *
+                                    $item->product->product_old_price) - ($item->quantity *
+                                    $item->product->product_price), 2, '.', ',') }})</span>
+                                @endif
                             </p>
-                        </div>
-                        <div class="col-4 text-center">
-                            <div class="btn-group">
-                                <button class="btn border" wire:click="decreaseQuantity({{ $item->id }})"><i
-                                        class="fa-regular fa-minus"></i></button><span class="p-3">{{ $item->quantity
-                                    }}</span><button class="btn border" wire:click="updateCartItem({{ $item->id }})"><i
-                                        class="fa-regular fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="col-4 d-flex flex-column align-items-end">
-                            <button class="btn btn-primary mt-2 checkout" data-bs-toggle="modal"
-                                data-bs-target="#checkOut" wire:click="checkOut({{ $item->id }})">Checkout</button>
-                            <button class="btn btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#remove"
-                                wire:click="remove({{ $item->id }})">Remove</button>
                         </div>
                     </div>
                     <hr>
@@ -61,16 +88,36 @@
                         Your cart is empty. <a wire:navigate href="/products">Click
                             here to add an product to cart.</a></h5>
                     @endforelse
+                    <h5>
+                        <span class="text-muted">
+                            @php
+
+                            $totals = $cartItems->reduce(function($carry, $cart) {
+                            $carry['totalOldPrice'] += $cart->product->product_old_price === null ? 0 :
+                            $cart->product->product_old_price * $cart->quantity;
+                            $carry['totalPrice'] += $cart->product->product_old_price === null ? 0 :
+                            $cart->product->product_price * $cart->quantity;
+                            return $carry;
+                            }, [ 'totalOldPrice' => 0, 'totalPrice' => 0 ]);
+
+                            $totalSave = $totals['totalOldPrice'] - $totals['totalPrice'];
+                            @endphp
+                            @if ($totalSave > 0)
+                            Total Saved: {{ number_format($totalSave, 2) }}
+                            @endif
+                        </span>
+                    </h5>
                     <div class="row mt-4">
                         <div class="col">
                             <h2><strong>
-                                    Grand total: &#8369;<strong id="total-price">{{ number_format(
-                                        $cartItems->sum(function ($cart) {
+                                @php
+                                    $grandTotal = $cartItems->sum(function ($cart) {
                                         return $cart->product->product_price * $cart->quantity;
-                                        }),
-                                        2,
-                                        ) }}
-                                    </strong>
+                                        });
+                                @endphp
+                                @if($grandTotal > 0)
+                                Grand total: &#8369;<strong id="total-price">{{ number_format($grandTotal, 2)}}
+                                @endif
                                 </strong>
                             </h2>
                         </div>

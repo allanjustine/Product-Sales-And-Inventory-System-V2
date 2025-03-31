@@ -181,7 +181,7 @@ class Index extends Component
         $this->productView = Product::find($id);
     }
 
-    #[On('closeModal')]
+    #[On('closedModal')]
     #[On('closeModalCart')]
     public function closedModal()
     {
@@ -228,6 +228,7 @@ class Index extends Component
         // alert()->success('Success', 'Product added to cart successfully.');
 
         // return $this->redirect('/products', navigate: true);
+        $this->dispatch('addTocartRefresh');
         return;
     }
 
@@ -287,6 +288,7 @@ class Index extends Component
                 $cart->delete();
 
                 $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Cart item deleted']);
+                $this->dispatch('addTocartRefresh');
                 return;
             }
         }
@@ -305,7 +307,8 @@ class Index extends Component
 
         $product->delete();
 
-        alert()->toast('Removed from cart successfully', 'success');
+        $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Removed from cart successfully']);
+        $this->dispatch('addTocartRefresh');
 
         return $this->redirect('/products', navigate: true);
     }
@@ -416,6 +419,7 @@ class Index extends Component
             PlaceOrder::dispatch($product, $adminId);
 
             $this->dispatch('closeModalCart');
+            $this->dispatch('addTocartRefresh');
             return;
         } else {
 

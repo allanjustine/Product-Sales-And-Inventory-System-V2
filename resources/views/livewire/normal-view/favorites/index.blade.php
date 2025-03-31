@@ -33,17 +33,22 @@
                             </h2>
                         </a>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
-                            @if ($favorite->product->product_stock >= 20)
-                            <span class="badge badge-success badge-pill">{{
-                                number_format($favorite->product->product_stock) }}</span>
-                            @elseif ($favorite->product->product_stock)
-                            <span class="badge badge-warning badge-pill">{{
-                                number_format($favorite->product->product_stock) }}</span>
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($favorite->product_old_price !== null) margin-top: 5px; margin-right: 15px; @endif">
+                            @if ($favorite->product_stock >= 20)
+                            <span class="badge badge-success badge-pill">{{ number_format($favorite->product_stock)
+                                }}</span>
+                            @elseif ($favorite->product_stock)
+                            <span class="badge badge-warning badge-pill">{{ number_format($favorite->product_stock)
+                                }}</span>
                             @else
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
+                        @if ($favorite->product_old_price !== null)
+                        <div style="position: absolute; top: 0; right: 0; rotate: 45deg;">
+                            <span class="flag-discount">{{ $favorite->discount }}</span>
+                        </div>
+                        @endif
 
                     </div>
                     <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
@@ -51,12 +56,17 @@
                         <div class="card-footer text-center mb-3 mt-auto">
                             <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
                                 {{ $favorite->product->product_category->category_name }}</h6>
-                            <h3 class="font-size-1 font-weight-normal">
-                                <h5 id="product_name">{{ $favorite->product->product_name }}</h5>
-                            </h3>
-                            <div class="d-block font-size-1 mb-2">
+                            <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
+                                style="max-width: 150px;" title="{{ $favorite->product->product_name }}">
+                                {{ $favorite->product->product_name }}
+                            </h5>
+                            <div class="d-block font-size-1">
                                 <span class="font-weight-medium">₱{{
                                     number_format($favorite->product->product_price, 2, '.', ',') }}</span>
+                                 @if ($favorite->product->product_old_price !== null)
+                                 <span class="text-muted text-decoration-line-through text-danger">(₱{{
+                                     number_format($favorite->product->product_old_price, 2, '.', ',') }})</span><span class="flag-discount">{{ $favorite->product->discount }}</span>
+                                 @endif
                             </div>
                             <div class="d-block font-size-1 mb-2">
                                 <span class="font-weight-medium">
@@ -83,7 +93,7 @@
                                     class="fa-light fa-pen-to-square"></i> Update</a>
                             @endrole
 
-                            <div class="d-flex font-size-1 mb-2">
+                            <div class="d-flex text-sm mb-2">
                                 <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                     {{ $favorite->product->product_sold }}

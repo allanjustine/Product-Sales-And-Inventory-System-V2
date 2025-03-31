@@ -69,8 +69,8 @@
                             aria-labelledby="custom-tabs-four-home-tab">
                             @foreach ($pendings as $order)
                             <div class="col-md-12 p-0">
-                                <div class="info-box elevation-3">
-                                    <div class="info-box-content">
+                                <div class="d-flex justify-content-center">
+                                    <div class="col-6">
                                         <span class="info-box-image">
 
                                             @if (Storage::exists($order->product->product_image))
@@ -83,36 +83,8 @@
                                                 alt="{{ $order->product->product_name }}">
                                             @endif
                                         </span>
-                                        <strong class="info-box-text text-capitalize">{{ $order->product->product_name
-                                            }}</strong>
-                                        <span class="info-box-text">&#8369;{{
-                                            number_format($order->product->product_price, 2, '.', ',') }}</span>
-                                        <span class="info-box-text">x{{ number_format($order->order_quantity)
-                                            }}PC(s)</span>
-                                        <span class="info-box-text">{{ date_format($order->created_at, 'F j, Y g:i A')
-                                            }}</span>
-                                        @if ($order->order_status === 'Paid')
-                                        <span class="info-box-text badge badge-success align-self-start"><i
-                                                class="fa fa-solid fa-check"></i> PAID</span>
-                                        @elseif ($order->order_status === 'Processing Order')
-                                        <span
-                                            class="info-box-text badge badge-success align-self-start">PREPARING</span>
-                                        @elseif ($order->order_status === 'To Deliver')
-                                        <span class="info-box-text badge badge-primary align-self-start">OUT FOR
-                                            DELIVERY</span>
-                                        @elseif ($order->order_status === 'Delivered')
-                                        <span class="info-box-text badge badge-info align-self-start">DELIVERED</span>
-                                        @elseif ($order->order_status === 'Complete')
-                                        <span class="info-box-text badge badge-primary align-self-start">COMPLETE</span>
-                                        @else
-                                        <span class="info-box-text badge badge-warning align-self-start">PENDING</span>
-                                        @endif
-                                        <span class="info-box-text"><strong>{{ $order->transaction_code
-                                                }}</strong></span>
-                                        <span class="info-box-number">Total:
-                                            &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}</span>
                                     </div>
-                                    <span>
+                                    <span class="col-6 text-end">
                                         @if ($order->order_status === 'Pending')
                                         <a href="#" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#cancel" wire:click="toCancel({{ $order->id }})">
@@ -148,6 +120,49 @@
                                         @endif
                                     </span>
                                 </div>
+                                <div class="d-flex flex-column m-3">
+                                    
+                                    <strong class="info-box-text text-capitalize text-truncate">{{ $order->product->product_name
+                                    }}</strong>
+                                <span class="info-box-text">&#8369;{{
+                                    number_format($order->product->product_price, 2, '.', ',') }}
+                                    @if($order->product->product_old_price !== null)
+                                        <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                        number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
+                                        class="flag-discount"> {{ $order->product->discount }}</span>
+                                    @endif    
+                                </span>
+                                <span class="info-box-text">x{{ number_format($order->order_quantity)
+                                    }}PC(s)</span>
+                                <span class="info-box-text">{{ date_format($order->created_at, 'F j, Y g:i A')
+                                    }}</span>
+                                @if ($order->order_status === 'Paid')
+                                <span class="info-box-text badge badge-success align-self-start"><i
+                                        class="fa fa-solid fa-check"></i> PAID</span>
+                                @elseif ($order->order_status === 'Processing Order')
+                                <span
+                                    class="info-box-text badge badge-success align-self-start">PREPARING</span>
+                                @elseif ($order->order_status === 'To Deliver')
+                                <span class="info-box-text badge badge-primary align-self-start">OUT FOR
+                                    DELIVERY</span>
+                                @elseif ($order->order_status === 'Delivered')
+                                <span class="info-box-text badge badge-info align-self-start">DELIVERED</span>
+                                @elseif ($order->order_status === 'Complete')
+                                <span class="info-box-text badge badge-primary align-self-start">COMPLETE</span>
+                                @else
+                                <span class="info-box-text badge badge-warning align-self-start">PENDING</span>
+                                @endif
+                                <span class="info-box-text"><strong>{{ $order->transaction_code
+                                        }}</strong></span>
+                                <span class="info-box-number">Total:
+                                    &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}
+                                    @if($order->product->product_old_price !== null)
+                                    <span class="text-muted">(save &#8369;{{ number_format(($order->order_quantity *
+                                        $order->product->product_old_price) - ($order->order_quantity *
+                                        $order->product->product_price), 2, '.', ',') }})</span>
+                                    @endif
+                                </span>
+                                </div>
                             </div>
                             @endforeach
                             @if ($pendings->count() === 0)
@@ -172,9 +187,8 @@
                             aria-labelledby="custom-tabs-four-home-tab">
                             @foreach ($recents as $order)
                             <div class="col-md-12 p-0">
-                                <div class="info-box elevation-3">
-                                    <div class="info-box-content">
-
+                                <div class="d-flex justify-content-center">
+                                    <div class="col-6">
                                         <span class="info-box-image">
                                             @if (Storage::exists($order->product->product_image))
                                             <img style="width: 90px; height: 80px; border-radius: 5px;"
@@ -186,38 +200,8 @@
                                                 alt="{{ $order->product->product_name }}">
                                             @endif
                                         </span>
-                                        <span class="info-box-text text-capitalize"><strong>{{
-                                                $order->product->product_name }}</strong></span>
-                                        <span class="info-box-text">&#8369;{{
-                                            number_format($order->product->product_price, 2, '.', ',') }}</span>
-                                        <span class="info-box-text">x{{ number_format($order->order_quantity)
-                                            }}PC(s)</span>
-                                        <span class="info-box-text">{{ date_format($order->created_at, 'F j, Y g:i A')
-                                            }}</span>
-                                        @if ($order->order_status === 'Paid')
-                                        <span class="info-box-text badge badge-success align-self-start"><i
-                                                class="fa fa-solid fa-check"></i> PAID</span>
-                                        @elseif ($order->order_status === 'Processing Order')
-                                        <span
-                                            class="info-box-text badge badge-success align-self-start">PREPARING</span>
-                                        @elseif ($order->order_status === 'To Deliver')
-                                        <span class="info-box-text badge badge-primary align-self-start">OUT
-                                            FOR
-                                            DELIVERY</span>
-                                        @elseif ($order->order_status === 'Delivered')
-                                        <span class="info-box-text badge badge-info align-self-start">DELIVERED</span>
-                                        @elseif ($order->order_status === 'Complete')
-                                        <span class="info-box-text badge badge-primary align-self-start">COMPLETE</span>
-                                        @else
-                                        <span class="info-box-text badge badge-warning align-self-start">PAYMENT
-                                            SETTLEMENT</span>
-                                        @endif
-                                        <span class="info-box-text"><strong>{{ $order->transaction_code
-                                                }}</strong></span>
-                                        <span class="info-box-number">Total:
-                                            &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}</span>
                                     </div>
-                                    <span>
+                                    <span class="col-6 text-end">
                                         @if ($order->order_status === 'Pending')
                                         <a href="#" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#cancel" wire:click="toCancel({{ $order->id }})">
@@ -235,6 +219,52 @@
                                         </a>
                                         @endif
                                     </span>
+                                </div>
+                                
+                                <div class="d-flex flex-column m-3">
+                                        
+                                    <span class="info-box-text text-capitalize text-truncate"><strong>{{
+                                        $order->product->product_name }}</strong></span>
+                                <span class="info-box-text">&#8369;{{
+                                    number_format($order->product->product_price, 2, '.', ',') }}
+                                @if($order->product->product_old_price !== null)
+                                    <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                    number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
+                                    class="flag-discount"> {{ $order->product->discount }}</span>
+                                @endif    
+                                </span>
+                                <span class="info-box-text">x{{ number_format($order->order_quantity)
+                                    }}PC(s)</span>
+                                <span class="info-box-text">{{ date_format($order->created_at, 'F j, Y g:i A')
+                                    }}</span>
+                                @if ($order->order_status === 'Paid')
+                                <span class="info-box-text badge badge-success align-self-start"><i
+                                        class="fa fa-solid fa-check"></i> PAID</span>
+                                @elseif ($order->order_status === 'Processing Order')
+                                <span
+                                    class="info-box-text badge badge-success align-self-start">PREPARING</span>
+                                @elseif ($order->order_status === 'To Deliver')
+                                <span class="info-box-text badge badge-primary align-self-start">OUT
+                                    FOR
+                                    DELIVERY</span>
+                                @elseif ($order->order_status === 'Delivered')
+                                <span class="info-box-text badge badge-info align-self-start">DELIVERED</span>
+                                @elseif ($order->order_status === 'Complete')
+                                <span class="info-box-text badge badge-primary align-self-start">COMPLETE</span>
+                                @else
+                                <span class="info-box-text badge badge-warning align-self-start">PAYMENT
+                                    SETTLEMENT</span>
+                                @endif
+                                <span class="info-box-text"><strong>{{ $order->transaction_code
+                                        }}</strong></span>
+                                <span class="info-box-number">Total:
+                                    &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}
+                                    @if($order->product->product_old_price !== null)
+                                    <span class="text-muted">(save &#8369;{{ number_format(($order->order_quantity *
+                                        $order->product->product_old_price) - ($order->order_quantity *
+                                        $order->product->product_price), 2, '.', ',') }})</span>
+                                    @endif
+                                </span>
                                 </div>
                             </div>
                             @endforeach
@@ -261,8 +291,8 @@
                             aria-labelledby="custom-tabs-four-home-tab">
                             @foreach ($cancels as $order)
                             <div class="col-md-12 p-0">
-                                <div class="info-box elevation-3">
-                                    <div class="info-box-content">
+                                <div class="d-flex justify-content-center">
+                                    <div class="col-6">
                                         <span class="info-box-image">
                                             @if (Storage::exists($order->product->product_image))
                                             <img style="width: 90px; height: 80px; border-radius: 5px;"
@@ -274,35 +304,8 @@
                                                 alt="{{ $order->product->product_name }}">
                                             @endif
                                         </span>
-                                        <span class="info-box-text text-capitalize"><strong>{{
-                                                $order->product->product_name }}</strong></span>
-                                        <span class="info-box-text">&#8369;{{
-                                            number_format($order->product->product_price, 2, '.', ',') }}</span>
-                                        <span class="info-box-text">x{{ number_format($order->order_quantity)
-                                            }}PC(s)</span>
-                                        <span class="info-box-text">{{ date_format($order->created_at, 'F j, Y g:i A')
-                                            }}</span>
-                                        @if ($order->order_status === 'Paid')
-                                        <span class="info-box-text badge badge-success align-self-start"><i
-                                                class="fa fa-solid fa-check"></i> PAID</span>
-                                        @elseif ($order->order_status === 'To Deliver')
-                                        <span class="info-box-text badge badge-primary align-self-start">TO
-                                            DELIVER</span>
-                                        @elseif ($order->order_status === 'Delivered')
-                                        <span class="info-box-text badge badge-info align-self-start">DELIVERED</span>
-                                        @elseif ($order->order_status === 'Complete')
-                                        <span class="info-box-text badge badge-primary align-self-start">COMPLETE</span>
-                                        @elseif ($order->order_status === 'Cancelled')
-                                        <span class="info-box-text badge badge-danger align-self-start">CANCELLED</span>
-                                        @else
-                                        <span class="info-box-text badge badge-warning align-self-start">PENDING</span>
-                                        @endif
-                                        <span class="info-box-text"><strong>{{ $order->transaction_code
-                                                }}</strong></span>
-                                        <span class="info-box-number">Total:
-                                            &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}</span>
                                     </div>
-                                    <span>
+                                    <span class="col-6 text-end">
                                         @if ($order->order_status === 'Cancelled')
                                         {{-- <a href="#" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#toRemove" wire:click="toRemove({{ $order->id }})">
@@ -321,6 +324,48 @@
                                         </button>
                                         @endif
                                     </span>
+                                </div>
+                                <div class="d-flex flex-column m-3">
+                                    
+                                    <span class="info-box-text text-capitalize text-truncate"><strong>{{
+                                        $order->product->product_name }}</strong></span>
+                                <span class="info-box-text">&#8369;{{
+                                    number_format($order->product->product_price, 2, '.', ',') }}
+                                @if($order->product->product_old_price !== null)
+                                    <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                    number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
+                                    class="flag-discount"> {{ $order->product->discount }}</span>
+                                @endif    
+                                </span>
+                                <span class="info-box-text">x{{ number_format($order->order_quantity)
+                                    }}PC(s)</span>
+                                <span class="info-box-text">{{ date_format($order->created_at, 'F j, Y g:i A')
+                                    }}</span>
+                                @if ($order->order_status === 'Paid')
+                                <span class="info-box-text badge badge-success align-self-start"><i
+                                        class="fa fa-solid fa-check"></i> PAID</span>
+                                @elseif ($order->order_status === 'To Deliver')
+                                <span class="info-box-text badge badge-primary align-self-start">TO
+                                    DELIVER</span>
+                                @elseif ($order->order_status === 'Delivered')
+                                <span class="info-box-text badge badge-info align-self-start">DELIVERED</span>
+                                @elseif ($order->order_status === 'Complete')
+                                <span class="info-box-text badge badge-primary align-self-start">COMPLETE</span>
+                                @elseif ($order->order_status === 'Cancelled')
+                                <span class="info-box-text badge badge-danger align-self-start">CANCELLED</span>
+                                @else
+                                <span class="info-box-text badge badge-warning align-self-start">PENDING</span>
+                                @endif
+                                <span class="info-box-text"><strong>{{ $order->transaction_code
+                                        }}</strong></span>
+                                <span class="info-box-number">Total:
+                                    &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}
+                                    @if($order->product->product_old_price !== null)
+                                    <span class="text-muted">(save &#8369;{{ number_format(($order->order_quantity *
+                                        $order->product->product_old_price) - ($order->order_quantity *
+                                        $order->product->product_price), 2, '.', ',') }})</span>
+                                    @endif
+                                </span>
                                 </div>
                             </div>
                             @endforeach

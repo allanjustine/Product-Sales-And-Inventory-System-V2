@@ -23,7 +23,7 @@ class Index extends Component
     public $search;
     public $sortBy = 'product_name';
     public $sortDirection = 'asc';
-    public $product_category_id, $product_image, $product_name, $product_description, $product_status, $product_stock, $product_price, $product_code;
+    public $product_category_id, $product_image, $product_name, $product_description, $product_status, $product_stock, $product_price, $product_old_price, $product_code;
     public $productEdit, $product_image_url, $productToDelete, $productView;
 
     public function handleSortBy($field)
@@ -68,7 +68,7 @@ class Index extends Component
 
         return compact('products', 'product_categories');
     }
-    
+
     public function generateProductCode() {
         $this->product_code = 'AJM-' . substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 5);
     }
@@ -78,11 +78,15 @@ class Index extends Component
         $validatedData = $this->validate([
             'product_name'              =>          'required|string|unique:products|max:255',
             'product_description'       =>          'required|string|max:65535',
-            'product_price'             =>          'required|string|numeric|min:1',
+            'product_price'             =>          'required|string|numeric|min:1|lte:product_old_price',
+            'product_old_price'         =>          'nullable|string|numeric|gte:product_price',
             'product_stock'             =>          'required|string|numeric',
             'product_status'            =>          'required|string',
             'product_image'             =>          'required|image|max:10000',
             'product_category_id'       =>          'required'
+        ], [
+            'product_price.lte'     => 'The product price must be less than or equal to the product old price.',
+            'product_old_price.gte' => 'The product price must be greater than or equal to the product price.',
         ]);
         $path = $this->product_image->store('public/product/images');
 
@@ -90,6 +94,7 @@ class Index extends Component
             'product_name'                  =>          $validatedData['product_name'],
             'product_description'           =>          $validatedData['product_description'],
             'product_price'                 =>          $validatedData['product_price'],
+            'product_old_price'             =>          $validatedData['product_old_price'],
             'product_stock'                 =>          $validatedData['product_stock'],
             'product_status'                =>          $validatedData['product_status'],
             'product_category_id'           =>          $validatedData['product_category_id'],
@@ -107,6 +112,7 @@ class Index extends Component
         $this->product_name = '';
         $this->product_description = '';
         $this->product_price = '';
+        $this->product_old_price = '';
         $this->product_stock = '';
         $this->product_status = '';
         $this->product_category_id = '';
@@ -125,6 +131,7 @@ class Index extends Component
         $this->product_name = $this->productEdit->product_name;
         $this->product_description = $this->productEdit->product_description;
         $this->product_price = $this->productEdit->product_price;
+        $this->product_old_price = $this->productEdit->product_old_price;
         $this->product_stock = $this->productEdit->product_stock;
         $this->product_status = $this->productEdit->product_status;
         $this->product_category_id = $this->productEdit->product_category_id;
@@ -165,7 +172,12 @@ class Index extends Component
     {
         $this->validate([
             'product_name'             =>      ['required', 'string', 'max:255', 'unique:products,product_name,' . $this->productEdit->id],
+            'product_price'            =>      'required|string|numeric|min:1|lte:product_old_price',
+            'product_old_price'        =>      'nullable|string|numeric|gte:product_price',
             'product_image'            =>      $this->product_image ? ['image', 'max:10000'] : ''
+        ], [
+            'product_price.lte'     => 'The product price must be less than or equal to the product old price.',
+            'product_old_price.gte' => 'The product price must be greater than or equal to the product price.',
         ]);
 
         if ($this->product_image) {
@@ -176,6 +188,7 @@ class Index extends Component
             'product_name'              =>          $this->product_name,
             'product_description'       =>          $this->product_description,
             'product_price'             =>          $this->product_price,
+            'product_old_price'         =>          $this->product_old_price,
             'product_stock'             =>          $this->product_stock,
             'product_status'            =>          $this->product_status,
             'product_category_id'       =>          $this->product_category_id,

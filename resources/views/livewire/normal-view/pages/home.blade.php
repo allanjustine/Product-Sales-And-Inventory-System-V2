@@ -16,11 +16,11 @@
                     <a href="#" class="btn" id="view-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="Have a nice day, {{ auth()->user()->name }}">
                         @if ($morning)
-                        <i class="fas fa-sunrise text-warning"></i> Good Morning
+                        <i class="fa-solid fa-sunrise text-warning"></i> Good Morning
                         @elseif($afternoon)
-                        <i class="fas fa-sun text-warning"></i> Good Afternoon
+                        <i class="fa-solid fa-sun text-warning"></i> Good Afternoon
                         @elseif($evening)
-                        <i class="fas fa-moon-stars text-dark"></i> Good Evening
+                        <i class="fa-solid fa-moon-stars text-dark"></i> Good Evening
                         @else
                         Have a nice day
                         @endif, {{ auth()->user()->name }}
@@ -40,11 +40,11 @@
                     @if (auth()->check())
                     <a href="#" class="btn" id="view-btn">
                         @if ($morning)
-                        Good Morning
+                        <i class="fa-solid fa-sunrise text-warning"></i> Good Morning
                         @elseif($afternoon)
-                        Good Afternoon
+                        <i class="fa-solid fa-sun text-warning"></i> Good Afternoon
                         @elseif($evening)
-                        Good Evening
+                        <i class="fa-solid fa-moon-stars text-dark"></i> Good Evening
                         @else
                         Have a nice day
                         @endif, {{ auth()->user()->name }}
@@ -64,11 +64,11 @@
                     @if (auth()->check())
                     <a href="#" class="btn" id="view-btn">
                         @if ($morning)
-                        Good Morning
+                        <i class="fa-solid fa-sunrise text-warning"></i> Good Morning
                         @elseif($afternoon)
-                        Good Afternoon
+                        <i class="fa-solid fa-sun text-warning"></i> Good Afternoon
                         @elseif($evening)
-                        Good Evening
+                        <i class="fa-solid fa-moon-stars text-dark"></i> Good Evening
                         @else
                         Have a nice day
                         @endif, {{ auth()->user()->name }}
@@ -124,20 +124,17 @@
                                 </h2>
                             </button>
                             @endauth
-                            <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
-                                @if ($loop->index == 0)
-                                <span class="px-2 pt-2 pb-1 rounded top-deals-bg">
-                                    <i class="fa-solid fa-medal fa-flip top-deals-icon"></i>
-                                    <span class="top-deals"><strong>Top 1</strong></span>
+                            <div class="pt-1 pr-2" style="position: absolute; top:0; left: 0;">
+                                <span class="px-2 pt-1 pb-1 rounded top-deals-bg">
+                                    <i class="fa-solid fa-medal fa-flip top-deals-icon text-sm"></i>
+                                    <span class="top-deals text-sm"><strong>Top {{ $loop->index + 1 }}</strong></span>
                                 </span>
-                                @else
-                                <span class="px-2 pt-2 pb-1 rounded top-deals-bg">
-                                    <i class="fa-solid fa-medal fa-flip top-deals-icon"></i>
-                                    <span class="top-deals"><strong>Top
-                                            {{ $loop->index + 1 }}</strong></span>
-                                </span>
-                                @endif
                             </div>
+                            @if ($product->product_old_price !== null)
+                            <div style="position: absolute; top: 0; right: 0; rotate: 45deg; margin-top: 5px;">
+                                <span class="flag-discount">{{ $product->discount }}</span>
+                            </div>
+                            @endif
 
                         </div>
                         <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
@@ -145,16 +142,21 @@
                             <div class="card-footer text-center mb-3 mt-auto">
                                 <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
                                     {{ $product->product_category->category_name }}</h6>
-                                <h5 class="font-size-1 font-weight-normal text-capitalize">
+                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
+                                    style="max-width: 150px;" title="{{ $product->product_name }}">
                                     {{ $product->product_name }}
                                 </h5>
                                 <div class="d-block font-size-1">
-                                    <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                    <span class="font-weight-medium">₱{{
                                         number_format($product->product_price, 2, '.', ',') }}</span>
+                                     @if ($product->product_old_price !== null)
+                                     <span class="text-muted text-decoration-line-through text-danger">(₱{{
+                                         number_format($product->product_old_price, 2, '.', ',') }})</span>
+                                     @endif
                                 </div>
                             </div>
                         </a>
-                        <div class="d-flex font-size-1 mb-2">
+                        <div class="d-flex text-sm sm-text-xs mb-2">
                             <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                 {{ $product->product_sold }}
@@ -222,20 +224,19 @@
                                 </h2>
                             </button>
                             @endauth
-                            <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
-                                @if ($loop->index == 0)
-                                <span class="px-2 pt-2 pb-1 rounded top-popular-bg">
-                                    <i class="fa-solid fa-fire-flame-curved fa-beat top-popular-icon"></i>
-                                    <span class="top-popular"><strong>Top 1</strong></span>
-                                </span>
-                                @else
-                                <span class="px-2 pt-2 pb-1 rounded top-popular-bg">
-                                    <i class="fa-solid fa-fire-flame-curved fa-beat top-popular-icon"></i>
-                                    <span class="top-popular"><strong>Top
+                            <div class="pt-1 pr-2" style="position: absolute; top:0; left: 0;">
+                                <span class="px-2 pt-1 pb-1 rounded top-popular-bg">
+                                    <i class="fa-solid fa-fire-flame-curved fa-beat top-popular-icon text-sm"></i>
+                                    <span class="top-popular text-sm"><strong>Top
                                             {{ $loop->index + 1 }}</strong></span>
                                 </span>
-                                @endif
                             </div>
+                            
+                            @if ($product->product_old_price !== null)
+                            <div style="position: absolute; top: 0; right: 0; rotate: 45deg; margin-top: 5px;">
+                                <span class="flag-discount">{{ $product->discount }}</span>
+                            </div>
+                            @endif
 
                         </div>
                         <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
@@ -243,16 +244,21 @@
                             <div class="card-footer text-center mb-3 mt-auto">
                                 <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
                                     {{ $product->product_category->category_name }}</h6>
-                                <h5 class="font-size-1 font-weight-normal text-capitalize">
+                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
+                                    style="max-width: 150px;" title="{{ $product->product_name }}">
                                     {{ $product->product_name }}
                                 </h5>
                                 <div class="d-block font-size-1">
-                                    <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                    <span class="font-weight-medium">₱{{
                                         number_format($product->product_price, 2, '.', ',') }}</span>
+                                     @if ($product->product_old_price !== null)
+                                     <span class="text-muted text-decoration-line-through text-danger">(₱{{
+                                         number_format($product->product_old_price, 2, '.', ',') }})</span>
+                                     @endif
                                 </div>
                             </div>
                         </a>
-                        <div class="d-flex font-size-1 mb-2">
+                        <div class="d-flex text-sm sm-text-xs mb-2">
                             <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                 {{ $product->product_sold }}
@@ -320,12 +326,18 @@
                                 </h2>
                             </button>
                             @endauth
-                            <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
-                                <span class="px-2 pt-2 pb-1 rounded latest-bg">
-                                    <i class="fa-solid fa-megaphone fa-beat-fade latest-icon"></i>
-                                    <span class="latest"><strong>Latest</strong></span>
+                            <div class="pt-1 pr-2" style="position: absolute; top:0; left: 0;">
+                                <span class="px-2 pt-1 pb-1 rounded latest-bg">
+                                    <i class="fa-solid fa-megaphone fa-beat-fade latest-icon text-sm"></i>
+                                    <span class="latest text-sm"><strong>Latest</strong></span>
                                 </span>
                             </div>
+                            
+                            @if ($product->product_old_price !== null)
+                            <div style="position: absolute; top: 0; right: 0; rotate: 45deg; margin-top: 5px;">
+                                <span class="flag-discount">{{ $product->discount }}</span>
+                            </div>
+                            @endif
 
                         </div>
                         <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
@@ -333,17 +345,22 @@
                             <div class="card-footer text-center mb-3 mt-auto">
                                 <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
                                     {{ $product->product_category->category_name }}</h6>
-                                <h5 class="font-size-1 font-weight-normal text-capitalize">
+                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
+                                    style="max-width: 150px;" title="{{ $product->product_name }}">
                                     {{ $product->product_name }}
                                 </h5>
                                 <div class="d-block font-size-1">
-                                    <span class="font-weight-medium"><i class="fas fa-peso-sign"></i>{{
+                                    <span class="font-weight-medium">₱{{
                                         number_format($product->product_price, 2, '.', ',') }}</span>
+                                     @if ($product->product_old_price !== null)
+                                     <span class="text-muted text-decoration-line-through text-danger">(₱{{
+                                         number_format($product->product_old_price, 2, '.', ',') }})</span>
+                                     @endif
                                 </div>
                             </div>
 
                         </a>
-                        <div class="d-flex font-size-1 mb-2">
+                        <div class="d-flex text-sm sm-text-xs mb-2">
                             <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                 {{ $product->product_sold }}

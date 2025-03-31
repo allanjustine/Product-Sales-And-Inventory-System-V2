@@ -78,10 +78,10 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="product_stock">Product Stock:</label>
-                                <input type="number" id="product_stock" placeholder="Product Stock" name="product Stock"
-                                    wire:model.live.debounce.200ms="product_stock" class="form-control" required>
-                                @error('product_stock')
+                                <label for="product_old_price">Product Old Price:</label>
+                                <input type="number" id="product_old_price" placeholder="Product Old Price" name="product Old Price"
+                                    wire:model.live.debounce.200ms="product_old_price" class="form-control" required>
+                                @error('product_old_price')
                                 <span class="text-danger">*{{ $message }}</span>
                                 @enderror
                             </div>
@@ -99,7 +99,17 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="product_stock">Product Stock:</label>
+                                <input type="number" id="product_stock" placeholder="Product Stock" name="product Stock"
+                                    wire:model.live.debounce.200ms="product_stock" class="form-control" required>
+                                @error('product_stock')
+                                <span class="text-danger">*{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="product_category_id">Product Category:</label>
                                 <select class="form-select" id="product_category_id"

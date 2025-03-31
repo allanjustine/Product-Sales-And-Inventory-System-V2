@@ -3,56 +3,53 @@
         <h1 class="ms-5">
             <strong id="branding-ajm">AJM</strong>
         </h1>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="d-flex space-x-2">
+            @if (Auth::check())
+                <livewire:normal-view.carts.cart-count />
+            @endif
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mx-auto p-3 navbar-nav-item">
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/"><i class="fa-light fa-house"></i> Home</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/"><i class="fa-light fa-house"></i>
+                        Home</a>
                 </li>
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/about-us"><i class="fa-light fa-question"></i> About Us</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/about-us"><i
+                            class="fa-light fa-question"></i> About Us</a>
                 </li>
                 @if (auth()->check())
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/products"><i class="fa-light fa-box-open"></i> Products</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/products"><i
+                            class="fa-light fa-box-open"></i> Products</a>
                 </li>
                 @role('user')
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/orders"><i class="fa-light fa-bag-shopping"></i> My Orders</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/orders"><i
+                            class="fa-light fa-bag-shopping"></i> My Orders</a>
                 </li>
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/carts"><i class="fa-light fa-shopping-cart"></i> My Carts</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/carts"><i
+                            class="fa-light fa-shopping-cart"></i> My Carts</a>
                 </li>
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/favorites"><i class="fa-light fa-heart"></i> My Favorites</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/favorites"><i
+                            class="fa-light fa-heart"></i> My Favorites</a>
                 </li>
                 @endrole
                 @else
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/view-products"><i class="fa-light fa-box-open"></i> View Products</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/view-products"><i
+                            class="fa-light fa-box-open"></i> View Products</a>
                 </li>
                 @endif
                 <li class="nav-item p-2">
-                    <a wire:navigate
-                        class="nav-link text-white text-center"
-                        href="/feedbacks"><i class="fa-light fa-comment-dots"></i> Your Feedback</a>
+                    <a wire:navigate class="nav-link text-white text-center" href="/feedbacks"><i
+                            class="fa-light fa-comment-dots"></i> Your Feedback</a>
                 </li>
             </ul>
             <div class="dropdown me-5">
@@ -146,9 +143,12 @@
                     After you logout you will redirect to login page.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click="logout" class="btn btn-danger" wire:target='logout' wire:loading.attr='disabled'>
-                        <span  wire:target='logout' wire:loading.remove><i class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</span>
-                        <span  wire:target='logout' wire:loading><span class="spinner-border spinner-border-sm"></span> Logging out...</span>
+                    <button type="button" wire:click="logout" class="btn btn-danger" wire:target='logout'
+                        wire:loading.attr='disabled'>
+                        <span wire:target='logout' wire:loading.remove><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</span>
+                        <span wire:target='logout' wire:loading><span class="spinner-border spinner-border-sm"></span>
+                            Logging out...</span>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>

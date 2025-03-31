@@ -1,7 +1,7 @@
 <div style="overflow-x: hidden;">
     @include('livewire.normal-view.products.view')
     <div class="col-md-5 col-sm-6 offset-md-4 offset-sm-3 mt-4">
-        <input type="search" class="form-control" placeholder="Search" wire:model.live.debounce.200ms="search"
+        <input type="search" class="form-control" placeholder="Search" wire:model.live.debounce.500ms="search"
             style="border-radius: 30px; height: 50px;">
     </div>
     <div class="row d-flex justify-content-center mt-5 pb-3">
@@ -84,7 +84,7 @@
                             </div>
                         </a>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 5px; margin-right: 15px; @endif">
                             @if ($product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($product->product_stock)
                                 }}</span>
@@ -95,6 +95,11 @@
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
+                        @if ($product->product_old_price !== null)
+                        <div style="position: absolute; top: 0; right: 0; rotate: 45deg;">
+                            <span class="flag-discount">{{ $product->discount }}</span>
+                        </div>
+                        @endif
 
                     </div>
                     <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
@@ -102,12 +107,17 @@
                         <div class="card-footer text-center mb-3 mt-auto">
                             <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
                                 {{ $product->product_category->category_name }}</h6>
-                            <h5 class="font-size-1 font-weight-normal text-capitalize">
+                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
+                                style="max-width: 150px;" title="{{ $product->product_name }}">
                                 {{ $product->product_name }}
                             </h5>
                             <div class="d-block font-size-1 mb-2">
                                 <span class="font-weight-medium">₱{{
                                     number_format($product->product_price, 2, '.', ',') }}</span>
+                                 @if ($product->product_old_price !== null)
+                                 <span class="text-muted text-decoration-line-through text-danger">(₱{{
+                                     number_format($product->product_old_price, 2, '.', ',') }})</span>
+                                 @endif
                             </div>
                             <div class="d-block font-size-1 mb-2">
                                 <span class="font-weight-medium">
@@ -121,7 +131,7 @@
                             <a wire:navigate href="/login" class="btn btn-primary mt-1 form-control"><i
                                     class="fa-solid fa-cart-shopping"></i> Buy Now</a>
 
-                            <div class="d-flex font-size-1 mb-2">
+                            <div class="d-flex text-sm sm-text-xs mb-2">
                                 <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                     {{ $product->product_sold }}

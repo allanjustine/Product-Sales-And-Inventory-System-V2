@@ -8,7 +8,7 @@
         <div class="dropdown" id="mainDropdown">
             <div x-data="{ open: false }">
                 <input type="search" class="form-control" id="searchInput" placeholder="Search" x-on:input="open = true"
-                    wire:model.live.debounce.200ms="search" style="border-radius: 30px; height: 50px;">
+                    wire:model.live.debounce.500ms="search" style="border-radius: 30px; height: 50px;">
                 <div id="searchDropdown" class="dropdown-menu w-100" @if(count($searchLogs) !==0)
                     :class="{ 'show': open }" @click.outside="open = false" x-cloak x-transition @else
                     style="display: none !important" @endif aria-bs-labelledby="searchInput">
@@ -83,9 +83,12 @@
         </div>
         <div class="col-md-3 col-sm-4 col-6 text-center">
             <label for="Clear Filters">Clear Filters</label>
-            <button style="height: 40px;" type="button" wire:loading.attr='disabled' wire:target='clearFilters' wire:click="clearFilters" class="btn btn-secondary form-control">
-                <span wire:target='clearFilters' wire:loading.remove=><i class="fa-solid fa-broom-wide"></i> Clear Filters</span>
-                <span wire:target='clearFilters' wire:loading><span class="spinner-border spinner-border-sm"></span> Clearing...</span>
+            <button style="height: 40px;" type="button" wire:loading.attr='disabled' wire:target='clearFilters'
+                wire:click="clearFilters" class="btn btn-secondary form-control">
+                <span wire:target='clearFilters' wire:loading.remove=><i class="fa-solid fa-broom-wide"></i> Clear
+                    Filters</span>
+                <span wire:target='clearFilters' wire:loading><span class="spinner-border spinner-border-sm"></span>
+                    Clearing...</span>
             </button>
         </div>
     </div>
@@ -200,7 +203,7 @@
                             </h2>
                         </button>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top:0; right: 0;">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 5px; margin-right: 15px; @endif">
                             @if ($product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($product->product_stock)
                                 }}</span>
@@ -211,6 +214,11 @@
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
+                        @if ($product->product_old_price !== null)
+                        <div style="position: absolute; top: 0; right: 0; rotate: 45deg;">
+                            <span class="flag-discount">{{ $product->discount }}</span>
+                        </div>
+                        @endif
 
                     </div>
 
@@ -224,9 +232,13 @@
                                 style="max-width: 150px;" title="{{ $product->product_name }}">
                                 {{ $product->product_name }}
                             </h5>
-                            <div class="d-block font-size-1 mb-2">
+                            <div class="d-block mb-2">
                                 <span class="font-weight-medium">₱{{
                                     number_format($product->product_price, 2, '.', ',') }}</span>
+                                @if ($product->product_old_price !== null)
+                                <span class="text-muted text-decoration-line-through text-danger">(₱{{
+                                    number_format($product->product_old_price, 2, '.', ',') }})</span>
+                                @endif
                             </div>
                             <div class="d-block font-size-1 mb-2">
                                 <span class="font-weight-medium">
@@ -253,7 +265,7 @@
                                     class="fa-light fa-pen-to-square"></i> Update</a>
                             @endrole
 
-                            <div class="d-flex font-size-1 mb-2">
+                            <div class="d-flex text-sm sm-text-xs mb-2">
                                 <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
                                     {{ $product->product_sold }}

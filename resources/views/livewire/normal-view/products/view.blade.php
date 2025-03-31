@@ -47,7 +47,23 @@
                                             @endif
                                         </p>
                                         <p class="d-flex justify-content-between"><strong>Price:</strong>
-                                            &#8369;{{ number_format($productView->product_price, 2, '.', ',') }}</p>
+                                            <span>
+                                                &#8369;{{ number_format($productView->product_price, 2, '.', ',') }}
+                                                @if($productView->product_old_price !== null)
+                                                <span class="text-muted text-decoration-line-through">( &#8369;{{
+                                                    number_format($productView->product_old_price, 2, '.', ',') }})</span>
+                                                @endif
+                                            </span>
+                                        </p>
+                                        <p class="d-flex justify-content-between"><strong>Discount:</strong>
+                                            <span>
+                                                @if($productView->product_old_price !== null)
+                                                <span
+                                                    class="flag-discount">{{ $productView->discount }}
+                                                </span>
+                                                @endif
+                                            </span>
+                                        </p>
                                         <p class="d-flex justify-content-between"><strong>Sold(s):</strong>
                                             {{ number_format($productView->product_sold) }}</p>
                                         <p class="d-flex justify-content-between"><strong>Rating(s):</strong>

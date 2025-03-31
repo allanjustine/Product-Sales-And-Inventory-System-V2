@@ -18,7 +18,7 @@
                 </select>
                 <label>Entries</label>
                 <button class="btn btn-primary mb-3 me-2 float-end" data-bs-toggle="modal"
-                    onclick="generateProductCode()" data-bs-target="#addProduct">
+                    wire:click="generateProductCode" data-bs-target="#addProduct">
                     <i class="fa-solid fa-plus"></i> Add Product
                 </button>
                 <input type="search" class="form-control mb-3 mx-2 float-end" style="width: 198px;" placeholder="Search"
@@ -158,13 +158,13 @@
                             @else
                             <td><span class="badge badge-warning">OUT OF STOCK</span></td>
                             @endif
-                            @if ($product->product_rating === 0)
+                            @if ($product->product_rating == 0)
                             <td>No ratings yet</td>
                             @else
                             <td>{{ $product->product_rating }} <i class="fa-solid fa-star" style="color: #ffd700;"></i>
                             </td>
                             @endif
-                            <td>&#8369;{{ number_format($product->product_price, 2, '.', ',') }}</td>
+                            <td>&#8369;{{ number_format($product->product_price, 2, '.', ',') }} @if($product->product_old_price !== null) <span class="text-decoration-line-through text-muted">- &#8369;{{ number_format($product->product_old_price, 2, '.', ',') }}</span> @endif</td>
                             {{-- @if ($product->product_status === 'Available')
                             <td><span class="badge badge-success">AVAILABLE</span></td>
                             @else
