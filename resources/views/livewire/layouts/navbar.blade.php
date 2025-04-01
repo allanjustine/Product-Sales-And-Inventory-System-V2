@@ -1,11 +1,13 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow">
-        <h1 class="ms-5">
-            <strong id="branding-ajm">AJM</strong>
-        </h1>
+        <a href="/" wire:navigate class="btn btn-link">
+            <h1>
+                <strong id="branding-ajm">AJM</strong>
+            </h1>
+        </a>
         <div class="d-flex space-x-2">
             @if (Auth::check())
-                <livewire:normal-view.carts.cart-count />
+            <livewire:normal-view.carts.cart-count />
             @endif
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">

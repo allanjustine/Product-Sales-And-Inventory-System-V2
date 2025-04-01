@@ -33,20 +33,20 @@
                             </h2>
                         </a>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($favorite->product_old_price !== null) margin-top: 5px; margin-right: 15px; @endif">
-                            @if ($favorite->product_stock >= 20)
-                            <span class="badge badge-success badge-pill">{{ number_format($favorite->product_stock)
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($favorite->product->product_old_price !== null) margin-top: 10px; @endif">
+                            @if ($favorite->product->product_stock >= 20)
+                            <span class="badge badge-success badge-pill">{{ number_format($favorite->product->product_stock)
                                 }}</span>
-                            @elseif ($favorite->product_stock)
-                            <span class="badge badge-warning badge-pill">{{ number_format($favorite->product_stock)
+                            @elseif ($favorite->product->product_stock)
+                            <span class="badge badge-warning badge-pill">{{ number_format($favorite->product->product_stock)
                                 }}</span>
                             @else
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
-                        @if ($favorite->product_old_price !== null)
-                        <div style="position: absolute; top: 0; right: 0; rotate: 45deg;">
-                            <span class="flag-discount">{{ $favorite->discount }}</span>
+                        @if ($favorite->product->product_old_price !== null)
+                        <div style="position: absolute; top: 0; right: 0;">
+                            <span class="flag-discount">{{ $favorite->product->discount }}</span>
                         </div>
                         @endif
 

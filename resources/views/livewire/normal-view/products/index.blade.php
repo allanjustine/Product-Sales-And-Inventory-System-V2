@@ -122,6 +122,7 @@
                             wire:click="increaseQuantity({{ $item->id }})">
                             <i class="fas fa-plus text-black"></i>
                         </button>
+                       <div class="position-relative">
                         @if (Storage::exists($item->product->product_image))
                         <img style="width: 70px; height: 70px; border-radius: 10%;"
                             src="{{ Storage::url($item->product->product_image) }}" alt="">
@@ -129,23 +130,37 @@
                         <img style="width: 70px; height: 70px; border-radius: 10%;"
                             src="{{ url($item->product->product_image) }}" alt="">
                         @endif
-                        &nbsp;&nbsp;<div class="text-truncate" style="max-width: 100px;"><strong
+
+                        @if ($item->product->product_old_price !== null)
+                        <div style="position: absolute; top: 0; right: 0;">
+                            <span class="flag-discount">{{ $item->product->discount }}</span>
+                        </div>
+                        @endif
+                       </div>
+                        &nbsp;&nbsp;<div class="text-truncate" style="max-width: 170px;"><strong
                                 class="text-capitalize">{{ $item->product->product_name
                                 }}</strong></div>
                     </div>
                     <div class="cart-item-price mt-2">
-                        &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}
-                        <button class="btn btn-link text-danger" data-bs-toggle="modal" data-bs-target="#remove"
-                            wire:click="remove({{ $item->id }})">
-                            <i class="fas fa-trash-alt"></i>&nbsp;Delete
-                        </button>
-                        <button class="btn btn-link text-primary" data-bs-toggle="modal" data-bs-target="#checkOut"
-                            wire:click="checkOut({{ $item->id }})">
-                            <i class="fas fa-check"></i>&nbsp;Checkout
-                        </button><br>
+                        <div class="d-flex align-items-center">
+                            <div class="text-sm col-6">
+                                &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }} <span class="text-decoration-line-through text-muted">(&#8369;{{ number_format($item->product->product_old_price, 2, '.', ',') }})</span>
+                            </div>
+                            <div class="d-flex col-6 align-items-center">
+                                <button class="btn btn-link text-danger text-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#remove"
+                                    wire:click="remove({{ $item->id }})">
+                                    <i class="fas fa-trash-alt"></i>&nbsp;<span>Delete</span>
+                                </button>
+                                <button class="btn btn-link text-primary text-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#checkOut"
+                                    wire:click="checkOut({{ $item->id }})">
+                                    <i class="fas fa-check"></i>&nbsp;<span>Checkout</span>
+                                </button>
+                            </div>
+                        </div>
+                        <br>
                         <span><strong>Sub total: &#8369;{{ number_format($item->product->product_price *
                                 $item->quantity, 2,
-                                '.', ',') }}</strong></span>
+                                '.', ',') }}</strong> <span class="text-muted text-sm">(save &#8369;{{ number_format(($item->product->product_old_price * $item->quantity) - ($item->product->product_price * $item->quantity), 2, '.', ',') }})</span></span>
                     </div>
                 </li>
                 <li class="dropdown-divider"></li>
@@ -203,7 +218,7 @@
                             </h2>
                         </button>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 5px; margin-right: 15px; @endif">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 10px; @endif">
                             @if ($product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($product->product_stock)
                                 }}</span>
@@ -215,7 +230,7 @@
                             @endif
                         </div>
                         @if ($product->product_old_price !== null)
-                        <div style="position: absolute; top: 0; right: 0; rotate: 45deg;">
+                        <div style="position: absolute; top: 0; right: 0;">
                             <span class="flag-discount">{{ $product->discount }}</span>
                         </div>
                         @endif

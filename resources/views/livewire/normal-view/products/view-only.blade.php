@@ -84,7 +84,7 @@
                             </div>
                         </a>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 5px; margin-right: 15px; @endif">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 10px; @endif">
                             @if ($product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($product->product_stock)
                                 }}</span>
@@ -96,7 +96,7 @@
                             @endif
                         </div>
                         @if ($product->product_old_price !== null)
-                        <div style="position: absolute; top: 0; right: 0; rotate: 45deg;">
+                        <div style="position: absolute; top: 0; right: 0;">
                             <span class="flag-discount">{{ $product->discount }}</span>
                         </div>
                         @endif

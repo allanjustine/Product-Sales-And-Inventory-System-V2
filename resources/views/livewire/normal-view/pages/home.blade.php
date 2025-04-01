@@ -117,7 +117,7 @@
                             @auth
                             <button type="button"
                                 title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute top-0 start-0"
+                                class="btn btn-link position-absolute bottom-0 start-0"
                                 wire:click="addToFavorite({{ $product->id }})">
                                 <h2 class="text-danger"><i
                                         class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
@@ -131,7 +131,7 @@
                                 </span>
                             </div>
                             @if ($product->product_old_price !== null)
-                            <div style="position: absolute; top: 0; right: 0; rotate: 45deg; margin-top: 5px;">
+                            <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
                                 <span class="flag-discount">{{ $product->discount }}</span>
                             </div>
                             @endif
@@ -217,7 +217,7 @@
                             @auth
                             <button type="button"
                                 title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute top-0 start-0"
+                                class="btn btn-link position-absolute bottom-0 start-0"
                                 wire:click="addToFavorite({{ $product->id }})">
                                 <h2 class="text-danger"><i
                                         class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
@@ -231,9 +231,9 @@
                                             {{ $loop->index + 1 }}</strong></span>
                                 </span>
                             </div>
-                            
+
                             @if ($product->product_old_price !== null)
-                            <div style="position: absolute; top: 0; right: 0; rotate: 45deg; margin-top: 5px;">
+                            <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
                                 <span class="flag-discount">{{ $product->discount }}</span>
                             </div>
                             @endif
@@ -319,7 +319,7 @@
                             @auth
                             <button type="button"
                                 title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute top-0 start-0"
+                                class="btn btn-link position-absolute bottom-0 start-0"
                                 wire:click="addToFavorite({{ $product->id }})">
                                 <h2 class="text-danger"><i
                                         class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
@@ -332,9 +332,9 @@
                                     <span class="latest text-sm"><strong>Latest</strong></span>
                                 </span>
                             </div>
-                            
+
                             @if ($product->product_old_price !== null)
-                            <div style="position: absolute; top: 0; right: 0; rotate: 45deg; margin-top: 5px;">
+                            <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
                                 <span class="flag-discount">{{ $product->discount }}</span>
                             </div>
                             @endif

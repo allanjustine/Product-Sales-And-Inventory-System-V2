@@ -119,13 +119,13 @@ body {
 
 #myDiv {
     max-width: 550px;
-    min-width: 340px;
+    min-width: 390px;
     max-height: 450px;
     overflow-y: auto;
     border-radius: 20px;
     z-index: 1;
     top: 0;
-    margin-top: 50px;
+    margin-top: 55px;
     margin-right: 20px;
 }
 
@@ -464,4 +464,12 @@ textarea {
     bottom: 0;
     border-width: 0 7.5px 11px 0;
     border-color: transparent transparent #ee3b50 transparent;
+}
+
+.sticky {
+    position: sticky;
+}
+
+.top-0 {
+    top: 0px;
 }
