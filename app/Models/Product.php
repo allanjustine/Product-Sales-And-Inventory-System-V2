@@ -38,7 +38,7 @@ class Product extends Model
 
     public function getDiscountAttribute()
     {
-        return round((($this->product_old_price - $this->product_price) / $this->product_old_price) * 100, 2) . "%";
+        return round((($this->product_old_price - $this->product_price) / $this->product_old_price) * 100, 2) . "% off";
     }
 
     public function scopeSearch($query, $terms)
