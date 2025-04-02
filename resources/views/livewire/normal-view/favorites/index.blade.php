@@ -65,7 +65,7 @@
                                     number_format($favorite->product->product_price, 2, '.', ',') }}</span>
                                  @if ($favorite->product->product_old_price !== null)
                                  <span class="text-muted text-decoration-line-through text-danger">(₱{{
-                                     number_format($favorite->product->product_old_price, 2, '.', ',') }})</span><span class="flag-discount">{{ $favorite->product->discount }}</span>
+                                     number_format($favorite->product->product_old_price, 2, '.', ',') }})</span>
                                  @endif
                             </div>
                             <div class="d-block font-size-1 mb-2">
