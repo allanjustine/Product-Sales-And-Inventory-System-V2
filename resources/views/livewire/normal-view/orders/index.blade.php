@@ -121,7 +121,7 @@
                                     </span>
                                 </div>
                                 <div class="d-flex flex-column m-3">
-                                    
+
                                     <strong class="info-box-text text-capitalize text-truncate">{{ $order->product->product_name
                                     }}</strong>
                                 <span class="info-box-text">&#8369;{{
@@ -130,7 +130,7 @@
                                         <span class="text-muted text-decoration-line-through">( &#8369;{{
                                         number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
                                         class="flag-discount"> {{ $order->product->discount }}</span>
-                                    @endif    
+                                    @endif
                                 </span>
                                 <span class="info-box-text">x{{ number_format($order->order_quantity)
                                     }}PC(s)</span>
@@ -175,10 +175,12 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h2>
+                                        @if ($grandTotalPending > 0)
                                         <span class="ml-3">
                                             <strong>Grand Total:
                                                 &#8369;{{ number_format($grandTotalPending, 2, '.', ',') }}</strong>
                                         </span>
+                                        @endif
                                     </h2>
                                 </div>
                             </div>
@@ -220,9 +222,9 @@
                                         @endif
                                     </span>
                                 </div>
-                                
+
                                 <div class="d-flex flex-column m-3">
-                                        
+
                                     <span class="info-box-text text-capitalize text-truncate"><strong>{{
                                         $order->product->product_name }}</strong></span>
                                 <span class="info-box-text">&#8369;{{
@@ -231,7 +233,7 @@
                                     <span class="text-muted text-decoration-line-through">( &#8369;{{
                                     number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
                                     class="flag-discount"> {{ $order->product->discount }}</span>
-                                @endif    
+                                @endif
                                 </span>
                                 <span class="info-box-text">x{{ number_format($order->order_quantity)
                                     }}PC(s)</span>
@@ -278,10 +280,12 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h2>
+                                        @if ($grandTotalRecent > 0)
                                         <span class="ml-3">
                                             <strong>Grand Total:
                                                 &#8369;{{ number_format($grandTotalRecent, 2, '.', ',') }}</strong>
                                         </span>
+                                        @endif
                                     </h2>
                                 </div>
                             </div>
@@ -326,7 +330,7 @@
                                     </span>
                                 </div>
                                 <div class="d-flex flex-column m-3">
-                                    
+
                                     <span class="info-box-text text-capitalize text-truncate"><strong>{{
                                         $order->product->product_name }}</strong></span>
                                 <span class="info-box-text">&#8369;{{
@@ -335,7 +339,7 @@
                                     <span class="text-muted text-decoration-line-through">( &#8369;{{
                                     number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
                                     class="flag-discount"> {{ $order->product->discount }}</span>
-                                @endif    
+                                @endif
                                 </span>
                                 <span class="info-box-text">x{{ number_format($order->order_quantity)
                                     }}PC(s)</span>
@@ -378,10 +382,12 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h2>
+                                        @if ($grandTotalCancelled)
                                         <span class="ml-3">
                                             <strong>Grand Total:
                                                 &#8369;{{ number_format($grandTotalCancelled, 2, '.', ',') }}</strong>
                                         </span>
+                                        @endif
                                     </h2>
                                 </div>
                             </div>
