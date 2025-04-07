@@ -47,15 +47,8 @@ class ContactUs extends Component
         }
     }
 
-    public function displayFeedBacks()
-    {
-        $feedbacks = Contact::orderBy('created_at', 'desc')->get();
-
-        return compact('feedbacks');
-    }
-
     public function render()
     {
-        return view('livewire.normal-view.pages.contact-us', $this->displayFeedBacks());
+        return view('livewire.normal-view.pages.contact-us');
     }
 }

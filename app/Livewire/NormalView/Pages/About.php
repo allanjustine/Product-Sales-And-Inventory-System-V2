@@ -12,7 +12,9 @@ class About extends Component
 
     public function index()
     {
-        $testimonies = Contact::all();
+        $testimonies = Contact::query()
+            ->where('is_published', true)
+            ->get(['name', 'email', 'message', 'created_at']);
 
         return compact('testimonies');
     }

@@ -56,6 +56,7 @@
                             <footer class="blockquote-footer">{{ $testimony->name }}</footer>
                         </blockquote>
                     </div>
+                    <small class="text-muted fst-italic">{{ $testimony->created_at->diffForHumans() }}</small>
                 </div>
             </div>
             @empty
