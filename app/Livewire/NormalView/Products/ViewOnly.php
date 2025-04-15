@@ -44,7 +44,7 @@ class ViewOnly extends Component
 
     public function displayProducts()
     {
-        $query = Product::search($this->search);
+        $query = Product::with('product_category')->search($this->search);
 
         if ($this->category_name != 'All') {
             $query->whereHas('product_category', function ($q) {

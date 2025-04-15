@@ -49,6 +49,7 @@ class Index extends Component
     public $loadMore = 20;
     public $loadMorePlus = 20;
     public $searchLogs = [];
+    public $carts;
 
     use WithPagination;
 
@@ -64,7 +65,7 @@ class Index extends Component
 
     public function displayProducts()
     {
-        $query = Product::search($this->search);
+        $query = Product::with(['product_category', 'favorites'])->search($this->search);
 
         if ($this->category_name != 'All') {
             $query->whereHas('product_category', function ($q) {
@@ -93,7 +94,7 @@ class Index extends Component
             }
         }
 
-        $carts = Cart::with('product')
+        $this->carts = Cart::with('product')
             ->where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -115,7 +116,7 @@ class Index extends Component
 
         $this->searchLogs = SearchLog::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->take(5)->get();
 
-        return compact('products', 'carts', 'allDisplayProducts');
+        return compact('products', 'allDisplayProducts');
     }
 
     public function searchDelete($id)
@@ -234,13 +235,9 @@ class Index extends Component
 
     public function getTotal()
     {
-        $cartTotal = Cart::query()
-            ->with('product')
-            ->where('user_id', Auth::id())
-            ->get()
-            ->sum(function ($item) {
-                return $item->product->product_price * $item->quantity;
-            });
+        $cartTotal = $this->carts->sum(function ($item) {
+            return $item->product->product_price * $item->quantity;
+        });
 
         return $cartTotal;
     }

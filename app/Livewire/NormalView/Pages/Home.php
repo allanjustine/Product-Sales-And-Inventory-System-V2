@@ -20,15 +20,17 @@ class Home extends Component
 
     public function essentialItems()
     {
-        $topDeals = Product::orderBy('product_sold', 'desc')
-            ->whereNotIn('product_sold', [0])
+        $topDeals = Product::with(['product_category', 'favorites.product'])
+            ->where('product_sold', '>', 0)
+            ->orderBy('product_sold', 'desc')
             ->take(10)
             ->get();
-        $popularityDeals = Product::orderBy('product_votes', 'desc')
-            ->whereNotIn('product_votes', [0])
+        $popularityDeals = Product::with(['product_category', 'favorites.product'])
+            ->where('product_votes', '>', 0)
+            ->orderBy('product_votes', 'desc')
             ->take(10)
             ->get();
-        $latestProducts = Product::orderBy('created_at', 'desc')
+        $latestProducts = Product::with(['product_category', 'favorites.product'])->orderBy('created_at', 'desc')
             ->take(10)
             ->get();
 
@@ -45,7 +47,6 @@ class Home extends Component
         $this->afternoon = $time >= 12 && $time < 18;
         $this->evening = $time >= 18 && $time <= 23;
     }
-
 
     public function view($id)
     {

@@ -55,7 +55,7 @@ class ProductSales extends Component
 
     public function displaySales()
     {
-        $query = Order::join('users', 'orders.user_id', '=', 'users.id')
+        $query = Order::with(['product', 'user'])->join('users', 'orders.user_id', '=', 'users.id')
             ->select('orders.*', 'users.name', 'products.product_name')
             ->leftJoin('products', 'orders.product_id', '=', 'products.id')
             ->where('order_status', 'Paid')

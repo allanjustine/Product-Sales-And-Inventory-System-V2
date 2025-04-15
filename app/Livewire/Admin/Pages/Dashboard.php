@@ -63,43 +63,29 @@ class Dashboard extends Component
 
     public function count()
     {
+        $excludedData = ["Pending", "Cancelled", "Complete", "Delivered", "To Deliver"];
+        $includedData = ["Pending", "Complete", "To Deliver", "Delivered"];
+
         $usersCount = User::role('user')->count();
         $adminsCount = User::role('admin')->count();
         $feedbacks = Contact::count();
         $productsCount = Product::count();
         $categoriesCount = ProductCategory::count();
-        $ordersCount = Order::where('order_status', 'Pending')
-            ->orWhere('order_status', 'Complete')
-            ->orWhere('order_status', 'To Deliver')
-            ->orWhere('order_status', 'Delivered')
+        $ordersCount = Order::whereIn('order_status', $includedData)
             ->count();
         $productSalesCount = Order::where('order_status', 'Paid')->count();
-        $grandTotal = Order::whereNotIn('order_status', ['Pending'])
-            ->whereNotIn('order_status', ['Cancelled'])
-            ->whereNotIn('order_status', ['Complete'])
-            ->whereNotIn('order_status', ['Delivered'])
-            ->whereNotIn('order_status', ['To Deliver'])
+
+
+        $grandTotal = Order::whereNotIn('order_status', $excludedData)
             ->sum('order_total_amount');
         $todaysTotal = Order::whereDate('created_at', today())
-            ->whereNotIn('order_status', ['Pending'])
-            ->whereNotIn('order_status', ['Cancelled'])
-            ->whereNotIn('order_status', ['Complete'])
-            ->whereNotIn('order_status', ['Delivered'])
-            ->whereNotIn('order_status', ['To Deliver'])
+            ->whereNotIn('order_status', $excludedData)
             ->sum('order_total_amount');
         $monthlyTotal = Order::whereMonth('created_at', now()->month)
-            ->whereNotIn('order_status', ['Pending'])
-            ->whereNotIn('order_status', ['Cancelled'])
-            ->whereNotIn('order_status', ['Complete'])
-            ->whereNotIn('order_status', ['Delivered'])
-            ->whereNotIn('order_status', ['To Deliver'])
+            ->whereNotIn('order_status', $excludedData)
             ->sum('order_total_amount');
         $yearlyTotal = Order::whereYear('created_at', now()->year)
-            ->whereNotIn('order_status', ['Pending'])
-            ->whereNotIn('order_status', ['Cancelled'])
-            ->whereNotIn('order_status', ['Complete'])
-            ->whereNotIn('order_status', ['Delivered'])
-            ->whereNotIn('order_status', ['To Deliver'])
+            ->whereNotIn('order_status', $excludedData)
             ->sum('order_total_amount');
         $orderMonth = Order::whereMonth('created_at', now()->month)->get();
 

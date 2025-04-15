@@ -22,8 +22,7 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" role="menu">
                     <li class="nav-item">
-                        <a wire:navigate href="/admin/dashboard"
-                            class="nav-link">
+                        <a wire:navigate href="/admin/dashboard" class="nav-link">
                             <i class="nav-icon fa-solid fa-gauge-max"></i>
                             <p>
                                 Dashboard
@@ -31,19 +30,20 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a wire:navigate href="/admin/users"
-                            class="nav-link">
+                        <a wire:navigate href="/admin/users" class="nav-link">
                             <i class="nav-icon fa-solid fa-users"></i>
                             <p>
                                 Users
                             </p>
 
+                            @if ($usersCount > 0)
                             <span class="right badge badge-info">{{ $usersCount }}</span>
+                            @endif
                         </a>
                     </li>
                     <li class="nav-header">ORDERS MANAGEMENT</li>
-                    <li x-data="{ open: window.location.pathname === '/admin/orders' || window.location.pathname === '/admin/product-sales' }" class="nav-item"
-                        x-bind:class="{ 'menu-open': open }">
+                    <li x-data="{ open: window.location.pathname === '/admin/orders' || window.location.pathname === '/admin/product-sales' }"
+                        class="nav-item" x-bind:class="{ 'menu-open': open }">
                         <a href="#" @click="open = !open" class="nav-link">
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
                             <p>
@@ -53,25 +53,27 @@
                         </a>
                         <ul class="nav nav-treeview" x-cloak x-show="open" x-transition>
                             <li class="nav-item">
-                                <a wire:navigate href="/admin/orders"
-                                    class="nav-link">
+                                <a wire:navigate href="/admin/orders" class="nav-link">
                                     <i class="nav-icon fa-solid fa-bag-shopping"></i>
                                     <p>
                                         Users Order
                                         <span class="right badge badge-info"></span>
                                     </p>
+                                    @if ($ordersCount > 0)
                                     <span class="right badge badge-info">{{ $ordersCount }}</span>
+                                    @endif
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a wire:navigate href="/admin/product-sales"
-                                    class="nav-link">
+                                <a wire:navigate href="/admin/product-sales" class="nav-link">
                                     <i class="nav-icon fa-solid fa-database"></i>
                                     <p>
                                         Product Sales
                                         <span class="right badge badge-info"></span>
                                     </p>
+                                    @if ($productSalesCount > 0)
                                     <span class="right badge badge-info">{{ $productSalesCount }}</span>
+                                    @endif
                                 </a>
                             </li>
                         </ul>
@@ -88,19 +90,21 @@
                         </a>
                         <ul class="nav nav-treeview" x-cloak x-show="open" x-transition>
                             <li class="nav-item">
-                                <a wire:navigate href="/admin/products"
-                                    class="nav-link">
+                                <a wire:navigate href="/admin/products" class="nav-link">
                                     <i class="nav-icon fa-solid fa-box-open"></i>
                                     <p>Products</p>
+                                    @if ($productsCount > 0)
                                     <span class="right badge badge-info">{{ $productsCount }}</span>
+                                    @endif
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a wire:navigate href="/admin/product-categories"
-                                    class="nav-link">
+                                <a wire:navigate href="/admin/product-categories" class="nav-link">
                                     <i class="nav-icon fa-solid fa-list"></i>
                                     <p>Product Categories</p>
+                                    @if ($categoriesCount)
                                     <span class="right badge badge-info">{{ $categoriesCount }}</span>
+                                    @endif
                                 </a>
                             </li>
                         </ul>
@@ -116,13 +120,14 @@
                         </a>
                     </li> --}}
                     <li class="nav-item">
-                        <a wire:navigate href="/admin/feedbacks"
-                            class="nav-link">
+                        <a wire:navigate href="/admin/feedbacks" class="nav-link">
                             <i class="nav-icon fa-solid fa-comments"></i>
                             <p>
                                 Feed Backs
                             </p>
+                            @if ($feedbacks > 0)
                             <span class="right badge badge-info">{{ $feedbacks }}</span>
+                            @endif
                         </a>
                     </li>
                     {{-- <li class="nav-item menu-close">
@@ -170,8 +175,7 @@
                                 </span>
                             </li>
                             <li class="nav-item">
-                                <a wire:navigate href="/profile"
-                                    class="nav-link">
+                                <a wire:navigate href="/profile" class="nav-link">
                                     <i class="fa-solid fa-user nav-icon"></i>
                                     <p>My Profile</p>
                                 </a>
@@ -232,9 +236,12 @@
                     After you logout you will redirect to login page.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click="logout" class="btn btn-danger" wire:target='logout' wire:loading.attr='disabled'>
-                        <span  wire:target='logout' wire:loading.remove><i class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</span>
-                        <span  wire:target='logout' wire:loading><span class="spinner-border spinner-border-sm"></span> Logging out...</span>
+                    <button type="button" wire:click="logout" class="btn btn-danger" wire:target='logout'
+                        wire:loading.attr='disabled'>
+                        <span wire:target='logout' wire:loading.remove><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</span>
+                        <span wire:target='logout' wire:loading><span class="spinner-border spinner-border-sm"></span>
+                            Logging out...</span>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>

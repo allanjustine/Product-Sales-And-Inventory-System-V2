@@ -42,6 +42,10 @@ class Index extends Component
             'message'   =>      $message
         ]);
 
+        if ($status === "Paid") {
+            $this->dispatch('paidSettlement');
+        }
+
         // event(new ProcessOrder($order, $status, $message));
         ProcessOrder::dispatch($order, $status, $message);
 

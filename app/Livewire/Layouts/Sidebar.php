@@ -17,6 +17,7 @@ class Sidebar extends Component
     #[On('cancelOrderByUser')]
     #[On('repurchaseAndSubmitRating')]
     #[On('placeOrderByUser')]
+    #[On('paidSettlement')]
     public function count()
     {
         $usersCount = User::where('id', '<>', auth()->id())->count();

@@ -35,8 +35,8 @@ class Index extends Component
     #[On('isRefresh')]
     public function displayAllFavorites()
     {
-        $allFavorites = Favorite::where(['user_id' => auth()->user()->id, 'status' => true])->latest()->take($this->loadMore)->get();
-        $allFavoritesData = Favorite::where(['user_id' => auth()->user()->id, 'status' => true])->count();
+        $allFavorites = Favorite::with(['product.product_category'])->where(['user_id' => auth()->user()->id, 'status' => true])->latest()->take($this->loadMore)->get();
+        $allFavoritesData = Favorite::with(['product.product_category'])->where(['user_id' => auth()->user()->id, 'status' => true])->count();
 
         return compact('allFavorites', 'allFavoritesData');
     }
