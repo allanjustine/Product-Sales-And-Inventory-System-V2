@@ -67,7 +67,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 User side
-in the orders add a display if the order was cancelled by the admin
+in the orders add a display if the order was cancelled by the admin done
 
 Admin side
 add users status for disable account, ban or restrict use a dropdown for clicks
