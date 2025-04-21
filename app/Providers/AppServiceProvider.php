@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -65,5 +66,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(BroadcastServiceProvider::class);
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
+        // Model::preventLazyLoading();
+        Model::automaticallyEagerLoadRelationships();
     }
 }
