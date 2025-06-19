@@ -5,6 +5,7 @@ namespace App\Livewire\NormalView\Carts;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -20,7 +21,10 @@ class Index extends Component
 
     public function carts()
     {
-        $cartItems = Cart::where('user_id', auth()->id())->with('product')->get();
+        $cartItems = Cart::with('product')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
         return compact('cartItems');
     }
 
@@ -44,6 +48,7 @@ class Index extends Component
         return;
     }
 
+    #[On('decreaseQuantity')]
     public function decreaseQuantity($itemId)
     {
         $cart = Cart::where('user_id', auth()->id())

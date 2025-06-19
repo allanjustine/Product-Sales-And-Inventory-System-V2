@@ -113,8 +113,8 @@
                 @foreach ($carts as $item)
                 <li class="cart-item px-3 py-2 mr-2" key="{{ $item->id }}">
                     <div class="cart-item-image d-flex gap-1 align-items-center">
-                        <button class="btn btn-link text-primary" type="button"
-                            wire:click="decreaseQuantity({{ $item->id }})">
+                        <button class="btn btn-link text-primary" id="decrease-quantity" type="button"
+                            @if($item->quantity === 1) onclick="toDelete({{ $item->id }})" @else wire:click='decreaseQuantity({{ $item->id }})' @endif>
                             <i class="fas fa-minus text-black"></i>
                         </button>
                         x{{ number_format($item->quantity) }}
@@ -131,7 +131,7 @@
                             src="{{ url($item->product->product_image) }}" alt="">
                         @endif
 
-                        @if ($item->product->product_old_price !== null)
+                        @if ($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
                         <div style="position: absolute; top: 0; right: 0;">
                             <span class="flag-discount">{{ $item->product->discount }}</span>
                         </div>
@@ -144,7 +144,7 @@
                     <div class="cart-item-price mt-2">
                         <div class="d-flex align-items-center">
                             <div class="text-sm col-6">
-                                &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }} <span class="text-decoration-line-through text-muted">(&#8369;{{ number_format($item->product->product_old_price, 2, '.', ',') }})</span>
+                                &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }} @if($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)<span class="text-decoration-line-through text-muted">(&#8369;{{ number_format($item->product->product_old_price, 2, '.', ',') }})</span>@endif
                             </div>
                             <div class="d-flex col-6 align-items-center">
                                 <button class="btn btn-link text-danger text-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#remove"
@@ -218,7 +218,7 @@
                             </h2>
                         </button>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 10px; @endif">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null && $product->product_old_price !== $product->product_price) margin-top: 10px; @endif">
                             @if ($product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($product->product_stock)
                                 }}</span>
@@ -229,7 +229,7 @@
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
-                        @if ($product->product_old_price !== null)
+                        @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                         <div style="position: absolute; top: 0; right: 0;">
                             <span class="flag-discount">{{ $product->discount }}</span>
                         </div>
@@ -250,7 +250,7 @@
                             <div class="d-block mb-2">
                                 <span class="font-weight-medium">₱{{
                                     number_format($product->product_price, 2, '.', ',') }}</span>
-                                @if ($product->product_old_price !== null)
+                                @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                                 <span class="text-muted text-decoration-line-through text-danger">(₱{{
                                     number_format($product->product_old_price, 2, '.', ',') }})</span>
                                 @endif
@@ -330,7 +330,7 @@
     </div> --}}
 
     <div class="d-flex mb-2 align-items-center overflow-auto">
-        @if($products->count() < $allDisplayProducts) <div class="mx-auto" id="sentinel" wire:loading.remove
+        @if($products->count() < $products->total()) <div class="mx-auto" id="sentinel" wire:loading.remove
             wire:target='loadMorePage'>
     </div>
     @endif
@@ -373,15 +373,15 @@
 </style>
 
 <script>
-    let search = '';
     let sentinelObserver = null;
-    document.addEventListener('searchData', function(e) {
-        search = e.detail.search;
-    });
 
     document.addEventListener('livewire:navigated', function() {
         const sentinel = document.getElementById('sentinel');
         const button = document.getElementById('loadMoreData');
+        const count = @json($products->count());
+        const total = @json($products->total());
+        const canLoad = count < total;
+
         if(!sentinel) return;
 
         if(sentinelObserver) {
@@ -389,7 +389,7 @@
         }
 
         sentinelObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !search) {
+            if (entries[0].isIntersecting && canLoad) {
                 button?.click();
             }
         });

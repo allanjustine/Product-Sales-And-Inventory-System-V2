@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-4 text-center">
                                 <div class="btn-group">
-                                    <button class="btn border" wire:click="decreaseQuantity({{ $item->id }})"><i
+                                    <button class="btn border" id="decrease-quantity" @if($item->quantity === 1) onclick="toDelete({{ $item->id }})" @else wire:click='decreaseQuantity({{ $item->id }})' @endif><i
                                             class="fa-regular fa-minus"></i></button><span class="p-3">{{
                                         $item->quantity
                                         }}</span><button class="btn border"
@@ -61,7 +61,7 @@
                             </p>
                             <p class="fw-bold">
                                 &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }}
-                                @if($item->product->product_old_price !== null)
+                                @if($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
                                 <span class="text-muted text-decoration-line-through">( &#8369;{{
                                     number_format($item->product->product_old_price, 2, '.', ',') }})</span><span
                                     class="flag-discount"> {{ $item->product->discount }}</span>
@@ -74,7 +74,7 @@
                             <p class="fs-6">
                                 <strong class="item-price">Sub total: &#8369;{{ number_format($item->quantity *
                                     $item->product->product_price, 2, '.', ',') }}</strong>
-                                @if($item->product->product_old_price !== null)
+                                @if($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
                                 <span class="text-muted">(save &#8369;{{ number_format(($item->quantity *
                                     $item->product->product_old_price) - ($item->quantity *
                                     $item->product->product_price), 2, '.', ',') }})</span>
@@ -181,5 +181,24 @@
             color: #333;
         }
     </style>
+
+
+    <script>
+        const buttonDecrease = document.getElementById('decrease-quantity');
+         function toDelete(id) {
+            Swal.fire({
+                icon: "info",
+                title: "To be remove",
+                text: "Are you sure you want to remove this item?",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    Livewire.dispatch('decreaseQuantity', {itemId: id});
+                }
+            })
+        }
+    </script>
 
 </div>

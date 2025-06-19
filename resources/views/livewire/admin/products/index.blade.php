@@ -164,7 +164,7 @@
                             <td>{{ $product->product_rating }} <i class="fa-solid fa-star" style="color: #ffd700;"></i>
                             </td>
                             @endif
-                            <td>&#8369;{{ number_format($product->product_price, 2, '.', ',') }} @if($product->product_old_price !== null) <span class="text-decoration-line-through text-muted">- &#8369;{{ number_format($product->product_old_price, 2, '.', ',') }}</span> @endif</td>
+                            <td>&#8369;{{ number_format($product->product_price, 2, '.', ',') }} @if($product->product_old_price !== null && $product->product_old_price !== $product->product_price) <span class="text-decoration-line-through text-muted">- &#8369;{{ number_format($product->product_old_price, 2, '.', ',') }}</span> @endif</td>
                             {{-- @if ($product->product_status === 'Available')
                             <td><span class="badge badge-success">AVAILABLE</span></td>
                             @else

@@ -101,7 +101,7 @@ class Index extends Component
 
         $allDisplayProducts = Product::count();
 
-        $products = $query->take($this->loadMore)->latest()->get();
+        $products = $query->latest()->paginate($this->loadMore);
 
         if ($this->search) {
             $searchLog = SearchLog::where('log_entry', $this->search)->first();
@@ -263,6 +263,7 @@ class Index extends Component
         return;
     }
 
+    #[On('decreaseQuantity')]
     public function decreaseQuantity($itemId)
     {
         $cart = Cart::where('user_id', auth()->id())

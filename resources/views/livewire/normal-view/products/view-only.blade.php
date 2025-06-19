@@ -84,7 +84,7 @@
                             </div>
                         </a>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null) margin-top: 10px; @endif">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($product->product_old_price !== null && $product->product_old_price !== $product->product_price) margin-top: 10px; @endif">
                             @if ($product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($product->product_stock)
                                 }}</span>
@@ -95,7 +95,7 @@
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
-                        @if ($product->product_old_price !== null)
+                        @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                         <div style="position: absolute; top: 0; right: 0;">
                             <span class="flag-discount">{{ $product->discount }}</span>
                         </div>
@@ -114,7 +114,7 @@
                             <div class="d-block font-size-1 mb-2">
                                 <span class="font-weight-medium">₱{{
                                     number_format($product->product_price, 2, '.', ',') }}</span>
-                                 @if ($product->product_old_price !== null)
+                                 @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                                  <span class="text-muted text-decoration-line-through text-danger">(₱{{
                                      number_format($product->product_old_price, 2, '.', ',') }})</span>
                                  @endif
@@ -167,7 +167,7 @@
             {{ $products->links('pagination::bootstrap-4') }}</span>
     </div> --}}
     <div class="d-flex mb-2 align-items-center overflow-auto">
-        @if($products->count() < $allDisplayProducts)
+        @if($products->count() < $products->total())
             <div class="mx-auto" id="sentinel" wire:loading.remove wire:target='loadMore'></div>
         @endif
         <button wire:loading type="button" wire:target='loadMore' class="btn btn-link mx-auto" wire:click="loadMore" id="loadMoreData">
@@ -183,15 +183,15 @@
     </div>
 
     <script>
-        let search = '';
         let sentinelObserver = null;
-        document.addEventListener('searchData', function(e) {
-            search = e.detail.search;
-        });
 
         document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
             const button = document.getElementById('loadMoreData');
+            const count = @json($products->count());
+            const total = @json($products->total());
+            const canLoad = count < total;
+
             if(!sentinel) return;
 
             if(sentinelObserver) {
@@ -199,7 +199,7 @@
             }
 
             sentinelObserver = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && !search) {
+                if (entries[0].isIntersecting && canLoad) {
                     button?.click();
                 }
             });

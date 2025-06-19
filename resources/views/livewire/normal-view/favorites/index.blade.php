@@ -33,7 +33,7 @@
                             </h2>
                         </a>
 
-                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($favorite->product->product_old_price !== null) margin-top: 10px; @endif">
+                        <div class="pt-2 pr-2" style="position: absolute; top: 0; right: 0; @if($favorite->product->product_old_price !== null && $favorite->product->product_old_price !== $favorite->product->product_price) margin-top: 10px; @endif">
                             @if ($favorite->product->product_stock >= 20)
                             <span class="badge badge-success badge-pill">{{ number_format($favorite->product->product_stock)
                                 }}</span>
@@ -44,7 +44,7 @@
                             <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
                             @endif
                         </div>
-                        @if ($favorite->product->product_old_price !== null)
+                        @if ($favorite->product->product_old_price !== null && $favorite->product->product_old_price !== $favorite->product->product_price)
                         <div style="position: absolute; top: 0; right: 0;">
                             <span class="flag-discount">{{ $favorite->product->discount }}</span>
                         </div>
@@ -63,7 +63,7 @@
                             <div class="d-block font-size-1">
                                 <span class="font-weight-medium">₱{{
                                     number_format($favorite->product->product_price, 2, '.', ',') }}</span>
-                                 @if ($favorite->product->product_old_price !== null)
+                                 @if ($favorite->product->product_old_price !== null && $favorite->product->product_old_price !== $favorite->product->product_price)
                                  <span class="text-muted text-decoration-line-through text-danger">(₱{{
                                      number_format($favorite->product->product_old_price, 2, '.', ',') }})</span>
                                  @endif

@@ -130,7 +130,7 @@
                                     <span class="top-deals text-sm"><strong>Top {{ $loop->index + 1 }}</strong></span>
                                 </span>
                             </div>
-                            @if ($product->product_old_price !== null)
+                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                             <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
                                 <span class="flag-discount">{{ $product->discount }}</span>
                             </div>
@@ -149,7 +149,7 @@
                                 <div class="d-block font-size-1">
                                     <span class="font-weight-medium">₱{{
                                         number_format($product->product_price, 2, '.', ',') }}</span>
-                                     @if ($product->product_old_price !== null)
+                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                                      <span class="text-muted text-decoration-line-through text-danger">(₱{{
                                          number_format($product->product_old_price, 2, '.', ',') }})</span>
                                      @endif
@@ -232,7 +232,7 @@
                                 </span>
                             </div>
 
-                            @if ($product->product_old_price !== null)
+                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                             <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
                                 <span class="flag-discount">{{ $product->discount }}</span>
                             </div>
@@ -251,7 +251,7 @@
                                 <div class="d-block font-size-1">
                                     <span class="font-weight-medium">₱{{
                                         number_format($product->product_price, 2, '.', ',') }}</span>
-                                     @if ($product->product_old_price !== null)
+                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                                      <span class="text-muted text-decoration-line-through text-danger">(₱{{
                                          number_format($product->product_old_price, 2, '.', ',') }})</span>
                                      @endif
@@ -333,7 +333,7 @@
                                 </span>
                             </div>
 
-                            @if ($product->product_old_price !== null)
+                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                             <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
                                 <span class="flag-discount">{{ $product->discount }}</span>
                             </div>
@@ -352,7 +352,7 @@
                                 <div class="d-block font-size-1">
                                     <span class="font-weight-medium">₱{{
                                         number_format($product->product_price, 2, '.', ',') }}</span>
-                                     @if ($product->product_old_price !== null)
+                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                                      <span class="text-muted text-decoration-line-through text-danger">(₱{{
                                          number_format($product->product_old_price, 2, '.', ',') }})</span>
                                      @endif

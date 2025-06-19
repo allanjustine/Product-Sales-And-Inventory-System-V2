@@ -126,7 +126,7 @@
                                     }}</strong>
                                 <span class="info-box-text">&#8369;{{
                                     number_format($order->product->product_price, 2, '.', ',') }}
-                                    @if($order->product->product_old_price !== null)
+                                    @if($order->product->product_old_price !== null && $order->product->product_old_price !== $order->product->product_price)
                                         <span class="text-muted text-decoration-line-through">( &#8369;{{
                                         number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
                                         class="flag-discount"> {{ $order->product->discount }}</span>
@@ -156,7 +156,7 @@
                                         }}</strong></span>
                                 <span class="info-box-number">Total:
                                     &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}
-                                    @if($order->product->product_old_price !== null)
+                                    @if($order->product->product_old_price !== null && $order->product->product_old_price !== $order->product->product_price)
                                     <span class="text-muted">(save &#8369;{{ number_format(($order->order_quantity *
                                         $order->product->product_old_price) - ($order->order_quantity *
                                         $order->product->product_price), 2, '.', ',') }})</span>
@@ -229,7 +229,7 @@
                                         $order->product->product_name }}</strong></span>
                                 <span class="info-box-text">&#8369;{{
                                     number_format($order->product->product_price, 2, '.', ',') }}
-                                @if($order->product->product_old_price !== null)
+                                @if($order->product->product_old_price !== null && $order->product->product_old_price !== $order->product->product_price)
                                     <span class="text-muted text-decoration-line-through">( &#8369;{{
                                     number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
                                     class="flag-discount"> {{ $order->product->discount }}</span>
@@ -261,7 +261,7 @@
                                         }}</strong></span>
                                 <span class="info-box-number">Total:
                                     &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}
-                                    @if($order->product->product_old_price !== null)
+                                    @if($order->product->product_old_price !== null && $order->product->product_old_price !== $order->product->product_price)
                                     <span class="text-muted">(save &#8369;{{ number_format(($order->order_quantity *
                                         $order->product->product_old_price) - ($order->order_quantity *
                                         $order->product->product_price), 2, '.', ',') }})</span>
@@ -335,7 +335,7 @@
                                         $order->product->product_name }}</strong></span>
                                 <span class="info-box-text">&#8369;{{
                                     number_format($order->product->product_price, 2, '.', ',') }}
-                                @if($order->product->product_old_price !== null)
+                                @if($order->product->product_old_price !== null && $order->product->product_old_price !== $order->product->product_price)
                                     <span class="text-muted text-decoration-line-through">( &#8369;{{
                                     number_format($order->product->product_old_price, 2, '.', ',') }})</span><span
                                     class="flag-discount"> {{ $order->product->discount }}</span>
@@ -364,7 +364,7 @@
                                         }}</strong></span>
                                 <span class="info-box-number">Total:
                                     &#8369;{{ number_format($order->order_total_amount, 2, '.', ',') }}
-                                    @if($order->product->product_old_price !== null)
+                                    @if($order->product->product_old_price !== null && $order->product->product_old_price !== $order->product->product_price)
                                     <span class="text-muted">(save &#8369;{{ number_format(($order->order_quantity *
                                         $order->product->product_old_price) - ($order->order_quantity *
                                         $order->product->product_price), 2, '.', ',') }})</span>

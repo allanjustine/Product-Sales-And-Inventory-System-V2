@@ -79,7 +79,7 @@ class Index extends Component
             'product_name'              =>          'required|string|unique:products|max:255',
             'product_description'       =>          'required|string|max:65535',
             'product_price'             =>          'required|string|numeric|min:1|lte:product_old_price',
-            'product_old_price'         =>          'nullable|string|numeric|gte:product_price',
+            'product_old_price'         =>          'required|string|numeric|gte:product_price',
             'product_stock'             =>          'required|string|numeric',
             'product_status'            =>          'required|string',
             'product_image'             =>          'required|image|max:10000',
@@ -173,7 +173,7 @@ class Index extends Component
         $this->validate([
             'product_name'             =>      ['required', 'string', 'max:255', 'unique:products,product_name,' . $this->productEdit->id],
             'product_price'            =>      'required|string|numeric|min:1|lte:product_old_price',
-            'product_old_price'        =>      'nullable|string|numeric|gte:product_price',
+            'product_old_price'        =>      'required|string|numeric|gte:product_price',
             'product_image'            =>      $this->product_image ? ['image', 'max:10000'] : ''
         ], [
             'product_price.lte'     => 'The product price must be less than or equal to the product old price.',

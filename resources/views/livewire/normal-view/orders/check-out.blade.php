@@ -43,7 +43,7 @@
                             </p>
                             <p class="text-center">
                                 &#8369;{{ number_format($cartItemToCheckOut->product->product_price, 2, '.', ',') }}
-                                @if($cartItemToCheckOut->product->product_old_price !== null)
+                                @if($cartItemToCheckOut->product->product_old_price !== null && $cartItemToCheckOut->product->product_old_price !== $cartItemToCheckOut->product->product_price)
                                 <span class="text-muted text-decoration-line-through">( &#8369;{{
                                     number_format($cartItemToCheckOut->product->product_old_price, 2, '.', ',') }})</span><span
                                     class="flag-discount">{{ $cartItemToCheckOut->product->discount }}</span>
@@ -54,7 +54,7 @@
                                     Total:
                                     &#8369;{{ number_format($cartItemToCheckOut->product->product_price * $cartItemToCheckOut->quantity, 2, '.', ',') }}
                                 </strong>
-                                @if($cartItemToCheckOut->product->product_old_price !== null)
+                                @if($cartItemToCheckOut->product->product_old_price !== null && $cartItemToCheckOut->product->product_old_price !== $cartItemToCheckOut->product->product_price)
                                 <span class="text-muted">(save &#8369;{{ number_format(($cartItemToCheckOut->quantity *
                                     $cartItemToCheckOut->product->product_old_price) - ($cartItemToCheckOut->quantity *
                                     $cartItemToCheckOut->product->product_price), 2, '.', ',') }})</span>
