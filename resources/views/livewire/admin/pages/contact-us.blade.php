@@ -19,7 +19,7 @@
                             <tr>
                                 <td>{{ $feedback->name }}</td>
                                 <td>{{ $feedback->email }}</td>
-                                <td>{{ $feedback->message }}</td>
+                                <td style="white-space: pre;">{{ $feedback->message }}</td>
                                 <td>
                                     @if ($feedback->is_published)
                                     <span class="badge badge-success">Is Published</span>
