@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Web | {{ $title ?? 'Not Set' }}</title>
     <meta property="og:title" content="My Web | {{ $title ?? 'Not Set' }}">
+    <meta name="author" content="Allan Justine Mascariñas" />
     <meta property="og:description"
         content="A powerful, real-time eCommerce platform designed for simplicity and speed. Seamlessly manage products, process orders, and track inventory with instant updates. Whether you're a small business or a growing enterprise, our user-friendly interface makes online selling effortless — no technical expertise required.">
     <meta property="og:image" content="https://e-commerce.smctgroup.ph/images/slide1.jpg">
@@ -45,41 +46,42 @@
 <body style="overflow-x: hidden;">
 
     @role('admin')
-    <div class="wrapper" style="max-height: 100vh; overflow-y: hidden;">
-        {{-- <div class="preloader flex-column justify-content-center align-items-center">
+        <div class="wrapper" style="max-height: 100vh; overflow-y: hidden;">
+            {{-- <div class="preloader flex-column justify-content-center align-items-center">
             <div class="ring">Loading
                 <span class="ring2"></span>
             </div>
         </div> --}}
 
-        @livewire('layouts.sidebar')
-        <div class="content-wrapper px-4 py-2" style="max-height: 84vh; overflow-y: auto;">
-            <div class="content-header">
-                <h1>
-                    {{ $title ?? 'No title' }}
-                </h1>
+            @livewire('layouts.sidebar')
+            <div class="content-wrapper px-4 py-2" style="max-height: 84vh; overflow-y: auto;">
+                <div class="content-header">
+                    <h1>
+                        {{ $title ?? 'No title' }}
+                    </h1>
+                </div>
+                <hr>
+                <div class="content px-2">
+                    {{ $slot ?? '' }}
+                </div>
             </div>
-            <hr>
-            <div class="content px-2">
-                {{ $slot ?? '' }}
-            </div>
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-inline text-sm">
+                    <span id="date"></span>
+                    <span id="time"></span></span>
+                </div>
+                <strong>Copyright &copy; 2023 - {{ now()->year }} <a href="https://facebook.com/1down"
+                        target="_blank">Allan
+                        Justine
+                        Mascariñas</a>.</strong> All rights
+                reserved.
+            </footer>
         </div>
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline text-sm">
-                <span id="date"></span>
-                <span id="time"></span></span>
-            </div>
-            <strong>Copyright &copy; 2023 - {{ now()->year }} <a href="https://facebook.com/1down" target="_blank">Allan
-                    Justine
-                    Mascariñas</a>.</strong> All rights
-            reserved.
-        </footer>
-    </div>
     @else
-    @if(! request()->is('verification/*/*'))
-    @livewire('layouts.navbar')
-    @endif
-    {{ $slot ?? '' }}
+        @if (!request()->is('verification/*/*'))
+            @livewire('layouts.navbar')
+        @endif
+        {{ $slot ?? '' }}
     @endrole
 
     <script data-navigate-once src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
@@ -99,8 +101,7 @@
     <script data-navigate-once src="https://adminlte.io/docs/3.2/assets/plugins/bootstrap/js/bootstrap.bundle.min.js">
     </script>
     <script data-navigate-once
-        src="https://adminlte.io/docs/3.2/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js">
-    </script>
+        src="https://adminlte.io/docs/3.2/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script data-navigate-once src="https://adminlte.io/docs/3.2/assets/js/adminlte.min.js"></script>
     <script data-navigate-once src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @livewireScripts
@@ -109,67 +110,67 @@
 </body>
 
 @unlessrole('admin')
-<footer class="bg-dark text-light py-4" onload="updateTime()">
-    <div class="container">
-        <div class="row p-2">
-            <div class="col-md-4">
-                <h5>AJM Company</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore
-                    et dolore magna aliqua.</p>
-            </div>
+    <footer class="bg-dark text-light py-4" onload="updateTime()">
+        <div class="container">
+            <div class="row p-2">
+                <div class="col-md-4">
+                    <h5>AJM Company</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore
+                        et dolore magna aliqua.</p>
+                </div>
 
-            <div class="col-md-4">
-                <h5>Contact Us</h5>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-map-marker-alt"></i> Address: Tinangnan, Tubigon, Bohol - Purok 2</li>
-                    <li><i class="fas fa-phone"></i> Phone: 09512072888</li>
-                    <li><i class="fas fa-envelope"></i> Email: mydummy.2022.2023@gmail.com</li>
-                </ul>
-            </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt"></i> Address: Tinangnan, Tubigon, Bohol - Purok 2</li>
+                        <li><i class="fas fa-phone"></i> Phone: 09512072888</li>
+                        <li><i class="fas fa-envelope"></i> Email: mydummy.2022.2023@gmail.com</li>
+                    </ul>
+                </div>
 
-            <div class="col-md-4 text-center">
-                <h5>Follow Us</h5>
-                <ul class="list-inline social-icons">
-                    <li class="list-inline-item">
-                        <a href="https://facebook.com/1down" id="facebook" target="_blank">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://twitter.com" id="twitter" target="_blank">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://youtube.com" id="youtube" target="_blank">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://gmail.com" id="gmail" target="_blank">
-                            <i class="fab fa-google"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://instagram.com" id="instagram" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </li>
-                </ul>
+                <div class="col-md-4 text-center">
+                    <h5>Follow Us</h5>
+                    <ul class="list-inline social-icons">
+                        <li class="list-inline-item">
+                            <a href="https://facebook.com/1down" id="facebook" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com" id="twitter" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://youtube.com" id="youtube" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://gmail.com" id="gmail" target="_blank">
+                                <i class="fab fa-google"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://instagram.com" id="instagram" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p style="font-size: 12px;" class="text-center mt-3">Current date and time: <span
+                            class="border-bottom"><span id="date"></span>
+                            <span id="time"></span></span></p>
+                    <hr>
+                    <p>&copy; 2023 - {{ now()->year }} <strong>AJM</strong>. All rights reserved.</p>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p style="font-size: 12px;" class="text-center mt-3">Current date and time: <span
-                        class="border-bottom"><span id="date"></span>
-                        <span id="time"></span></span></p>
-                <hr>
-                <p>&copy; 2023 - {{ now()->year }} <strong>AJM</strong>. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 @endunlessrole
 
 <div class="back-to-top">
@@ -212,8 +213,8 @@
     function updateTime() {
         var now = new Date();
         var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September"
-            , "October", "November", "December"
+        var monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"
         ];
         var dayOfWeek = daysOfWeek[now.getDay()];
         var month = monthsOfYear[now.getMonth()];
@@ -225,7 +226,6 @@
         document.getElementById("time").innerHTML = timeString;
     }
     setInterval(updateTime, 1000);
-
 </script>
 
 
@@ -272,7 +272,7 @@
         }
 
         toggleSwitch.addEventListener('change', switchTheme, false);
-        })
+    })
 </script>
 
 
@@ -422,8 +422,8 @@
     function updateTime() {
         var now = new Date();
         var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September"
-            , "October", "November", "December"
+        var monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"
         ];
         var dayOfWeek = daysOfWeek[now.getDay()];
         var month = monthsOfYear[now.getMonth()];
@@ -435,7 +435,6 @@
         document.getElementById("time").innerHTML = timeString;
     }
     setInterval(updateTime, 1000);
-
 </script>
 
 <script>
