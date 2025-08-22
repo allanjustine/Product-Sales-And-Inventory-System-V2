@@ -50,6 +50,16 @@ services:
     depends_on:
       - e-commerce-app
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: smct-e-commerce-tunnel
+    restart: unless-stopped
+    command: tunnel run --url http://e-commerce-nginx:9003
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiODE3YmEzYzg5MGM0YTRmYzRjN2YwYTg1NmQ3YzFmODciLCJ0IjoiMTQ3ZjA5OTQtN2FhZi00NWM4LWFjZmQtMDMzZWY4Yjk5M2Q2IiwicyI6Ik5tRTJZamhsWW1JdE1UY3pZaTAwTldJM0xUbGxOamt0TVRneVpqVXpNR1UyWXpBeiJ9
+    networks:
+      - smct-mailer
+
 networks:
   e-commerce-network:
     driver: bridge
