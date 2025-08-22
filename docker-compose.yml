@@ -58,7 +58,7 @@ services:
     environment:
       - TUNNEL_TOKEN=eyJhIjoiODE3YmEzYzg5MGM0YTRmYzRjN2YwYTg1NmQ3YzFmODciLCJ0IjoiMTQ3ZjA5OTQtN2FhZi00NWM4LWFjZmQtMDMzZWY4Yjk5M2Q2IiwicyI6Ik5tRTJZamhsWW1JdE1UY3pZaTAwTldJM0xUbGxOamt0TVRneVpqVXpNR1UyWXpBeiJ9
     networks:
-      - e-commerce-app
+      - e-commerce-network
 
 networks:
   e-commerce-network:
