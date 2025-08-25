@@ -102,7 +102,7 @@ class Index extends Component
             'product_code'                  =>          $this->product_code
         ]);
 
-        $this->sweetAlert('Product Added', 'success', message: "The product \"{$product->product_name}\" is added to list.");
+        $this->sweetAlert('Product Added', 'success', "The product \"{$product->product_name}\" is added to list.");
 
     }
 
