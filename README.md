@@ -73,7 +73,7 @@ Admin side
 add users status for disable account, ban or restrict use a dropdown for clicks
 add in the orders a cancel button if the admin want to cancel the order of the user and reason for cancellation
 add testimony and display
-add shipping fee every location done
+add shipping fee every location done.
 
 This V2 is already deployed.
 
