@@ -75,6 +75,7 @@ add in the orders a cancel button if the admin want to cancel the order of the u
 add testimony and display
 add shipping fee every location done.
 add to cart timing.
+twik
 
 This V2 is already deployed.
 
