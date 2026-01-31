@@ -72,35 +72,6 @@
                                                             insufficient please reduce your cart quantity</span><br>
                                                     @endif
                                                 </span>
-
-                                                <span>
-                                                    <label for="order_payment_method" class="mt-3">Payment
-                                                        Method</label>
-                                                    <select id="select-cat" class="form-select" style=""
-                                                        name="order_payment_method" id="order_payment_method"
-                                                        wire:model.live="order_payment_method" required>
-                                                        <option selected hidden="true">Select a Payment Method</option>
-                                                        <option disabled>Select a Payment Method</option>
-                                                        <option value="Cash On Delivery">Cash On Delivery</option>
-                                                    </select>
-                                                    @error('order_payment_method')
-                                                        <span class="text-center text-danger">*Please select payment method
-                                                            first.</span>
-                                                    @enderror
-                                                </span>
-                                                <br>
-                                                <span>
-                                                    <label class="mt-3" for="user_location">Your delivery
-                                                        address</label>
-                                                    <textarea name="" class="form-control {{ $errors->has('user_location') ? 'border-danger' : '' }}" id=""
-                                                        cols="20" rows="5" placeholder="Enter specific location for the delivery address"
-                                                        wire:model.live.debounce.200ms="user_location"></textarea>
-                                                    @if ($errors->has('user_location'))
-                                                        <span class="text-danger">*Please enter your delivery address
-                                                            first.</span>
-                                                    @endif
-                                                </span>
-
                                             </p>
                                         </form>
                                     </div>
@@ -112,7 +83,7 @@
                 @if ($orderToBuy)
                     <div class="modal-footer">
                         <button type="button" wire:loading.attr="disabled" class="btn btn-primary form-control" wire:click="orderPlaceOrderItem" wire:target='orderPlaceOrderItem'>
-                            <span wire:target='orderPlaceOrderItem' wire:loading.remove><i class="fa-solid fa-cart-circle-check"></i> Place Order</span>
+                            <span wire:target='orderPlaceOrderItem' wire:loading.remove><i class="fa-solid fa-check"></i> Checkout</span>
                             <span wire:target='orderPlaceOrderItem' wire:loading><span class="spinner-border spinner-border-sm"></span> Please wait...</span>
 
                         <button type="button" class="btn btn-secondary form-control"

@@ -23,7 +23,7 @@
                                 @if($profile_image)
                                 <button type="button"
                                     class="btn btn-secondary px-2 py-1 rounded-circle btn-sm position-absolute top-0 end-0"
-                                    wire:click="removeProfileImage"><i class="far fa-xmark"></i></button>
+                                    wire:click="removeProfileImage"><i class="fas fa-xmark"></i></button>
                                 @endif
                                 <img wire:target="profile_image" style="width: 120px; height: 120px;" wire:loading
                                     class="rounded-circle img-fluid"
@@ -41,13 +41,13 @@
                                 <span wire:loading.remove wire:target='profile_image'>Upload photo</span>
                             </button>
                             <input type="file" hidden class="form-control" accept=".png, .jpg, .jpeg, .gif"
-                                id="profile_image" wire:model.live="profile_image">
+                                id="profile_image" wire:model="profile_image">
                             @error('profile_image')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-floating mt-3">
-                            <input type="text" id="name" wire:model.live.debounce.200ms="name" class="form-control"
+                            <input type="text" id="name" wire:model="name" class="form-control"
                                 placeholder="Name">
                             <label for="name">Name</label>
                         </div>
@@ -55,15 +55,15 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="text" id="address" wire:model.live.debounce.200ms="address"
+                            <input type="text" id="address" wire:model="address"
                                 class="form-control" placeholder="Address">
                             <label for="address">Address</label>
                         </div>
-                        @error('name')
+                        @error('address')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="email" id="email" wire:model.live.debounce.200ms="email" class="form-control"
+                            <input type="email" id="email" wire:model="email" class="form-control"
                                 placeholder="Email">
                             <label for="email">Email</label>
                         </div>
@@ -71,7 +71,7 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="text" id="username" wire:model.live.debounce.200ms="username" class="form-control"
+                            <input type="text" id="username" wire:model="username" class="form-control"
                                 placeholder="Username">
                             <label for="username">Username</label>
                         </div>
@@ -79,7 +79,7 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <input type="password" id="password" wire:model.live.debounce.200ms="password"
+                            <input type="password" id="password" wire:model="password"
                                 placeholder="Password" class="form-control">
                             <button type="button"
                                 class="position-absolute no-focus top-50 end-0 mr-2 translate-middle-y"
@@ -93,7 +93,7 @@
                         @enderror
                         <div class="form-floating mt-3">
                             <input type="password" id="password_confirmation" placeholder="Confirm Password"
-                                wire:model.live.debounce.200ms="password_confirmation" class="form-control">
+                                wire:model="password_confirmation" class="form-control">
                             <button type="button"
                                 class="position-absolute no-focus top-50 end-0 mr-2 translate-middle-y"
                                 onclick="toggleConfirmPasswordVisibility()">
@@ -105,7 +105,7 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="form-floating mt-3">
-                            <select name="gender" id="" class="form-select" wire:model.live.debounce.200ms="gender"
+                            <select name="gender" id="" class="form-select" wire:model="gender"
                             >
                                 <option hidden="true">Select Gender</option>
                                 <option selected disabled>Select Gender</option>
@@ -118,7 +118,7 @@
                             @enderror
                         </div>
                         <div class="form-floating mt-3">
-                            <input type="number" id="phone_number" wire:model.live="phone_number" class="form-control"
+                            <input type="number" id="phone_number" wire:model="phone_number" class="form-control"
                                 placeholder="Phone Number">
                             <label for="phone_number">Phone Number: (09-xxxxxxxxx) (must 11 digits)</label>
                         </div>

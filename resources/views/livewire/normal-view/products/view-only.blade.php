@@ -68,7 +68,7 @@
         <hr>
         <div class="row">
             @foreach ($products as $product)
-            <div class="col-md-3 mt-2 col-sm-4 col-6">
+            <div class="col-md-3 mt-2 col-sm-4 col-6 p-1">
                 <div class="card shadow product-card" style="min-width: 50px;">
                     <div style="position: relative;">
                         <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"

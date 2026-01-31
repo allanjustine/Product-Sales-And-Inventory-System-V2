@@ -17,6 +17,7 @@ use App\Livewire\NormalView\Carts\Index;
 use App\Livewire\NormalView\Favorites\Index as FavoritesIndex;
 use App\Livewire\NormalView\Orders\Index as OrdersIndex;
 use App\Livewire\NormalView\Orders\RecentOrders;
+use App\Livewire\NormalView\OrderSummary\Index as OrderSummaryIndex;
 use App\Livewire\NormalView\Pages\About;
 use App\Livewire\NormalView\Pages\ContactUs;
 use App\Livewire\NormalView\Pages\Home;
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/recent-orders', RecentOrders::class);
     Route::get('/carts', Index::class);
     // Route::get('/cart', [SiteController::class, 'myCart']);
+    Route::get('order-summaries', OrderSummaryIndex::class);
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {

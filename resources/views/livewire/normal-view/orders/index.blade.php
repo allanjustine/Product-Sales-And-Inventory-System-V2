@@ -8,7 +8,7 @@
                     <button class="btn btn-link btn-block text-left text-center" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         <i
-                            class="far {{ auth()->user()->user_location ? 'fa-check text-success' : 'fa-circle-exclamation text-danger' }}"></i>
+                            class="fas {{ auth()->user()->user_location ? 'fa-check text-success' : 'fa-circle-exclamation text-danger' }}"></i>
                         Show delivery address
                     </button>
                 </h2>
@@ -19,7 +19,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="alert mt-2 col-md-8 text-primary" role="alert" style="background: #74bef7a1">
                         <a wire:navigate href="/profile" class="float-end text-primary"
-                            style="text-decoration: none;"><i class="far fa-pen"></i>
+                            style="text-decoration: none;"><i class="fas fa-pen"></i>
                             Edit</a>
                         <div class="d-flex align-items-center">
                             <img src="images/mylogo.jpg" alt="Info Logo" class="me-2" style="width: 120px;">
@@ -27,7 +27,7 @@
                                 <h4 class="alert-heading"><strong>Your delivery address</strong></h4>
                                 <p class="{{ auth()->user()->user_location ? 'text-primary' : 'text-danger' }}"><i {{
                                         auth()->user()->user_location ? 'hidden' : '' }}
-                                        class="far fa-circle-exclamation mr-2"></i>{{ auth()->user()->user_location ??
+                                        class="fas fa-circle-exclamation mr-2"></i>{{ auth()->user()->user_location ??
                                     'Set up your delivery address to make sure your order will arrive at your address
                                     location.' }}
                                 </p>

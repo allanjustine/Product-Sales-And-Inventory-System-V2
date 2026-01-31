@@ -7,6 +7,7 @@ use App\Models\Favorite;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -135,12 +136,9 @@ class Index extends Component
 
     public function orderPlaceOrderItem()
     {
-
         $product = Product::find($this->orderPlaceOrder);
 
         $this->validate([
-            'order_payment_method'  =>      'required',
-            'user_location'         =>      'required|max:255',
             'order_quantity'        =>      ['required', 'numeric', 'min:1'],
         ]);
 
@@ -148,95 +146,39 @@ class Index extends Component
         $productStatus = $product->product_status;
 
         if ($productStatus == 'Available' && $productQuantity >= $this->order_quantity) {
-            $existingOrder = Order::where([
-                ['user_id', auth()->id()],
-                ['product_id', $product->id],
-                ['order_status', 'Pending']
-            ])->first();
+            Auth::user()->orderSummaries()->delete();
 
-            if ($existingOrder) {
-                $user = User::where('id', auth()->user()->id);
+            Auth::user()->orderSummaries()->create([
+                'product_id'     => $product->id,
+                'order_quantity' => $this->order_quantity
+            ]);
 
-                $user->update([
-                    'user_location' => $this->user_location
-                ]);
-                $existingOrder->created_at = now();
-                $existingOrder->order_quantity += $this->order_quantity;
-                $existingOrder->order_total_amount += $this->order_quantity * $product->product_price;
-                $existingOrder->save();
-            } else {
-                $transactionCode = 'AJM-' . Str::random(10);
+            $this->dispatch('closeModal');
 
-                $order = new Order();
-                $order->user_id = auth()->id();
-                $order->product_id = $product->id;
-                $order->order_quantity = $this->order_quantity;
-                $order->order_price = $product->product_price;
-                $order->order_total_amount = $this->order_quantity * $product->product_price;
-                $order->order_payment_method = $this->order_payment_method;
-                $order->order_status = 'Pending';
-                $order->transaction_code = $transactionCode;
-                $order->save();
-
-                $user = User::where('id', auth()->user()->id);
-
-                $user->update([
-                    'user_location' => $this->user_location
-                ]);
-            }
-
-            $product->product_stock -= $this->order_quantity;
-            $product->product_sold += $this->order_quantity;
-            $product->save();
-
-
-            if ($existingOrder) {
-                $this->dispatch('alert', alerts: [
-                    'title'         =>          'Success',
-                    'type'          =>          'success',
-                    'message'       =>          "The product is added/changed to your existing order.<br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            } else {
-                $transactionCode = "\"{$order->transaction_code}\"";
-                $this->dispatch('alert', alerts: [
-                    'title'         =>          'Success',
-                    'type'          =>          'success',
-                    'message'       =>          "The product ordered successfully. Your transaction code is {$transactionCode} <br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            }
+            return $this->redirect('/order-summaries', navigate: true);
         } else {
 
             if ($productStatus == 'Not Available') {
                 // alert()->error('Sorry', 'The product is Not Available');
 
-                // return $this->redirect('/favorites', navigate: true);
+                // return $this->redirect('/products', navigate: true);
 
-                $this->dispatch('toastr', data: [
-                    'type'      =>      'error',
-                    'message'   =>      'The product is Not Available'
+                $this->dispatch('toastr',  data: [
+                    'type' => 'error',
+                    'message' => 'The product is Not Available'
                 ]);
                 return;
             } elseif ($product->product_stock == 0) {
                 // alert()->error('Sorry', 'The product is out of stock');
 
-                // return $this->redirect('/favorites', navigate: true);
-                $this->dispatch('toastr', data: [
-                    'type'      =>      'warning',
-                    'message'   =>      'The product is out of stock'
-                ]);
+                // return $this->redirect('/products', navigate: true);
+                $this->dispatch('toastr',  data: ['type' => 'warning', 'message' => 'The product is out of stock']);
                 return;
             } else {
                 // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
 
-                // return $this->redirect('/favorites', navigate: true);
-                $this->dispatch('toastr', data: [
-                    'type'      =>      'info',
-                    'message'   =>      'The product stock is insufficient please reduce your cart quantity'
-                ]);
+                // return $this->redirect('/products', navigate: true);
+                $this->dispatch('toastr',  data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity']);
                 return;
             }
         }

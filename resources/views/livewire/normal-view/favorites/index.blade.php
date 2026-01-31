@@ -2,14 +2,12 @@
     @include('livewire.normal-view.products.view')
     @include('livewire.normal-view.carts.add-to-cart')
     @include('livewire.normal-view.orders.buy-now')
-    <div class="container-md">
+    <div class="container">
         <h3 class="mt-5"><i class="fa-light fa-heart"></i> My Favorites</h3>
         <hr>
-        <div class="row">
-
+        <div class="row g-2">
             @forelse ($allFavorites as $favorite)
             <div class="col-md-3 mt-2 col-sm-4 col-6 p-1">
-
                 <div class="card shadow product-card" style="min-width: 50px;">
                     <div style="position: relative;">
                         <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"

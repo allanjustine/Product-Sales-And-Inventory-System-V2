@@ -52,4 +52,9 @@ class Product extends Model
                     ->orWhere('product_code', 'like', $term);
             });
     }
+
+    public function orderSummaries()
+    {
+        return $this->hasMany(OrderSummary::class);
+    }
 }

@@ -4,6 +4,9 @@ namespace App\Livewire\NormalView\Carts;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderSummary;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -18,6 +21,7 @@ class Index extends Component
     public $itemPlaceOrder;
     public $itemRemove;
     public $order_payment_method;
+    public $cart_ids = [];
 
     public function carts()
     {
@@ -116,108 +120,73 @@ class Index extends Component
 
     public function placeOrder()
     {
-        $cartItem = Cart::find($this->itemPlaceOrder);
+        $carts = Cart::where('user_id', Auth::id())
+            ->whereIn('id', $this->cart_ids)
+            ->get();
 
-        $this->validate([
-            'order_payment_method'  =>      'required',
-            'user_location'         =>      'required|max:255',
-        ]);
+        DB::transaction(function () use ($carts) {
+            Auth::user()->orderSummaries()->delete();
 
-        $product = $cartItem->product;
-        $productQuantity = $product->product_stock;
-        $productStatus = $product->product_status;
+            foreach ($carts as $cart) {
+                $productQuantity = $cart->product->product_stock;
+                $productStatus = $cart->product->product_status;
 
-        if ($cartItem->quantity <= $productQuantity && $productStatus == 'Available') {
-            $existingOrder = Order::where([
-                ['user_id', auth()->id()],
-                ['product_id', $product->id],
-                ['order_status', 'Pending']
-            ])->first();
+                if ($productStatus == 'Not Available') {
+                    // alert()->error('Sorry', 'The product is Not Available');
 
-            if ($existingOrder) {
-                // $existingOrder->user_location = $this->user_location;
-                $cartItem->user->update([
-                    'user_location' => $this->user_location
-                ]);
-                $existingOrder->created_at = now();
-                $existingOrder->order_quantity += $cartItem->quantity;
-                $existingOrder->order_total_amount += ($cartItem->quantity * $product->product_price);
-                $existingOrder->save();
-            } else {
-                $transactionCode = 'AJM-' . Str::random(10);
-                $order = new Order();
-                $order->user_id = auth()->id();
-                $order->product_id = $product->id;
-                $order->order_quantity = $cartItem->quantity;
-                // $order->user_location = $this->user_location;
-                $order->order_price = $product->product_price;
-                $order->order_total_amount = $cartItem->quantity * $product->product_price;
-                $order->order_payment_method = $this->order_payment_method;
-                $order->order_status = 'Pending';
-                $order->transaction_code = $transactionCode;
-                $order->save();
+                    // return $this->redirect('/products', navigate: true);
 
-                $cartItem->user->update([
-                    'user_location' => $this->user_location
-                ]);
+                    $this->dispatch('toastr', data: ['type' => 'error', 'message' => 'The product is Not Available. Please remove it from your cart or uncheck it.']);
+                    return;
+                }
+
+                if ($cart->product->product_stock == 0) {
+                    // alert()->error('Sorry', 'The product is out of stock');
+
+                    // return $this->redirect('/products', navigate: true);
+                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The product is out of stock. Please remove it from your cart or uncheck it.']);
+                    return;
+                }
+
+                if ($cart->quantity > $productQuantity) {
+                    // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
+
+                    // return $this->redirect('/products', navigate: true);
+                    $this->dispatch('toastr', data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity or remove it from your cart or uncheck it.']);
+                    return;
+                }
+
+                if ($productStatus == 'Available') {
+
+                    Auth::user()->orderSummaries()->create([
+                        'product_id'     => $cart->product->id,
+                        'order_quantity' => $cart->quantity,
+                        'cart_id'        => $cart->id
+                    ]);
+                }
             }
 
-            $product->product_stock -= $cartItem->quantity;
-            $product->product_sold += $cartItem->quantity;
-            $product->save();
-            $cartItem->delete();
+            $this->dispatch('closeModalCart');
             $this->dispatch('addTocartRefresh');
 
-            if ($existingOrder) {
-                $this->dispatch('alert', alerts: [
-                    'title'         =>          'Success',
-                    'type'          =>          'success',
-                    'message'       =>          "The product is added/changed. <br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            } else {
-                $transactionCode = "\"{$order->transaction_code}\"";
-                $this->dispatch('alert', alerts: [
-                    'title'         =>          'Success',
-                    'type'          =>          'success',
-                    'message'       =>          "The product ordered successfully. Your transaction code is {$transactionCode}. <br><br><a class='btn btn-primary' wire:navigate href='/orders'>Go to Orders</a>"
-                ]);
-                $this->dispatch('closeModal');
-                return;
-            }
-        } else {
+            return $this->redirect('/order-summaries', navigate: true);
+        });
+    }
 
-            if ($productStatus == 'Not Available') {
-                // alert()->error('Sorry', 'The product is Not Available');
+    public function handleSelectAll()
+    {
+        $carts = Cart::where('user_id', Auth::id())->whereHas('product', fn($item) => $item->where('product_status', 'Available'));
 
-                // return $this->redirect('/products', navigate: true);
+        $selectedAll = count($this->cart_ids) === $carts->count();
 
-                $this->dispatch('toastr', data: [
-                    'type'      =>      'error',
-                    'message'   =>      'The product is Not Available'
-                ]);
-                return;
-            } elseif ($product->product_stock == 0) {
-                // alert()->error('Sorry', 'The product is out of stock');
+        $selectedAll ? $this->cart_ids = [] : $this->cart_ids = $carts->pluck('id')->filter();
+    }
 
-                // return $this->redirect('/products', navigate: true);
-                $this->dispatch('toastr', data: [
-                    'type'      =>      'warning',
-                    'message'   =>      'The product is out of stock'
-                ]);
-                return;
-            } else {
-                // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
+    public function mount()
+    {
+        $orderSummaries = OrderSummary::where('user_id', Auth::id())->pluck('cart_id')->filter();
 
-                // return $this->redirect('/products', navigate: true);
-                $this->dispatch('toastr', data: [
-                    'type'      =>      'info',
-                    'message'   =>      'The product stock is insufficient please reduce your cart quantity'
-                ]);
-                return;
-            }
-        }
+        $this->cart_ids = $orderSummaries;
     }
 
     public function render()

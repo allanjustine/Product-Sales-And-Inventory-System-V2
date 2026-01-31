@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserLoginHistory::class);
     }
+
+    public function orderSummaries()
+    {
+        return $this->hasMany(OrderSummary::class);
+    }
 }

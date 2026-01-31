@@ -7,11 +7,13 @@ use App\Events\UserSearchLog;
 use App\Models\Cart;
 use App\Models\Favorite;
 use App\Models\Order;
+use App\Models\OrderSummary;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\SearchLog;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -50,6 +52,7 @@ class Index extends Component
     public $loadMorePlus = 20;
     public $searchLogs = [];
     public $carts;
+    public $cart_ids = [];
 
     use WithPagination;
 
@@ -235,7 +238,7 @@ class Index extends Component
 
     public function getTotal()
     {
-        $cartTotal = $this->carts->sum(function ($item) {
+        $cartTotal = $this->carts->whereIn('id', $this->cart_ids)->sum(function ($item) {
             return $item->product->product_price * $item->quantity;
         });
 
@@ -343,105 +346,66 @@ class Index extends Component
     //     }
     // }
 
+    public function mount()
+    {
+        $orderSummaries = OrderSummary::where('user_id', Auth::id())->pluck('cart_id')->filter();
+
+        $this->cart_ids = $orderSummaries;
+    }
+
     public function placeOrder()
     {
-        $cartItem = $this->cartItemToCheckOut;
+        $carts = Cart::where('user_id', Auth::id())
+            ->whereIn('id', $this->cart_ids)
+            ->get();
 
-        $this->validate([
-            'order_payment_method'  =>      'required',
-            'user_location'         =>      'required|max:255',
-        ]);
+        DB::transaction(function () use ($carts) {
+            Auth::user()->orderSummaries()->delete();
 
-        $product = $cartItem->product;
-        $productQuantity = $product->product_stock;
-        $productStatus = $product->product_status;
+            foreach ($carts as $cart) {
+                $productQuantity = $cart->product->product_stock;
+                $productStatus = $cart->product->product_status;
 
-        if ($cartItem->quantity <= $productQuantity && $productStatus == 'Available') {
-            $existingOrder = Order::where([
-                ['user_id', auth()->id()],
-                ['product_id', $product->id],
-                ['order_status', 'Pending']
-            ])->first();
+                if ($productStatus == 'Not Available') {
+                    // alert()->error('Sorry', 'The product is Not Available');
 
-            if ($existingOrder) {
-                // $existingOrder->user_location = $this->user_location;
-                $cartItem->user->update([
-                    'user_location' => $this->user_location
-                ]);
-                $existingOrder->created_at = now();
-                $existingOrder->order_quantity += $cartItem->quantity;
-                $existingOrder->order_total_amount += ($cartItem->quantity * $product->product_price);
-                $existingOrder->save();
+                    // return $this->redirect('/products', navigate: true);
 
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-            } else {
-                $transactionCode = 'AJM-' . Str::random(10);
-                $order = new Order();
-                $order->user_id = auth()->id();
-                $order->product_id = $product->id;
-                $order->order_quantity = $cartItem->quantity;
-                // $order->user_location = $this->user_location;
-                $order->order_price = $product->product_price;
-                $order->order_total_amount = $cartItem->quantity * $product->product_price;
-                $order->order_payment_method = $this->order_payment_method;
-                $order->order_status = 'Pending';
-                $order->transaction_code = $transactionCode;
-                $order->save();
+                    $this->dispatch('toastr', data: ['type' => 'error', 'message' => 'The product is Not Available. Please remove it from your cart or uncheck it.']);
+                    return;
+                }
 
-                $cartItem->user->update([
-                    'user_location' => $this->user_location
-                ]);
+                if ($cart->product->product_stock == 0) {
+                    // alert()->error('Sorry', 'The product is out of stock');
 
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
+                    // return $this->redirect('/products', navigate: true);
+                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The product is out of stock. Please remove it from your cart or uncheck it.']);
+                    return;
+                }
+
+                if ($cart->quantity > $productQuantity) {
+                    // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
+
+                    // return $this->redirect('/products', navigate: true);
+                    $this->dispatch('toastr', data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity or remove it from your cart or uncheck it.']);
+                    return;
+                }
+
+                if ($productStatus == 'Available') {
+
+                    Auth::user()->orderSummaries()->create([
+                        'product_id'     => $cart->product->id,
+                        'order_quantity' => $cart->quantity,
+                        'cart_id'        => $cart->id
+                    ]);
+                }
             }
-
-            $product->product_stock -= $cartItem->quantity;
-            $product->product_sold += $cartItem->quantity;
-            $product->save();
-            $cartItem->delete();
-
-
-            $adminId = User::whereHas('roles', function ($query) {
-                $query->where('name', 'admin');
-            })->pluck('id')->first();
-
-            // event(new PlaceOrder($product, $adminId));
-            PlaceOrder::dispatch($product, $adminId);
 
             $this->dispatch('closeModalCart');
             $this->dispatch('addTocartRefresh');
-            return;
-        } else {
 
-            if ($productStatus == 'Not Available') {
-                // alert()->error('Sorry', 'The product is Not Available');
-
-                // return $this->redirect('/products', navigate: true);
-
-                $this->dispatch('toastr', data: ['type' => 'error', 'message' => 'The product is Not Available']);
-                return;
-            } elseif ($product->product_stock == 0) {
-                // alert()->error('Sorry', 'The product is out of stock');
-
-                // return $this->redirect('/products', navigate: true);
-                $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The product is out of stock']);
-                return;
-            } else {
-                // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
-
-                // return $this->redirect('/products', navigate: true);
-                $this->dispatch('toastr', data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity']);
-                return;
-            }
-        }
+            return $this->redirect('/order-summaries', navigate: true);
+        });
     }
 
     public function toBuyNow($productId)
@@ -458,12 +422,9 @@ class Index extends Component
 
     public function orderPlaceOrderItem()
     {
-
         $product = Product::find($this->orderPlaceOrder);
 
         $this->validate([
-            'order_payment_method'  =>      'required',
-            'user_location'         =>      'required|max:255',
             'order_quantity'        =>      ['required', 'numeric', 'min:1'],
         ]);
 
@@ -471,68 +432,16 @@ class Index extends Component
         $productStatus = $product->product_status;
 
         if ($productStatus == 'Available' && $productQuantity >= $this->order_quantity) {
-            $existingOrder = Order::where([
-                ['user_id', auth()->id()],
-                ['product_id', $product->id],
-                ['order_status', 'Pending']
-            ])->first();
+            Auth::user()->orderSummaries()->delete();
 
-            if ($existingOrder) {
-                $user = User::where('id', auth()->user()->id);
-
-                $user->update([
-                    'user_location' => $this->user_location
-                ]);
-                $existingOrder->created_at = now();
-                $existingOrder->order_quantity += $this->order_quantity;
-                $existingOrder->order_total_amount += ($this->order_quantity * $product->product_price);
-                $existingOrder->save();
-
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product is added/changed to your existing order.' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-            } else {
-                $transactionCode = 'AJM-' . Str::random(10);
-
-                $order = new Order();
-                $order->user_id = auth()->id();
-                $order->product_id = $product->id;
-                $order->order_quantity = $this->order_quantity;
-                $order->order_price = $product->product_price;
-                $order->order_total_amount = $this->order_quantity * $product->product_price;
-                $order->order_payment_method = $this->order_payment_method;
-                $order->order_status = 'Pending';
-                $order->transaction_code = $transactionCode;
-                $order->save();
-
-                $user = User::where('id', auth()->user()->id);
-
-                $user->update([
-                    'user_location' => $this->user_location
-                ]);
-
-                $this->dispatch('alert', alerts: [
-                    'type'          =>          'success',
-                    'title'         =>          'Ordered',
-                    'message'       =>          'The product ordered successfully. Your transaction code is "' . $order->transaction_code . '"' . '<br><br><a class="btn btn-primary" wire:navigate href="/orders">Go to Orders</a>'
-                ]);
-            }
-
-            $product->product_stock -= $this->order_quantity;
-            $product->product_sold += $this->order_quantity;
-            $product->save();
-
+            Auth::user()->orderSummaries()->create([
+                'product_id'     => $product->id,
+                'order_quantity' => $this->order_quantity
+            ]);
 
             $this->dispatch('closeModal');
-            $adminId = User::whereHas('roles', function ($query) {
-                $query->where('name', 'admin');
-            })->pluck('id')->first();
 
-            // event(new PlaceOrder($product, $adminId));
-            PlaceOrder::dispatch($product, $adminId);
-            return;
+            return $this->redirect('/order-summaries', navigate: true);
         } else {
 
             if ($productStatus == 'Not Available') {
@@ -578,6 +487,15 @@ class Index extends Component
         $this->user_location = '';
 
         $this->resetValidation();
+    }
+
+    public function handleSelectAll()
+    {
+        $carts = Cart::where('user_id', Auth::id())->whereHas('product', fn($item) => $item->where('product_status', 'Available'));
+
+        $selectedAll = count($this->cart_ids) === $carts->count();
+
+        $selectedAll ? $this->cart_ids = [] : $this->cart_ids = $carts->pluck('id')->filter();
     }
 
     public function render()

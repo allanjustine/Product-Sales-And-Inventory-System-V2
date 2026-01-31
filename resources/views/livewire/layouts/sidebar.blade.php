@@ -141,7 +141,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle"></i>
+                                    <i class="nav-icon fas fa-circle"></i>
                                     <p>List</p>
                                 </a>
                             </li>
