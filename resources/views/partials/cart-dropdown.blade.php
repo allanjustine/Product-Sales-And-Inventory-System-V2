@@ -1,5 +1,5 @@
 @role('user')
-    <div class="position-fixed d-none d-sm-block" style="right: 0; margin-top: -180px; z-index: 1;" id="cartIcon">
+    <div class="position-fixed d-none d-sm-block" style="right: 0; top: 100px; z-index: 1;" id="cartIcon">
         <div class="position-relative d-flex justify-content-end me-4" id="main-cart" x-data="{ open: false }">
             <button type="button" class="btn bt-link p-3 rounded-circle shadow-sm position-relative" id="cart-dropdown"
                 @click="open = !open">
