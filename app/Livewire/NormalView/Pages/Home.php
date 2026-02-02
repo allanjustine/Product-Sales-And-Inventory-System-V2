@@ -2,6 +2,7 @@
 
 namespace App\Livewire\NormalView\Pages;
 
+use App\Models\Cart;
 use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\User;
@@ -39,6 +40,42 @@ class Home extends Component
         $allLocations = User::all();
 
         return compact('topDeals', 'popularityDeals', 'latestProducts', 'allLocations');
+    }
+
+    public function addToCartNowItem($id)
+    {
+
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->first();
+
+        if ($cart) {
+            $cart->update([
+                'quantity' => $cart->quantity + 1,
+            ]);
+        } else {
+            Cart::create([
+                'user_id' => auth()->id(),
+                'product_id' => $id,
+                'quantity' => 1,
+            ]);
+        }
+
+        $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Product added to cart successfully.']);
+        $this->dispatch('closeModal');
+        return;
+    }
+
+    public function removeToFavorite($id)
+    {
+        Favorite::findOrFail($id)->delete();
+
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'Removed from favorites.'
+        ]);
+
+        return;
     }
 
     public function mount()

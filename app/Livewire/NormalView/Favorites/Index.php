@@ -69,6 +69,9 @@ class Index extends Component
             'message'   =>      'Removed from favorites.'
         ]);
         $this->dispatch('isRefresh');
+        $this->dispatch('closeModal');
+        $this->reset();
+
         return;
     }
 
@@ -113,6 +116,35 @@ class Index extends Component
         // alert()->success('Success', 'Product added to cart successfully.');
 
         // return $this->redirect('/favorites', navigate: true);
+        return;
+    }
+
+    public function addToCartNowItem($id)
+    {
+
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->first();
+
+        if ($cart) {
+            $cart->update([
+                'quantity' => $cart->quantity + 1,
+            ]);
+        } else {
+            Cart::create([
+                'user_id'    => auth()->id(),
+                'product_id' => $id,
+                'quantity'   => 1,
+            ]);
+        }
+
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'Product added to cart successfully.'
+        ]);
+        $this->dispatch('closeModal');
+
+        $this->reset();
         return;
     }
 
