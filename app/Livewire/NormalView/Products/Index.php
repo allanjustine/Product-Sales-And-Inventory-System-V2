@@ -152,6 +152,15 @@ class Index extends Component
         $this->reset();
     }
 
+    public function updatedQuantity($value)
+    {
+        $this->quantity = !$value ? 1 : ($value > 999 ? 999 : $value);
+    }
+
+    public function updatedOrderQuantity($value)
+    {
+        $this->order_quantity = !$value ? 1 : ($value > 999 ? 999 : $value);
+    }
 
     public function clearAllLogs()
     {
@@ -260,6 +269,31 @@ class Index extends Component
         return;
     }
 
+    public function addToCartNowItem($id)
+    {
+
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->first();
+
+        if ($cart) {
+            $cart->update([
+                'quantity' => $cart->quantity + 1,
+            ]);
+        } else {
+            Cart::create([
+                'user_id' => auth()->id(),
+                'product_id' => $id,
+                'quantity' => 1,
+            ]);
+        }
+
+        $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Product added to cart successfully.']);
+        $this->dispatch('closeModal');
+        $this->dispatch('addTocartRefresh');
+        return;
+    }
+
     public function getTotal()
     {
         $cartTotal = $this->carts->whereIn('id', $this->cart_ids)->sum(function ($item) {
@@ -325,6 +359,18 @@ class Index extends Component
         return;
     }
 
+    public function removeToFavorite($id)
+    {
+        Favorite::findOrFail($id)->delete();
+
+        $this->dispatch('toastr', data: [
+            'type'      =>      'success',
+            'message'   =>      'Removed from favorites.'
+        ]);
+
+        return;
+    }
+
     public function remove($itemId)
     {
         $this->cartItemToRemove = Cart::find($itemId);
@@ -338,13 +384,15 @@ class Index extends Component
 
         $product->delete();
 
+        $this->cart_ids = [];
+
+        $this->select_all = false;
+
         $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Removed from cart successfully']);
 
         $this->dispatch('addTocartRefresh');
 
-        $this->cart_ids = [];
-
-        $this->select_all = false;
+        $this->reset();
 
         return;
     }
@@ -463,7 +511,7 @@ class Index extends Component
         $product = Product::find($this->orderPlaceOrder);
 
         $this->validate([
-            'order_quantity'        =>      ['required', 'numeric', 'min:1'],
+            'order_quantity'        =>      ['required', 'numeric', 'min:1', "max:{$product->product_stock}"],
         ]);
 
         $productQuantity = $product->product_stock;

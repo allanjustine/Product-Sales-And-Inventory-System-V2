@@ -1,6 +1,4 @@
-@props([$badgeText, $badgeType])
-
-<div class="card product-card shadow-sm h-100">
+<div class="card product-card border shadow-sm h-100">
     <div class="position-relative">
         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#viewProduct"
             wire:click="view({{ $product->id }})">

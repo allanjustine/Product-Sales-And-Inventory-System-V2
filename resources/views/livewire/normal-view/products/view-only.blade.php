@@ -23,7 +23,6 @@
         }
     @endphp
 
-    <!-- Mobile Filter Toggle -->
     <div class="d-md-none mb-2">
         <div class="sticky-top bg-white border-bottom py-2 px-3" style="top: 0; z-index: 1;">
             <div class="container">
@@ -45,14 +44,11 @@
         </div>
     </div>
 
-    <!-- Main Layout -->
     <div class="container-fluid py-4" x-data='{ grid: "3" }'>
         <div class="row">
-            <!-- Left Sidebar Filters (Desktop) -->
             <div class="col-lg-3 col-md-4 mb-4 d-none d-md-block">
                 <div class="card border-0 shadow-sm sticky-top" style="top: 20px; z-index: 1;">
                     <div class="card-body">
-                        <!-- Header -->
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h5 class="fw-bold mb-0"><i class="fas fa-filter me-2"></i>Filters</h5>
                             <button type="button" wire:loading.attr='disabled' wire:target='clearFilters'
@@ -62,7 +58,6 @@
                         </div>
 
                         <div class="filter-sidebar">
-                            <!-- Search Box -->
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Search Products</label>
                                 <div class="input-group">
@@ -81,7 +76,6 @@
                                 </div>
                             </div>
 
-                            <!-- Category Filter -->
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Categories</label>
                                 <div class="list-group">
@@ -101,7 +95,6 @@
                                 </div>
                             </div>
 
-                            <!-- Rating Filter -->
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Customer Rating</label>
                                 <div class="rating-filter">
@@ -129,7 +122,6 @@
                                 </div>
                             </div>
 
-                            <!-- Sort Options -->
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Sort By</label>
                                 <select class="form-select" wire:model.live="sort">
@@ -138,7 +130,6 @@
                                 </select>
                             </div>
 
-                            <!-- Price Range -->
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Price Range</label>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -154,7 +145,6 @@
                                 </div>
                             </div>
 
-                            <!-- Stock Status -->
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Availability</label>
                                 <div class="form-check">
@@ -167,7 +157,6 @@
                             </div>
                         </div>
 
-                        <!-- Active Filters Summary -->
                         <div class="mt-4 pt-3 border-top">
                             <div class="small text-muted">
                                 <div class="d-flex justify-content-between mb-1">
@@ -184,9 +173,7 @@
                 </div>
             </div>
 
-            <!-- Products Grid -->
             <div class="col-lg-9 col-md-8">
-                <!-- Products Header (Desktop) -->
                 <div class="d-md-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h2 class="fw-bold mb-1">
@@ -216,12 +203,10 @@
                     </div>
                 </div>
 
-                <!-- Products Grid -->
                 <div class="row">
                     @foreach ($products as $product)
-                        <div class="col-md-6 col-lg-3 col-6" :class="`col-lg-${grid} col-6`">
-                            <div class="card product-card h-100 border-0 shadow-sm">
-                                <!-- Product Image -->
+                        <div class="col-md-6 col-lg-3 col-6 mt-3" :class="`col-lg-${grid} col-6`">
+                            <div class="card product-card h-100 border shadow-sm">
                                 <div class="position-relative overflow-hidden">
                                     <a href="#" class="text-decoration-none" data-bs-toggle="modal"
                                         data-bs-target="#viewProduct" wire:click="view({{ $product->id }})">
@@ -236,7 +221,6 @@
                                         </div>
                                     </a>
 
-                                    <!-- Stock Badge -->
                                     <div class="position-absolute top-0 end-0 m-2">
                                         @if ($product->product_stock >= 20)
                                             <span class="badge bg-success bg-opacity-90 text-white">
@@ -253,7 +237,6 @@
                                         @endif
                                     </div>
 
-                                    <!-- Discount Badge -->
                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
                                         <div class="position-absolute top-0 start-0 m-2">
                                             <span class="badge bg-danger bg-opacity-90 text-white">
@@ -263,9 +246,7 @@
                                     @endif
                                 </div>
 
-                                <!-- Product Info -->
                                 <div class="card-body d-flex flex-column">
-                                    <!-- Category -->
                                     <div class="mb-2">
                                         <small class="text-muted text-uppercase">
                                             <i
@@ -273,26 +254,25 @@
                                         </small>
                                     </div>
 
-                                    <!-- Product Name -->
                                     <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal"
-                                        data-bs-target="#viewProduct" wire:click="view({{ $product->id }})">
+                                        data-bs-target="#viewProduct" wire:click="view({{ $product->id }})"
+                                        title="{{ $product->product_name }}"
+                                        >
                                         <h6 class="card-title fw-bold text-truncate w-100 mb-2">
                                             {{ $product->product_name }}
                                         </h6>
                                     </a>
 
-                                    <!-- Rating -->
                                     <div class="d-flex align-items-center mb-2">
                                         <div class="rating-stars me-2">
                                             @for ($i = 1; $i <= 5; $i++)
                                                 <i
-                                                    class="fas fa-star {{ $i <= $product->product_rating ? 'text-warning' : 'text-light' }}"></i>
+                                                    class="fas fa-star {{ $i <= $product->product_rating ? 'text-warning' : 'text-muted' }}"></i>
                                             @endfor
                                         </div>
                                         <small class="text-muted">({{ $product->product_votes }})</small>
                                     </div>
 
-                                    <!-- Price -->
                                     <div class="mb-3">
                                         <span class="h5 fw-bold text-primary">
                                             ₱{{ number_format($product->product_price, 2) }}
@@ -304,7 +284,6 @@
                                         @endif
                                     </div>
 
-                                    <!-- Status Badge -->
                                     <div class="mb-3">
                                         @if ($product->product_status === 'Available')
                                             <span class="badge bg-success bg-opacity-10 text-success">
@@ -317,7 +296,6 @@
                                         @endif
                                     </div>
 
-                                    <!-- Action Button -->
                                     <div class="d-grid">
                                         @if ($product->product_status === 'Available')
                                             <a wire:navigate href="/login" class="btn btn-primary w-100">
@@ -331,7 +309,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Footer Stats -->
                                 <div class="card-footer bg-transparent border-top">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small class="text-muted">
@@ -349,7 +326,6 @@
                     @endforeach
                 </div>
 
-                <!-- Empty States -->
                 @if (!empty($search) && $products->count() === 0)
                     <div class="text-center py-5">
                         <div class="mb-4">
@@ -371,7 +347,6 @@
                     </div>
                 @endif
 
-                <!-- Load More -->
                 @if ($products->count() < $products->total())
                     <div class="text-center mt-5">
                         <div id="sentinel" wire:loading.remove wire:target='loadMore'></div>
@@ -389,14 +364,11 @@
         </div>
     </div>
 
-    <!-- Custom CSS -->
     <style>
-        /* Layout */
         .container-fluid {
             max-width: 1400px;
         }
 
-        /* Filter Sidebar (Desktop) */
         .filter-sidebar {
             z-index: 1;
             max-height: calc(100vh - 300px);
@@ -417,7 +389,6 @@
             border-radius: 3px;
         }
 
-        /* Mobile Filter Sidebar */
         .filter-mobile-sidebar {
             scrollbar-width: thin;
             scrollbar-color: #dee2e6 #f8f9fa;
@@ -435,8 +406,6 @@
             background: #dee2e6;
             border-radius: 3px;
         }
-
-        /* List Group */
         .list-group-item {
             transition: all 0.3s ease;
             border: 1px solid transparent;
@@ -453,7 +422,6 @@
             color: white;
         }
 
-        /* Product Cards */
         .product-card {
             transition: all 0.3s ease;
             border-radius: 12px;
@@ -482,7 +450,6 @@
             transform: scale(1.05);
         }
 
-        /* Rating Stars */
         .rating-stars {
             font-size: 0.9rem;
         }
@@ -491,12 +458,10 @@
             color: #dee2e6 !important;
         }
 
-        /* Mobile Header */
         .d-lg-none .sticky-top {
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Badges */
         .badge {
             font-weight: 500;
             padding: 0.5em 0.8em;
@@ -510,7 +475,6 @@
             background-color: rgba(13, 110, 253, 0.1);
         }
 
-        /* Button Styling */
         .btn-primary {
             background: linear-gradient(135deg, #0d6efd, #0b5ed7);
             border: none;
@@ -528,7 +492,6 @@
             border-color: #0d6efd;
         }
 
-        /* Animation for infinite scroll */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -545,7 +508,6 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        /* Responsive Design */
         @media (max-width: 992px) {
             .product-image-container {
                 height: 180px;
@@ -598,7 +560,6 @@
             }
         }
 
-        /* Checkbox and Radio Styling */
         .form-check-input {
             cursor: pointer;
         }
@@ -608,7 +569,6 @@
             user-select: none;
         }
 
-        /* Select Styling */
         .form-select {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -618,18 +578,14 @@
             border-color: #0d6efd;
             box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
-
-        /* Spinner */
         .spinner-border {
             vertical-align: middle;
         }
 
-        /* Price Styling */
         .text-decoration-line-through {
             text-decoration-thickness: 2px;
         }
 
-        /* Mobile specific styles */
         @media (max-width: 767.98px) {
             .container-fluid.py-4 {
                 padding-top: 0 !important;
@@ -650,9 +606,7 @@
         }
     </style>
 
-    <!-- JavaScript -->
     <script>
-        // Intersection Observer for infinite scroll
         document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
             if (!sentinel) return;
@@ -667,13 +621,11 @@
 
             observer.observe(sentinel);
 
-            // Cleanup on page change
             document.addEventListener('livewire:navigate', () => {
                 observer.disconnect();
             });
         });
 
-        // Toastr notifications
         document.addEventListener('livewire:navigated', () => {
             Livewire.on('toastr', (event) => {
                 const {
