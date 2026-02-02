@@ -111,63 +111,163 @@
 </body>
 
 @unlessrole('admin')
-    <footer class="bg-dark text-light py-4" onload="updateTime()">
-        <div class="container">
-            <div class="row p-2">
-                <div class="col-md-4">
-                    <h5>AJM Company</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore
-                        et dolore magna aliqua.</p>
+    <footer class="bg-dark text-light py-5 position-relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10">
+            <div class="pattern-dots pattern-dots-sm"></div>
+        </div>
+
+        <div class="container position-relative">
+            <div class="row g-4">
+                <!-- Company Info -->
+                <div class="col-lg-4">
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="company-icon bg-primary rounded-circle p-2 me-3">
+                                <i class="fas fa-building fa-lg"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0">AJM Company</h4>
+                        </div>
+                        <p class="text-white mb-4">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua.
+                        </p>
+
+                        <!-- Company Tagline -->
+                        <div
+                            class="company-tagline bg-primary bg-opacity-10 border-start border-primary border-4 ps-3 py-2 rounded-end">
+                            <small class="text-white fw-semibold">
+                                <i class="fas fa-star fa-xs me-1"></i> Excellence in Every Detail
+                            </small>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4">
-                    <h5>Contact Us</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-map-marker-alt"></i> Address: Tinangnan, Tubigon, Bohol - Purok 2</li>
-                        <li><i class="fas fa-phone"></i> Phone: 09512072888</li>
-                        <li><i class="fas fa-envelope"></i> Email: mydummy.2022.2023@gmail.com</li>
-                    </ul>
+                <!-- Contact Info -->
+                <div class="col-lg-4">
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-4 border-bottom border-secondary pb-2 d-inline-block">
+                            <i class="fas fa-headset me-2"></i>Contact Us
+                        </h5>
+
+                        <div class="contact-list">
+                            <div class="contact-item d-flex mb-3">
+                                <div
+                                    class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Address</h6>
+                                    <p class="mb-0 text-white small">Tinangnan, Tubigon, Bohol - Purok 2</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item d-flex mb-3">
+                                <div
+                                    class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
+                                    <i class="fas fa-phone fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Phone</h6>
+                                    <p class="mb-0 text-white small">+63 951 207 2888</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item d-flex">
+                                <div
+                                    class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Email</h6>
+                                    <p class="mb-0 text-white small">mydummy.2022.2023@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4 text-center">
-                    <h5>Follow Us</h5>
-                    <ul class="list-inline social-icons">
-                        <li class="list-inline-item">
-                            <a href="https://facebook.com/1down" id="facebook" target="_blank">
-                                <i class="fab fa-facebook-f"></i>
+                <div class="col-lg-4">
+                    <div class="mb-5">
+                        <h5 class="fw-bold mb-4 border-bottom border-secondary pb-2 d-inline-block">
+                            <i class="fas fa-share-alt me-2"></i>Follow Us
+                        </h5>
+
+                        <div class="social-links d-flex justify-content-lg-start justify-content-center">
+                            <a href="https://facebook.com/1down" target="_blank" class="social-icon facebook me-3"
+                                data-bs-toggle="tooltip" title="Follow on Facebook">
+                                <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
+                                    <i class="fab fa-facebook-f fa-lg"></i>
+                                </div>
                             </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://twitter.com" id="twitter" target="_blank">
-                                <i class="fab fa-twitter"></i>
+
+                            <a href="https://twitter.com" target="_blank" class="social-icon twitter me-3"
+                                data-bs-toggle="tooltip" title="Follow on Twitter">
+                                <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
+                                    <i class="fab fa-twitter fa-lg"></i>
+                                </div>
                             </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://youtube.com" id="youtube" target="_blank">
-                                <i class="fab fa-youtube"></i>
+
+                            <a href="https://youtube.com" target="_blank" class="social-icon youtube me-3"
+                                data-bs-toggle="tooltip" title="Subscribe on YouTube">
+                                <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
+                                    <i class="fab fa-youtube fa-lg"></i>
+                                </div>
                             </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://gmail.com" id="gmail" target="_blank">
-                                <i class="fab fa-google"></i>
+
+                            <a href="https://instagram.com" target="_blank" class="social-icon instagram me-3"
+                                data-bs-toggle="tooltip" title="Follow on Instagram">
+                                <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </div>
                             </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://instagram.com" id="instagram" target="_blank">
-                                <i class="fab fa-instagram"></i>
+
+                            <a href="https://gmail.com" target="_blank" class="social-icon gmail"
+                                data-bs-toggle="tooltip" title="Email Us">
+                                <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
+                                    <i class="fab fa-google fa-lg"></i>
+                                </div>
                             </a>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+
+                    <div class="time-card bg-dark bg-gradient border border-secondary rounded-3 p-3 text-center">
+                        <div class="time-header mb-2">
+                            <i class="fas fa-clock me-2 text-primary"></i>
+                            <small class="text-uppercase text-primary fw-semibold">Live Time</small>
+                        </div>
+                        <div class="time-display">
+                            <div class="date-text mb-1">
+                                <span id="date" class="fw-semibold"></span>
+                            </div>
+                            <div class="time-text">
+                                <span id="time" class="h5 fw-bold text-primary"></span>
+                            </div>
+                            <div class="timezone small text-white mt-1">
+                                <i class="fas fa-globe-asia me-1"></i> Philippine Standard Time
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p style="font-size: 12px;" class="text-center mt-3">Current date and time: <span
-                            class="border-bottom"><span id="date"></span>
-                            <span id="time"></span></span></p>
-                    <hr>
-                    <p>&copy; 2023 - {{ now()->year }} <strong>AJM</strong>. All rights reserved.</p>
+
+            <div class="row mt-5 pt-4 border-top border-secondary">
+                <div class="col-12">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        <div class="mb-3 mb-md-0">
+                            <p class="mb-0">
+                                &copy; {{ now()->year }} <strong class="text-primary">AJM Company</strong>. All rights
+                                reserved.
+                            </p>
+                        </div>
+
+                        <div class="footer-links">
+                            <a href="#" class="text-white text-decoration-none me-3 small">Privacy
+                                Policy</a>
+                            <a href="#" class="text-white text-decoration-none me-3 small">Terms of
+                                Service</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -416,6 +516,113 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+    }
+
+    .company-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    }
+
+    .social-icon {
+        position: relative;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon .icon-wrapper {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover .icon-wrapper {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-icon.facebook:hover .icon-wrapper {
+        background: linear-gradient(135deg, #1877f2, #0d5cba) !important;
+    }
+
+    .social-icon.twitter:hover .icon-wrapper {
+        background: linear-gradient(135deg, #1da1f2, #0d8bd9) !important;
+    }
+
+    .social-icon.youtube:hover .icon-wrapper {
+        background: linear-gradient(135deg, #ff0000, #cc0000) !important;
+    }
+
+    .social-icon.instagram:hover .icon-wrapper {
+        background: linear-gradient(135deg, #e4405f, #c13584) !important;
+    }
+
+    .social-icon.gmail:hover .icon-wrapper {
+        background: linear-gradient(135deg, #ea4335, #d62516) !important;
+    }
+
+    .social-icon:hover i {
+        color: white !important;
+    }
+
+    .time-card {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(13, 110, 253, 0.2) !important;
+        transition: all 0.3s ease;
+    }
+
+    .time-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(13, 110, 253, 0.1);
+        border-color: rgba(13, 110, 253, 0.4) !important;
+    }
+
+    .contact-item {
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateX(5px);
+    }
+
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footer-links a {
+        position: relative;
+        padding-bottom: 2px;
+    }
+
+    .footer-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #0d6efd;
+        transition: width 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: #0d6efd !important;
+    }
+
+    .footer-links a:hover::after {
+        width: 100%;
     }
 </style>
 
