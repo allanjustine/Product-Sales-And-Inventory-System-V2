@@ -51,7 +51,7 @@
                                         <i class="fas fa-user text-muted"></i>
                                     </span>
                                     <input type="text"
-                                        class="form-control border-start-0 ps-0 {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                        class="form-control border-start-0 ps-0 h-auto {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                         id="name" placeholder="Enter your full name" wire:model="name"
                                         @if (auth()->check()) readonly @endif>
                                     @if (auth()->check())
@@ -83,7 +83,7 @@
                                         <i class="fas fa-envelope text-muted"></i>
                                     </span>
                                     <input type="email"
-                                        class="form-control border-start-0 ps-0 {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                        class="form-control border-start-0 ps-0 h-auto {{ $errors->has('email') ? 'is-invalid' : '' }}"
                                         id="email" placeholder="your.email@example.com" wire:model="email"
                                         @if (auth()->check()) readonly @endif>
                                     @if (auth()->check())
