@@ -5,7 +5,6 @@
     <div class="container">
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-6 col-lg-5">
-                <!-- Logo -->
                 <div class="text-center mb-4">
                     <div class="logo-container d-inline-block mb-3">
                         <div class="logo-circle">
@@ -16,11 +15,9 @@
                     <p class="text-muted">Sign in to your account</p>
                 </div>
 
-                <!-- Login Card -->
                 <div class="card border-0 shadow-lg rounded-3">
                     <div class="card-body p-4 p-md-5">
                         <form wire:submit="login">
-                            <!-- Username/Email -->
                             <div class="mb-4">
                                 <label for="username_or_email" class="form-label fw-semibold mb-2">
                                     Username or Email
@@ -43,7 +40,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Password -->
                             <div class="mb-4">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <label for="password" class="form-label fw-semibold mb-0">
@@ -78,7 +74,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Remember Me -->
                             <div class="mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox"
@@ -89,7 +84,6 @@
                                 </div>
                             </div>
 
-                            <!-- Submit Button -->
                             <div class="d-grid mb-4">
                                 <button type="submit"
                                         class="btn btn-primary btn-lg py-3 fw-semibold"
@@ -104,7 +98,6 @@
                                 </button>
                             </div>
 
-                            <!-- Divider -->
                             <div class="position-relative my-4">
                                 <div class="border-bottom"></div>
                                 <div class="position-absolute top-50 start-50 translate-middle px-3 bg-white">
@@ -112,7 +105,6 @@
                                 </div>
                             </div>
 
-                            <!-- Links -->
                             <div class="text-center">
                                 <p class="mb-2">
                                     Don't have an account?
@@ -132,7 +124,6 @@
                     </div>
                 </div>
 
-                <!-- Security Notice -->
                 <div class="text-center mt-4">
                     <small class="text-muted">
                         <i class="fas fa-shield-alt me-1"></i>
@@ -143,14 +134,11 @@
         </div>
     </div>
 
-    <!-- Custom CSS -->
     <style>
-        /* Container */
         .container {
             max-width: 1200px;
         }
 
-        /* Logo */
         .logo-circle {
             width: 80px;
             height: 80px;
@@ -160,12 +148,10 @@
             margin: 0 auto;
         }
 
-        /* Card */
         .card {
             border-radius: 16px !important;
         }
 
-        /* Form Elements */
         .form-control, .input-group-text {
             transition: all 0.3s ease;
             height: 50px;
@@ -181,7 +167,6 @@
             border-color: #dee2e6;
         }
 
-        /* Password Toggle */
         #password-toggle {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -191,7 +176,6 @@
             background-color: #e9ecef;
         }
 
-        /* Checkbox */
         .form-check-input:checked {
             background-color: #0d6efd;
             border-color: #0d6efd;
@@ -205,7 +189,6 @@
             cursor: pointer;
         }
 
-        /* Button */
         .btn-primary {
             background: linear-gradient(135deg, #0d6efd, #0b5ed7);
             border: none;
@@ -223,7 +206,6 @@
             cursor: not-allowed;
         }
 
-        /* Links */
         a.text-decoration-none {
             color: #0d6efd;
             transition: all 0.3s ease;
@@ -233,7 +215,6 @@
             text-decoration: underline !important;
         }
 
-        /* Error States */
         .is-invalid {
             border-color: #dc3545 !important;
         }
@@ -242,7 +223,6 @@
             font-size: 0.875rem;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .card-body {
                 padding: 1.5rem !important;
@@ -268,15 +248,12 @@
             }
         }
 
-        /* Spinner */
         .spinner-border {
             vertical-align: middle;
         }
     </style>
 
-    <!-- JavaScript -->
     <script>
-        // Password visibility toggle
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById("password");
             const passwordToggleIcon = document.getElementById("password-toggle-icon");
@@ -292,7 +269,6 @@
             }
         }
 
-        // Livewire events
         document.addEventListener('livewire:navigated', () => {
             Livewire.on('alert', (event) => {
                 const { title, type, message } = event.alerts;
@@ -312,7 +288,6 @@
             });
         });
 
-        // Session alerts
         @if(session('verified'))
         document.addEventListener('livewire:navigated', function() {
             const { title, message, type } = @json(session('verified'));

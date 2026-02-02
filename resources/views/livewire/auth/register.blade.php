@@ -2,7 +2,6 @@
     <div class="container">
         <div class="row justify-content-center align-items-center min-vh-100 py-5">
             <div class="col-md-8 col-lg-6">
-                <!-- Header -->
                 <div class="text-center mb-4">
                     <div class="logo-container mb-4">
                         <div class="logo-circle mx-auto mb-3">
@@ -12,15 +11,11 @@
                         <p class="text-muted">Join our community today</p>
                     </div>
                 </div>
-
-                <!-- Registration Card -->
                 <div class="card border-0 shadow-lg rounded-3">
                     <div class="card-body p-4 p-lg-5">
                         <form wire:submit="register" class="needs-validation" novalidate>
-                            <!-- Profile Photo Section -->
                             <div class="text-center mb-4">
                                 <div class="position-relative d-inline-block">
-                                    <!-- Profile Image Preview -->
                                     <div class="profile-image-container mb-3">
                                         @if($profile_image)
                                             <img src="{{ $profile_image->temporaryUrl() }}"
@@ -38,7 +33,6 @@
                                         @endif
                                     </div>
 
-                                    <!-- Upload Button -->
                                     <div class="d-grid gap-2">
                                         <button type="button"
                                                 class="btn btn-outline-primary btn-sm"
@@ -68,9 +62,7 @@
                                 </div>
                             </div>
 
-                            <!-- Personal Information -->
                             <div class="row mb-3">
-                                <!-- Name -->
                                 <div class="col-md-6">
                                     <label for="name" class="form-label fw-semibold">Full Name</label>
                                     <div class="input-group">
@@ -91,7 +83,6 @@
                                     @enderror
                                 </div>
 
-                                <!-- Email -->
                                 <div class="col-md-6">
                                     <label for="email" class="form-label fw-semibold">Email Address</label>
                                     <div class="input-group">
@@ -113,9 +104,7 @@
                                 </div>
                             </div>
 
-                            <!-- Username and Phone -->
                             <div class="row mb-3">
-                                <!-- Username -->
                                 <div class="col-md-6">
                                     <label for="username" class="form-label fw-semibold">Username</label>
                                     <div class="input-group">
@@ -136,7 +125,6 @@
                                     @enderror
                                 </div>
 
-                                <!-- Phone Number -->
                                 <div class="col-md-6">
                                     <label for="phone_number" class="form-label fw-semibold">Phone Number</label>
                                     <div class="input-group">
@@ -160,9 +148,7 @@
                                 </div>
                             </div>
 
-                            <!-- Address and Gender -->
                             <div class="row mb-3">
-                                <!-- Address -->
                                 <div class="col-md-6">
                                     <label for="address" class="form-label fw-semibold">Address</label>
                                     <div class="input-group">
@@ -183,7 +169,6 @@
                                     @enderror
                                 </div>
 
-                                <!-- Gender -->
                                 <div class="col-md-6">
                                     <label for="gender" class="form-label fw-semibold">Gender</label>
                                     <div class="input-group">
@@ -207,9 +192,7 @@
                                 </div>
                             </div>
 
-                            <!-- Password Fields -->
                             <div class="row mb-4">
-                                <!-- Password -->
                                 <div class="col-md-6">
                                     <label for="password" class="form-label fw-semibold">Password</label>
                                     <div class="input-group">
@@ -236,7 +219,6 @@
                                     @enderror
                                 </div>
 
-                                <!-- Confirm Password -->
                                 <div class="col-md-6">
                                     <label for="password_confirmation" class="form-label fw-semibold">Confirm Password</label>
                                     <div class="input-group">
@@ -259,7 +241,6 @@
                                 </div>
                             </div>
 
-                            <!-- Terms and Conditions -->
                             <div class="mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -275,7 +256,6 @@
                                 </div>
                             </div>
 
-                            <!-- Submit Button -->
                             <div class="d-grid mb-3">
                                 <button type="submit"
                                         class="btn btn-primary btn-lg py-3 fw-semibold"
@@ -291,7 +271,6 @@
                                 </button>
                             </div>
 
-                            <!-- Login Link -->
                             <div class="text-center">
                                 <p class="mb-0">
                                     Already have an account?
@@ -304,7 +283,6 @@
                     </div>
                 </div>
 
-                <!-- Security Notice -->
                 <div class="text-center mt-4">
                     <small class="text-muted">
                         <i class="fas fa-shield-alt me-1"></i>
@@ -315,14 +293,11 @@
         </div>
     </div>
 
-    <!-- Custom CSS -->
     <style>
-        /* Container */
         .container {
             max-width: 1200px;
         }
 
-        /* Logo */
         .logo-circle {
             width: 100px;
             height: 100px;
@@ -332,7 +307,6 @@
             box-shadow: 0 5px 15px rgba(13, 110, 253, 0.1);
         }
 
-        /* Profile Image */
         .profile-image-container {
             position: relative;
             width: 120px;
@@ -370,12 +344,10 @@
             justify-content: center;
         }
 
-        /* Card */
         .card {
             border-radius: 16px !important;
         }
 
-        /* Form Elements */
         .form-control, .form-select, .input-group-text {
             height: 50px;
             transition: all 0.3s ease;
@@ -391,7 +363,6 @@
             border-color: #dee2e6;
         }
 
-        /* Password Toggle */
         #password-toggle, #password-confirm-toggle {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -401,7 +372,6 @@
             background-color: #e9ecef;
         }
 
-        /* Checkbox */
         .form-check-input:checked {
             background-color: #0d6efd;
             border-color: #0d6efd;
@@ -414,8 +384,6 @@
         .form-check-label {
             cursor: pointer;
         }
-
-        /* Button */
         .btn-primary {
             background: linear-gradient(135deg, #0d6efd, #0b5ed7);
             border: none;
@@ -437,7 +405,6 @@
             border-radius: 8px;
         }
 
-        /* Links */
         a.text-decoration-none {
             color: #0d6efd;
             transition: all 0.3s ease;
@@ -447,7 +414,6 @@
             text-decoration: underline !important;
         }
 
-        /* Error States */
         .is-invalid {
             border-color: #dc3545 !important;
         }
@@ -456,12 +422,10 @@
             font-size: 0.875rem;
         }
 
-        /* Phone number input */
         input[type="tel"] {
             font-family: monospace;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .card-body {
                 padding: 1.5rem !important;
@@ -496,12 +460,10 @@
             }
         }
 
-        /* Spinner */
         .spinner-border {
             vertical-align: middle;
         }
 
-        /* Remove number input arrows */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -513,9 +475,7 @@
         }
     </style>
 
-    <!-- JavaScript -->
     <script>
-        // Password visibility toggle
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById("password");
             const passwordToggleIcon = document.getElementById("password-toggle-icon");
@@ -546,39 +506,31 @@
             }
         }
 
-        // Phone number formatting
         document.addEventListener('livewire:navigated', function() {
             const phoneInput = document.getElementById('phone_number');
 
             if (phoneInput) {
                 phoneInput.addEventListener('input', function(e) {
-                    // Remove any non-digit characters
                     let value = e.target.value.replace(/\D/g, '');
 
-                    // Ensure it starts with 09
                     if (!value.startsWith('09')) {
                         value = '09' + value.replace(/^09/, '');
                     }
 
-                    // Limit to 11 digits
                     value = value.substring(0, 11);
 
-                    // Update the input value
                     e.target.value = value;
 
-                    // Trigger Livewire model update
                     @this.set('phone_number', value);
                 });
             }
 
-            // Initialize tooltips
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
 
-        // Livewire alerts
         document.addEventListener('livewire:navigated', function() {
             Livewire.on('alert', (event) => {
                 const { title, message, type } = event.alerts;
@@ -599,7 +551,6 @@
             });
         });
 
-        // Form validation
         document.addEventListener('livewire:navigated', function() {
             const form = document.querySelector('form.needs-validation');
 
@@ -613,7 +564,6 @@
                 }, false);
             }
 
-            // Auto-focus on first input
             const firstInput = document.getElementById('name');
             if (firstInput) {
                 setTimeout(() => {
