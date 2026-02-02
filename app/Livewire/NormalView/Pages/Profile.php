@@ -90,6 +90,7 @@ class Profile extends Component
             'name' => 'required',
             'gender' => ['required', 'string', Rule::in('Male', 'Female')],
             'address' => 'required',
+            'user_location' => ['required', 'string', 'max:1000', 'min:5'],
             'phone_number' => 'required|numeric',
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'username' => 'required|string|lowercase|unique:users,username,' . $this->user->id,

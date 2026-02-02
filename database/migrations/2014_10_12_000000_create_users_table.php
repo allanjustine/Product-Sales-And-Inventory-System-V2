@@ -16,7 +16,7 @@ return new class extends Migration
             $table->longText('profile_image')->nullable();
             $table->string('name');
             $table->string('address');
-            $table->string('user_location')->nullable();
+            $table->text('user_location')->nullable();
             $table->string('email')->unique();
             $table->string('username')->unique();
             $table->string('gender');

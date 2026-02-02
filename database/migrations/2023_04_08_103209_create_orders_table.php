@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('user_rating')->default(0);
             $table->string('transaction_code');
             $table->string('order_status')->default('Pending');
-            $table->string('shipping_address');
+            $table->text('shipping_address');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
