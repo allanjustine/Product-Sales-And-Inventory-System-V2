@@ -1,90 +1,285 @@
 <div>
     @livewire('auth.forgot-password')
     @livewire('auth.resend-email')
-    <div class="container mb-5">
-        <div class="col-md-6 offset-md-3 mt-5">
-            <div class="card-img-top d-flex justify-content-center align-items-center mb-3">
-                <div class="overflow-hidden" style="width: 150px; height: 150px;">
-                    <img src="images/mylogo.jpg" class="w-100 h-100" alt="Login Image">
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-6 col-lg-5">
+                <!-- Logo -->
+                <div class="text-center mb-4">
+                    <div class="logo-container d-inline-block mb-3">
+                        <div class="logo-circle">
+                            <img src="images/mylogo.jpg" alt="Logo" class="w-100 h-100 rounded-circle">
+                        </div>
+                    </div>
+                    <h2 class="fw-bold mb-2">Welcome Back</h2>
+                    <p class="text-muted">Sign in to your account</p>
                 </div>
-            </div>
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="text-center">Login &nbsp;
-                        <span class="position-relative">
-                            <span style="cursor: pointer;"
-                                class="position-absolute bottom-0 translate-middle badge rounded-pill bg-dark"
-                                id="login-pill">
-                                <i class="fa-solid fa-question" wire:ignore.self data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Login to continue the website"></i>
-                            </span>
-                        </span>
-                    </h3>
-                    <hr>
-                    <form wire:submit="login">
 
-                        <div class="form-floating mt-3">
-                            <input type="text" id="username_or_email" wire:model="username_or_email"
-                                class="form-control" placeholder="Username or email">
-                            <label for="username_or_email"><i class="fas fa-user"></i> Username or email</label>
-                        </div>
-
-                        @error('username_or_email')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <div class="form-floating mt-3">
-                            <input type="password" id="password" wire:model="password" class="form-control"
-                                placeholder="Password">
-                            <label for="password"><i class="fas fa-lock"></i> Password</label>
-                            <button type="button"
-                                class="position-absolute no-focus top-50 end-0 mr-2 translate-middle-y"
-                                onclick="togglePasswordVisibility()">
-                                <i id="password-toggle-icon" class="fas fa-eye-slash"></i>
-                            </button>
-                        </div>
-                        @error('password')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <div class="d-flex mt-3">
-                            <div class="flex-grow-1">
-                                <a href="#" class="float-end" data-bs-toggle="modal"
-                                    data-bs-target="#forgotPassword">Forgot
-                                    password?</a>
-                                <p><input type="checkbox" wire:model="remember"> Remember me</p>
-                                <p>Don't have an account? <a href="/register" wire:navigate>Register</a></p>
-                                <p>Didn't receive email verification? <a href="#" data-bs-toggle="modal"
-                                        data-bs-target="#resend">Resend</a></p>
+                <!-- Login Card -->
+                <div class="card border-0 shadow-lg rounded-3">
+                    <div class="card-body p-4 p-md-5">
+                        <form wire:submit="login">
+                            <!-- Username/Email -->
+                            <div class="mb-4">
+                                <label for="username_or_email" class="form-label fw-semibold mb-2">
+                                    Username or Email
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="fas fa-user text-muted"></i>
+                                    </span>
+                                    <input type="text"
+                                           id="username_or_email"
+                                           class="form-control border-start-0 {{ $errors->has('username_or_email') ? 'is-invalid' : '' }}"
+                                           placeholder="Enter username or email"
+                                           wire:model="username_or_email"
+                                           required>
+                                </div>
+                                @error('username_or_email')
+                                <div class="invalid-feedback d-block mt-2">
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                        </div>
-                        <button type="submit" class="mt-3 btn btn-primary form-control"><span wire:loading
-                                wire:target="login"><span class="spinner-border spinner-border-sm"></span> Logging
-                                in...</span> <span wire:loading.remove wire:target="login">Login</span></button>
-                    </form>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <label for="password" class="form-label fw-semibold mb-0">
+                                        Password
+                                    </label>
+                                    <a href="#" class="text-decoration-none small" data-bs-toggle="modal"
+                                       data-bs-target="#forgotPassword">
+                                        Forgot Password?
+                                    </a>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="fas fa-lock text-muted"></i>
+                                    </span>
+                                    <input type="password"
+                                           id="password"
+                                           class="form-control border-start-0 {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                           placeholder="Enter your password"
+                                           wire:model="password"
+                                           required>
+                                    <button type="button"
+                                            class="input-group-text bg-light border-start-0"
+                                            onclick="togglePasswordVisibility()"
+                                            id="password-toggle">
+                                        <i id="password-toggle-icon" class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                                @error('password')
+                                <div class="invalid-feedback d-block mt-2">
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           id="remember" wire:model="remember">
+                                    <label class="form-check-label" for="remember">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid mb-4">
+                                <button type="submit"
+                                        class="btn btn-primary btn-lg py-3 fw-semibold"
+                                        wire:loading.attr="disabled">
+                                    <span wire:loading.remove wire:target="login">
+                                        Sign In
+                                    </span>
+                                    <span wire:loading wire:target="login">
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                        Signing In...
+                                    </span>
+                                </button>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="position-relative my-4">
+                                <div class="border-bottom"></div>
+                                <div class="position-absolute top-50 start-50 translate-middle px-3 bg-white">
+                                    <small class="text-muted">Or</small>
+                                </div>
+                            </div>
+
+                            <!-- Links -->
+                            <div class="text-center">
+                                <p class="mb-2">
+                                    Don't have an account?
+                                    <a href="/register" wire:navigate class="text-decoration-none fw-semibold ms-1">
+                                        Sign up
+                                    </a>
+                                </p>
+                                <p class="mb-0">
+                                    Didn't receive verification?
+                                    <a href="#" class="text-decoration-none fw-semibold ms-1" data-bs-toggle="modal"
+                                       data-bs-target="#resend">
+                                        Resend Email
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Security Notice -->
+                <div class="text-center mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Secure login with encryption
+                    </small>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Custom CSS -->
     <style>
-        .no-focus:focus {
-            outline: none;
+        /* Container */
+        .container {
+            max-width: 1200px;
         }
 
-        .no-focus {
+        /* Logo */
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #0d6efd;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        /* Card */
+        .card {
+            border-radius: 16px !important;
+        }
+
+        /* Form Elements */
+        .form-control, .input-group-text {
+            transition: all 0.3s ease;
+            height: 50px;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+        /* Password Toggle */
+        #password-toggle {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #password-toggle:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Checkbox */
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+        }
+
+        /* Button */
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
             border: none;
-            background: transparent;
-            font-size: 18px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Links */
+        a.text-decoration-none {
+            color: #0d6efd;
+            transition: all 0.3s ease;
+        }
+
+        a.text-decoration-none:hover {
+            text-decoration: underline !important;
+        }
+
+        /* Error States */
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .invalid-feedback {
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1.5rem !important;
+            }
+
+            .btn-lg {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .logo-circle {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                border-radius: 12px !important;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Spinner */
+        .spinner-border {
+            vertical-align: middle;
         }
     </style>
 
+    <!-- JavaScript -->
     <script>
-        $(document).ready(function() {
-            $('[data-bs-toggle="tooltip"]').tooltip();
-        });
-
+        // Password visibility toggle
         function togglePasswordVisibility() {
-            var passwordInput = document.getElementById("password");
-            var passwordToggleIcon = document.getElementById("password-toggle-icon");
+            const passwordInput = document.getElementById("password");
+            const passwordToggleIcon = document.getElementById("password-toggle-icon");
 
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
@@ -97,93 +292,67 @@
             }
         }
 
-    </script>
-
-    @if(session('verified'))
-    <script>
-        document.addEventListener('livewire:navigated', function() {
-            const {
-                title
-                , message
-                , type
-            } = @json(session('verified'));
-            Swal.fire({
-                title: title
-                , text: message
-                , icon: type
-                , confirmButtonText: 'OK'
-                , showCloseButton: true,
-
-            });
-        });
-
-    </script>
-    @endif
-
-    @if(session('alreadyVerified'))
-    <script>
-        document.addEventListener('livewire:navigated', function() {
-            const {
-                title
-                , message
-                , type
-            } = @json(session('alreadyVerified'));
-            Swal.fire({
-                title: title
-                , text: message
-                , icon: type
-                , confirmButtonText: 'OK'
-                , showCloseButton: true,
-
-            });
-
-        });
-    </script>
-    @endif
-
-    @if(session('invalidToken'))
-    <script>
-        document.addEventListener('livewire:navigated', function() {
-            const {
-                title
-                , message
-                , type
-            } = @json(session('invalidToken'));
-            Swal.fire({
-                title: title
-                , text: message
-                , icon: type
-                , confirmButtonText: 'OK'
-                , showCloseButton: true,
-
-            });
-        });
-
-    </script>
-    @endif
-
-    <script>
+        // Livewire events
         document.addEventListener('livewire:navigated', () => {
             Livewire.on('alert', (event) => {
-                const {
-                    title
-                    , type
-                    , message
-                } = event.alerts;
+                const { title, type, message } = event.alerts;
                 Swal.fire({
-                    title: title
-                    , text: message
-                    , icon: type
-                    , confirmButtonText: 'OK'
-                    , showCloseButton: true,
-
+                    title: title,
+                    text: message,
+                    icon: type,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0d6efd',
+                    showCloseButton: true,
                 });
             });
+
             Livewire.on('closeModal', () => {
-               $('#resend').modal('hide');
-               $('#forgotPassword').modal('hide');
+                $('#resend').modal('hide');
+                $('#forgotPassword').modal('hide');
             });
         });
 
+        // Session alerts
+        @if(session('verified'))
+        document.addEventListener('livewire:navigated', function() {
+            const { title, message, type } = @json(session('verified'));
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: type,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0d6efd',
+                showCloseButton: true,
+            });
+        });
+        @endif
+
+        @if(session('alreadyVerified'))
+        document.addEventListener('livewire:navigated', function() {
+            const { title, message, type } = @json(session('alreadyVerified'));
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: type,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0d6efd',
+                showCloseButton: true,
+            });
+        });
+        @endif
+
+        @if(session('invalidToken'))
+        document.addEventListener('livewire:navigated', function() {
+            const { title, message, type } = @json(session('invalidToken'));
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: type,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#0d6efd',
+                showCloseButton: true,
+            });
+        });
+        @endif
     </script>
 </div>

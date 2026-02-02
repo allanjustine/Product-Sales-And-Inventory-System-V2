@@ -23,15 +23,17 @@ class Home extends Component
         $topDeals = Product::with(['product_category', 'favorites.product'])
             ->where('product_sold', '>', 0)
             ->orderBy('product_sold', 'desc')
-            ->take(10)
+            ->take(value: 12)
             ->get();
+
         $popularityDeals = Product::with(['product_category', 'favorites.product'])
             ->where('product_votes', '>', 0)
             ->orderBy('product_votes', 'desc')
-            ->take(10)
+            ->take(12)
             ->get();
+
         $latestProducts = Product::with(['product_category', 'favorites.product'])->orderBy('created_at', 'desc')
-            ->take(10)
+            ->take(12)
             ->get();
 
         $allLocations = User::all();

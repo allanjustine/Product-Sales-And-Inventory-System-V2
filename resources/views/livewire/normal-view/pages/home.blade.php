@@ -1,459 +1,656 @@
 <div>
     @include('livewire.normal-view.products.view')
-    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-        </ol>
+    <div id="homeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2"></button>
+        </div>
+
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="images/slide1.jpg" alt="First slide">
-                <div class="carousel-caption text-center top-0">
-                    <h3 id="car-title" class="py-3">Food is not just fuel, it's information. It talks to your DNA and
-                        tells it what to do.</h3>
-                    @if (auth()->check())
-                    <a href="#" class="btn" id="view-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="Have a nice day, {{ auth()->user()->name }}">
-                        @if ($morning)
-                        <i class="fa-solid fa-sunrise text-warning"></i> Good Morning
-                        @elseif($afternoon)
-                        <i class="fa-solid fa-sun text-warning"></i> Good Afternoon
-                        @elseif($evening)
-                        <i class="fa-solid fa-moon-stars text-dark"></i> Good Evening
-                        @else
-                        Have a nice day
-                        @endif, {{ auth()->user()->name }}
-                    </a>
-                    <a wire:navigate href="/products" class="btn btn-primary mt-1">Order now</a>
-                    @else
-                    <a wire:navigate href="/view-products" class="btn" id="view-btn">View Products</a>
-                    <a wire:navigate href="/login" class="btn btn-primary">Get Started</a>
-                    @endif
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="images/slide2.jpg" alt="Second slide">
-                <div class="carousel-caption text-center top-0">
-                    <h3 id="car-title" class="py-3">A restaurant should be a place where you can eat food that has
-                        been cooked with passion, served with warmth, and enjoyed with pleasure.</h3>
-                    @if (auth()->check())
-                    <a href="#" class="btn" id="view-btn">
-                        @if ($morning)
-                        <i class="fa-solid fa-sunrise text-warning"></i> Good Morning
-                        @elseif($afternoon)
-                        <i class="fa-solid fa-sun text-warning"></i> Good Afternoon
-                        @elseif($evening)
-                        <i class="fa-solid fa-moon-stars text-dark"></i> Good Evening
-                        @else
-                        Have a nice day
-                        @endif, {{ auth()->user()->name }}
-                    </a>
-                    <a wire:navigate href="/products" class="btn btn-primary mt-1">Order now</a>
-                    @else
-                    <a wire:navigate href="/view-products" class="btn" id="view-btn">View Products</a>
-                    <a wire:navigate href="/login" class="btn btn-primary">Get Started</a>
-                    @endif
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="images/slide3.jpg" alt="Third slide">
-                <div class="carousel-caption text-center top-0">
-                    <h3 id="car-title" class="py-3">Food delivery is not just a service, it's a relationship between
-                        the restaurant and the customer.</h3>
-                    @if (auth()->check())
-                    <a href="#" class="btn" id="view-btn">
-                        @if ($morning)
-                        <i class="fa-solid fa-sunrise text-warning"></i> Good Morning
-                        @elseif($afternoon)
-                        <i class="fa-solid fa-sun text-warning"></i> Good Afternoon
-                        @elseif($evening)
-                        <i class="fa-solid fa-moon-stars text-dark"></i> Good Evening
-                        @else
-                        Have a nice day
-                        @endif, {{ auth()->user()->name }}
-                    </a>
-                    <a wire:navigate href="/products" class="btn btn-primary mt-1">Order now</a>
-                    @else
-                    <a wire:navigate href="/view-products" class="btn" id="view-btn">View Products</a>
-                    <a wire:navigate href="/login" class="btn btn-primary">Get Started</a>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+            @foreach ([['image' => 'images/slide1.jpg', 'title' => 'Food is not just fuel, it\'s information. It talks to your DNA and tells it what to do.'], ['image' => 'images/slide2.jpg', 'title' => 'A restaurant should be a place where you can eat food that has been cooked with passion, served with warmth, and enjoyed with pleasure.'], ['image' => 'images/slide3.jpg', 'title' => 'Food delivery is not just a service, it\'s a relationship between the restaurant and the customer.']] as $index => $slide)
+                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                    <div class="position-relative">
+                        <img class="d-block w-100 carousel-image" src="{{ $slide['image'] }}"
+                            alt="Slide {{ $index + 1 }}" style="height: 80vh; object-fit: cover;">
+                        <div class="carousel-overlay position-absolute top-0 start-0 w-100 h-100"
+                            style="background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));">
+                        </div>
+                    </div>
 
-    <h3 class="text-center bg-dark mt-3 p-3"><i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i> TOP SELLING
-        PRODUCTS <i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i></h3>
+                    <div class="carousel-caption position-absolute top-50 start-50 translate-middle w-100 px-3">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10 col-md-12 text-center">
+                                    <div class="mb-4">
+                                        <i class="fa-classic fa-solid fa-quote-left text-white-50 fa-2x mb-3"></i>
+                                    </div>
+                                    <h1 class="display-5 fw-bold text-white mb-4 carousel-title">
+                                        {{ $slide['title'] }}
+                                    </h1>
 
-    <div class="container mt-3">
-        <div class="card p-3 bg-transparent">
-            <div class="grid">
-                @foreach ($topDeals as $product)
-                <div class="grid-item col-md-3 col-sm-4 col-6">
-                    <div class="card shadow product show" id="product-card" style="min-width: 50px;">
-
-                        <div style="position: relative;">
-                            <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                                wire:click="view({{ $product->id }})">
-                                <div class="image-container">
-                                    @if (Storage::exists($product->product_image))
-                                    <img class="card-img-top" src="{{ Storage::url($product->product_image) }}"
-                                        alt="{{ $product->product_name }}">
+                                    @if (auth()->check())
+                                        <div
+                                            class="d-inline-block bg-opacity-20 backdrop-blur rounded-pill px-4 py-2 mb-4">
+                                            <div class="d-flex align-items-center gap-2">
+                                                @if ($morning)
+                                                    <i class="fa-classic fa-solid fa-sunrise text-warning fa-lg"></i>
+                                                    <span class="fw-medium text-white">Good Morning</span>
+                                                @elseif($afternoon)
+                                                    <i class="fa-classic fa-solid fa-sun text-warning fa-lg"></i>
+                                                    <span class="fw-medium text-white">Good Afternoon</span>
+                                                @elseif($evening)
+                                                    <i class="fa-classic fa-solid fa-moon-stars text-light fa-lg"></i>
+                                                    <span class="fw-medium text-white">Good Evening</span>
+                                                @else
+                                                    <i class="fa-classic fa-solid fa-smile-beam text-light fa-lg"></i>
+                                                    <span class="fw-medium text-white">Have a nice day</span>
+                                                @endif
+                                                <span class="fw-bold text-white">, {{ auth()->user()->name }}</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <a wire:navigate href="/products"
+                                            class="btn btn-primary btn-lg px-4 py-3 shadow-lg">
+                                            <i class="fa-classic fa-solid fa-shopping-cart me-2"></i>Order Now
+                                        </a>
                                     @else
-                                    <img class="card-img-top" src="{{ $product->product_image }}"
-                                        alt="{{ $product->product_name }}">
+                                        <div
+                                            class="backdrop-blur rounded p-3 mb-4 d-inline-block">
+                                            <p class="text-white mb-0">
+                                                <i class="fa-classic fa-solid fa-info-circle me-2"></i>
+                                                Sign in to get personalized recommendations
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <div class="d-flex flex-wrap gap-3 justify-content-center">
+                                            <a wire:navigate href="/product-lists"
+                                                class="btn btn-warning btn-lg px-4 py-3">
+                                                <i class="fa-classic fa-solid fa-eye me-2"></i>Browse Products
+                                            </a>
+                                            <a wire:navigate href="/login"
+                                                class="btn btn-primary btn-lg px-4 py-3 shadow-lg">
+                                                <i class="fa-classic fa-solid fa-sign-in-alt me-2"></i>Sign In
+                                            </a>
+                                        </div>
                                     @endif
                                 </div>
-                            </a>
-                            @auth
-                            <button type="button"
-                                title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute bottom-0 start-0"
-                                wire:click="addToFavorite({{ $product->id }})">
-                                <h2 class="text-danger"><i
-                                        class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
-                                </h2>
-                            </button>
-                            @endauth
-                            <div class="pt-1 pr-2" style="position: absolute; top:0; left: 0;">
-                                <span class="px-2 pt-1 pb-1 rounded top-deals-bg">
-                                    <i class="fa-solid fa-medal fa-flip top-deals-icon text-sm"></i>
-                                    <span class="top-deals text-sm"><strong>Top {{ $loop->index + 1 }}</strong></span>
-                                </span>
                             </div>
-                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                            <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
-                                <span class="flag-discount">{{ $product->discount }}</span>
-                            </div>
-                            @endif
-
-                        </div>
-                        <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                            wire:click="view({{ $product->id }})">
-                            <div class="card-footer text-center mb-3 mt-auto">
-                                <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
-                                    {{ $product->product_category->category_name }}</h6>
-                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
-                                    style="max-width: 150px;" title="{{ $product->product_name }}">
-                                    {{ $product->product_name }}
-                                </h5>
-                                <div class="d-block font-size-1">
-                                    <span class="font-weight-medium">₱{{
-                                        number_format($product->product_price, 2, '.', ',') }}</span>
-                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                                     <span class="text-muted text-decoration-line-through text-danger">(₱{{
-                                         number_format($product->product_old_price, 2, '.', ',') }})</span>
-                                     @endif
-                                </div>
-                            </div>
-                        </a>
-                        <div class="d-flex text-sm sm-text-xs mb-2">
-                            <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
-
-                                {{ $product->product_sold }}
-                            </strong>
-                            <span class="font-weight-medium pr-2" style="position: absolute; bottom:0; right: 0;">
-                                <i class="fa-solid fa-star"></i>
-                                <strong>
-                                    {{ $product->product_rating }}/5
-                                </strong>
-
-                                <span class="text-danger">({{ $product->product_votes }})</span>
-                            </span>
                         </div>
                     </div>
                 </div>
-                @endforeach
-            </div>
-            @if ($topDeals->count() === 0)
-            <p class="text-center">
-                <i class="fa-regular fa-xmark-to-slot" style="font-size: 50px;"></i>
-                <br>
-                No Top Products Yet.
-            </p>
-            @endif
-
-            <div class="text-center mt-3">
-                @if (auth()->check())
-                <a wire:navigate href="/products" class="btn btn-info">See more...</a>
-                @else
-                <a wire:navigate href="/view-products" class="btn btn-info">See more...</a>
-                @endif
-            </div>
+            @endforeach
         </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-opacity-50 p-3" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-opacity-50 p-3" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
-    <h3 class="text-center bg-dark mt-3 p-3"><i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i> POPULAR
-        PRODUCTS <i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i></h3>
+    <div class="container py-5">
+        <section class="mb-5">
+            <div class="section-header mb-5">
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <div class="line bg-gradient"></div>
+                    <div class="text-center">
+                        <span class="badge bg-primary mb-2 px-3 py-2 rounded-pill">
+                            <i class="fa-classic fa-solid fa-medal me-2"></i>Top Picks
+                        </span>
+                        <h2 class="fw-bold">Top Selling Products</h2>
+                        <p class="text-muted mb-0">Most loved items by our customers</p>
+                    </div>
+                    <div class="line bg-gradient"></div>
+                </div>
+            </div>
 
-    <div class="container mt-3">
-        <div class="card p-3 bg-transparent">
-            <div class="grid">
-                @foreach ($popularityDeals as $product)
-                <div class="grid-item col-md-3 col-sm-4 col-6">
-                    <div class="card shadow product show" id="product-card" style="min-width: 50px;">
-                        <div style="position: relative;">
-                            <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                                wire:click="view({{ $product->id }})">
-                                <div class="image-container">
-                                    @if (Storage::exists($product->product_image))
-                                    <img class="card-img-top" src="{{ Storage::url($product->product_image) }}"
-                                        alt="{{ $product->product_name }}">
-                                    @else
-                                    <img class="card-img-top" src="{{ $product->product_image }}"
-                                        alt="{{ $product->product_name }}">
-                                    @endif
-                                </div>
-                            </a>
-                            @auth
-                            <button type="button"
-                                title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute bottom-0 start-0"
-                                wire:click="addToFavorite({{ $product->id }})">
-                                <h2 class="text-danger"><i
-                                        class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
-                                </h2>
-                            </button>
-                            @endauth
-                            <div class="pt-1 pr-2" style="position: absolute; top:0; left: 0;">
-                                <span class="px-2 pt-1 pb-1 rounded top-popular-bg">
-                                    <i class="fa-solid fa-fire-flame-curved fa-beat top-popular-icon text-sm"></i>
-                                    <span class="top-popular text-sm"><strong>Top
-                                            {{ $loop->index + 1 }}</strong></span>
-                                </span>
-                            </div>
-
-                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                            <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
-                                <span class="flag-discount">{{ $product->discount }}</span>
-                            </div>
-                            @endif
-
+            <div class="row g-4">
+                @forelse ($topDeals as $product)
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        @include('components.product-card', [
+                            'product' => $product,
+                            'badgeType' => 'top',
+                            'badgeText' => 'Top ' . ($loop->index + 1),
+                        ])
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <i class="fa-classic fa-solid fa-trophy text-muted mb-3" style="font-size: 4rem;"></i>
+                            <h4 class="text-muted mb-2">No Top Products Yet</h4>
+                            <p class="text-muted">Products will appear here once they gain popularity</p>
                         </div>
-                        <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                            wire:click="view({{ $product->id }})">
-                            <div class="card-footer text-center mb-3 mt-auto">
-                                <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
-                                    {{ $product->product_category->category_name }}</h6>
-                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
-                                    style="max-width: 150px;" title="{{ $product->product_name }}">
-                                    {{ $product->product_name }}
-                                </h5>
-                                <div class="d-block font-size-1">
-                                    <span class="font-weight-medium">₱{{
-                                        number_format($product->product_price, 2, '.', ',') }}</span>
-                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                                     <span class="text-muted text-decoration-line-through text-danger">(₱{{
-                                         number_format($product->product_old_price, 2, '.', ',') }})</span>
-                                     @endif
+                    </div>
+                @endforelse
+            </div>
+
+            @if ($topDeals->count() > 0)
+                <div class="text-center mt-5">
+                    @if (auth()->check())
+                        <a wire:navigate href="/products?sorted_by=top_selling"
+                            class="btn btn-outline-primary btn-lg px-5">
+                            <i class="fa-classic fa-solid fa-arrow-right me-2"></i>View All Products
+                        </a>
+                    @else
+                        <a wire:navigate href="/product-lists?sorted_by=top_selling"
+                            class="btn btn-outline-primary btn-lg px-5">
+                            <i class="fa-classic fa-solid fa-arrow-right me-2"></i>Browse All Products
+                        </a>
+                    @endif
+                </div>
+            @endif
+        </section>
+
+        <section class="mb-5">
+            <div class="section-header mb-5">
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <div class="line bg-gradient"></div>
+                    <div class="text-center">
+                        <span class="badge bg-warning mb-2 px-3 py-2 rounded-pill">
+                            <i class="fa-classic fa-solid fa-fire me-2"></i>Trending Now
+                        </span>
+                        <h2 class="fw-bold">Popular Products</h2>
+                        <p class="text-muted mb-0">Currently trending in our store</p>
+                    </div>
+                    <div class="line bg-gradient"></div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($popularityDeals as $product)
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        @include('components.product-card', [
+                            'product' => $product,
+                            'badgeType' => 'popular',
+                            'badgeText' => 'Trending',
+                        ])
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <i class="fa-classic fa-solid fa-fire text-muted mb-3" style="font-size: 4rem;"></i>
+                            <h4 class="text-muted mb-2">No Popular Products Yet</h4>
+                            <p class="text-muted">Check back later for trending products</p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+
+            @if ($popularityDeals->count() > 0)
+                <div class="text-center mt-5">
+                    @if (auth()->check())
+                        <a wire:navigate href="/products?sorted_by=popularity"
+                            class="btn btn-outline-warning btn-lg px-5">
+                            <i class="fa-classic fa-solid fa-arrow-right me-2"></i>Explore More
+                        </a>
+                    @else
+                        <a wire:navigate href="/product-lists?sorted_by=popularity"
+                            class="btn btn-outline-warning btn-lg px-5">
+                            <i class="fa-classic fa-solid fa-arrow-right me-2"></i>Discover More
+                        </a>
+                    @endif
+                </div>
+            @endif
+        </section>
+
+        <section class="mb-5">
+            <div class="section-header mb-5">
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <div class="line bg-gradient"></div>
+                    <div class="text-center">
+                        <span class="badge bg-info mb-2 px-3 py-2 rounded-pill">
+                            <i class="fa-classic fa-solid fa-bolt me-2"></i>Just Arrived
+                        </span>
+                        <h2 class="fw-bold">Latest Products</h2>
+                        <p class="text-muted mb-0">Freshly added to our collection</p>
+                    </div>
+                    <div class="line bg-gradient"></div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($latestProducts as $product)
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        @include('components.product-card', [
+                            'product' => $product,
+                            'badgeType' => 'latest',
+                            'badgeText' => 'New',
+                        ])
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <i class="fa-classic fa-solid fa-clock text-muted mb-3" style="font-size: 4rem;"></i>
+                            <h4 class="text-muted mb-2">No Latest Products</h4>
+                            <p class="text-muted">New products will be added soon</p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+
+            @if ($latestProducts->count() > 0)
+                <div class="text-center mt-5">
+                    @if (auth()->check())
+                        <a wire:navigate href="/products?sorted_by=latest" class="btn btn-outline-info btn-lg px-5">
+                            <i class="fa-classic fa-solid fa-arrow-right me-2"></i>See All New Arrivals
+                        </a>
+                    @else
+                        <a wire:navigate href="/product-lists?sorted_by=latest"
+                            class="btn btn-outline-info btn-lg px-5">
+                            <i class="fa-classic fa-solid fa-arrow-right me-2"></i>View All Products
+                        </a>
+                    @endif
+                </div>
+            @endif
+        </section>
+    </div>
+
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="section-header mb-5">
+                <div class="text-center">
+                    <span class="badge bg-dark mb-2 px-3 py-2 rounded-pill">
+                        <i class="fa-classic fa-solid fa-map-marker-alt me-2"></i>Visit Us
+                    </span>
+                    <h2 class="fw-bold">Our Location</h2>
+                    <p class="text-muted mb-4">Find us at our cozy store</p>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start gap-3 mb-4">
+                                <div class="bg-primary rounded-circle p-3 flex-shrink-0">
+                                    <i class="fa-classic fa-solid fa-location-dot text-white fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="fw-bold mb-1">AJM Store</h4>
+                                    <p class="text-muted mb-0">
+                                        <i class="fa-classic fa-solid fa-map-pin text-danger me-2"></i>
+                                        Tinangnan, Tubigon, Bohol
+                                    </p>
                                 </div>
                             </div>
-                        </a>
-                        <div class="d-flex text-sm sm-text-xs mb-2">
-                            <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
 
-                                {{ $product->product_sold }}
-                            </strong>
-                            <span class="font-weight-medium pr-2" style="position: absolute; bottom:0; right: 0;">
-                                <i class="fa-solid fa-star"></i>
-                                <strong>
-                                    {{ $product->product_rating }}/5
-                                </strong>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="fa-classic fa-solid fa-clock text-primary"></i>
+                                        <span class="fw-medium">Opening Hours</span>
+                                    </div>
+                                    <p class="text-muted mb-0">9:00 AM - 10:00 PM</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="fa-classic fa-solid fa-phone text-primary"></i>
+                                        <span class="fw-medium">Contact</span>
+                                    </div>
+                                    <p class="text-muted mb-0">(032) 123-4567</p>
+                                </div>
+                            </div>
 
-                                <span class="text-danger">({{ $product->product_votes }})</span>
-                            </span>
+                            <div class="mt-4">
+                                <a href="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d413.07098686836446!2d123.970567480301!3d9.949291019306209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwNTYnNTcuMCJOIDEyM8KwNTgnMTMuOCJF!5e0!3m2!1sen!2sph!4v1681485598511!5m2!1sen!2sph"
+                                    target="_blank" class="btn btn-primary">
+                                    <i class="fa-classic fa-solid fa-directions me-2"></i>Get Directions
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                @endforeach
-            </div>
-            @if ($popularityDeals->count() === 0)
-            <p class="text-center">
-                <i class="fa-regular fa-xmark-to-slot" style="font-size: 50px;"></i>
-                <br>
-                No Popular Products Yet.
-            </p>
-            @endif
-            <div class="text-center mt-3">
-                @if (auth()->check())
-                <a wire:navigate href="/products" class="btn btn-info">See more...</a>
-                @else
-                <a wire:navigate href="/view-products" class="btn btn-info">See more...</a>
-                @endif
-            </div>
-        </div>
-    </div>
-    <h3 class="text-center bg-dark mt-3 p-3"><i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i>
-        LATEST
-        PRODUCTS <i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i></h3>
 
-    <div class="container mt-3">
-        <div class="card p-3 bg-transparent">
-            <div class="grid">
-                @foreach ($latestProducts as $product)
-                <div class="grid-item col-md-3 col-sm-4 col-6">
-                    <div class="card shadow product show" id="product-card" style="min-width: 50px;">
-                        <div style="position: relative;">
-
-                            <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                                wire:click="view({{ $product->id }})">
-                                <div class="image-container">
-                                    @if (Storage::exists($product->product_image))
-                                    <img class="card-img-top" src="{{ Storage::url($product->product_image) }}"
-                                        alt="{{ $product->product_name }}">
-                                    @else
-                                    <img class="card-img-top" src="{{ $product->product_image }}"
-                                        alt="{{ $product->product_name }}">
-                                    @endif
-                                </div>
-                            </a>
-                            @auth
-                            <button type="button"
-                                title="@if ($product->favorites->contains('user_id', auth()->user()->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute bottom-0 start-0"
-                                wire:click="addToFavorite({{ $product->id }})">
-                                <h2 class="text-danger"><i
-                                        class="{{ $product->favorites->contains('user_id', auth()->user()->id) ? 'fas' : 'far' }} fa-heart"></i>
-                                </h2>
-                            </button>
-                            @endauth
-                            <div class="pt-1 pr-2" style="position: absolute; top:0; left: 0;">
-                                <span class="px-2 pt-1 pb-1 rounded latest-bg">
-                                    <i class="fa-solid fa-megaphone fa-beat-fade latest-icon text-sm"></i>
-                                    <span class="latest text-sm"><strong>Latest</strong></span>
-                                </span>
-                            </div>
-
-                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                            <div style="position: absolute; top: 0; right: 0; margin-top: 2px;">
-                                <span class="flag-discount">{{ $product->discount }}</span>
-                            </div>
-                            @endif
-
-                        </div>
-                        <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                            wire:click="view({{ $product->id }})">
-                            <div class="card-footer text-center mb-3 mt-auto">
-                                <h6 class="d-inline-block text-secondary medium font-weight-medium mb-1">
-                                    {{ $product->product_category->category_name }}</h6>
-                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
-                                    style="max-width: 150px;" title="{{ $product->product_name }}">
-                                    {{ $product->product_name }}
-                                </h5>
-                                <div class="d-block font-size-1">
-                                    <span class="font-weight-medium">₱{{
-                                        number_format($product->product_price, 2, '.', ',') }}</span>
-                                     @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                                     <span class="text-muted text-decoration-line-through text-danger">(₱{{
-                                         number_format($product->product_old_price, 2, '.', ',') }})</span>
-                                     @endif
-                                </div>
-                            </div>
-
-                        </a>
-                        <div class="d-flex text-sm sm-text-xs mb-2">
-                            <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
-
-                                {{ $product->product_sold }}
-                            </strong>
-                            <span class="font-weight-medium pr-2" style="position: absolute; bottom:0; right: 0;">
-                                <i class="fa-solid fa-star"></i>
-                                <strong>
-                                    {{ $product->product_rating }}/5
-                                </strong>
-
-                                <span class="text-danger">({{ $product->product_votes }})</span>
-                            </span>
-                        </div>
+                <div class="col-lg-6">
+                    <div class="map-container rounded-3 overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d413.07098686836446!2d123.970567480301!3d9.949291019306209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwNTYnNTcuMCJOIDEyM8KwNTgnMTMuOCJF!5e0!3m2!1sen!2sph!4v1681485598511!5m2!1sen!2sph"
+                            width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100">
+                        </iframe>
                     </div>
                 </div>
-                @endforeach
-            </div>
-            @if ($latestProducts->count() === 0)
-            <p class="text-center">
-                <i class="fa-regular fa-xmark-to-slot" style="font-size: 50px;"></i>
-                <br>
-                No Latest Products Yet.
-            </p>
-            @endif
-            <div class="text-center mt-3">
-                @if (auth()->check())
-                <a wire:navigate href="/products" class="btn btn-info">See more...</a>
-                @else
-                <a wire:navigate href="/view-products" class="btn btn-info">See more...</a>
-                @endif
             </div>
         </div>
-    </div>
+    </section>
 
-    <h3 class="text-center bg-dark mt-3 p-3"><i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i>
-        LOCATION <i class="fa-sharp fa-regular fa-arrow-down fa-bounce"></i></h3>
-    <h4 class="text-center mt-4"><span class="location-text pb-2"><i class="fa-solid fa-location-dot fa-shake fa-xl"
-                style="color: #ad0000;"></i> AJM Restaurant is
-            located @Tinangnan, Tubigon,
-            Bohol <i class="fa-solid fa-location-dot fa-shake fa-xl" style="color: #ad0000;"></i></span></h4>
-    <div class="container d-flex justify-content-center mt-5 mb-3">
-        <iframe class="elevation-3 rounded"
-            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d413.07098686836446!2d123.970567480301!3d9.949291019306209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwNTYnNTcuMCJOIDEyM8KwNTgnMTMuOCJF!5e0!3m2!1sen!2sph!4v1681485598511!5m2!1sen!2sph"
-            width="700" height="350" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-            tabindex="0"></iframe>
-    </div>
+    <style>
+        #homeCarousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
 
+        .carousel-image {
+            min-height: 600px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .carousel-caption {
+            z-index: 10;
+            padding: 0;
+            max-width: 1200px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%;
+            margin-top: -30px;
+        }
+
+        .carousel-title {
+            font-size: 2.5rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 60px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+        .carousel-indicators {
+            margin-bottom: 2rem;
+            z-index: 10;
+        }
+
+        .carousel-indicators button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 6px;
+            border: 2px solid white;
+            background-color: transparent;
+        }
+
+        .carousel-indicators button.active {
+            background-color: white;
+        }
+
+        .backdrop-blur {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .btn-outline-light {
+            border-width: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.4) !important;
+        }
+
+        @media (max-width: 992px) {
+            .carousel-title {
+                font-size: 2rem;
+            }
+
+            .carousel-image {
+                min-height: 500px;
+            }
+
+            .carousel-caption {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-title {
+                font-size: 1.6rem;
+            }
+
+            .carousel-image {
+                min-height: 400px;
+            }
+
+            .carousel-caption {
+                top: 45%;
+            }
+
+            .btn-lg {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .carousel-indicators {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .carousel-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .carousel-image {
+                min-height: 350px;
+            }
+
+            .d-flex.flex-wrap {
+                flex-direction: column;
+                gap: 10px !important;
+            }
+
+            .d-flex.flex-wrap .btn {
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+
+        .carousel-item {
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .carousel-overlay {
+            pointer-events: none;
+        }
+
+        .fa-quote-left {
+            opacity: 0.7;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 0.7;
+                transform: translateY(0);
+            }
+        }
+
+        .bg-opacity-20 {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header .line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #dee2e6, transparent);
+        }
+
+        .bg-gradient {
+            background: linear-gradient(90deg, transparent, #6c757d, transparent);
+        }
+
+        .product-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .product-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            height: 350px;
+        }
+
+        .animate__animated {
+            animation-duration: 1s;
+        }
+
+        .animate__delay-1s {
+            animation-delay: 0.5s;
+        }
+
+        .backdrop-blur {
+            backdrop-filter: blur(10px);
+        }
+
+        .bg-opacity-25 {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        @media (max-width: 768px) {
+            .carousel-caption h1 {
+                font-size: 1.8rem;
+            }
+
+            .carousel-image-wrapper img {
+                height: 70vh;
+            }
+
+            .section-header .line {
+                display: none;
+            }
+        }
+    </style>
 
     <script>
-        $(function() {
-            $('[data-bs-toggle="tooltip"]').tooltip()
-        })
-
-    </script>
-
-    @if(session('already_login'))
-    <script>
-        const {
-            title
-            , type
-            , message
-        } = @json(session('already_login'));
-
-        Swal.fire({
-            title: title
-            , icon: type
-            , text: message
-            , confirmButtonText: 'Ok'
-            , showCloseButton: true
+        document.addEventListener('livewire:navigated', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
-    </script>
-    @endif
-
-    <script>
         document.addEventListener('livewire:navigated', () => {
             Livewire.on('toastr', (event) => {
                 const {
-                    type
-                    , message
+                    type,
+                    message
                 } = event.data;
-
                 toastr[type](message, '', {
-                    closeButton: true
-                    , "progressBar": true
-                , })
-            })
+                    closeButton: true,
+                    progressBar: true,
+                });
+            });
+
             Livewire.on('closeModal', () => {
-
                 $('#addToCart').modal('hide');
-            })
-        })
+            });
+        });
 
+        @if (session('already_login'))
+            const {
+                title,
+                type,
+                message
+            } = @json(session('already_login'));
+            Swal.fire({
+                title: title,
+                icon: type,
+                text: message,
+                confirmButtonText: 'Ok',
+                showCloseButton: true,
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                }
+            });
+        @endif
     </script>
-
 </div>

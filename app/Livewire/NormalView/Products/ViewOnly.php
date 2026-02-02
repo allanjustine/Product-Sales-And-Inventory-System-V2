@@ -25,6 +25,9 @@ class ViewOnly extends Component
     public $allDisplayProducts;
     public $defaultPage = 20;
     public $loadMorePlus = 20;
+    public $minPrice = 0;
+    public $maxPrice = 0;
+    public $inStockOnly = false;
 
     use WithPagination;
 
@@ -33,7 +36,8 @@ class ViewOnly extends Component
         $this->defaultPage += $this->loadMorePlus;
     }
 
-    public function updatedSearch($value) {
+    public function updatedSearch($value)
+    {
         $this->dispatch('searchData', search: $value);
     }
 
@@ -46,13 +50,21 @@ class ViewOnly extends Component
     {
         $query = Product::with('product_category')->search($this->search);
 
+        $sorted_by = request('sorted_by', '');
+
         if ($this->category_name != 'All') {
             $query->whereHas('product_category', function ($q) {
                 $q->where('category_name', $this->category_name);
             });
         }
 
-        if ($this->sort === 'low_to_high') {
+        if ($sorted_by === 'top_selling') {
+            $query->orderBy('product_sold', 'desc');
+        } else if ($sorted_by === 'latest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sorted_by === 'popularity') {
+            $query->orderBy('product_votes', 'desc');
+        } elseif ($this->sort === 'low_to_high') {
             $query->orderBy('product_price', 'asc');
         } else {
             $query->orderBy('product_price', 'desc');
@@ -74,8 +86,17 @@ class ViewOnly extends Component
             }
         }
 
+        if ($this->maxPrice && $this->minPrice) {
+            $query->whereBetween('product_price', [$this->minPrice, $this->maxPrice]);
+        }
 
-        $products = $query->paginate($this->defaultPage);
+        $products = $query->when(
+            $this->inStockOnly,
+            fn($q)
+            =>
+            $q->where('product_stock', '>', 0)
+        )
+            ->paginate($this->defaultPage);
 
         return compact('products');
     }
@@ -98,6 +119,9 @@ class ViewOnly extends Component
         $this->category_name = 'All';
         $this->sort = 'low_to_high';
         $this->product_rating = 'All';
+        $this->minPrice = 0;
+        $this->maxPrice = 0;
+        $this->inStockOnly = false;
         $this->resetPage();
     }
 

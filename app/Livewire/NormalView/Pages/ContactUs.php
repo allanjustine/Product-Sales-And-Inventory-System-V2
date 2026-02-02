@@ -19,7 +19,7 @@ class ContactUs extends Component
         $this->validate([
             'name'          =>          ['required', 'string', 'max:255'],
             'email'         =>          ['required', 'email', 'max:255'],
-            'message'       =>          ['required', 'string', 'max:65535']
+            'message'       =>          ['required', 'string', 'max:1000']
         ]);
 
         Contact::create([

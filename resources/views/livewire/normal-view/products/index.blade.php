@@ -1,509 +1,683 @@
-<div style="overflow-x: hidden;">
-    @include('livewire.normal-view.products.view')
-    @include('livewire.normal-view.carts.add-to-cart')
-    @include('livewire.normal-view.carts.delete')
-    @include('livewire.normal-view.orders.check-out')
-    @include('livewire.normal-view.orders.buy-now')
-    <div class="col-md-5 col-sm-6 offset-md-4 offset-sm-3 mt-4">
-        <div class="dropdown" id="mainDropdown">
-            <div x-data="{ open: false }">
-                <input type="search" class="form-control" id="searchInput" placeholder="Search" x-on:input="open = true"
-                    wire:model.live.debounce.500ms="search" style="border-radius: 30px; height: 50px;">
-                <div id="searchDropdown" class="dropdown-menu w-100"
-                    @if (count($searchLogs) !== 0) :class="{ 'show': open }" @click.outside="open = false" x-cloak x-transition @else
-                    style="display: none !important" @endif
-                    aria-bs-labelledby="searchInput">
-                    @foreach ($searchLogs as $log)
-                        <div class="d-flex align-items-center" key={{ $log->id }}>
-                            <button type="button" @click="open = false" id="searchLogButton"
-                                class="dropdown-item p-3 flex-grow-1 text-truncate" type="button"
-                                wire:click="searchLog({{ $log->id }})">
-                                {{ $log->log_entry }}
-                            </button>
-                            <button type="button" wire:loading.attr='disabled' wire:target='searchDelete'
-                                class="mr-2" id="removeSearchLogButton"
-                                style="background-color: transparent; border: none;"
-                                wire:click="searchDelete({{ $log->id }})">
-                                <i class="fa-regular fa-times"></i>
-                            </button>
-                        </div>
-                    @endforeach
-                    <div>
-                        <a href="#" class="float-end px-3" id="clearAllSearchLogsButton"
-                            wire:click="clearAllLogs({{ auth()?->user()?->id }})">Clear
-                            all</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row d-flex justify-content-center mt-5 pb-3">
-        {{-- <div class="col-md-1 col-sm-1 col-3 text-center">
-            <label>Show</label>
-            <select wire:model.live.debounce.200ms="perPage" class="perPageSelect form-select" id="select-cat">
-                <option>15</option>
-                <option>20</option>
-                <option>25</option>
-                <option>35</option>
-                <option>45</option>
-                <option>50</option>
-                <option>100</option>
-            </select>
-        </div> --}}
-        <div class="col-md-2 col-sm-3 col-6 text-center">
-            <label for="category">Categories</label>
-            <select name="category" id="select-cat" class="form-select" wire:model.live.debounce.200ms="category_name">
-                <option value="All">All</option>
-                @foreach ($product_categories as $category)
-                    <option value="{{ $category->category_name }}">{{ $category->category_name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-2 col-sm-3 col-6 text-center">
-            <label for="sort">Ratings</label>
-            <select wire:model.live.debounce.200ms="product_rating" class="form-select" id="select-cat">
-                <option value="All">All</option>
-                <option value="1">1
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= 1)
-                            &#9733;
-                        @else
-                            &#9734;
-                        @endif
-                    @endfor
-                </option>
-                <option value="2">2
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= 2)
-                            &#9733;
-                        @else
-                            &#9734;
-                        @endif
-                    @endfor
-                </option>
-                <option value="3">3
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= 3)
-                            &#9733;
-                        @else
-                            &#9734;
-                        @endif
-                    @endfor
-                </option>
-                <option value="4">4
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= 4)
-                            &#9733;
-                        @else
-                            &#9734;
-                        @endif
-                    @endfor
-                </option>
-                <option value="5">5
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= 5)
-                            &#9733;
-                        @else
-                            &#9734;
-                        @endif
-                    @endfor
-                </option>
-            </select>
-        </div>
-        <div class="col-md-2 col-sm-4 col-6 text-center">
-            <label for="sort">Sort By</label>
-            <select wire:model.live.debounce.200ms="sort" class="form-select" id="select-cat">
-                <option value="low_to_high">Price: Low to High</option>
-                <option value="high_to_low">Price: High to Low</option>
-            </select>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 text-center">
-            <label for="Clear Filters">Clear Filters</label>
-            <button style="height: 40px;" type="button" wire:loading.attr='disabled' wire:target='clearFilters'
-                wire:click="clearFilters" class="btn btn-secondary form-control">
-                <span wire:target='clearFilters' wire:loading.remove=><i class="fa-solid fa-broom-wide"></i> Clear
-                    Filters</span>
-                <span wire:target='clearFilters' wire:loading><span class="spinner-border spinner-border-sm"></span>
-                    Clearing...</span>
-            </button>
-        </div>
-    </div>
-    @role('user')
-        <div class="position-fixed d-none d-sm-block" style="right: 0; margin-top: -180px; z-index: 1;" id="cartIcon">
-            <div class="position-relative d-flex justify-content-end mr-5" id="main-cart" x-data="{ open: false }">
-                <button type="button" class="btn btn-link p-2 cartdropdown position-relative" id="cart-dropdown"
-                    @click="open = !open">
-                    <i class="fa-regular fa-cart-shopping pt-3"></i>
-                    @if ($carts->count() > 0)
-                        <span class="badge badge-pill badge-danger" id="badge-cart">
-                            <span style="font-size: 12px;">{{ $carts->count() }}</span>
-                        </span>
-                    @endif
-                </button>
+<div>
+    <div style="overflow-x: hidden;">
+        @include('livewire.normal-view.products.view')
+        @include('livewire.normal-view.carts.add-to-cart')
+        @include('livewire.normal-view.carts.delete')
+        @include('livewire.normal-view.orders.check-out')
+        @include('livewire.normal-view.orders.buy-now')
 
-                <ul id="myDiv" class="bg-white border shadow-sm position-absolute" style="list-style: none;" x-cloak
-                    x-show="open" @click.outside="open = false">
-                    <h4 class="sticky-top bg-white py-3"><strong><i class="fa-regular fa-cart-shopping"></i> My Cart
-                            @if ($carts->count() > 0)
-                                ({{ $carts->count() }})
-                            @endif
-                        </strong></h4>
-                    <hr>
-                    @foreach ($carts as $item)
-                        <li class="cart-item px-3 py-2 mr-2 position-relative" key="{{ $item->id }}">
-                            <span style="position: absolute; top: 5px; right: 10px; font-size: 10px;" class="fw-bold">Stock:
-                                ({{ $item->product->product_stock }} pcs)
-                            </span>
-                            <div class="cart-item-image d-flex gap-1 align-items-center">
-                                <input type="checkbox" wire:model.live='cart_ids' value="{{ $item->id }}"
-                                    @if ($item->product->product_status === 'Not Available') disabled @endif />
-                                <button class="btn btn-link text-primary" id="decrease-quantity" type="button"
-                                    @if ($item->quantity === 1) onclick="toDelete({{ $item->id }})" @else wire:click='decreaseQuantity({{ $item->id }})' @endif>
-                                    <i class="fas fa-minus text-black"></i>
+        <!-- Main Layout -->
+        <div class="container-fluid py-4">
+            <div class="row">
+                <!-- Left Sidebar Filters -->
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <div class="card border-0 shadow-sm sticky-top" style="top: 20px;">
+                        <div class="card-body">
+                            <!-- Header -->
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h5 class="fw-bold mb-0"><i class="fas fa-filter me-2"></i>Filters</h5>
+                                <button type="button" wire:loading.attr='disabled' wire:target='clearFilters'
+                                    wire:click="clearFilters" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-broom me-1"></i>Clear All
                                 </button>
-                                x{{ number_format($item->quantity) }}
-                                <button type="button" class="btn btn-link text-primary"
-                                    wire:click="increaseQuantity({{ $item->id }})">
-                                    <i class="fas fa-plus text-black"></i>
-                                </button>
-                                <div class="position-relative">
-                                    @if (Storage::exists($item->product->product_image))
-                                        <img style="width: 70px; height: 70px; border-radius: 10%;"
-                                            src="{{ Storage::url($item->product->product_image) }}" alt="">
-                                    @else
-                                        <img style="width: 70px; height: 70px; border-radius: 10%;"
-                                            src="{{ url($item->product->product_image) }}" alt="">
-                                    @endif
+                            </div>
 
-                                    @if ($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
-                                        <div style="position: absolute; top: 0; right: 0;">
-                                            <span class="flag-discount">{{ $item->product->discount }}</span>
+                            <!-- Search Box -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Search Products</label>
+                                <div x-data="{ open: false }" class="position-relative">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0">
+                                            <i class="fas fa-search text-muted"></i>
+                                        </span>
+                                        <input type="search" class="form-control border-start-0 ps-0"
+                                            placeholder="Search products..." x-on:input="open = true"
+                                            wire:model.live.debounce.500ms="search">
+                                    </div>
+
+                                    <!-- Search Dropdown -->
+                                    @if (count($searchLogs) > 0)
+                                        <div class="dropdown-menu w-100 mt-1 shadow" x-show="open" x-cloak
+                                            @click.outside="open = false" x-transition>
+                                            <div class="dropdown-header small text-muted px-3 py-2">
+                                                Recent Searches
+                                            </div>
+                                            @foreach ($searchLogs as $log)
+                                                <div class="d-flex align-items-center border-bottom">
+                                                    <button type="button" @click="open = false"
+                                                        class="dropdown-item text-truncate py-2 flex-grow-1"
+                                                        wire:click="searchLog({{ $log->id }})">
+                                                        <i class="fas fa-history text-muted me-2"></i>
+                                                        {{ $log->log_entry }}
+                                                    </button>
+                                                    <button type="button" wire:loading.attr='disabled'
+                                                        wire:target='searchDelete' class="btn btn-link text-danger px-2"
+                                                        wire:click="searchDelete({{ $log->id }})">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            @endforeach
+                                            <div class="dropdown-divider"></div>
+                                            <div class="px-3 py-2">
+                                                <a href="#" class="text-danger small"
+                                                    wire:click="clearAllLogs({{ auth()?->user()?->id }})">
+                                                    <i class="fas fa-trash-alt me-1"></i>Clear all history
+                                                </a>
+                                            </div>
                                         </div>
                                     @endif
                                 </div>
-                                &nbsp;&nbsp;<div class="text-truncate" style="max-width: 170px;"><strong
-                                        class="text-capitalize">{{ $item->product->product_name }}</strong></div>
                             </div>
-                            <div>
-                                <p @class([
-                                    'text-success' => $item->product->product_status === 'Available',
-                                    'text-danger' => $item->product->product_status === 'Not Available',
-                                    'text-sm',
-                                ])>
-                                    {{ $item->product->product_status }}
-                                </p>
+
+                            <!-- Category Filter -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Categories</label>
+                                <div class="list-group">
+                                    <a href="#"
+                                        class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === 'All' ? 'active' : '' }}"
+                                        wire:click="$set('category_name', 'All')">
+                                        <i class="fas fa-layer-group me-2"></i>All Categories
+                                        <span class="badge bg-secondary float-end">{{ $products->total() }}</span>
+                                    </a>
+                                    @foreach ($product_categories as $category)
+                                        <a href="#"
+                                            class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === $category->category_name ? 'active' : '' }}"
+                                            wire:click="$set('category_name', '{{ $category->category_name }}')">
+                                            <i class="fas fa-tag me-2"></i>{{ $category->category_name }}
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="cart-item-price mt-2">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="text-sm">
-                                        &#8369;{{ number_format($item->product->product_price, 2, '.', ',') }} @if ($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
-                                            <span
-                                                class="text-decoration-line-through text-muted">(&#8369;{{ number_format($item->product->product_old_price, 2, '.', ',') }})</span>
-                                        @endif
-                                    </div>
-                                    <div class="d-flex">
-                                        <button class="btn btn-link text-danger text-sm d-flex align-items-center"
-                                            data-bs-toggle="modal" data-bs-target="#remove"
-                                            wire:click="remove({{ $item->id }})">
-                                            <i class="fas fa-trash-alt"></i>&nbsp;<span>Delete</span>
-                                        </button>
+
+                            <!-- Price Range -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Price Range</label>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <small class="text-muted">Min</small>
+                                    <small class="text-muted">Max</small>
+                                </div>
+                                <div class="d-flex gap-2 align-items-center mb-3">
+                                    <input type="number" class="form-control form-control-sm" placeholder="Min"
+                                        wire:model.live.debounce.500ms="minPrice">
+                                    <span class="text-muted">-</span>
+                                    <input type="number" class="form-control form-control-sm" placeholder="Max"
+                                        wire:model.live.debounce.500ms="maxPrice">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" wire:model.live="hasDiscount"
+                                        id="hasDiscount">
+                                    <label class="form-check-label" for="hasDiscount">
+                                        <i class="fas fa-percentage text-danger me-1"></i>Show discounted items only
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Ratings Filter -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Customer Rating</label>
+                                <div class="rating-filter">
+                                    @foreach ([5, 4, 3, 2, 1] as $rating)
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="product_rating"
+                                                id="rating{{ $rating }}" wire:model.live="product_rating"
+                                                value="{{ $rating }}">
+                                            <label class="form-check-label" for="rating{{ $rating }}">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <i
+                                                        class="fas fa-star {{ $i <= $rating ? 'text-warning' : 'text-light' }}"></i>
+                                                @endfor
+                                                <span class="text-muted ms-2">& above</span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="product_rating"
+                                            id="ratingAll" wire:model.live="product_rating" value="All">
+                                        <label class="form-check-label" for="ratingAll">
+                                            <span class="text-muted">All Ratings</span>
+                                        </label>
                                     </div>
                                 </div>
-                                <br>
-                                <span><strong>Sub total:
-                                        &#8369;{{ number_format($item->product->product_price * $item->quantity, 2, '.', ',') }}</strong>
-                                    <span class="text-muted text-sm">(save
-                                        &#8369;{{ number_format($item->product->product_old_price * $item->quantity - $item->product->product_price * $item->quantity, 2, '.', ',') }})</span></span>
                             </div>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                    @endforeach
-                    <div class="sticky-bottom p-2 bg-white">
-                        <div class="d-flex flex-column gap-2">
-                            <li class="mr-5">
-                                @if ($carts->count() === 0)
-                                    <p class="text-center">
-                                        <i class="fa-regular fa-cart-xmark mt-5" style="font-size: 50px;"></i>
-                                    </p>
-                                    <p class="text-center mb-5 fs-5">Your cart is empty.</p>
-                                @endif
-                                @if ($total > 0)
-                                    <span class="px-3 py-2"><strong>Grand total:
-                                            &#8369;{{ number_format($total, 2, '.', ',') }}</strong></span>
-                                @endif
-                            </li>
 
+                            <!-- Sort Options -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Sort By</label>
+                                <select class="form-select" wire:model.live="sort">
+                                    <option value="low_to_high">Price: Low to High</option>
+                                    <option value="high_to_low">Price: High to Low</option>
+                                </select>
+                            </div>
 
-                            <div class="d-flex gap-2 align-items-center">
-                                @if (
-                                    $carts->filter(function ($item) {
-                                            return $item->product && $item->product->product_status === 'Available';
-                                        })->count() > 0)
-                                    <input type="checkbox" wire:click="handleSelectAll"
-                                        style="width: 30px; height: 30px;"
-                                        @if (count($this->cart_ids) ===
-                                                $carts->filter(function ($item) {
-                                                        return $item->product && $item->product->product_status === 'Available';
-                                                    })->count()) checked @endif>
+                            <!-- Price Range -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Price Range</label>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <small class="text-muted">Min</small>
+                                    <small class="text-muted">Max</small>
+                                </div>
+                                <div class="d-flex gap-2 align-items-center mb-3">
+                                    <input type="number" class="form-control form-control-sm" placeholder="Min"
+                                        wire:model.live.debounce.500ms="minPrice">
+                                    <span class="text-muted">-</span>
+                                    <input type="number" class="form-control form-control-sm" placeholder="Max"
+                                        wire:model.live.debounce.500ms="maxPrice">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" wire:model.live="hasDiscount"
+                                        id="hasDiscount">
+                                    <label class="form-check-label" for="hasDiscount">
+                                        <i class="fas fa-percentage text-danger me-1"></i>Show discounted items only
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Stock Status -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium mb-2">Stock Status</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" wire:model.live="inStockOnly"
+                                        id="inStockOnly">
+                                    <label class="form-check-label" for="inStockOnly">
+                                        <i class="fas fa-check-circle text-success me-1"></i>In stock only
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Quick Stats -->
+                            <div class="mt-4 pt-3 border-top">
+                                <div class="small text-muted">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Products Found:</span>
+                                        <span class="fw-medium">{{ $products->total() }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Active Filters:</span>
+                                        <span class="fw-medium text-primary">
+                                            @php
+                                                $activeFilters = 0;
+                                                if ($category_name !== 'All') {
+                                                    $activeFilters++;
+                                                }
+                                                if ($product_rating !== 'All') {
+                                                    $activeFilters++;
+                                                }
+                                                if ($search) {
+                                                    $activeFilters++;
+                                                }
+                                            @endphp
+                                            {{ $activeFilters }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="col-lg-9 col-md-8">
+                    <!-- Products Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="fw-bold mb-1">
+                                <i class="fas fa-box-open text-primary me-2"></i>Products
+                            </h2>
+                            <p class="text-muted mb-0">
+                                @if ($search)
+                                    Search results for "{{ $search }}"
+                                @elseif($category_name !== 'All')
+                                    {{ $category_name }} products
+                                @else
+                                    Browse all products
                                 @endif
-                                <button
-                                    @if (count($this->cart_ids) > 0) data-bs-toggle="modal" data-bs-target="#checkOut"  @else disabled @endif
-                                    class="btn btn-primary text-white p-2 justify-content-center text-sm w-100 d-flex align-items-center"
-                                    wire:loading.attr='disabled' wire:target='cart_ids'>
-                                    <i class="fas fa-check"></i>&nbsp;<span>Checkout @if (count($this->cart_ids) > 0)
-                                            ({{ count($this->cart_ids) }})
-                                        @endif
-                                    </span>
+                            </p>
+                        </div>
+                        <div class="d-none d-md-block">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary active">
+                                    <i class="fas fa-th-large"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="fas fa-list"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </ul>
-            </div>
-        </div>
-    @endrole
-    <div class="container">
-        <h3 class="mt-5"><i class="fa-light fa-box-open"></i> Products</h3>
-        @if ($products->count() === 0)
-            <h5 class="text-danger">No products found.</h5>
-        @elseif (!empty($search))
-            <h5 class="text-danger">{{ $products->count() }} products founded.</h5>
-        @else
-            <h5 class="text-danger">{{ $allDisplayProducts }} products.</h5>
-        @endif
-        <hr>
-        <div class="row">
-            @foreach ($products as $product)
-                <div class="col-md-3 mt-2 col-sm-4 col-6 p-1" key="{{ $product->id }}">
-                    <div class="card shadow product-card" style="min-width: 50px;">
-                        <div style="position: relative;">
-                            <a href="#" class="text-black" data-bs-toggle="modal"
-                                data-bs-target="#viewProduct" wire:click="view({{ $product->id }})">
-                                <div class="image-container">
-                                    @if (Storage::exists($product->product_image))
-                                        <img class="card-img-top" src="{{ Storage::url($product->product_image) }}"
-                                            alt="{{ $product->product_name }}">
-                                    @else
-                                        <img class="card-img-top" src="{{ url($product->product_image) }}"
-                                            alt="{{ $product->product_name }}">
-                                    @endif
-                                </div>
-                            </a>
-                            <button type="button"
-                                title="@if ($product->favorites->contains('user_id', auth()?->user()?->id)) {{ $product->favorites->count() }} people added this to favorites @else Add to favorites @endif"
-                                class="btn btn-link position-absolute top-0 start-0"
-                                wire:click="addToFavorite({{ $product->id }})">
-                                <h2 class="text-danger"><i
-                                        class="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'fas' : 'far' }} fa-heart"></i>
-                                </h2>
-                            </button>
 
-                            <div class="pt-2 pr-2"
-                                style="position: absolute; top: 0; right: 0; @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price) margin-top: 10px; @endif">
-                                @if ($product->product_stock >= 20)
-                                    <span
-                                        class="badge badge-success badge-pill">{{ number_format($product->product_stock) }}</span>
-                                @elseif ($product->product_stock)
-                                    <span
-                                        class="badge badge-warning badge-pill">{{ number_format($product->product_stock) }}</span>
-                                @else
-                                    <span class="badge badge-danger badge-pill">OUT OF STOCK</span>
-                                @endif
-                            </div>
-                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                                <div style="position: absolute; top: 0; right: 0;">
-                                    <span class="flag-discount">{{ $product->discount }}</span>
-                                </div>
-                            @endif
+                    <!-- Products Grid -->
+                    <div class="row g-3">
+                        @foreach ($products as $product)
+                            <div class="col-xl-3 col-lg-4 col-md-6">
+                                <div class="card product-card h-100 border-0 shadow-sm">
+                                    <!-- Product Image -->
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                            data-bs-target="#viewProduct" wire:click="view({{ $product->id }})">
+                                            <div class="product-image-container">
+                                                @if (Storage::exists($product->product_image))
+                                                    <img src="{{ Storage::url($product->product_image) }}"
+                                                        alt="{{ $product->product_name }}" class="product-image">
+                                                @else
+                                                    <img src="{{ url($product->product_image) }}"
+                                                        alt="{{ $product->product_name }}" class="product-image">
+                                                @endif
+                                            </div>
+                                        </a>
 
-                        </div>
+                                        <!-- Favorite Button -->
+                                        <button type="button" class="btn favorite-btn"
+                                            wire:click="addToFavorite({{ $product->id }})"
+                                            title="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'Remove from favorites' : 'Add to favorites' }}">
+                                            <i
+                                                class="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'fas' : 'far' }} fa-heart text-danger"></i>
+                                        </button>
 
-                        <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#viewProduct"
-                            wire:click="view({{ $product->id }})">
-                            <div class="card-footer text-center mb-3 mt-auto">
-                                <h6 class="d-inline-block text-secondary font-weight-medium mb-1 text-truncate"
-                                    style="max-width: 150px;"
-                                    title="{{ $product->product_category->category_name }}">
-                                    {{ $product->product_category->category_name }}</h6>
-                                <h5 class="mx-auto font-size-1 font-weight-normal text-capitalize text-truncate"
-                                    style="max-width: 150px;" title="{{ $product->product_name }}">
-                                    {{ $product->product_name }}
-                                </h5>
-                                <div class="d-block mb-2">
-                                    <span
-                                        class="font-weight-medium">₱{{ number_format($product->product_price, 2, '.', ',') }}</span>
-                                    @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
-                                        <span
-                                            class="text-muted text-decoration-line-through text-danger">(₱{{ number_format($product->product_old_price, 2, '.', ',') }})</span>
-                                    @endif
-                                </div>
-                                <div class="d-block font-size-1 mb-2">
-                                    <span class="font-weight-medium">
-                                        @if ($product->product_status === 'Available')
-                                            <td><span class="badge badge-success">AVAILABLE</span></td>
-                                        @else
-                                            <td><span class="badge badge-danger">NOT AVAILABLE</span></td>
+                                        <!-- Stock Badge -->
+                                        <div class="position-absolute top-0 end-0 m-2">
+                                            @if ($product->product_stock >= 20)
+                                                <span class="badge bg-success bg-opacity-90 text-white">
+                                                    <i class="fas fa-check-circle me-1"></i>In Stock
+                                                </span>
+                                            @elseif ($product->product_stock > 0)
+                                                <span class="badge bg-warning bg-opacity-90 text-dark">
+                                                    <i class="fas fa-exclamation-circle me-1"></i>Low Stock
+                                                </span>
+                                            @else
+                                                <span class="badge bg-danger bg-opacity-90 text-white">
+                                                    <i class="fas fa-times-circle me-1"></i>Out of Stock
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <!-- Discount Badge -->
+                                        @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
+                                            <div class="position-absolute top-0 start-0 m-2">
+                                                <span class="badge bg-danger bg-opacity-90 text-white">
+                                                    <i class="fas fa-percentage me-1"></i>{{ $product->discount }}
+                                                </span>
+                                            </div>
                                         @endif
-                                    </span>
-                                </div>
-                                @role('user')
-                                    <a class="btn btn-warning mt-1 form-control" data-bs-toggle="modal"
-                                        data-bs-target="#addToCart" wire:click="addToCart({{ $product->id }})"><i
-                                            class="fa-solid fa-cart-plus"></i>
-                                        Add to Cart</a>
+                                    </div>
 
-                                    <a class="btn btn-primary mt-1 form-control btn-block" data-bs-toggle="modal"
-                                        data-bs-target="#toBuyNow" wire:click="toBuyNow({{ $product->id }})"><i
-                                            class="fa-solid fa-cart-shopping"></i> Buy Now</a>
-                                @endrole
-                                @role('admin')
-                                    <a wire:navigate href="/admin/products"
-                                        class="btn btn-primary mt-1 form-control btn-block"><i
-                                            class="fa-light fa-pen-to-square"></i> Update</a>
-                                @endrole
+                                    <!-- Product Info -->
+                                    <div class="card-body">
+                                        <!-- Category -->
+                                        <div class="mb-2">
+                                            <small class="text-muted text-uppercase">
+                                                <i
+                                                    class="fas fa-tag me-1"></i>{{ $product->product_category->category_name }}
+                                            </small>
+                                        </div>
 
-                                <div class="d-flex text-sm sm-text-xs mb-2">
-                                    <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">Sold:
+                                        <!-- Product Name -->
+                                        <a href="#" class="text-decoration-none text-dark"
+                                            data-bs-toggle="modal" data-bs-target="#viewProduct"
+                                            wire:click="view({{ $product->id }})">
+                                            <h6 class="card-title fw-bold text-truncate mb-2">
+                                                {{ $product->product_name }}
+                                            </h6>
+                                        </a>
 
-                                        {{ $product->product_sold }}
-                                    </strong>
-                                    {{-- <strong class="pl-2" style="position: absolute; bottom:0; left: 0;">
-                                    Sold:
-                                    @if ($product->product_sold >= 1000)
-                                    {{ number_format($product->product_sold / 1000, 1) }}k
-                                    @else
-                                    {{ $product->product_sold }}
-                                    @endif
-                                </strong> --}}
-                                    <span class="font-weight-medium pr-2"
-                                        style="position: absolute; bottom:0; right: 0;">
-                                        <i class="fa-solid fa-star"></i>
-                                        <strong>
-                                            {{ $product->product_rating }}/5
-                                        </strong>
-                                        <span class="text-danger">({{ $product->product_votes }})</span>
-                                    </span>
+                                        <!-- Rating -->
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="rating-stars me-2">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <i
+                                                        class="fas fa-star {{ $i <= $product->product_rating ? 'text-warning' : 'text-light' }}"></i>
+                                                @endfor
+                                            </div>
+                                            <small class="text-muted">({{ $product->product_votes }})</small>
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="mb-3">
+                                            <span class="h5 fw-bold text-primary">
+                                                ₱{{ number_format($product->product_price, 2) }}
+                                            </span>
+                                            @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
+                                                <small class="text-decoration-line-through text-muted ms-2">
+                                                    ₱{{ number_format($product->product_old_price, 2) }}
+                                                </small>
+                                            @endif
+                                        </div>
+
+                                        <!-- Status Badge -->
+                                        <div class="mb-3">
+                                            @if ($product->product_status === 'Available')
+                                                <span class="badge bg-success bg-opacity-10 text-success">
+                                                    <i class="fas fa-check-circle me-1"></i>Available
+                                                </span>
+                                            @else
+                                                <span class="badge bg-danger bg-opacity-10 text-danger">
+                                                    <i class="fas fa-times-circle me-1"></i>Not Available
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <!-- Action Buttons -->
+                                        @role('user')
+                                            <div class="d-grid gap-2">
+                                                @if ($product->product_status === 'Available')
+                                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#addToCart"
+                                                        wire:click="addToCart({{ $product->id }})">
+                                                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                                                    </button>
+                                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#toBuyNow"
+                                                        wire:click="toBuyNow({{ $product->id }})">
+                                                        <i class="fas fa-bolt me-2"></i>Buy Now
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-secondary" disabled>
+                                                        <i class="fas fa-clock me-2"></i>Out of Stock
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        @endrole
+
+                                        @role('admin')
+                                            <div class="d-grid">
+                                                <a wire:navigate href="/admin/products" class="btn btn-outline-primary">
+                                                    <i class="fas fa-edit me-2"></i>Update Product
+                                                </a>
+                                            </div>
+                                        @endrole
+                                    </div>
+
+                                    <!-- Footer Stats -->
+                                    <div class="card-footer bg-transparent border-top">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="fas fa-shopping-bag me-1"></i>
+                                                {{ $product->product_sold }} sold
+                                            </small>
+                                            <small class="text-muted">
+                                                <i class="fas fa-box me-1"></i>
+                                                {{ $product->product_stock }} in stock
+                                            </small>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </a>
+                        @endforeach
                     </div>
+
+                    <!-- Empty States -->
+                    @if (!empty($search) && $products->count() === 0)
+                        <div class="text-center py-5">
+                            <div class="mb-4">
+                                <i class="fas fa-search text-muted" style="font-size: 4rem;"></i>
+                            </div>
+                            <h4 class="fw-bold text-muted mb-3">No products found for "{{ $search }}"</h4>
+                            <p class="text-muted mb-4">Try adjusting your search or filters</p>
+                            <button wire:click="clearFilters" class="btn btn-primary">
+                                <i class="fas fa-filter me-2"></i>Clear Filters
+                            </button>
+                        </div>
+                    @elseif($products->count() === 0)
+                        <div class="text-center py-5">
+                            <div class="mb-4">
+                                <i class="fas fa-box-open text-muted" style="font-size: 4rem;"></i>
+                            </div>
+                            <h4 class="fw-bold text-muted mb-3">No products available</h4>
+                            <p class="text-muted mb-4">Check back soon for new arrivals</p>
+                        </div>
+                    @endif
+
+                    <!-- Load More -->
+                    @if ($products->count() < $products->total())
+                        <div class="text-center mt-5">
+                            <div id="sentinel" wire:loading.remove wire:target='loadMorePage'></div>
+                            <button wire:loading wire:target='loadMorePage' class="btn btn-outline-primary px-5"
+                                disabled>
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                Loading...
+                            </button>
+                            <button wire:loading.remove wire:target='loadMorePage' wire:click="loadMorePage"
+                                class="btn btn-primary px-5">
+                                <i class="fas fa-arrow-down me-2"></i>Load More Products
+                            </button>
+                        </div>
+                    @endif
                 </div>
-            @endforeach
-            @if (!empty($search) && $products->count() === 0)
-                <span class="text-center">
-                    <i class="fa-regular fa-face-thinking mb-3 mt-5" style="font-size: 100px;"></i>
-                    <h4 class="text-break">"{{ $search }}" product not found.</h4>
-                </span>
-            @elseif($products->count() === 0)
-                <span class="text-center">
-                    <i class="fa-regular fa-xmark-to-slot mb-3 mt-5" style="font-size: 100px;"></i>
-                    <h4>No products found comeback soon.</h4>
-                </span>
-            @endif
-        </div>
-    </div>
-    {{-- <div class="d-flex align-items-center overflow-auto">
-        <span class="mx-auto pt-3" id="paginate">
-            {{ $products->links('pagination::bootstrap-4') }}</span>
-    </div> --}}
-    {{-- <div class="d-flex mb-2 align-items-center overflow-auto">
-        <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
-            $search ? 'hidden' : '' }} id="paginate">
-            <span wire:loading class="spinner-border"></span><span wire:loading.remove>Load more...</span></a>
-    </div> --}}
-
-    <div class="d-flex mb-2 align-items-center overflow-auto">
-        @if ($products->count() < $products->total())
-            <div class="mx-auto" id="sentinel" wire:loading.remove wire:target='loadMorePage'>
             </div>
-        @endif
-        <button wire:loading type="button" wire:target='loadMorePage' class="btn btn-link mx-auto"
-            wire:click='loadMorePage' id="loadMoreData">
-            <span class="spinner-border"></span>
-        </button>
-        {{-- <a wire:click="loadMorePage" class="mx-auto btn btn-link" {{ $products->count() >= $allDisplayProducts ||
-        $search
-        ?
-        'hidden' : '' }} id="paginate">
-        <span wire:loading.remove>Load more...</span>
-        <span wire:loading class="spinner-border"></span>
-    </a> --}}
+        </div>
+
+        @include('partials.cart-dropdown')
     </div>
 
+    <!-- Custom CSS -->
     <style>
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Layout */
+        .container-fluid {
+            max-width: 1400px;
+        }
+
+        /* Filter Sidebar */
+        .sticky-top {
+            z-index: 1;
+        }
+
+        .list-group-item.active {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        /* Product Cards */
+        .product-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .product-image-container {
+            height: 200px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+
+        .product-image {
             width: 100%;
             height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 9999;
+            justify-content: center;
+            border: none;
+            transition: all 0.3s ease;
+            z-index: 1;
         }
 
-        .loading-message {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
+        .favorite-btn:hover {
+            background: white;
+            transform: scale(1.1);
         }
 
-        .dropdown-menu .dropdown-item:focus {
-            background-color: transparent !important;
-            color: black !important;
+        /* Rating Stars */
+        .rating-stars {
+            font-size: 0.9rem;
+        }
+
+        /* Price Styling */
+        .text-decoration-line-through {
+            text-decoration-thickness: 2px;
+        }
+
+        /* Form Elements */
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        /* Search Dropdown */
+        [x-cloak] {
+            display: none !important;
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.5em 0.8em;
+        }
+
+        .bg-opacity-90 {
+            opacity: 0.9;
+        }
+
+        /* Animation for infinite scroll */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .product-image-container {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-image-container {
+                height: 160px;
+            }
+
+            .sticky-top {
+                position: static;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-image-container {
+                height: 200px;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+        }
+
+        /* Filter labels */
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        /* Input group styling */
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
+
+        /* Rating filter stars */
+        .rating-filter .fa-star {
+            font-size: 0.9rem;
+        }
+
+        /* Active filter count */
+        .text-primary {
+            color: #0d6efd !important;
+        }
+
+        /* Button hover effects */
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        /* Loading state */
+        .spinner-border {
+            vertical-align: middle;
         }
     </style>
 
+    <!-- JavaScript -->
     <script>
-        let sentinelObserver = null;
-
+        // Intersection Observer for infinite scroll
         document.addEventListener('livewire:navigated', function() {
             const sentinel = document.getElementById('sentinel');
-            const button = document.getElementById('loadMoreData');
-            const count = @json($products->count());
-            const total = @json($products->total());
-            const canLoad = count < total;
-
             if (!sentinel) return;
 
-            if (sentinelObserver) {
-                sentinelObserver.disconnect();
-            }
-
-            sentinelObserver = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && canLoad) {
-                    button?.click();
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && @json($products->count() < $products->total())) {
+                    @this.call('loadMorePage');
                 }
+            }, {
+                rootMargin: '100px',
             });
 
-            sentinelObserver.observe(sentinel);
+            observer.observe(sentinel);
 
+            // Cleanup on page change
+            document.addEventListener('livewire:navigate', () => {
+                observer.disconnect();
+            });
         });
-    </script>
 
-    <script>
+        // Toastr notifications
         document.addEventListener('livewire:navigated', () => {
-
             Livewire.on('toastr', (event) => {
                 const {
                     type,
                     message
                 } = event.data;
-
                 toastr[type](message, '', {
                     closeButton: true,
-                    "progressBar": true,
+                    progressBar: true,
                 });
             });
+
             Livewire.on('closeModal', () => {
                 $('#addToCart').modal('hide');
             });
         });
-    </script>
 
-    <script>
+        // SweetAlert alerts
         document.addEventListener('livewire:navigated', () => {
             Livewire.on('alert', function(event) {
                 const {
@@ -511,14 +685,13 @@
                     type,
                     message
                 } = event.alerts;
-
                 Swal.fire({
                     icon: type,
                     title: title,
                     html: message,
                     showCloseButton: false,
                     showConfirmButton: false
-                })
+                });
             });
 
             Livewire.on('closeModal', function() {
@@ -526,71 +699,47 @@
                 $('#checkOut').modal('hide');
             });
         });
-    </script>
 
-
-    {{-- @if (session('message'))
-<script>
-    toastr.options = {
-                "progressBar": true,
-                "closeButton": true,
-            }
-            toastr.success("{{ session('message') }}");
-</script>
-@endif --}}
-
-    <script>
+        // Cart icon position on scroll
         document.addEventListener('livewire:navigated', function() {
             const cartIcon = document.getElementById('cartIcon');
+            if (!cartIcon) return;
 
-            if (window.pageYOffset > 85) {
-                cartIcon.style.marginTop = '-270px';
-                cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
-            } else {
-                cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
-                cartIcon.style.marginTop = '-180px';
-            }
-            document.addEventListener('scroll', () => {
+            const updateCartPosition = () => {
                 if (window.scrollY > 85) {
                     cartIcon.style.marginTop = '-270px';
-                    cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
                 } else {
-                    cartIcon.style.transition = 'margin-top 0.3s ease-in-out';
                     cartIcon.style.marginTop = '-180px';
                 }
+            };
+
+            updateCartPosition();
+            window.addEventListener('scroll', updateCartPosition);
+
+            // Cleanup
+            document.addEventListener('livewire:navigate', () => {
+                window.removeEventListener('scroll', updateCartPosition);
             });
         });
-    </script>
 
-    <script>
-        document.addEventListener('livewire:navigated', function() {
-            Livewire.on('closeModalCart', function() {
-                $('#checkOut').modal('hide');
-            });
-        });
-    </script>
-
-
-
-
-    <script>
-        const buttonDecrease = document.getElementById('decrease-quantity');
-
+        // Quantity decrease confirmation
         function toDelete(id) {
             Swal.fire({
-                icon: "info",
-                title: "To be remove",
-                text: "Are you sure you want to remove this item?",
+                icon: "warning",
+                title: "Remove Item",
+                text: "Are you sure you want to remove this item from your cart?",
                 showCancelButton: true,
-                confirmButtonText: "Yes",
-                cancelButtonText: "No"
+                confirmButtonText: "Yes, remove it",
+                cancelButtonText: "Cancel",
+                confirmButtonColor: "#dc3545",
+                cancelButtonColor: "#6c757d"
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.dispatch('decreaseQuantity', {
                         itemId: id
                     });
                 }
-            })
+            });
         }
     </script>
 

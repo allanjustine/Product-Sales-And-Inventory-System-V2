@@ -22,6 +22,9 @@ class Index extends Component
     public $itemRemove;
     public $order_payment_method;
     public $cart_ids = [];
+    public $select_all = false;
+    public $grand_total = 0;
+    public $total_save = 0;
 
     public function carts()
     {
@@ -29,6 +32,31 @@ class Index extends Component
             ->where('user_id', auth()->id())
             ->latest()
             ->get();
+
+        $cartSelected = Cart::whereIn('id', $this->cart_ids)
+            ->get();
+
+        $this->grand_total = (clone $cartSelected)->sum(function ($cart) {
+            return $cart->product->product_price * $cart->quantity;
+        });
+
+        $totals = (clone $cartSelected)->reduce(
+            function ($carry, $cart) {
+                $carry['totalOldPrice'] +=
+                    $cart->product->product_old_price === null
+                    ? 0
+                    : $cart->product->product_old_price * $cart->quantity;
+                $carry['totalPrice'] +=
+                    $cart->product->product_old_price === null
+                    ? 0
+                    : $cart->product->product_price * $cart->quantity;
+                return $carry;
+            },
+            ['totalOldPrice' => 0, 'totalPrice' => 0],
+        );
+
+        $this->total_save = $totals['totalOldPrice'] - $totals['totalPrice'];
+
         return compact('cartItems');
     }
 
@@ -73,19 +101,25 @@ class Index extends Component
                     'type'      =>      'success',
                     'message'   =>      'Quantity updated'
                 ]);
-                return;
             } else {
                 $cart->delete();
+
                 $this->dispatch('toastr', data: [
                     'type'      =>      'success',
                     'message'   =>      'Cart item deleted'
                 ]);
+
                 $this->dispatch('addTocartRefresh');
 
                 $this->reset();
-                return;
             }
         }
+
+        $this->cart_ids = [];
+
+        $this->select_all = false;
+
+        return;
     }
 
     public function checkOut($itemId)
@@ -115,6 +149,9 @@ class Index extends Component
         $this->dispatch('closeModal');
         $this->dispatch('addTocartRefresh');
         $this->reset();
+        $this->cart_ids = [];
+        $this->select_all = false;
+
         return;
     }
 
@@ -173,13 +210,26 @@ class Index extends Component
         });
     }
 
-    public function handleSelectAll()
+    private function availableCarts()
     {
-        $carts = Cart::where('user_id', Auth::id())->whereHas('product', fn($item) => $item->where('product_status', 'Available'));
+        return Cart::where('user_id', Auth::id())
+            ->whereHas(
+                'product',
+                fn($item)
+                =>
+                $item->where('product_status', 'Available')
+            );
+    }
 
-        $selectedAll = count($this->cart_ids) === $carts->count();
+    public function updatedSelectAll($value)
+    {
+        $value ? $this->cart_ids = $this->availableCarts()->pluck('id')->filter() : $this->cart_ids = [];
+    }
 
-        $selectedAll ? $this->cart_ids = [] : $this->cart_ids = $carts->pluck('id')->filter();
+    #[On('addTocartRefresh')]
+    public function updatedCartIds()
+    {
+        $this->select_all = count($this->cart_ids) === $this->availableCarts()->count();
     }
 
     public function mount()

@@ -53,6 +53,10 @@ class Index extends Component
     public $searchLogs = [];
     public $carts;
     public $cart_ids = [];
+    public $select_all = false;
+    public $inStockOnly = false;
+    public $maxPrice = 0;
+    public $minPrice = 0;
 
     use WithPagination;
 
@@ -70,12 +74,21 @@ class Index extends Component
     {
         $query = Product::with(['product_category', 'favorites'])->search($this->search);
 
+        $sorted_by = request('sorted_by', '');
+
         if ($this->category_name != 'All') {
             $query->whereHas('product_category', function ($q) {
                 $q->where('category_name', $this->category_name);
             });
         }
-        if ($this->sort === 'low_to_high') {
+
+        if ($sorted_by === 'top_selling') {
+            $query->orderBy('product_sold', 'desc');
+        } else if ($sorted_by === 'latest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sorted_by === 'popularity') {
+            $query->orderBy('product_votes', 'desc');
+        } elseif ($this->sort === 'low_to_high') {
             $query->orderBy('product_price', 'asc');
         } else {
             $query->orderBy('product_price', 'desc');
@@ -104,7 +117,18 @@ class Index extends Component
 
         $allDisplayProducts = Product::count();
 
-        $products = $query->latest()->paginate($this->loadMore);
+        if ($this->maxPrice && $this->minPrice) {
+            $query->whereBetween('product_price', [$this->minPrice, $this->maxPrice]);
+        }
+
+        $products = $query->when(
+            $this->inStockOnly,
+            fn($q)
+            =>
+            $q->where('product_stock', '>', 0)
+        )
+            ->latest()
+            ->paginate($this->loadMore);
 
         if ($this->search) {
             $searchLog = SearchLog::where('log_entry', $this->search)->first();
@@ -284,15 +308,21 @@ class Index extends Component
                 // alert()->toast('Updated cart quantity successfully', 'success');
                 // return $this->redirect('/products', navigate: true);
                 $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Quantity updated']);
-                return;
             } else {
+
                 $cart->delete();
 
                 $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Cart item deleted']);
+
                 $this->dispatch('addTocartRefresh');
-                return;
             }
         }
+
+        $this->cart_ids = [];
+
+        $this->select_all = false;
+
+        return;
     }
 
     public function remove($itemId)
@@ -309,9 +339,14 @@ class Index extends Component
         $product->delete();
 
         $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Removed from cart successfully']);
+
         $this->dispatch('addTocartRefresh');
 
-        return $this->redirect('/products', navigate: true);
+        $this->cart_ids = [];
+
+        $this->select_all = false;
+
+        return;
     }
 
 
@@ -348,7 +383,10 @@ class Index extends Component
 
     public function mount()
     {
-        $orderSummaries = OrderSummary::where('user_id', Auth::id())->pluck('cart_id')->filter();
+        $orderSummaries = OrderSummary::where('user_id', Auth::id())
+            ->pluck('cart_id')
+            ->filter()
+            ->toArray();
 
         $this->cart_ids = $orderSummaries;
     }
@@ -477,6 +515,9 @@ class Index extends Component
         $this->category_name = 'All';
         $this->sort = 'low_to_high';
         $this->product_rating = 'All';
+        $this->minPrice = 0;
+        $this->maxPrice = 0;
+        $this->inStockOnly = false;
         $this->resetPage();
     }
 
@@ -489,13 +530,26 @@ class Index extends Component
         $this->resetValidation();
     }
 
-    public function handleSelectAll()
+    private function availableCarts()
     {
-        $carts = Cart::where('user_id', Auth::id())->whereHas('product', fn($item) => $item->where('product_status', 'Available'));
+        return Cart::where('user_id', Auth::id())
+            ->whereHas(
+                'product',
+                fn($item)
+                =>
+                $item->where('product_status', 'Available')
+            );
+    }
 
-        $selectedAll = count($this->cart_ids) === $carts->count();
+    public function updatedSelectAll($value)
+    {
 
-        $selectedAll ? $this->cart_ids = [] : $this->cart_ids = $carts->pluck('id')->filter();
+        $value ? $this->cart_ids = $this->availableCarts()->pluck('id')->filter()->toArray() : $this->cart_ids = [];
+    }
+
+    public function updatedCartIds()
+    {
+        $this->select_all = count($this->cart_ids) === $this->availableCarts()->count();
     }
 
     public function render()
