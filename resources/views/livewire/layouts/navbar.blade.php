@@ -143,7 +143,7 @@
                                     </div>
                                     <div>
                                         <h6 class="fw-bold mb-0">{{ auth()->user()->name }}</h6>
-                                        <small class="text-muted">{{ auth()->user()->email }}</small>
+                                        <small class="text-white">{{ auth()->user()->email }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -253,8 +253,8 @@
                             <i class="fas fa-sign-out-alt fa-lg"></i>
                         </div>
                         <div>
-                            <h5 class="modal-title fw-bold" id="logoutModalLabel">Confirm Logout</h5>
-                            <p class="text-muted mb-0">Are you sure you want to sign out?</p>
+                            <h5 class="modal-title text-white fw-bold" id="logoutModalLabel">Confirm Logout</h5>
+                            <p class="text-white mb-0">Are you sure you want to sign out?</p>
                         </div>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
