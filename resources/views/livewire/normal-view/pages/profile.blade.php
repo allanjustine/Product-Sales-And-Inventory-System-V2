@@ -203,7 +203,7 @@
                                     </div>
                                 </div>
                                 <button type="button" id="save-btn"
-                                    class="btn btn-light btn-lg px-4 rounded-pill fw-semibold shadow-sm"
+                                    class="btn btn-light text-sm btn-lg px-4 rounded-pill fw-semibold shadow-sm"
                                     wire:click="updateProfile" wire:loading.attr="disabled">
                                     <span wire:loading wire:target="updateProfile">
                                         <span class="spinner-border spinner-border-sm me-2"></span>Saving...
@@ -357,7 +357,7 @@
                                         </div>
                                     </div>
                                     <button type="button" id="save-pass-btn"
-                                        class="btn btn-warning btn-lg px-4 rounded-pill text-white fw-semibold shadow-sm"
+                                        class="btn btn-warning text-sm btn-lg px-4 rounded-pill text-white fw-semibold shadow-sm"
                                         wire:click="changePassword" wire:loading.attr="disabled">
                                         <span wire:loading wire:target='changePassword'>
                                             <span class="spinner-border spinner-border-sm me-2"></span>Saving...

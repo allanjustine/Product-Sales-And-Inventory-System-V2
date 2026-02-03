@@ -188,19 +188,13 @@
                                                 </div>
                                             @endif
 
-                                            <div class="order-summary mt-4 p-3 bg-light rounded-3"
+                                            <div class="order-summary mt-4 p-3 bg-light rounded-3 d-flex flex-md-row flex-column align-items-center justify-content-md-between"
                                                 id="buyNowOrderSummary">
-                                                <div class="d-flex justify-content-between align-items-center mb-2"
+                                                <div class="d-flex flex-column align-items-center mb-2"
                                                     id="buyNowSummaryHeader">
                                                     <h6 class="fw-bold mb-0" id="buyNowSummaryTitle">
                                                         <i class="fas fa-receipt me-2 text-success"></i>Order Summary
                                                     </h6>
-                                                    <small class="text-muted" id="buyNowSummarySubtitle">Total
-                                                        Amount</small>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center"
-                                                    id="buyNowSummaryDetails">
                                                     <div id="buyNowSummaryLeft">
                                                         <div class="text-muted small" id="buyNowItemCount">
                                                             {{ $order_quantity }} item(s) ×
@@ -214,6 +208,12 @@
                                                             </div>
                                                         @endif
                                                     </div>
+                                                </div>
+
+                                                <div class="d-flex flex-column align-items-center"
+                                                    id="buyNowSummaryDetails">
+                                                    <small class="text-muted" id="buyNowSummarySubtitle">Total
+                                                        Amount</small>
                                                     <div class="text-end" id="buyNowSummaryRight">
                                                         <div class="fw-bold fs-3 text-success" id="buyNowTotalPrice">
                                                             &#8369;{{ number_format($orderToBuy->product_price * $order_quantity, 2) }}

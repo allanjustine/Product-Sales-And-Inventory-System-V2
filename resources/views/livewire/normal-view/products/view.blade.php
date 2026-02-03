@@ -71,7 +71,7 @@
                                                             No ratings yet
                                                         @else
                                                             {{ number_format($productView->product_rating, 1) }}
-                                                            ({{ number_format($productView->product_sold) }} sold)
+                                                            (@short($productView->product_sold) sold)
                                                         @endif
                                                     </span>
                                                 </div>
@@ -88,8 +88,8 @@
                                                 @endif
                                             </div>
 
-                                            <div class="row g-3 mb-4">
-                                                <div class="col-6">
+                                            <div class="row mb-4 g-3">
+                                                <div class="col-12 col-md-6">
                                                     <div class="info-card border rounded-3 p-3 h-100">
                                                         <div class="d-flex align-items-center">
                                                             <div
@@ -106,7 +106,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-12 col-md-6">
                                                     <div class="info-card border rounded-3 p-3 h-100">
                                                         <div class="d-flex align-items-center">
                                                             <div
@@ -138,7 +138,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-12 col-md-6">
                                                     <div class="info-card border rounded-3 p-3 h-100">
                                                         <div class="d-flex align-items-center">
                                                             <div
@@ -149,7 +149,7 @@
                                                                 <small class="text-muted d-block">Stock</small>
                                                                 <div class="fw-semibold" style="font-size: 10px;">
                                                                     @if ($productView->product_stock)
-                                                                        {{ number_format($productView->product_stock) }}
+                                                                        @short($productView->product_stock)
                                                                         units
                                                                     @else
                                                                         <span
@@ -165,7 +165,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-12 col-md-6">
                                                     <div class="info-card border rounded-3 p-3 h-100">
                                                         <div class="d-flex align-items-center">
                                                             <div
@@ -175,7 +175,7 @@
                                                             <div>
                                                                 <small class="text-muted d-block">Total Sold</small>
                                                                 <div class="fw-semibold">
-                                                                    {{ number_format($productView->product_sold) }}
+                                                                    @short($productView->product_sold)
                                                                     units
                                                                 </div>
                                                             </div>
@@ -568,7 +568,7 @@
         }
 
         .modal-body {
-            max-height: calc(100vh - 200px);
+            max-height: calc(100vh - 300px);
             overflow-y: auto;
         }
 

@@ -218,6 +218,7 @@ class Index extends Component
                 fn($item)
                 =>
                 $item->where('product_status', 'Available')
+                ->whereColumn('product_stock', '>=', 'quantity')
             );
     }
 

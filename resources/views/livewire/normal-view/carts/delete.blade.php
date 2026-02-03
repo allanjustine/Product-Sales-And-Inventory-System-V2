@@ -5,8 +5,8 @@
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header bg-light border-bottom-0 rounded-top-3 p-4">
                     <div class="d-flex align-items-center gap-3">
-                        <div class="bg-danger rounded-circle p-2">
-                            <i class="fas fa-trash-alt text-white"></i>
+                        <div class="rounded-circle p-2">
+                            <i class="fas fa-trash-alt text-danger"></i>
                         </div>
                         <div>
                             <h5 class="modal-title fw-bold mb-1" id="removeFromCartModal">
@@ -18,7 +18,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body p-4">
+                <div class="modal-body p-4" style="max-height: calc(100vh - 300px); overflow-y: auto;">
                     @if ($cartItemToRemove)
                         <div class="text-center mb-4">
                             <div class="d-inline-flex p-3 rounded-circle bg-warning bg-opacity-10">

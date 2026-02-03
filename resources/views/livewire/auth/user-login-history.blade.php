@@ -2,7 +2,7 @@
     <div class="login-history-section">
         <button type="button" class="btn btn-primary btn-lg w-100 py-3 fw-semibold shadow-sm" style="border-radius: 8px;"
             data-bs-toggle="modal" data-bs-target="#loginhistory" wire:click="showLoginHistory">
-            <div class="d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center text-sm">
                 <div class="icon-wrapper rounded-circle p-2 me-3">
                     <i class="fa-solid fa-history fa-lg"></i>
                 </div>
@@ -27,7 +27,7 @@
                                 aria-label="Close"></button>
                         </div>
                     </div>
-                    <div class="modal-body p-0" style="max-height: calc(100vh - 210px); overflow-y: auto;">
+                    <div class="modal-body p-0" style="max-height: calc(100vh - 300px); overflow-y: auto;">
                         @if (!$histories)
                             <div class="p-5 text-center">
                                 <div class="spinner-border text-primary mb-4" style="width: 3rem; height: 3rem;"

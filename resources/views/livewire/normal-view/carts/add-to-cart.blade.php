@@ -19,7 +19,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-body p-0" id="addToCartModalBody" style="max-height: calc(100vh - 250px);">
+                    <div class="modal-body p-0" id="addToCartModalBody" style="max-height: calc(100vh - 300px);">
                         @if (!$productToBeCart)
                             <div class="loading-state p-5 text-center" id="cartModalLoading">
                                 <div class="loading-spinner mb-4" id="cartLoadingSpinner">

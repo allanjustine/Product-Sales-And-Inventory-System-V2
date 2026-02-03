@@ -3,11 +3,11 @@
     @include('livewire.normal-view.carts.add-to-cart')
     @include('livewire.normal-view.orders.buy-now')
     <div class="container">
-        <h3 class="mt-5 fw-bold"><i class="fa-solid fa-heart text-danger"></i> My Shopping Favorites</h3>
+        <h3 class="mt-5 fw-bold text-primary"><i class="fa-solid fa-heart text-danger"></i> My Shopping Favorites</h3>
         <hr>
-        <div class="row g-2">
+        <div class="row">
             @forelse ($allFavorites as $favorite)
-                <div class="col-md-3 mt-2 col-sm-4 col-6 p-1">
+                <div class="col-md-6 col-lg-3 col-6 mt-2" style="padding: 0.5px;">
                     <x-product-list-card :product="$favorite->product" />
                 </div>
             @empty
@@ -58,14 +58,8 @@
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(0.5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-        }
-
-        .product-image-container {
-            height: 200px;
-            overflow: hidden;
-            background-color: #f8f9fa;
         }
 
         .product-image {
@@ -142,6 +136,10 @@
             animation: fadeIn 0.5s ease-out;
         }
 
+        .product-image-container {
+            height: 200px;
+        }
+
         @media (max-width: 992px) {
             .product-image-container {
                 height: 180px;
@@ -160,7 +158,7 @@
 
         @media (max-width: 576px) {
             .product-image-container {
-                height: 200px;
+                height: 130px;
             }
 
             .card-body {

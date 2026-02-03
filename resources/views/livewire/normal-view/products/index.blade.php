@@ -272,9 +272,9 @@
                         </div>
                     </div>
 
-                    <div class="row g-3">
+                    <div class="row">
                         @foreach ($products as $product)
-                            <div class="col-md-6 col-lg-3 col-6" :class="`col-lg-${grid} col-6`">
+                            <div class="col-md-6 col-lg-3 col-6 mt-2" style="padding: 0.5px;" :class="`col-lg-${grid} col-6`">
                                 <x-product-list-card :product="$product" />
                             </div>
                         @endforeach
@@ -343,7 +343,7 @@
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-0.5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
         }
 
@@ -445,7 +445,7 @@
 
         @media (max-width: 576px) {
             .product-image-container {
-                height: 200px;
+                height: 130px;
             }
 
             .card-body {

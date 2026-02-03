@@ -48,7 +48,7 @@
                                     <div class="position-relative flex-shrink-0">
                                         <div class="d-flex align-items-center">
                                             <input type="checkbox" wire:model.live='cart_ids' value="{{ $item->id }}"
-                                                @if ($item->product->product_status === 'Not Available') disabled @endif
+                                                @if ($item->product->product_status === 'Not Available' || $item->product->product_stock < $item->quantity) disabled @endif
                                                 class="form-check-input mt-1">
                                             @if (Storage::exists($item->product->product_image))
                                                 <img class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;"
@@ -78,7 +78,7 @@
                                                 @else bg-danger @endif">
                                                 {{ $item->product->product_status }}
                                             </span>
-                                            <small class="text-muted">Stock: {{ $item->product->product_stock }}
+                                            <small class="text-muted">Stock: @short($item->product->product_stock)
                                                 pcs</small>
                                         </div>
 
@@ -142,7 +142,7 @@
                         <div class="d-flex align-items-center gap-3">
                             @if (
                                 $carts->filter(function ($item) {
-                                        return $item->product && $item->product->product_status === 'Available';
+                                        return $item->product && $item->product->product_status === 'Available' && $item->product->product_stock >= $item->quantity;
                                     })->count() > 0)
                                 <div class="form-check d-flex align-items-center">
                                     <input type="checkbox" class="form-check-input" wire:model.live="select_all"

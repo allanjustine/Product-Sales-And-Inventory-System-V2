@@ -25,6 +25,39 @@
                 </button>
             </div>
 
+            <div class="d-block d-md-none" data-bs-toggle="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none"
+                    id="userDropdown" aria-expanded="false">
+                    @if (auth()->check())
+                        <div class="position-relative">
+                            <div class="user-avatar">
+                                <img src="{{ auth()->user()->profile_image
+                                    ? Storage::url(auth()->user()->profile_image)
+                                    : 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png' }}"
+                                    alt="{{ auth()->user()->name }}" class="rounded-circle">
+                                <span class="user-status bg-success"></span>
+                            </div>
+                        </div>
+                        <div class="d-none d-lg-block ms-2">
+                            <div class="text-white fw-medium">{{ auth()->user()->name }}</div>
+                            <small class="text-white-50">{{ auth()->user()->role }}</small>
+                        </div>
+                    @else
+                        <div class="d-flex align-items-center">
+                            <div class="user-avatar">
+                                <div class="avatar-placeholder rounded-circle">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                            </div>
+                            <div class="d-none d-lg-block ms-2">
+                                <div class="text-white fw-medium">Welcome</div>
+                                <small class="text-white-50">Guest</small>
+                            </div>
+                        </div>
+                    @endif
+                </a>
+            </div>
+
             <!-- Main Navigation -->
             <div class="collapse navbar-collapse order-lg-2" id="navbarMain">
                 <ul class="navbar-nav mx-auto">
@@ -97,39 +130,40 @@
 
             <!-- User Profile Dropdown -->
             <div class="dropdown order-lg-4 ms-lg-3">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-                    id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    @if (auth()->check())
-                        <div class="position-relative">
-                            <div class="user-avatar">
-                                <img src="{{ auth()->user()->profile_image
-                                    ? Storage::url(auth()->user()->profile_image)
-                                    : 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png' }}"
-                                    alt="{{ auth()->user()->name }}" class="rounded-circle">
-                                <span class="user-status bg-success"></span>
-                            </div>
-                        </div>
-                        <div class="d-none d-lg-block ms-2">
-                            <div class="text-white fw-medium">{{ auth()->user()->name }}</div>
-                            <small class="text-white-50">{{ auth()->user()->role }}</small>
-                        </div>
-                    @else
-                        <div class="d-flex align-items-center">
-                            <div class="user-avatar">
-                                <div class="avatar-placeholder rounded-circle">
-                                    <i class="fas fa-user text-white"></i>
+                <div class="d-none d-md-block" data-bs-toggle="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none"
+                        id="userDropdown" aria-expanded="false">
+                        @if (auth()->check())
+                            <div class="position-relative">
+                                <div class="user-avatar">
+                                    <img src="{{ auth()->user()->profile_image
+                                        ? Storage::url(auth()->user()->profile_image)
+                                        : 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png' }}"
+                                        alt="{{ auth()->user()->name }}" class="rounded-circle">
+                                    <span class="user-status bg-success"></span>
                                 </div>
                             </div>
                             <div class="d-none d-lg-block ms-2">
-                                <div class="text-white fw-medium">Welcome</div>
-                                <small class="text-white-50">Guest</small>
+                                <div class="text-white fw-medium">{{ auth()->user()->name }}</div>
+                                <small class="text-white-50">{{ auth()->user()->role }}</small>
                             </div>
-                        </div>
-                    @endif
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2" style="min-width: 300px;"
-                    aria-labelledby="userDropdown">
+                        @else
+                            <div class="d-flex align-items-center">
+                                <div class="user-avatar">
+                                    <div class="avatar-placeholder rounded-circle">
+                                        <i class="fas fa-user text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="d-none d-lg-block ms-2">
+                                    <div class="text-white fw-medium">Welcome</div>
+                                    <small class="text-white-50">Guest</small>
+                                </div>
+                            </div>
+                        @endif
+                    </a>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2"
+                    style="min-width: 300px;" aria-labelledby="userDropdown">
                     @if (auth()->check())
                         <!-- Profile Header -->
                         <li>
@@ -522,7 +556,7 @@
             const dropdownMenu = dropdown?.nextElementSibling;
 
             if (dropdown && !dropdown.contains(event.target) && dropdownMenu && !dropdownMenu.contains(event
-                .target)) {
+                    .target)) {
                 if (dropdownMenu.classList.contains('show')) {
                     const bsDropdown = bootstrap.Dropdown.getInstance(dropdown);
                     bsDropdown?.hide();

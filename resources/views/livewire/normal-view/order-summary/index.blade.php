@@ -9,7 +9,7 @@
                 <h1 class="confirmation-title">Order Confirmed!</h1>
                 <p class="confirmation-subtitle">Thank you for your purchase. Your order has been successfully submitted
                     and is now being processed.</p>
-                <div class="order-details">
+                <div class="order-details d-none d-md-block">
                     <div class="detail-row">
                         <span class="detail-label">Order Transaction Codes</span>
                         <div class="d-flex gap-2 flex-column" style="max-height: 70px; overflow-y: auto;">
@@ -63,11 +63,12 @@
                     <div class="card order-summary-card">
                         <div class="card-header bg-primary d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0"><i class="fas fa-bag-check me-2"></i>Your Order Details</h5>
+                                <h5 class="mb-0" id="header"><i class="fas fa-bag-check me-2"></i>Your Order
+                                    Details</h5>
                             </div>
                             <div class="text-end">
-                                <p class="mb-0">Expected Delivery</p>
-                                <h6 class="mb-0">{{ $this->estimated_delivery_date }}</h6>
+                                <p class="mb-0" id="header">Expected Delivery</p>
+                                <h6 class="mb-0" id="header">{{ $this->estimated_delivery_date }}</h6>
                             </div>
                         </div>
 
@@ -78,7 +79,7 @@
 
                                     @foreach ($this->orderSummaries as $index => $summary)
                                         <div class="row product-row align-items-center" wire:key='{{ $index }}'>
-                                            <div class="col-2">
+                                            <div class="col-4 col-md-2">
                                                 @if (Storage::exists($summary->product->product_image))
                                                     <img src="{{ Storage::url($summary->product->product_image) }}"
                                                         class="product-image"
@@ -89,7 +90,7 @@
                                                         alt="{{ $summary->product->product_name }}">
                                                 @endif
                                             </div>
-                                            <div class="col-7">
+                                            <div class="col-8 col-md-7">
                                                 <h6 class="mb-1" style="cursor: pointer;"
                                                     :class="{ 'text-truncate': !showText }" x-data="{ showText: false }">
                                                     <span class="text-capitalize" x-cloak
@@ -101,7 +102,7 @@
                                                 <p class="mb-0 small text-info">Discount:
                                                     {{ $summary->product->discount }}</p>
                                             </div>
-                                            <div class="col-3 text-end">
+                                            <div class="col-12 col-md-3 text-md-end">
                                                 <div class="price-highlight">
                                                     ₱{{ number_format($summary->product->product_price, 2) }}</div>
                                                 <div class="text-muted text-decoration-line-through">
@@ -122,10 +123,10 @@
                                     <div class="summary-section mt-4">
                                         <h5 class="summary-title">Price Details</h5>
                                         <div class="row mb-2">
-                                            <div class="col-8">Total Original Amount
+                                            <div class="col-12 col-md-8">Total Original Amount
                                                 ({{ count($this->orderSummaries) }} items)
                                             </div>
-                                            <div class="col-4 text-end">
+                                            <div class="col-12 col-md-4 text-md-end fw-semibold">
                                                 ₱{{ number_format(
                                                     $this->orderSummaries->sum(function ($item) {
                                                         return $item->product->product_old_price * $item->order_quantity;
@@ -135,8 +136,8 @@
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-8">Total Discount/Saved</div>
-                                            <div class="col-4 text-end">
+                                            <div class="col-12 col-md-8">Total Discount/Saved</div>
+                                            <div class="col-12 col-md-4 text-md-end fw-semibold">
                                                 -
                                                 ₱{{ number_format(
                                                     $this->orderSummaries->sum(function ($item) {
@@ -148,9 +149,10 @@
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-8">Subtotal ({{ count($this->orderSummaries) }} items)
+                                            <div class="col-12 col-md-8">Subtotal ({{ count($this->orderSummaries) }}
+                                                items)
                                             </div>
-                                            <div class="col-4 text-end">
+                                            <div class="col-12 col-md-4 text-md-end fw-semibold">
                                                 ₱{{ number_format(
                                                     $this->orderSummaries->sum(function ($item) {
                                                         return $item->product->product_price * $item->order_quantity;
@@ -164,8 +166,8 @@
                                         <div class="col-4 text-end">₱9.99</div>
                                     </div> --}}
                                         <div class="row pt-3 border-top">
-                                            <div class="col-8 fw-bold">Total Amount</div>
-                                            <div class="col-4 text-end total-amount">
+                                            <div class="col-12 col-md-8 fw-bold">Total Amount</div>
+                                            <div class="col-12 col-md-4 text-md-end fw-semibold total-amount">
                                                 ₱{{ number_format(
                                                     $this->orderSummaries->sum(function ($item) {
                                                         return $item->product->product_price * $item->order_quantity;
@@ -215,13 +217,13 @@
                                         <button class="btn btn-lg btn-primary mt-2" type="button"
                                             wire:click='placeOrderItems' wire:loading.attr="disabled"
                                             wire:target='placeOrderItems'>
-                                            <span wire:loading.remove wire:target='placeOrderItems'>Place Order</span>
+                                            <span wire:loading.remove wire:target='placeOrderItems'><i class="fa-solid fa-box-check"></i> Place Order</span>
                                             <span class="spinner-border" wire:loading
                                                 wire:target='placeOrderItems'></span>
                                         </button>
                                         <button class="btn btn-lg btn-danger" type="button"
                                             wire:click='cancelOrderItems'>
-                                            Cancel
+                                           <i class="fa-solid fa-circle-xmark"></i> Cancel
                                         </button>
                                     </div>
                                 </div>
@@ -259,6 +261,12 @@
     </div>
 
     <style>
+        @media (max-width: 300px) {
+            #header {
+                font-size: 10px;
+            }
+        }
+
         .order-summary-card {
             border-radius: 15px;
             border: none;
@@ -606,6 +614,17 @@
             }
         }
     </style>
+
+    <script>
+        document.addEventListener('livewire:navigated', () => {
+            Livewire.on('success-placed-order', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('livewire:navigated', function() {

@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-body p-0" id="cancelModalBody">
+                    <div class="modal-body p-0" id="cancelModalBody" style="max-height: calc(100vh - 300px); overflow-y: auto;">
                         @if (!$cancel)
                             <div class="loading-state p-5 text-center" id="cancelModalLoading">
                                 <div class="loading-spinner mb-4" id="cancelLoadingSpinner">

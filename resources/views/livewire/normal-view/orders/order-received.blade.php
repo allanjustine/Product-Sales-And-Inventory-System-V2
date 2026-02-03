@@ -19,7 +19,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-body p-0" id="ratingModalBody">
+                    <div class="modal-body p-0" id="ratingModalBody" style="max-height: calc(100vh - 300px); overflow-y: auto;">
                         <div class="rating-container" id="ratingContainer">
                             <div class="rating-intro p-4 border-bottom" id="ratingIntroSection">
                                 <div class="text-center" id="ratingIntroContent">

@@ -114,6 +114,8 @@ class Index extends Component
 
         $this->purchase_completed = true;
 
+        $this->dispatch('success-placed-order');
+
         return;
     }
 

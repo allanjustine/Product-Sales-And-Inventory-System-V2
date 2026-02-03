@@ -154,7 +154,7 @@
                             <div class="contact-item d-flex mb-3">
                                 <div
                                     class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                                    <i class="fas fa-map-marker-alt fa-fw"></i>
+                                    <i class="fas fa-location-dot text-white"></i>
                                 </div>
                                 <div>
                                     <h6 class="mb-1 fw-semibold">Address</h6>
@@ -165,7 +165,7 @@
                             <div class="contact-item d-flex mb-3">
                                 <div
                                     class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                                    <i class="fas fa-phone fa-fw"></i>
+                                    <i class="fas fa-phone text-white"></i>
                                 </div>
                                 <div>
                                     <h6 class="mb-1 fw-semibold">Phone</h6>
@@ -176,7 +176,7 @@
                             <div class="contact-item d-flex">
                                 <div
                                     class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <i class="fas fa-envelope text-white"></i>
                                 </div>
                                 <div>
                                     <h6 class="mb-1 fw-semibold">Email</h6>
@@ -541,6 +541,17 @@
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
+    }
+
+    @media (max-width: 300px) {
+        .social-icon .icon-wrapper {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
     }
 
     .social-icon:hover .icon-wrapper {

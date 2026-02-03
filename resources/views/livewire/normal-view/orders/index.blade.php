@@ -34,7 +34,7 @@
                                     <div class="alert alert-primary border-0 rounded-4 shadow-sm" role="alert"
                                         id="deliveryAddressAlert">
                                         <div class="d-flex align-items-center">
-                                            <div class="alert-icon me-3" id="deliveryAddressAlertIcon">
+                                            <div class="alert-icon me-3 d-none d-md-block" id="deliveryAddressAlertIcon">
                                                 <img src="images/mylogo.jpg" alt="Info Logo" class="rounded-3"
                                                     style="width: 80px;" id="deliveryAddressLogo">
                                             </div>

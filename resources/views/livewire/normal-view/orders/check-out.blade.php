@@ -19,7 +19,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-body p-0" id="checkoutModalBody">
+                    <div class="modal-body p-0" id="checkoutModalBody" style="max-height: calc(100vh - 300px); overflow-y: auto;">
                         <div class="checkout-container" id="checkoutContainer">
                             <div class="confirmation-section p-4 border-bottom" id="checkoutConfirmation">
                                 <div class="alert alert-primary border-0 rounded-3 shadow-sm" role="alert"

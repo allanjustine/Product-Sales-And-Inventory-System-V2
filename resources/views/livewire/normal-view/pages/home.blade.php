@@ -25,14 +25,14 @@
                                     <div class="mb-4">
                                         <i class="fa-classic fa-solid fa-quote-left text-white-50 fa-2x mb-3"></i>
                                     </div>
-                                    <h1 class="display-5 fw-bold text-white mb-4 carousel-title">
+                                    <h1 class="display-5 fw-bold text-white mb-4 carousel-title" id="home-title">
                                         {{ $slide['title'] }}
                                     </h1>
 
                                     @if (auth()->check())
                                         <div
                                             class="d-inline-block bg-opacity-20 backdrop-blur rounded-pill px-4 py-2 mb-4">
-                                            <div class="d-flex align-items-center gap-2">
+                                            <div class="d-flex align-items-center gap-2" id="signin-text">
                                                 @if ($morning)
                                                     <i class="fa-classic fa-solid fa-sunrise text-warning fa-lg"></i>
                                                     <span class="fw-medium text-white">Good Morning</span>
@@ -55,20 +55,19 @@
                                             <i class="fa-classic fa-solid fa-shopping-cart me-2"></i>Order Now
                                         </a>
                                     @else
-                                        <div
-                                            class="backdrop-blur rounded p-3 mb-4 d-inline-block">
-                                            <p class="text-white mb-0">
+                                        <div class="backdrop-blur rounded p-3 mb-4 d-inline-block">
+                                            <p class="text-white mb-0" id="signin-text">
                                                 <i class="fa-classic fa-solid fa-info-circle me-2"></i>
                                                 Sign in to get personalized recommendations
                                             </p>
                                         </div>
                                         <br>
                                         <div class="d-flex flex-wrap gap-3 justify-content-center">
-                                            <a wire:navigate href="/product-lists"
+                                            <a wire:navigate href="/product-lists" id="signin-text"
                                                 class="btn btn-warning btn-lg px-4 py-3">
                                                 <i class="fa-classic fa-solid fa-eye me-2"></i>Browse Products
                                             </a>
-                                            <a wire:navigate href="/login"
+                                            <a wire:navigate href="/login" id="signin-text"
                                                 class="btn btn-primary btn-lg px-4 py-3 shadow-lg">
                                                 <i class="fa-classic fa-solid fa-sign-in-alt me-2"></i>Sign In
                                             </a>
@@ -101,16 +100,16 @@
                         <span class="badge bg-primary mb-2 px-3 py-2 rounded-pill">
                             <i class="fa-classic fa-solid fa-medal me-2"></i>Top Picks
                         </span>
-                        <h2 class="fw-bold">Top Selling Products</h2>
+                        <h2 class="fw-bold" id="title-tops">Top Selling Products</h2>
                         <p class="text-muted mb-0">Most loved items by our customers</p>
                     </div>
                     <div class="line bg-gradient"></div>
                 </div>
             </div>
 
-            <div class="row g-4">
+            <div class="row">
                 @forelse ($topDeals as $product)
-                    <div class="col-xl-3 col-lg-4 col-6">
+                    <div class="col-xl-3 col-lg-4 col-6 mt-1" style="padding: 0.5px;">
                         @include('components.product-card', [
                             'product' => $product,
                             'badgeType' => 'top',
@@ -153,16 +152,16 @@
                         <span class="badge bg-warning mb-2 px-3 py-2 rounded-pill">
                             <i class="fa-classic fa-solid fa-fire me-2"></i>Trending Now
                         </span>
-                        <h2 class="fw-bold">Popular Products</h2>
-                        <p class="text-muted mb-0">Currently trending in our store</p>
+                        <h2 class="fw-bold" id="title-tops">Popular Products</h2>
+                        <p class="text-muted mb-0" id="subtitle-tops">Currently trending in our store</p>
                     </div>
                     <div class="line bg-gradient"></div>
                 </div>
             </div>
 
-            <div class="row g-4">
+            <div class="row">
                 @forelse ($popularityDeals as $product)
-                    <div class="col-xl-3 col-lg-4 col-6">
+                    <div class="col-xl-3 col-lg-4 col-6 mt-1" style="padding: 0.5px;">
                         @include('components.product-card', [
                             'product' => $product,
                             'badgeType' => 'popular',
@@ -205,16 +204,16 @@
                         <span class="badge bg-info mb-2 px-3 py-2 rounded-pill">
                             <i class="fa-classic fa-solid fa-bolt me-2"></i>Just Arrived
                         </span>
-                        <h2 class="fw-bold">Latest Products</h2>
+                        <h2 class="fw-bold" id="title-tops">Latest Products</h2>
                         <p class="text-muted mb-0">Freshly added to our collection</p>
                     </div>
                     <div class="line bg-gradient"></div>
                 </div>
             </div>
 
-            <div class="row g-4">
+            <div class="row">
                 @forelse ($latestProducts as $product)
-                    <div class="col-xl-3 col-lg-4 col-6">
+                    <div class="col-xl-3 col-lg-4 col-6 mt-1" style="padding: 0.5px;">
                         @include('components.product-card', [
                             'product' => $product,
                             'badgeType' => 'latest',
@@ -256,7 +255,7 @@
                     <span class="badge bg-dark mb-2 px-3 py-2 rounded-pill">
                         <i class="fa-classic fa-solid fa-map-marker-alt me-2"></i>Visit Us
                     </span>
-                    <h2 class="fw-bold">Our Location</h2>
+                    <h2 class="fw-bold" id="title-tops">Our Location</h2>
                     <p class="text-muted mb-4">Find us at our cozy store</p>
                 </div>
             </div>
@@ -319,6 +318,63 @@
     </section>
 
     <style>
+        @media (max-width: 300px) {
+            #home-title {
+                font-size: 15px;
+            }
+
+            #signin-text {
+                font-size: 10px;
+            }
+
+            #title-tops {
+                font-size: 15px;
+            }
+
+            #subtitle-tops {
+                font-size: 12px;
+            }
+
+            #badge-text {
+                font-size: 6px;
+            }
+
+            #discount-badge {
+                font-size: 6px;
+                margin-top: 2px;
+            }
+
+            #category {
+                font-size: 7px;
+            }
+
+            #product-name {
+                font-size: 9px;
+            }
+
+            #price {
+                font-size: 11px;
+            }
+
+            #old-price {
+                font-size: 9px;
+            }
+
+            #rating-sold {
+                font-size: 8px;
+            }
+
+            #product-image {
+                height: 130px;
+            }
+        }
+
+        @media (min-width: 300px) {
+            #product-image {
+                height: 200px;
+            }
+        }
+
         #homeCarousel {
             position: relative;
             overflow: hidden;
@@ -523,7 +579,7 @@
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-0.5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
         }
 

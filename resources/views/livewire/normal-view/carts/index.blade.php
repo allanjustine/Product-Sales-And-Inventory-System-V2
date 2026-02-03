@@ -52,7 +52,7 @@
             <div class="d-flex align-items-center gap-2 mb-2">
                 @if (
                     $cartItems->filter(function ($item) {
-                            return $item->product && $item->product->product_status === 'Available';
+                            return $item->product && $item->product->product_status === 'Available' && $item->product->product_stock >= $item->quantity;
                         })->count() > 0)
                     <div class="form-check d-flex gap-3 align-items-center">
                         <input class="form-check-input" type="checkbox" wire:model.live='select_all'
@@ -74,19 +74,21 @@
                                 <div class="d-flex align-items-center gap-3 p-2">
                                     <input type="checkbox" class="form-check-input mt-1"
                                         style="width: 18px; height: 18px;" wire:model.live='cart_ids'
-                                        value="{{ $item->id }}" @if ($item->product->product_status === 'Not Available') disabled @endif>
+                                        value="{{ $item->id }}" @if ($item->product->product_status === 'Not Available' || (int) $item->product->product_stock < (int) $item->quantity) disabled @endif>
 
-                                    <span
-                                        class="badge ml-2
+                                    <div class="d-flex flex-column">
+                                        <span
+                                            class="badge ml-3
                                     @if ($item->product->product_status === 'Available') bg-success
                                     @else bg-danger @endif">
-                                        {{ $item->product->product_status }}
-                                    </span>
+                                            {{ $item->product->product_status }}
+                                        </span>
 
-                                    <small class="text-muted">
-                                        <i class="fas fa-box me-1"></i>
-                                        {{ $item->product->product_stock }} pcs available
-                                    </small>
+                                        <small class="text-muted">
+                                            <i class="fas fa-box ml-3"></i>
+                                            @short($item->product->product_stock) pcs available
+                                        </small>
+                                    </div>
                                 </div>
 
                                 <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"
@@ -131,8 +133,8 @@
                                             {{ $item->product->discount }} OFF
                                         </span>
                                     @endif
-
-                                    <div class="d-flex align-items-center justify-content-between">
+                                    <div
+                                        class="d-flex flex-column flex-md-row align-items-md-center mt-2 mt-md-0 justify-content-md-between">
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="btn-group" role="group">
                                                 <button class="btn btn-outline-secondary px-3 py-2"
@@ -188,7 +190,7 @@
             </div>
 
             @if (count($this->cart_ids) > 0)
-                <div class="col-lg-4">
+                <div class="col-lg-4 d-none d-md-block">
                     <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
                         <div class="card-body">
                             <h5 class="fw-bold mb-4">Order Summary</h5>
@@ -214,7 +216,55 @@
                                 </div>
 
                                 @if (count($this->cart_ids) > 0)
-                                    <button wire:loading.attr="disabled" wire:target='cart_ids'
+                                    <button wire:loading.attr="disabled" wire:target='cart_ids' id="checkout"
+                                        class="btn btn-primary btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2"
+                                        data-bs-toggle="modal" data-bs-target="#checkOut">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>Proceed to Checkout ({{ count($this->cart_ids) }})</span>
+                                    </button>
+                                @else
+                                    <button class="btn btn-secondary btn-lg w-100 py-3" disabled>
+                                        Select items to checkout
+                                    </button>
+                                @endif
+
+                                <div class="text-center mt-3">
+                                    <a wire:navigate href="/products" class="text-decoration-none text-primary">
+                                        <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-block d-md-none fixed-bottom">
+                    <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-4">Order Summary</h5>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">Items ({{ count($this->cart_ids) }})</span>
+                                <span>&#8369;{{ number_format($this->grand_total, 2) }}</span>
+                            </div>
+
+                            @if ($this->total_save > 0)
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-success">Discount</span>
+                                    <span
+                                        class="text-success">-&#8369;{{ number_format($this->total_save, 2) }}</span>
+                                </div>
+                            @endif
+
+                            <div class="border-top pt-3 mt-2">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="fw-bold mb-0">Total Amount</h5>
+                                    <h3 class="fw-bold text-primary mb-0">
+                                        &#8369;{{ number_format($this->grand_total, 2) }}
+                                    </h3>
+                                </div>
+
+                                @if (count($this->cart_ids) > 0)
+                                    <button wire:loading.attr="disabled" wire:target='cart_ids' id="checkout"
                                         class="btn btn-primary btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2"
                                         data-bs-toggle="modal" data-bs-target="#checkOut">
                                         <i class="fas fa-credit-card"></i>
@@ -281,6 +331,12 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+        }
+
+        @media (max-width: 300px) {
+            #checkout {
+                font-size: 12px;
+            }
         }
     </style>
 

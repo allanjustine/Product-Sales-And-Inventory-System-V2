@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
@@ -68,5 +69,23 @@ class AppServiceProvider extends ServiceProvider
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
         // Model::preventLazyLoading();
         Model::automaticallyEagerLoadRelationships();
+
+        Blade::directive(
+            'short',
+            fn($expression)
+            =>
+            "<?php
+                \$value = $expression;
+                if (\$value >= 1000000000) {
+                    echo number_format(\$value / 1000000000, 1) . 'B';
+                } elseif (\$value >= 1000000) {
+                    echo number_format(\$value / 1000000, 1) . 'M';
+                } elseif (\$value >= 1000) {
+                    echo number_format(\$value / 1000, 1) . 'k';
+                } else {
+                    echo \$value;
+                }
+            ?>"
+        );
     }
 }
