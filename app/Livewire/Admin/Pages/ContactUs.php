@@ -24,7 +24,7 @@ class ContactUs extends Component
     {
         $feedback = Contact::find($id);
 
-        if(!$feedback) {
+        if (!$feedback) {
             $this->dispatch('alert', alerts: [
                 'type'          => 'error',
                 'title'         => 'Error',
@@ -44,6 +44,8 @@ class ContactUs extends Component
             'title'         => 'Success',
             'message'       => "Feedback successfully {$status}"
         ]);
+
+        $this->dispatch('closeModal', $id);
     }
 
     public function render()
