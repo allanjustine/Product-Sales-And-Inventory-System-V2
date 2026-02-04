@@ -41,7 +41,6 @@
                                                         class="discount-badge-item bg-danger text-white position-absolute top-0 start-0 m-3">
                                                         <div class="p-2 text-center">
                                                             <div class="fw-bold fs-5">{{ $productView->discount }}</div>
-                                                            <small class="opacity-75">OFF</small>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -67,7 +66,7 @@
                                                         @endfor
                                                     </div>
                                                     <span class="text-muted small">
-                                                        @if ($productView->product_rating === 0)
+                                                        @if ((int) $productView->product_rating === 0)
                                                             No ratings yet
                                                         @else
                                                             {{ number_format($productView->product_rating, 1) }}
@@ -77,7 +76,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="price-section mb-4">
+                                            <div class="price-section mb-4 d-flex align-items-center gap-2 flex-wrap">
                                                 <div class="current-price fw-bold fs-2 text-primary mb-1">
                                                     &#8369;{{ number_format($productView->product_price, 2) }}
                                                 </div>
