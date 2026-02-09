@@ -305,7 +305,7 @@ class Index extends Component
                 RepurchaseAndSubmitRating::dispatch($order, $adminId);
                 return;
             });
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->dispatch('alert', alerts: [
                 'title'         => 'Sorry',
                 'type'          => 'error',

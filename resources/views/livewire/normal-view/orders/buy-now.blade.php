@@ -225,7 +225,10 @@
                                                 </div>
                                             @endif
 
-                                            @if ($order_quantity > $orderToBuy->product_stock)
+                                            @if (
+                                                !$orderToBuy->productSizes()->exists() &&
+                                                    !$orderToBuy->productColors()->exists() &&
+                                                    $order_quantity > $orderToBuy->product_stock)
                                                 <div class="alert alert-warning alert-dismissible fade show mt-3"
                                                     role="alert" id="buyNowStockWarningAlert">
                                                     <i class="fas fa-exclamation-triangle me-2"
@@ -281,8 +284,13 @@
                             <div class="d-grid gap-2 w-100" id="buyNowActionButtons">
                                 <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm"
                                     id="buyNowConfirmBtn" wire:click="orderPlaceOrderItem"
-                                    wire:loading.attr="disabled" wire:target="orderPlaceOrderItem,order_quantity,toggleProductVariant"
-                                    {{ $order_quantity > $orderToBuy->product_stock ? 'disabled' : '' }}>
+                                    wire:loading.attr="disabled"
+                                    wire:target="orderPlaceOrderItem,order_quantity,toggleProductVariant"
+                                    {{ !$orderToBuy->productSizes()->exists() &&
+                                    !$orderToBuy->productColors()->exists() &&
+                                    $order_quantity > $orderToBuy->product_stock
+                                        ? 'disabled'
+                                        : '' }}>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span wire:loading.remove wire:target="orderPlaceOrderItem"
                                             id="buyNowCheckoutText">

@@ -80,7 +80,7 @@ class Index extends Component
         if ($this->orderToBuy) {
 
             return [
-                'order_quantity' => "required|numeric|min:1|max:{$this->orderToBuy->productStocks()}"
+                'order_quantity' => "required|numeric|min:1|lte:{$this->orderToBuy->productStocks()}"
             ];
         }
 
@@ -598,7 +598,7 @@ class Index extends Component
             Auth::user()->orderSummaries()->delete();
 
             foreach ($carts as $cart) {
-                $productQuantity = $cart->product->productStocks();
+                $productQuantity = $cart->product->product_stock;
                 $productStatus = $cart->product->product_status;
 
                 if ($productStatus == 'Not Available') {
@@ -618,22 +618,24 @@ class Index extends Component
                     return;
                 }
 
-                if ($cart->productSize?->stock < $cart->quantity) {
-                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The selected size is not enough stock or out of stock. Please remove it from your cart or replace it.']);
-                    return;
-                }
+                if ($cart->hasVariation()) {
+                    if ($cart->productSize && $cart->productSize?->stock < $cart->quantity) {
+                        $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The selected size is not enough stock or out of stock. Please remove it from your cart or replace it.']);
+                        return;
+                    }
 
-                if ($cart->productColor?->stock < $cart->quantity) {
-                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The selected color is not enough stock or out of stock. Please remove it from your cart or replace it.']);
-                    return;
-                }
+                    if ($cart->productColor && $cart->productColor?->stock < $cart->quantity) {
+                        $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The selected color is not enough stock or out of stock. Please remove it from your cart or replace it.']);
+                        return;
+                    }
+                } else {
+                    if ($cart->quantity > $productQuantity) {
+                        // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
 
-                if ($cart->quantity > $productQuantity) {
-                    // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
-
-                    // return $this->redirect('/products', navigate: true);
-                    $this->dispatch('toastr', data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity or remove it from your cart or uncheck it.']);
-                    return;
+                        // return $this->redirect('/products', navigate: true);
+                        $this->dispatch('toastr', data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity or remove it from your cart or uncheck it.']);
+                        return;
+                    }
                 }
 
                 if ($productStatus == 'Available') {
@@ -710,7 +712,7 @@ class Index extends Component
             return;
         }
 
-        if ($productSizeStock < $this->order_quantity) {
+        if ($product->productSizes()->exists() && $productSizeStock < $this->order_quantity) {
             $this->dispatch('toastr',  data: [
                 'type' => 'error',
                 'message' => 'The product size is not enough stock or out of stock. Please reduce your order quantity to continue.'
@@ -719,7 +721,7 @@ class Index extends Component
             return;
         }
 
-        if ($productColorStock < $this->order_quantity) {
+        if ($product->productColors()->exists() && $productColorStock < $this->order_quantity) {
             $this->dispatch('toastr',  data: [
                 'type' => 'error',
                 'message' => 'The product color is not enough stock or out of stock. Please reduce your order quantity to continue.'
@@ -728,7 +730,7 @@ class Index extends Component
             return;
         }
 
-        if ($productStock < $this->order_quantity) {
+        if (!$product->productSizes()->exists() && !$product->productColors()->exists() && $productStock < $this->order_quantity) {
             $this->dispatch('toastr',  data: [
                 'type' => 'error',
                 'message' => 'The product is out of stock. Please reduce your order quantity to continue.'

@@ -51,7 +51,7 @@ class Index extends Component
                 ->where('user_id', Auth::id())
                 ->get();
 
-            if($orderSummaries->isEmpty()){
+            if ($orderSummaries->isEmpty()) {
                 return $this->redirect('/products', navigate: true);
             }
 
@@ -77,16 +77,18 @@ class Index extends Component
                         throw new \Exception('The product is not enough stock or out of stock.');
                     }
 
-                    if ($orderSummary->productSize?->stock < $orderSummary->order_quantity) {
-                        throw new \Exception('The selected size is not enough stock or out of stock. Please reduce your order quantity or replace it.');
-                    }
+                    if ($orderSummary->hasVariation()) {
+                        if ($orderSummary->productSize?->stock < $orderSummary->order_quantity) {
+                            throw new \Exception('The selected size is not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                        }
 
-                    if ($orderSummary->productColor?->stock < $orderSummary->order_quantity) {
-                        throw new \Exception('The selected color is not enough stock or out of stock. Please reduce your order quantity or replace it.');
-                    }
-
-                    if ($orderSummary->product?->product_stock < $orderSummary->order_quantity) {
-                        throw new \Exception('The product stock not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                        if ($orderSummary->productColor?->stock < $orderSummary->order_quantity) {
+                            throw new \Exception('The selected color is not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                        }
+                    } else {
+                        if ($orderSummary->product?->product_stock < $orderSummary->order_quantity) {
+                            throw new \Exception('The product stock not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                        }
                     }
 
                     if ($orderSummary->order_quantity > $productQuantity) {
@@ -175,7 +177,7 @@ class Index extends Component
 
                 return;
             });
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->dispatch('toastr', data: [
                 'type' => 'error',
                 'message' => $e->getMessage()

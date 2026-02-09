@@ -76,7 +76,7 @@
                                 <div class="d-flex align-items-center gap-3 p-2">
                                     <input type="checkbox" class="form-check-input mt-1"
                                         style="width: 18px; height: 18px;" wire:model.live='cart_ids'
-                                        value="{{ $item->id }}" @if ($item->product->product_status === 'Not Available' || (int) $item->product->product_stock < (int) $item->quantity) disabled @endif>
+                                        value="{{ $item->id }}" @if ($item->product->product_status === 'Not Available' || (int) $item->product->productStocks() < (int) $item->quantity) disabled @endif>
 
                                     <div class="d-flex flex-column">
                                         <span

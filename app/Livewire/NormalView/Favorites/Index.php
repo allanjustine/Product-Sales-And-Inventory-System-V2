@@ -39,6 +39,18 @@ class Index extends Component
     #[Validate('required_if:has_colors,true', message: 'Please select a product color.')]
     public $product_color_id = null;
 
+    public function rules()
+    {
+        if ($this->orderToBuy) {
+
+            return [
+                'order_quantity' => "required|numeric|min:1|lte:{$this->orderToBuy->productStocks()}"
+            ];
+        }
+
+        return [];
+    }
+
     public function loadMorePages()
     {
         $this->loadMore += $this->loadMorePlus;
@@ -322,7 +334,7 @@ class Index extends Component
             return;
         }
 
-        if ($productSizeStock < $this->order_quantity) {
+        if ($product->productSizes()->exists() && $productSizeStock < $this->order_quantity) {
             $this->dispatch('toastr',  data: [
                 'type' => 'error',
                 'message' => 'The product size is not enough stock or out of stock. Please reduce your order quantity to continue.'
@@ -331,7 +343,7 @@ class Index extends Component
             return;
         }
 
-        if ($productColorStock < $this->order_quantity) {
+        if ($product->productColors()->exists() && $productColorStock < $this->order_quantity) {
             $this->dispatch('toastr',  data: [
                 'type' => 'error',
                 'message' => 'The product color is not enough stock or out of stock. Please reduce your order quantity to continue.'
@@ -340,7 +352,7 @@ class Index extends Component
             return;
         }
 
-        if ($productStock < $this->order_quantity) {
+        if (!$product->productSizes()->exists() && !$product->productColors()->exists() && $productStock < $this->order_quantity) {
             $this->dispatch('toastr',  data: [
                 'type' => 'error',
                 'message' => 'The product is out of stock. Please reduce your order quantity to continue.'
