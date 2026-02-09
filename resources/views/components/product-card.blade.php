@@ -3,11 +3,11 @@
         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#viewProduct"
             wire:click="view({{ $product->id }})">
             <div class="overflow-hidden" id="product-image">
-                @if (Storage::exists($product->product_image))
-                    <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->product_name }}"
-                        class="product-image w-100 h-100">
+                @if (Storage::exists($product->productImages?->first()->path))
+                    <img src="{{ Storage::url($product->productImages?->first()->path) }}"
+                        alt="{{ $product->product_name }}" class="product-image w-100 h-100">
                 @else
-                    <img src="{{ $product->product_image }}" alt="{{ $product->product_name }}"
+                    <img src="{{ $product->productImages->first()->path }}" alt="{{ $product->product_name }}"
                         class="product-image w-100 h-100">
                 @endif
             </div>
@@ -67,13 +67,14 @@
                 </small>
             @endif
         </div>
-
         <div class="mt-auto">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
                     <i class="fas fa-star text-warning me-1"></i>
-                    <span class="fw-semibold mr-1">{{ $product->product_rating }}</span> |
-                    <small class="text-muted ms-1">@short($product->product_sold) sold</small>
+                    <span
+                        class="fw-semibold mr-1">{{ (int) $product->averageRatings() === 0 ? 'No ratings yet' : $product->averageRatings() }}</span>
+                    |
+                    <small class="text-muted ms-1">{{ $product->shortOrderSold() }} sold</small>
                 </div>
             </div>
         </div>

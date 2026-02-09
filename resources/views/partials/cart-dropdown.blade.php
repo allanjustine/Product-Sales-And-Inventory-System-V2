@@ -48,15 +48,15 @@
                                     <div class="position-relative flex-shrink-0">
                                         <div class="d-flex align-items-center">
                                             <input type="checkbox" wire:model.live='cart_ids' value="{{ $item->id }}"
-                                                @if ($item->product->product_status === 'Not Available' || $item->product->product_stock < $item->quantity) disabled @endif
+                                                @if ($item->product->product_status === 'Not Available' || $item->product->productStocks() < $item->quantity) disabled @endif
                                                 class="form-check-input mt-1">
-                                            @if (Storage::exists($item->product->product_image))
+                                            @if (Storage::exists($item->product->productImages()?->first()?->path))
                                                 <img class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;"
-                                                    src="{{ Storage::url($item->product->product_image) }}"
+                                                    src="{{ Storage::url($item->product->productImages()?->first()?->path) }}"
                                                     alt="{{ $item->product->product_name }}">
                                             @else
                                                 <img class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;"
-                                                    src="{{ url($item->product->product_image) }}"
+                                                    src="{{ url($item->product->productImages()?->first()?->path) }}"
                                                     alt="{{ $item->product->product_name }}">
                                             @endif
                                         </div>
@@ -78,9 +78,48 @@
                                                 @else bg-danger @endif">
                                                 {{ $item->product->product_status }}
                                             </span>
-                                            <small class="text-muted">Stock: @short($item->product->product_stock)
+                                            <small class="text-muted">Stock: {{ $item->product->shortProductStocks() }}
                                                 pcs</small>
                                         </div>
+
+                                        @if ($item->hasVariation())
+                                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    @if ($item->product->productSizes->isNotEmpty())
+                                                        <div>
+                                                            <label for="size" class="text-sm">Size</label>
+                                                            <select wire:model.live='product_size_ids.{{ $item->id }}'
+                                                                class="form-select">
+                                                                @foreach ($item->product->productSizes as $size)
+                                                                    <option value="{{ $size->id }}"
+                                                                        wire:key='{{ $size->id }}'
+                                                                        {{ $size->stock === 0 ? 'disabled' : '' }}>
+                                                                        {{ $size->name }}
+                                                                        ({{ $size->stock ?: 'OUT OF STOCK' }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    @endif
+                                                    @if ($item->product->productColors->isNotEmpty())
+                                                        <div>
+                                                            <label for="color" class="text-sm">Color</label>
+                                                            <select wire:model.live='product_color_ids.{{ $item->id }}'
+                                                                class="form-select">
+                                                                @foreach ($item->product->productColors as $color)
+                                                                    <option value="{{ $color->id }}"
+                                                                        wire:key='{{ $color->id }}'
+                                                                        {{ $color->stock === 0 ? 'disabled' : '' }}>
+                                                                        {{ $color->name }}
+                                                                        ({{ $color->stock ?: 'OUT OF STOCK' }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endif
 
                                         @if ($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
                                             <span class="badge bg-danger rounded-pill">
@@ -142,7 +181,9 @@
                         <div class="d-flex align-items-center gap-3">
                             @if (
                                 $carts->filter(function ($item) {
-                                        return $item->product && $item->product->product_status === 'Available' && $item->product->product_stock >= $item->quantity;
+                                        return $item->product &&
+                                            $item->product->product_status === 'Available' &&
+                                            $item->product->productStocks() >= $item->quantity;
                                     })->count() > 0)
                                 <div class="form-check d-flex align-items-center">
                                     <input type="checkbox" class="form-check-input" wire:model.live="select_all"

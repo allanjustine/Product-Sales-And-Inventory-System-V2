@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +17,12 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->nullable();
-            $table->foreignId('user_id')->nullable();
+            $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductSize::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductColor::class)->nullable()->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->timestamps();
-
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

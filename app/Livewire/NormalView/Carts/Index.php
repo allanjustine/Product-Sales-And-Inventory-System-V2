@@ -25,6 +25,8 @@ class Index extends Component
     public $select_all = false;
     public $grand_total = 0;
     public $total_save = 0;
+    public $product_size_ids = [];
+    public $product_color_ids = [];
 
     public function carts()
     {
@@ -57,7 +59,34 @@ class Index extends Component
 
         $this->total_save = $totals['totalOldPrice'] - $totals['totalPrice'];
 
+        foreach ($cartItems as $cart) {
+            $this->product_color_ids[$cart->id] = $cart->product_color_id;
+            $this->product_size_ids[$cart->id] = $cart->product_size_id;
+        }
+
         return compact('cartItems');
+    }
+
+    public function updatedProductColorIds($value, $key)
+    {
+        Cart::where('user_id', Auth::id())
+            ->where('id', $key)
+            ->update([
+                'product_color_id' => $value
+            ]);
+
+        return $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Color updated']);
+    }
+
+    public function updatedProductSizeIds($value, $key)
+    {
+        Cart::where('user_id', Auth::id())
+            ->where('id', $key)
+            ->update([
+                'product_size_id' => $value
+            ]);
+
+        return $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Size updated']);
     }
 
     public function updateCartItem($itemId)
@@ -157,7 +186,8 @@ class Index extends Component
 
     public function placeOrder()
     {
-        $carts = Cart::where('user_id', Auth::id())
+        $carts = Cart::with('productSize', 'productColor')
+            ->where('user_id', Auth::id())
             ->whereIn('id', $this->cart_ids)
             ->get();
 
@@ -165,7 +195,7 @@ class Index extends Component
             Auth::user()->orderSummaries()->delete();
 
             foreach ($carts as $cart) {
-                $productQuantity = $cart->product->product_stock;
+                $productQuantity = $cart->product->productStocks();
                 $productStatus = $cart->product->product_status;
 
                 if ($productStatus == 'Not Available') {
@@ -177,11 +207,21 @@ class Index extends Component
                     return;
                 }
 
-                if ($cart->product->product_stock == 0) {
+                if ($cart->product->productStocks() < $cart->quantity) {
                     // alert()->error('Sorry', 'The product is out of stock');
 
                     // return $this->redirect('/products', navigate: true);
-                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The product is out of stock. Please remove it from your cart or uncheck it.']);
+                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The product is not enough stock or out of stock. Please remove it from your cart or uncheck it.']);
+                    return;
+                }
+
+                if ($cart->productSize?->stock < $cart->quantity) {
+                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The selected size is not enough stock or out of stock. Please remove it from your cart or replace it.']);
+                    return;
+                }
+
+                if ($cart->productColor?->stock < $cart->quantity) {
+                    $this->dispatch('toastr', data: ['type' => 'warning', 'message' => 'The selected color is not enough stock or out of stock. Please remove it from your cart or replace it.']);
                     return;
                 }
 
@@ -196,9 +236,11 @@ class Index extends Component
                 if ($productStatus == 'Available') {
 
                     Auth::user()->orderSummaries()->create([
-                        'product_id'     => $cart->product->id,
-                        'order_quantity' => $cart->quantity,
-                        'cart_id'        => $cart->id
+                        'product_id'       => $cart->product->id,
+                        'order_quantity'   => $cart->quantity,
+                        'cart_id'          => $cart->id,
+                        'product_size_id'  => $cart->product_size_id,
+                        'product_color_id' => $cart->product_color_id
                     ]);
                 }
             }
@@ -218,8 +260,31 @@ class Index extends Component
                 fn($item)
                 =>
                 $item->where('product_status', 'Available')
-                ->whereColumn('product_stock', '>=', 'quantity')
-            );
+            )
+            ->where(function ($query) {
+                $query->whereHas(
+                    'productSize',
+
+                    fn($q)
+
+                    =>
+                    $q->where('stock', '>', 0)
+                )
+                    ->orWhereHas(
+                        'productColor',
+
+                        fn($q)
+
+                        =>
+                        $q->where('stock', '>', 0)
+                    )
+                    ->orWhereHas(
+                        'product',
+                        fn($q)
+                        =>
+                        $q->whereColumn('products.product_stock', '>=', 'carts.quantity')
+                    );
+            });
     }
 
     public function updatedSelectAll($value)

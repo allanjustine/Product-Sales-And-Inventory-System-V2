@@ -25,4 +25,19 @@ class Cart extends Model
     {
         return $this->hasMany(OrderSummary::class);
     }
+
+    public function productSize()
+    {
+        return $this->belongsTo(ProductSize::class);
+    }
+
+    public function productColor()
+    {
+        return $this->belongsTo(ProductColor::class);
+    }
+
+    public function hasVariation()
+    {
+        return $this->product_size_id || $this->product_color_id;
+    }
 }

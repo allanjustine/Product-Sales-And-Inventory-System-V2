@@ -39,12 +39,12 @@
                                 <div class="product-preview-section p-4 border-bottom" id="cartProductPreview">
                                     <div class="product-image-wrapper text-center mb-4 position-relative"
                                         id="cartProductImageWrapper">
-                                        @if (Storage::exists($productToBeCart->product_image))
-                                            <img src="{{ Storage::url($productToBeCart->product_image) }}"
+                                        @if (Storage::exists($productToBeCart->productImages()?->first()?->path))
+                                            <img src="{{ Storage::url($productToBeCart->productImages()?->first()?->path) }}"
                                                 alt="{{ $productToBeCart->product_name }}"
                                                 class="img-fluid rounded-3 shadow-sm" id="cartProductImage">
                                         @else
-                                            <img src="{{ $productToBeCart->product_image }}"
+                                            <img src="{{ $productToBeCart->productImages()?->first()?->path }}"
                                                 alt="{{ $productToBeCart->product_name }}"
                                                 class="img-fluid rounded-3 shadow-sm" id="cartProductImage">
                                         @endif
@@ -108,19 +108,21 @@
                                         <div class="quantity-input-group" id="cartQuantityGroup">
                                             <div class="input-group input-group-lg shadow-sm" id="quantityInputGroup">
                                                 <button type="button" class="btn btn-outline-secondary"
-                                                    id="decrementQuantityBtn" wire:click="$set('quantity', {{ $quantity }} - 1)"
+                                                    id="decrementQuantityBtn"
+                                                    wire:click="$set('quantity', {{ $quantity }} - 1)"
                                                     wire:loading.attr="disabled"
                                                     {{ $quantity <= 1 ? 'disabled' : '' }}>
                                                     <i class="fas fa-minus" id="decrementIcon"></i>
                                                 </button>
 
                                                 <input type="number" class="form-control text-center"
-                                                    id="cartQuantityInput" wire:model.live.debounce.200ms="quantity"
+                                                    id="cartQuantityInput" wire:model.live.debounce.500ms="quantity"
                                                     min="1" max="{{ $productToBeCart->product_stock }}"
                                                     aria-label="Quantity">
 
                                                 <button type="button" class="btn btn-outline-secondary"
-                                                    id="incrementQuantityBtn" wire:click="$set('quantity', {{ $quantity }} + 1)"
+                                                    id="incrementQuantityBtn"
+                                                    wire:click="$set('quantity', {{ $quantity }} + 1)"
                                                     wire:loading.attr="disabled"
                                                     {{ $quantity >= $productToBeCart->product_stock ? 'disabled' : '' }}>
                                                     <i class="fas fa-plus" id="incrementIcon"></i>
@@ -136,6 +138,54 @@
                                                         aria-label="Close" id="closeErrorBtn"></button>
                                                 </div>
                                             @enderror
+                                            @if ($productToBeCart->productSizes->isNotEmpty())
+                                                <div class="col-12 my-3">
+                                                    <h6 class="fw-bold">Sizes</h6>
+                                                    <div class="d-flex flex-wrap gap-2">
+                                                        @foreach ($productToBeCart->productSizes as $productSize)
+                                                            <span
+                                                                @role('user') wire:click='toggleProductVariant("size", {{ $productSize->id }})' @endrole
+                                                                @style([
+                                                                    'cursor: not-allowed; background-color: #ccc; font-size: 8px;' => $productSize->stock < 1,
+                                                                ]) @class([
+                                                                    'selected-color-size' => $this->product_size_id === $productSize->id,
+                                                                    'badge flex-grow-1 text-black border p-3',
+                                                                ])
+                                                                id="color-size">
+                                                                {{ $productSize->name }}
+                                                                ({{ $productSize->stock ?: 'OUT OF STOCK' }})
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                    @error('product_size_id')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            @endif
+                                            @if ($productToBeCart->productColors->isNotEmpty())
+                                                <div class="col-12 my-3">
+                                                    <h6 class="fw-bold">Colors</h6>
+                                                    <div class="d-flex flex-wrap gap-2">
+                                                        @foreach ($productToBeCart->productColors as $productColor)
+                                                            <span
+                                                                @role('user') wire:click='toggleProductVariant("color", {{ $productColor->id }})' @endrole
+                                                                @style([
+                                                                    'cursor: not-allowed; background-color: #ccc; font-size: 8px;' => $productColor->stock < 1,
+                                                                ]) @class([
+                                                                    'selected-color-size' => $this->product_color_id === $productColor->id,
+                                                                    'badge flex-grow-1 text-black border p-3',
+                                                                ])
+                                                                id="color-size">
+                                                                {{ $productColor->name }}
+                                                                ({{ $productColor->stock ?: 'OUT OF STOCK' }})
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                    @error('product_color_id')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            @endif
 
                                             <div class="total-price-preview mt-4 p-3 bg-light rounded-3"
                                                 id="totalPricePreview">
@@ -171,7 +221,8 @@
                         <div class="modal-footer border-top p-4" id="addToCartModalFooter">
                             <div class="d-grid gap-2 w-100" id="cartActionButtons">
                                 <button type="button" class="btn btn-primary btn-lg rounded-pill shadow-sm"
-                                    id="addToCartConfirmBtn" wire:click="addToCartNow" wire:loading.attr="disabled">
+                                    id="addToCartConfirmBtn" wire:click="addToCartNow"
+                                    wire:target="addToCartNow,quantity,toggleProductVariant" wire:loading.attr="disabled">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span wire:loading.remove wire:target="addToCartNow" id="addToCartText">
                                             <i class="fas fa-cart-plus me-2" id="addToCartIcon"></i>Add to Cart
@@ -680,8 +731,7 @@
             const modal = document.getElementById('addToCart');
 
             if (modal) {
-                modal.addEventListener('hidden.bs.modal', function() {
-                });
+                modal.addEventListener('hidden.bs.modal', function() {});
 
                 const quantityInput = document.getElementById('cartQuantityInput');
                 const totalPriceElement = document.getElementById('totalPrice');

@@ -52,7 +52,9 @@
             <div class="d-flex align-items-center gap-2 mb-2">
                 @if (
                     $cartItems->filter(function ($item) {
-                            return $item->product && $item->product->product_status === 'Available' && $item->product->product_stock >= $item->quantity;
+                            return $item->product &&
+                                $item->product->product_status === 'Available' &&
+                                $item->product->product_stock >= $item->quantity;
                         })->count() > 0)
                     <div class="form-check d-flex gap-3 align-items-center">
                         <input class="form-check-input" type="checkbox" wire:model.live='select_all'
@@ -86,7 +88,7 @@
 
                                         <small class="text-muted">
                                             <i class="fas fa-box ml-3"></i>
-                                            @short($item->product->product_stock) pcs available
+                                            {{ $item->product->shortProductStocks() }} pcs available
                                         </small>
                                     </div>
                                 </div>
@@ -102,13 +104,13 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3 mb-md-0">
                                     <div class="position-relative">
-                                        @if (Storage::exists($item->product->product_image))
+                                        @if (Storage::exists($item->product->productImages()?->first()?->path))
                                             <img class="rounded-3 w-100" style="height: 150px; object-fit: cover;"
-                                                src="{{ Storage::url($item->product->product_image) }}"
+                                                src="{{ Storage::url($item->product->productImages()?->first()?->path) }}"
                                                 alt="{{ $item->product->product_name }}">
                                         @else
                                             <img class="rounded-3 w-100" style="height: 150px; object-fit: cover;"
-                                                src="{{ $item->product->product_image }}"
+                                                src="{{ $item->product->productImages()?->first()?->path }}"
                                                 alt="{{ $item->product->product_name }}">
                                         @endif
                                     </div>
@@ -128,9 +130,48 @@
                                         @endif
                                     </div>
 
+                                    @if ($item->hasVariation())
+                                        <div class="d-flex flex-wrap align-items-center mb-2">
+                                            <div class="d-flex gap-2 align-items-center">
+                                                @if ($item->product->productSizes->isNotEmpty())
+                                                    <div>
+                                                        <label for="size" class="text-sm">Size</label>
+                                                        <select wire:model.live='product_size_ids.{{ $item->id }}'
+                                                            class="form-select">
+                                                            @foreach ($item->product->productSizes as $size)
+                                                                <option value="{{ $size->id }}"
+                                                                    wire:key='{{ $size->id }}'
+                                                                    {{ $size->stock === 0 ? 'disabled' : '' }}>
+                                                                    {{ $size->name }}
+                                                                    ({{ $size->stock ?: 'OUT OF STOCK' }})
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endif
+                                                @if ($item->product->productColors->isNotEmpty())
+                                                    <div>
+                                                        <label for="color" class="text-sm">Color</label>
+                                                        <select wire:model.live='product_color_ids.{{ $item->id }}'
+                                                            class="form-select">
+                                                            @foreach ($item->product->productColors as $color)
+                                                                <option value="{{ $color->id }}"
+                                                                    wire:key='{{ $color->id }}'
+                                                                    {{ $color->stock === 0 ? 'disabled' : '' }}>
+                                                                    {{ $color->name }}
+                                                                    ({{ $color->stock ?: 'OUT OF STOCK' }})
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endif
+
                                     @if ($item->product->product_old_price !== null && $item->product->product_old_price !== $item->product->product_price)
                                         <span class="badge bg-danger rounded-pill ms-2">
-                                            {{ $item->product->discount }} OFF
+                                            {{ $item->product->discount }}
                                         </span>
                                     @endif
                                     <div
@@ -203,7 +244,8 @@
                             @if ($this->total_save > 0)
                                 <div class="d-flex justify-content-between mb-3">
                                     <span class="text-success">Discount</span>
-                                    <span class="text-success">-&#8369;{{ number_format($this->total_save, 2) }}</span>
+                                    <span
+                                        class="text-success">-&#8369;{{ number_format($this->total_save, 2) }}</span>
                                 </div>
                             @endif
 
@@ -216,7 +258,8 @@
                                 </div>
 
                                 @if (count($this->cart_ids) > 0)
-                                    <button wire:loading.attr="disabled" wire:target='cart_ids' id="checkout"
+                                    <button wire:loading.attr="disabled"
+                                        wire:target='cart_ids,product_size_ids,product_color_ids' id="checkout"
                                         class="btn btn-primary btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2"
                                         data-bs-toggle="modal" data-bs-target="#checkOut">
                                         <i class="fas fa-credit-card"></i>
