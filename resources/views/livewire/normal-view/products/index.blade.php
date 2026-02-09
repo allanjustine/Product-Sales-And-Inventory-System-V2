@@ -50,6 +50,9 @@
             if ($inStockOnly) {
                 $activeFilters++;
             }
+            if ($hasDiscount) {
+                $activeFilters++;
+            }
         @endphp
 
         <div class="container-fluid py-4">
@@ -115,48 +118,34 @@
                                 <div class="mb-4">
                                     <label class="form-label fw-medium mb-2">Categories</label>
                                     <div class="list-group">
-                                        <a href="#"
+                                        <button type="button"
                                             class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === 'All' ? 'active' : '' }}"
                                             wire:click="$set('category_name', 'All')">
                                             <i class="fas fa-layer-group me-2"></i>All Categories
                                             <span class="badge bg-secondary float-end">{{ $products->total() }}</span>
-                                        </a>
+                                        </button>
                                         @foreach ($product_categories as $category)
                                             <button type="button"
                                                 class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === $category->category_name ? 'active' : '' }}"
                                                 wire:click="$set('category_name', '{{ $category->category_name }}')">
                                                 <i class="fas fa-tag me-2"></i>{{ $category->category_name }}
+                                                <span
+                                                    class="badge bg-info float-end">{{ $category->products_count }}</span>
                                             </button>
                                         @endforeach
                                     </div>
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="form-label fw-medium mb-2">Price Range</label>
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <small class="text-muted">Min</small>
-                                        <small class="text-muted">Max</small>
-                                    </div>
-                                    <div class="d-flex gap-2 align-items-center mb-3">
-                                        <input type="number" class="form-control form-control-sm" placeholder="Min"
-                                            wire:model.live.debounce.500ms="minPrice">
-                                        <span class="text-muted">-</span>
-                                        <input type="number" class="form-control form-control-sm" placeholder="Max"
-                                            wire:model.live.debounce.500ms="maxPrice">
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" wire:model.live="hasDiscount"
-                                            id="hasDiscount">
-                                        <label class="form-check-label" for="hasDiscount">
-                                            <i class="fas fa-percentage text-danger me-1"></i>Show discounted items
-                                            only
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
                                     <label class="form-label fw-medium mb-2">Customer Rating</label>
                                     <div class="rating-filter">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="product_rating"
+                                                id="ratingAll" wire:model.live="product_rating" value="All">
+                                            <label class="form-check-label" for="ratingAll">
+                                                <span class="text-muted">All Ratings</span>
+                                            </label>
+                                        </div>
                                         @foreach ([5, 4, 3, 2, 1] as $rating)
                                             <div class="form-check mb-2">
                                                 <input class="form-check-input" type="radio" name="product_rating"
@@ -165,19 +154,12 @@
                                                 <label class="form-check-label" for="rating{{ $rating }}">
                                                     @for ($i = 1; $i <= 5; $i++)
                                                         <i
-                                                            class="fas fa-star {{ $i <= $rating ? 'text-warning' : 'text-light' }}"></i>
+                                                            class="fas fa-star {{ $i <= $rating ? 'text-warning' : 'text-gray' }}"></i>
                                                     @endfor
                                                     <span class="text-muted ms-2">& above</span>
                                                 </label>
                                             </div>
                                         @endforeach
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="product_rating"
-                                                id="ratingAll" wire:model.live="product_rating" value="All">
-                                            <label class="form-check-label" for="ratingAll">
-                                                <span class="text-muted">All Ratings</span>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -192,8 +174,8 @@
                                 <div class="mb-4">
                                     <label class="form-label fw-medium mb-2">Price Range</label>
                                     <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <small class="text-muted">Min</small>
-                                        <small class="text-muted">Max</small>
+                                        <small class="text-muted">₱{{ $minPrice ?? 0 }}</small>
+                                        <small class="text-muted">₱{{ $maxPrice ?? 'Max' }}</small>
                                     </div>
                                     <div class="d-flex gap-2 align-items-center mb-3">
                                         <input type="number" class="form-control form-control-sm" placeholder="Min"
@@ -271,10 +253,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         @foreach ($products as $product)
-                            <div class="col-md-6 col-lg-3 col-6 mt-2" style="padding: 0.5px;" :class="`col-lg-${grid} col-6`">
+                            <div class="col-md-6 col-lg-3 col-6 mt-2" style="padding: 0.5px;"
+                                :class="`col-lg-${grid} col-6`">
                                 <x-product-list-card :product="$product" />
                             </div>
                         @endforeach

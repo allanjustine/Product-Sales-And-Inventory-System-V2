@@ -16,7 +16,26 @@ class ProductCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $categories = ['Bread', 'Dairay', 'Fruit', 'Vegetables', 'Coffee', 'Tea', 'Juice', 'Soda', 'Alcohol', 'Beverages', 'Foods', 'Others'];
+        $categories = [
+            'Bread',
+            'Dairy',
+            'Fruit',
+            'Vegetables',
+            'Coffee',
+            'Tea',
+            'Juice',
+            'Soda',
+            'Alcohol',
+            'Beverages',
+            'Foods',
+            'T-Shirt',
+            'Shorts',
+            'Pants',
+            'Jacket',
+            'Shoes',
+            'Hoodie',
+            'Others'
+        ];
 
         $categoryName = $this->faker->unique()->randomElement($categories);
 

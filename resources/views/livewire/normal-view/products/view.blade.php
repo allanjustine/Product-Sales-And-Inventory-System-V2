@@ -2,7 +2,7 @@
     <div>
         <div wire:ignore.self class="modal fade" id="viewProduct" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
             data-bs-keyboard="false">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
                     <div class="modal-header bg-gradient-primary text-white p-4 border-0">
                         <div class="d-flex align-items-center w-100">
@@ -25,25 +25,102 @@
                                     <div class="col-lg-6 border-end">
                                         <div
                                             class="product-image-section p-4 p-lg-5 d-flex align-items-center justify-content-center bg-light">
-                                            <div class="position-relative product-image-wrapper">
-                                                @if (Storage::exists($productView->product_image))
-                                                    <img src="{{ Storage::url($productView->product_image) }}"
-                                                        alt="{{ $productView->product_name }}"
-                                                        class="img-fluid rounded-3 shadow-sm product-main-image">
-                                                @else
-                                                    <img src="{{ url($productView->product_image) }}"
-                                                        alt="{{ $productView->product_name }}"
-                                                        class="img-fluid rounded-3 shadow-sm product-main-image">
-                                                @endif
+                                            <div class="position-relative product-image-wrapper" x-data="{ active: 0 }"
+                                                x-init="$watch('active', value => {
+                                                    const el = $refs['thumb-' + value];
+                                                    if (el) {
+                                                        el.scrollIntoView({
+                                                            behavior: 'smooth',
+                                                            inline: 'center',
+                                                            block: 'nearest'
+                                                        });
+                                                    }
+                                                })">
+
+                                                <div id="productImagesCarousel" class="carousel slide carousel-fade"
+                                                    style="height: 40vh;">
+                                                    <div class="carousel-inner" style="height: 40vh;">
+                                                        @foreach ($productView->productImages as $key => $image)
+                                                            <div class="carousel-item"
+                                                                :class="active === {{ $key }} ? 'active' : ''">
+                                                                @if (Storage::exists($image->path))
+                                                                    <img src="{{ Storage::url($image->path) }}"
+                                                                        alt="{{ $image->product_name }}"
+                                                                        class="d-block w-100"
+                                                                        style="height: 40vh; object-fit: cover;">
+                                                                @else
+                                                                    <img src="{{ url($image->path) }}"
+                                                                        alt="{{ $productView->product_name }}"
+                                                                        class="d-block w-100"
+                                                                        style="height: 40vh; object-fit: cover;">
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button"
+                                                        data-bs-target="#productImagesCarousel"
+                                                        @click="active = active === 0 ? {{ count($productView->productImages) - 1 }} : active - 1"
+                                                        data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button"
+                                                        data-bs-target="#productImagesCarousel"
+                                                        @click="active = {{ count($productView->productImages) - 1 }} === active ? 0 : active + 1"
+                                                        data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                                <div class="w-100 gap-2 d-flex align-items-center mt-5"
+                                                    style="overflow-x: auto; height: fit-content;"
+                                                    x-bind.javascript="scrollTo()">
+                                                    @foreach ($productView->productImages as $key => $productImage)
+                                                        <div style="width: 50px; height: 50px;"
+                                                            @click="active = {{ $key }}">
+                                                            @if (Storage::exists($image->path))
+                                                                <img type="button" x-ref="thumb-{{ $key }}"
+                                                                    src="{{ Storage::url($productImage->path) }}"
+                                                                    :class="active === {{ $key }} ? 'active-image' :
+                                                                        ''"
+                                                                    data-bs-target="#productImagesCarousel"
+                                                                    data-bs-slide-to="{{ $key }}"
+                                                                    aria-current="{{ $loop->first ? 'true' : 'false' }}"
+                                                                    aria-label="Slide {{ $loop->iteration }}"
+                                                                    style="width: 50px; height: 50px;"
+                                                                    id="product-images">
+                                                            @else
+                                                                <img type="button" x-ref="thumb-{{ $key }}"
+                                                                    src="{{ url($productImage->path) }}"
+                                                                    data-bs-target="#productImagesCarousel"
+                                                                    :class="active === {{ $key }} ? 'active-image' :
+                                                                        ''"
+                                                                    data-bs-slide-to="{{ $key }}"
+                                                                    aria-current="{{ $loop->first ? 'true' : 'false' }}"
+                                                                    aria-label="Slide {{ $loop->iteration }}"
+                                                                    style="width: 50px; height: 50px;"
+                                                                    id="product-images">
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
 
                                                 @if ($productView->product_old_price !== null && $productView->product_old_price !== $productView->product_price)
                                                     <div
                                                         class="discount-badge-item bg-danger text-white position-absolute top-0 start-0 m-3">
                                                         <div class="p-2 text-center">
-                                                            <div class="fw-bold fs-5">{{ $productView->discount }}</div>
+                                                            <div class="fw-bold fs-5">{{ $productView->discount }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 @endif
+                                                <div class="position-absolute text-sm rounded-lg px-3 py-1"
+                                                    style="bottom: 75px; right: 0px; background-color: #e0dadaca;">
+                                                    <span
+                                                        x-text="`${active + 1}/{{ $productView->productImages->count() }}`"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +135,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="stars me-2">
                                                         @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($i <= $productView->product_rating)
+                                                            @if ($i <= $productView->averageRatings())
                                                                 <i class="fa-solid fa-star text-warning"></i>
                                                             @else
                                                                 <i class="far fa-star text-secondary"></i>
@@ -66,11 +143,11 @@
                                                         @endfor
                                                     </div>
                                                     <span class="text-muted small">
-                                                        @if ((int) $productView->product_rating === 0)
+                                                        @if ((int) $productView->averageRatings() === 0)
                                                             No ratings yet
                                                         @else
-                                                            {{ number_format($productView->product_rating, 1) }}
-                                                            (@short($productView->product_sold) sold)
+                                                            {{ $productView->averageRatings() }}
+                                                            ({{ $productView->shortOrderSold() }} sold)
                                                         @endif
                                                     </span>
                                                 </div>
@@ -147,8 +224,8 @@
                                                             <div>
                                                                 <small class="text-muted d-block">Stock</small>
                                                                 <div class="fw-semibold" style="font-size: 10px;">
-                                                                    @if ($productView->product_stock)
-                                                                        @short($productView->product_stock)
+                                                                    @if ($productView->productStocks() > 0)
+                                                                        {{ $productView->shortProductStocks() }}
                                                                         units
                                                                     @else
                                                                         <span
@@ -163,7 +240,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-12 col-md-6">
                                                     <div class="info-card border rounded-3 p-3 h-100">
                                                         <div class="d-flex align-items-center">
@@ -171,22 +247,70 @@
                                                                 class="info-icon-content bg-primary bg-opacity-10 rounded-circle p-2 me-3">
                                                                 <i class="fa-solid fa-chart-line text-white"></i>
                                                             </div>
-                                                            <div>
+                                                            <div x-cloak="">
                                                                 <small class="text-muted d-block">Total Sold</small>
                                                                 <div class="fw-semibold">
-                                                                    @short($productView->product_sold)
+                                                                    {{ $productView->shortOrderSold() }}
                                                                     units
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @if ($productView->productSizes->isNotEmpty())
+                                                    <div class="col-12">
+                                                        <h6 class="fw-bold">Sizes</h6>
+                                                        <div class="d-flex flex-wrap gap-2">
+                                                            @foreach ($productView->productSizes as $productSize)
+                                                                <span
+                                                                    @role('user') wire:click='toggleProductVariant("size", {{ $productSize->id }})' @endrole
+                                                                    @style([
+                                                                        'cursor: not-allowed; background-color: #ccc; font-size: 8px;' => $productSize->stock < 1,
+                                                                    ]) @class([
+                                                                        'selected-color-size' => $this->product_size_id === $productSize->id,
+                                                                        'badge flex-grow-1 text-black border p-3',
+                                                                    ])
+                                                                    id="color-size">
+                                                                    {{ $productSize->name }}
+                                                                    ({{ $productSize->stock ?: 'OUT OF STOCK' }})
+                                                                </span>
+                                                            @endforeach
+                                                        </div>
+                                                        @error('product_size_id')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                @endif
+                                                @if ($productView->productColors->isNotEmpty())
+                                                    <div class="col-12">
+                                                        <h6 class="fw-bold">Colors</h6>
+                                                        <div class="d-flex flex-wrap gap-2">
+                                                            @foreach ($productView->productColors as $productColor)
+                                                                <span
+                                                                    @role('user') wire:click='toggleProductVariant("color", {{ $productColor->id }})' @endrole
+                                                                    @style([
+                                                                        'cursor: not-allowed; background-color: #ccc; font-size: 8px;' => $productColor->stock < 1,
+                                                                    ]) @class([
+                                                                        'selected-color-size' => $this->product_color_id === $productColor->id,
+                                                                        'badge flex-grow-1 text-black border p-3',
+                                                                    ])
+                                                                    id="color-size">
+                                                                    {{ $productColor->name }}
+                                                                    ({{ $productColor->stock ?: 'OUT OF STOCK' }})
+                                                                </span>
+                                                            @endforeach
+                                                        </div>
+                                                        @error('product_color_id')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             @role('user')
                                                 <div class="action-buttons mt-4">
                                                     <button type="button" wire:loading.attr='disabled'
-                                                        wire:target='addToCartNowItem'
+                                                        wire:target='addToCartNowItem,toggleProductVariant'
                                                         wire:click='addToCartNowItem({{ $productView->id }})'
                                                         class="btn btn-primary btn-lg w-100 rounded-pill mb-3">
                                                         <i class="fa-solid fa-cart-plus me-2"></i> Add to Cart
@@ -221,6 +345,68 @@
                                         </h5>
                                         <div class="description-content bg-white rounded-3 p-4 shadow-sm">
                                             <p class="mb-0">{{ $productView->product_description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="reviews-section border-top bg-white">
+                                    <div class="p-3 p-md-4 p-lg-5">
+                                        <h5 class="fw-bold mb-3 mb-md-4">
+                                            <i class="fa-solid fa-star me-2 text-warning"></i>Customer Reviews
+                                            <span class="badge bg-primary bg-opacity-10 text-primary ms-2">12
+                                                reviews</span>
+                                        </h5>
+
+                                        <div class="reviews-container">
+                                            <div class="review-item border-bottom pb-3 pb-md-4 mb-3 mb-md-4">
+                                                <div class="d-flex align-items-start mb-2 mb-md-3">
+                                                    <div class="me-2 me-md-3">
+                                                        <div class="user-avatar rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+                                                            style="width: 40px; height: 40px;">
+                                                            <i class="fa-solid fa-user text-primary fa-sm"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-start flex-wrap">
+                                                            <div class="mb-1">
+                                                                <h6 class="fw-bold mb-0" style="font-size: 14px;">John
+                                                                    Smith</h6>
+                                                                <div class="stars mb-0" style="font-size: 11px;">
+                                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                                </div>
+                                                            </div>
+                                                            <small class="text-muted" style="font-size: 11px;">2 days
+                                                                ago</small>
+                                                        </div>
+                                                        <p class="mb-1 mb-md-2"
+                                                            style="font-size: 13px; line-height: 1.4;">Excellent
+                                                            product! Exceeded my expectations. The quality is
+                                                            outstanding and it arrived earlier than expected.</p>
+
+                                                        <div class="review-images d-flex gap-1 gap-md-2 mt-1 mt-md-2">
+                                                            <img src="https://media.istockphoto.com/id/154960461/photo/red-sweat-shirt-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=Dt1h6jsUfwyJolpalOYanvF5kG6VTWhjDI1zVcbdYJY="
+                                                                class="rounded border"
+                                                                style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
+                                                                onclick="openImageModal(this.src)">
+                                                            <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fFNob2VzfGVufDB8fDB8fHww"
+                                                                class="rounded border"
+                                                                style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
+                                                                onclick="openImageModal(this.src)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-3 mt-md-4">
+                                            <button class="btn btn-outline-primary rounded-pill px-3 px-md-4"
+                                                style="font-size: 14px;">
+                                                <i class="fa-solid fa-eye me-1 me-md-2"></i>View All 12 Reviews
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +455,8 @@
                                                                     style="height: 40px; width: 40px;"></div>
                                                                 <div class="ms-3 flex-grow-1">
                                                                     <div class="placeholder rounded mb-2"
-                                                                        style="height: 12px; width: 60px;"></div>
+                                                                        style="height: 12px; width: 60px;">
+                                                                    </div>
                                                                     <div class="placeholder rounded"
                                                                         style="height: 16px; width: 80px;"></div>
                                                                 </div>
@@ -324,6 +511,18 @@
         </div>
     </div>
 
+    <div class="modal fade reviewImageModal" id="reviewImageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body p-0">
+                    <img src="" id="modalReviewImage" class="img-fluid rounded" style="max-height: 80vh;">
+                </div>
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="modal" aria-label="Close" onclick="handleCloseModal()"></button>
+            </div>
+        </div>
+    </div>
+
     <style>
         .modal-content {
             border: none;
@@ -331,6 +530,10 @@
 
         .modal-header {
             background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+        }
+
+        .active-image {
+            opacity: 0.3;
         }
 
         .product-image-section {
@@ -429,6 +632,46 @@
             line-height: 1.8;
         }
 
+        #product-images:hover {
+            opacity: 0.3;
+        }
+
+        /* Reviews Section Styles */
+        .reviews-section {
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+        }
+
+        .review-item {
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .review-images img {
+            transition: all 0.3s ease;
+        }
+
+        .review-images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Review Image Modal */
+        #reviewImageModal .modal-content {
+            background: transparent;
+            border: none;
+        }
+
+        #reviewImageModal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
         .action-buttons .btn {
             padding: 0.75rem 1.5rem;
             font-weight: 600;
@@ -462,6 +705,121 @@
 
             100% {
                 background-position: -200% 0;
+            }
+        }
+
+        /* Reviews Section Mobile Responsive */
+        @media (max-width: 500px) {
+            .reviews-section {
+                padding: 1rem !important;
+            }
+
+            .reviews-section h5 {
+                font-size: 1rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            .reviews-section .badge {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.5rem;
+            }
+
+            .review-item {
+                padding-bottom: 0.75rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .user-avatar {
+                width: 35px !important;
+                height: 35px !important;
+                min-width: 35px !important;
+            }
+
+            .user-avatar i {
+                font-size: 0.875rem !important;
+            }
+
+            .review-item h6 {
+                font-size: 13px !important;
+                line-height: 1.2;
+            }
+
+            .review-item .stars {
+                font-size: 10px !important;
+            }
+
+            .review-item .stars i {
+                margin-right: 1px;
+            }
+
+            .review-item p {
+                font-size: 12px !important;
+                line-height: 1.3 !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .review-item small {
+                font-size: 10px !important;
+            }
+
+            .review-images {
+                margin-top: 0.25rem !important;
+            }
+
+            .review-images img {
+                width: 50px !important;
+                height: 50px !important;
+                min-width: 50px !important;
+            }
+
+            /* Button adjustments */
+            .reviews-section .btn {
+                font-size: 13px !important;
+                padding: 0.4rem 1rem !important;
+            }
+
+            .reviews-section .btn i {
+                font-size: 12px !important;
+            }
+
+            /* Reduce spacing */
+            .review-item .d-flex.align-items-start {
+                margin-bottom: 0.5rem !important;
+            }
+
+            /* Make review content more compact */
+            .review-item .flex-grow-1 {
+                padding-left: 0.25rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .user-avatar {
+                width: 30px !important;
+                height: 30px !important;
+                min-width: 30px !important;
+            }
+
+            .user-avatar i {
+                font-size: 0.75rem !important;
+            }
+
+            .review-item h6 {
+                font-size: 12px !important;
+            }
+
+            .review-item p {
+                font-size: 11px !important;
+            }
+
+            .review-images img {
+                width: 45px !important;
+                height: 45px !important;
+                min-width: 45px !important;
+            }
+
+            .review-item .stars {
+                font-size: 9px !important;
             }
         }
 
@@ -520,6 +878,12 @@
                 order: 1;
                 width: 100%;
             }
+
+            /* Reviews responsive */
+            .review-images img {
+                width: 60px !important;
+                height: 60px !important;
+            }
         }
 
         @media (max-width: 576px) {
@@ -536,6 +900,10 @@
                 padding: 1.5rem !important;
             }
 
+            .reviews-section {
+                padding: 1.5rem !important;
+            }
+
             .info-card {
                 padding: 0.75rem !important;
             }
@@ -546,6 +914,15 @@
 
             h4.modal-title {
                 font-size: 1.25rem;
+            }
+
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .user-avatar i {
+                font-size: 1rem !important;
             }
         }
 
@@ -567,7 +944,7 @@
         }
 
         .modal-body {
-            max-height: calc(100vh - 300px);
+            max-height: calc(100vh - 250px);
             overflow-y: auto;
         }
 
@@ -586,6 +963,15 @@
 
         .modal-body::-webkit-scrollbar-thumb:hover {
             background: #555;
+        }
+
+        #color-size:hover {
+            background: #e4e7ee;
+            cursor: pointer;
+        }
+
+        .selected-color-size {
+            background: #e4e7ee;
         }
     </style>
 
@@ -634,6 +1020,20 @@
                 });
             }
         });
+
+        // Function to open review image modal
+        function openImageModal(src) {
+            document.getElementById('modalReviewImage').src = src;
+            const modal = new bootstrap.Modal(document.getElementById('reviewImageModal'));
+            modal.show();
+        }
+
+        function handleCloseModal() {
+            const modal = document.getElementById('reviewImageModal');
+            const bootstrapBackDrop = document.querySelectorAll('.modal-backdrop');
+            bootstrapBackDrop[1].remove();
+            modal.style.display = 'none';
+        }
     </script>
 
     <script>
