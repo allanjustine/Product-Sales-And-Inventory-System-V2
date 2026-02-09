@@ -71,8 +71,7 @@
                     <span id="date"></span>
                     <span id="time"></span></span>
                 </div>
-                <strong>Copyright &copy; 2023 - {{ now()->year }} <a href="https://facebook.com/1down"
-                        target="_blank">Allan
+                <strong>Copyright &copy; {{ now()->year }} <a href="https://facebook.com/1down" target="_blank">Allan
                         Justine
                         Mascariñas</a>.</strong> All rights
                 reserved.
@@ -375,6 +374,18 @@
         toggleSwitch.addEventListener('change', switchTheme, false);
     })
 </script>
+@include('partials.preloader')
+
+<script>
+    document.addEventListener('livewire:navigated', () => {
+        const el = document.getElementById('pre-loader-normal');
+
+        if (el) {
+            el.remove();
+        }
+    });
+</script>
+
 
 
 <style>
