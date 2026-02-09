@@ -6,8 +6,7 @@
                 <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg" id="ratingModalContent">
                     <div class="modal-header bg-gradient-warning text-white p-4 border-0" id="ratingModalHeader">
                         <div class="d-flex align-items-center w-100">
-                            <div class="icon-wrapper rounded-circle p-2 me-3"
-                                id="ratingModalIcon">
+                            <div class="icon-wrapper rounded-circle p-2 me-3" id="ratingModalIcon">
                                 <i class="fas fa-star fa-lg text-white"></i>
                             </div>
                             <div class="flex-grow-1">
@@ -19,7 +18,8 @@
                         </div>
                     </div>
 
-                    <div class="modal-body p-0" id="ratingModalBody" style="max-height: calc(100vh - 300px); overflow-y: auto;">
+                    <div class="modal-body p-0" id="ratingModalBody"
+                        style="max-height: calc(100vh - 300px); overflow-y: auto;">
                         <div class="rating-container" id="ratingContainer">
                             <div class="rating-intro p-4 border-bottom" id="ratingIntroSection">
                                 <div class="text-center" id="ratingIntroContent">
@@ -167,6 +167,164 @@
                                                 aria-label="Close" id="closeRatingErrorBtn"></button>
                                         </div>
                                     @enderror
+
+                                    <div class="px-3">
+                                        <div class="d-flex ga-1">
+                                            <input type="checkbox" wire:model.live="is_anonymous"
+                                                class="form-check-input" id="anonymousCheckbox">
+                                            <label class="form-check-label" for="anonymousCheckbox"><i
+                                                    class="fa-solid fa-user-secret"></i> Review as anonymous</label>
+                                        </div>
+                                        <span class="text-muted text-sm">Your name will not be shown publicly.</span>
+                                    </div>
+
+                                    <!-- Review Textarea Section -->
+                                    <div class="review-section mt-5" id="reviewSection">
+                                        <div class="review-header mb-3" id="reviewHeader">
+                                            <h5 class="fw-bold text-dark mb-2" id="reviewTitle">
+                                                <i class="fas fa-comment-alt me-2 text-warning"></i>
+                                                Write Your Review
+                                            </h5>
+                                            <p class="text-muted small mb-0" id="reviewDescription">
+                                                Share your detailed experience with this product
+                                            </p>
+                                        </div>
+
+                                        <div class="review-textarea-wrapper" id="reviewTextareaWrapper">
+                                            <textarea wire:model.live.debounce.500ms="review" class="form-control review-textarea" id="reviewTextarea"
+                                                rows="4" maxlength="1000"
+                                                placeholder="Tell us more about your experience with this product... What did you like? What could be improved?"
+                                                style="border-radius: 10px; border: 2px solid #e9ecef; transition: all 0.3s ease;"></textarea>
+                                            <div class="d-flex justify-content-end align-items-center mt-2">
+                                                <small class="text-muted" id="reviewOptional">
+                                                    Optional
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        @error('review')
+                                            <div class="alert alert-danger alert-dismissible fade show mt-2"
+                                                role="alert" id="reviewErrorAlert">
+                                                <div class="d-flex align-items-center" id="reviewErrorContent">
+                                                    <i class="fas fa-exclamation-circle me-2" id="reviewErrorIcon"></i>
+                                                    <span class="fw-semibold"
+                                                        id="reviewErrorMessage">{{ $message }}</span>
+                                                </div>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Image Upload Section -->
+                                    <div class="image-upload-section mt-5" id="imageUploadSection">
+                                        <div class="upload-header mb-3" id="uploadHeader">
+                                            <h5 class="fw-bold text-dark mb-2" id="uploadTitle">
+                                                <i class="fas fa-images me-2 text-warning"></i>
+                                                Upload Product Photos
+                                            </h5>
+                                            <p class="text-muted small mb-0" id="uploadDescription">
+                                                Share photos of your product (JPG, JPEG, PNG only)
+                                            </p>
+                                        </div>
+
+                                        <div class="upload-area-wrapper" id="uploadAreaWrapper">
+                                            <div class="upload-area border rounded-3 p-4 text-center position-relative"
+                                                wire:loading.attr='disabled' wire:target='images' id="uploadArea"
+                                                style="border-style: dashed !important; border-color: #dee2e6; background: #f8f9fa; cursor: pointer; transition: all 0.3s ease;"
+                                                onclick="document.getElementById('imageUpload').click()">
+                                                <input type="file" wire:model.live="images" id="imageUpload"
+                                                    class="d-none" multiple accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG">
+
+                                                <div class="upload-icon mb-3" id="uploadIcon">
+                                                    <i
+                                                        class="fas fa-cloud-upload-alt fa-3x text-warning opacity-75"></i>
+                                                </div>
+
+                                                <h6 class="fw-bold mb-2" id="uploadAreaTitle" wire:loading.remove
+                                                    wire:target='images'>
+                                                    Drop images here or click to upload
+                                                </h6>
+
+                                                <p class="text-muted small mb-3" id="uploadAreaDescription"
+                                                    wire:loading.remove wire:target='images'>
+                                                    Maximum 5 images • JPG, JPEG, PNG only • 5MB max per image
+                                                </p>
+
+                                                <h6 class="fw-bold mb-2" id="uploadAreaTitle" wire:loading
+                                                    wire:target='images'>
+                                                    Uploading...
+                                                </h6>
+
+                                                <button wire:loading.remove wire:loading.attr='disabled'
+                                                    wire:target='images' type="button"
+                                                    class="btn btn-warning rounded-pill px-4" id="uploadButton">
+                                                    <i class="fas fa-plus me-2"></i>Choose Files
+                                                </button>
+                                            </div>
+
+                                            <!-- Uploaded Images Preview -->
+                                            <div class="uploaded-images-preview mt-3" id="uploadedImagesPreview"
+                                                wire:loading.attr='disabled' wire:target='images'>
+                                                @if ($this->old_images && count($this->old_images) > 0)
+                                                    <div class="row g-2" id="imagesPreviewRow">
+                                                        @foreach ($this->old_images as $index => $image)
+                                                            <div class="col-4 col-md-3"
+                                                                id="imagePreview{{ $index }}">
+                                                                <div class="image-preview-container position-relative rounded border overflow-hidden"
+                                                                    style="aspect-ratio: 1/1;">
+                                                                    <img src="{{ $image->temporaryUrl() }}"
+                                                                        alt="Preview {{ $index + 1 }}"
+                                                                        class="img-fluid w-100 h-100 object-fit-cover">
+                                                                    <button type="button"
+                                                                        class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 p-1"
+                                                                        style="width: 24px; height: 24px; border-radius: 50%;"
+                                                                        wire:click="removeImage({{ $index }})">
+                                                                        <i class="fas fa-times fa-xs"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+
+                                                    <div class="upload-info mt-2" id="uploadInfo">
+                                                        <small class="text-success">
+                                                            <i class="fas fa-check-circle me-1"></i>
+                                                            {{ count($this->old_images) }} image(s) selected
+                                                        </small>
+                                                    </div>
+                                                @else
+                                                    <div class="no-images text-center py-3" id="noImages"
+                                                        wire:loading.remove wire:target='images'>
+                                                        <i class="fas fa-images fa-2x text-muted opacity-50 mb-2"></i>
+                                                        <p class="text-muted small mb-0">No images selected yet</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            @error('images.*')
+                                                <div class="alert alert-danger alert-dismissible fade show mt-2"
+                                                    role="alert" id="imageErrorAlert">
+                                                    <div class="d-flex align-items-center" id="imageErrorContent">
+                                                        <i class="fas fa-exclamation-circle me-2" id="imageErrorIcon"></i>
+                                                        <span class="fw-semibold"
+                                                            id="imageErrorMessage">{{ $message }}</span>
+                                                    </div>
+                                                </div>
+                                            @enderror
+
+                                            <!-- File Type Validation Error -->
+                                            @error('images')
+                                                <div class="alert alert-danger alert-dismissible fade show mt-2"
+                                                    role="alert" id="fileTypeErrorAlert">
+                                                    <div class="d-flex align-items-center" id="fileTypeErrorContent">
+                                                        <i class="fas fa-exclamation-circle me-2"
+                                                            id="fileTypeErrorIcon"></i>
+                                                        <span class="fw-semibold"
+                                                            id="fileTypeErrorMessage">{{ $message }}</span>
+                                                    </div>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -175,12 +333,13 @@
                     <div class="modal-footer border-top p-4" id="ratingModalFooter">
                         <div class="d-grid gap-2 w-100" id="ratingActionButtons">
                             <button class="btn btn-warning btn-lg rounded-pill shadow-sm" type="button"
-                                wire:click="submitRating" wire:loading.attr='disabled' wire:target='submitRating'
+                                wire:click="submitRating" wire:loading.attr='disabled'
+                                wire:target='submitRating,product_rating,review,images,is_anonymous'
                                 id="submitRatingBtn">
                                 <div class="d-flex align-items-center justify-content-center"
                                     id="submitRatingContent">
                                     <span wire:target='submitRating' wire:loading.remove id="submitRatingText">
-                                        <i class="fas fa-thumbs-up me-2" id="submitRatingIcon"></i>Submit Rating
+                                        <i class="fas fa-thumbs-up me-2" id="submitRatingIcon"></i>Submit Review
                                     </span>
                                     <span wire:target='submitRating' wire:loading id="submittingRatingText">
                                         <span class="spinner-border spinner-border-sm me-2"
@@ -210,7 +369,7 @@
     <style>
         #ratingModalContent {
             border: none;
-            max-width: 500px;
+            max-width: 550px;
             margin: 0 auto;
             transition: all 0.3s ease;
         }
@@ -435,6 +594,99 @@
             }
         }
 
+        /* Review Textarea Styles */
+        .review-textarea {
+            resize: none;
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .review-textarea:focus {
+            border-color: #ffc107 !important;
+            box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+            outline: none;
+        }
+
+        .review-textarea:hover {
+            border-color: #ced4da;
+        }
+
+        #reviewCounter {
+            font-size: 12px;
+        }
+
+        /* Image Upload Styles */
+        #uploadArea:hover {
+            border-color: #ffc107 !important;
+            background: #fff9e6 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #uploadArea.drag-over {
+            border-color: #28a745 !important;
+            background: #e6ffed !important;
+        }
+
+        #uploadIcon {
+            animation: uploadFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes uploadFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        #uploadButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+        }
+
+        .image-preview-container {
+            transition: all 0.3s ease;
+        }
+
+        .image-preview-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-preview-container .btn-danger {
+            opacity: 0.8;
+            transition: all 0.2s ease;
+        }
+
+        .image-preview-container:hover .btn-danger {
+            opacity: 1;
+        }
+
+        #imageErrorAlert,
+        #fileTypeErrorAlert,
+        #reviewErrorAlert {
+            animation: errorSlideIn 0.3s ease-out;
+        }
+
+        @keyframes errorSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         #ratingErrorAlert {
             border-left: 4px solid #dc3545;
             background: linear-gradient(135deg, #f8d7da 0%, #f5c2c7 100%);
@@ -576,6 +828,7 @@
         @media (max-width: 576px) {
             #ratingModalContent {
                 margin: 0.5rem;
+                max-width: 95%;
             }
 
             #ratingModalHeader {
@@ -621,6 +874,19 @@
                 font-size: 3rem;
             }
 
+            .review-textarea {
+                font-size: 13px;
+                padding: 12px;
+            }
+
+            .upload-area {
+                padding: 2rem !important;
+            }
+
+            #uploadIcon i {
+                font-size: 2.5rem;
+            }
+
             .star-label::after {
                 display: none;
             }
@@ -655,6 +921,18 @@
             #selectedRatingBadge {
                 padding: 0.5rem 1rem;
                 font-size: 0.9rem;
+            }
+
+            .upload-area {
+                padding: 1.5rem !important;
+            }
+
+            #uploadAreaTitle {
+                font-size: 0.9rem;
+            }
+
+            #uploadAreaDescription {
+                font-size: 0.8rem;
             }
         }
 
@@ -707,7 +985,87 @@
                 modal.addEventListener('hidden.bs.modal', function() {
                     Livewire.dispatch('resetInputs');
                 });
+                // Image upload drag and drop
+                const uploadArea = document.getElementById('uploadArea');
+                const fileInput = document.getElementById('imageUpload');
 
+                if (uploadArea && fileInput) {
+                    // Prevent default drag behaviors
+                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                        uploadArea.addEventListener(eventName, preventDefaults, false);
+                    });
+
+                    function preventDefaults(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+
+                    // Highlight drop area when item is dragged over it
+                    ['dragenter', 'dragover'].forEach(eventName => {
+                        uploadArea.addEventListener(eventName, highlight, false);
+                    });
+
+                    ['dragleave', 'drop'].forEach(eventName => {
+                        uploadArea.addEventListener(eventName, unhighlight, false);
+                    });
+
+                    function highlight(e) {
+                        uploadArea.classList.add('drag-over');
+                    }
+
+                    function unhighlight(e) {
+                        uploadArea.classList.remove('drag-over');
+                    }
+
+                    // Handle dropped files
+                    uploadArea.addEventListener('drop', handleDrop, false);
+
+                    function handleDrop(e) {
+                        const dt = e.dataTransfer;
+                        const files = dt.files;
+
+                        if (files.length > 0) {
+                            // Validate file types
+                            const validFiles = Array.from(files).filter(file => {
+                                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                                return validTypes.includes(file.type);
+                            });
+
+                            if (validFiles.length > 0) {
+                                // Create a new DataTransfer object
+                                const dataTransfer = new DataTransfer();
+
+                                // Add existing files if any
+                                if (fileInput.files) {
+                                    Array.from(fileInput.files).forEach(file => {
+                                        dataTransfer.items.add(file);
+                                    });
+                                }
+
+                                // Add new files (limit to 5 total)
+                                let fileCount = dataTransfer.items.length;
+                                for (let file of validFiles) {
+                                    if (fileCount < 5) {
+                                        dataTransfer.items.add(file);
+                                        fileCount++;
+                                    }
+                                }
+
+                                // Assign files to input
+                                fileInput.files = dataTransfer.files;
+
+                                // Trigger change event
+                                fileInput.dispatchEvent(new Event('change', {
+                                    bubbles: true
+                                }));
+                            } else {
+                                alert('Only JPG, JPEG, and PNG files are allowed.');
+                            }
+                        }
+                    }
+                }
+
+                // Rating functionality
                 const ratingInputs = document.querySelectorAll('.rating-input');
                 const starLabels = document.querySelectorAll('.star-label');
                 const selectedRatingBadge = document.getElementById('selectedRatingBadge');

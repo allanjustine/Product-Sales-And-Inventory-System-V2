@@ -7,10 +7,13 @@ use App\Events\RepurchaseAndSubmitRating;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Index extends Component
 {
@@ -33,6 +36,12 @@ class Index extends Component
     public $orders;
     public $order_quantity;
     public $user_rating;
+    public $is_anonymous;
+    public $review;
+    public $images = [];
+    public $old_images = [];
+
+    use WithFileUploads;
 
     #[On('isRefresh')]
     public function mount()
@@ -53,7 +62,7 @@ class Index extends Component
             ->whereNotIn('order_status', ['Cancelled'])
             ->sum('order_total_amount');
 
-        $this->recents = Order::orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
+        $this->recents = Order::with('orderRating')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
             $query->where('order_status', 'Paid')
                 ->orWhere('order_status', 'Complete');
         })
@@ -119,14 +128,29 @@ class Index extends Component
 
         switch ($order->order_status) {
             case 'Pending':
-                $product = Product::find($order->product_id);
+                $product = Product::with('productSizes', 'productColors')->findOrFail($order->product_id);
 
                 $order->order_status = 'Cancelled';
+
+                if ($order->hasVariation()) {
+                    if ($order->product_size_id) {
+                        $order->productSize->stock += $order->order_quantity;
+                    }
+
+                    if ($order->product_color_id) {
+                        $order->productColor->stock += $order->order_quantity;
+                    }
+                } else {
+                    $product->product_stock += $order->order_quantity;
+                }
+
+                $product->save();
+
                 $order->save();
 
-                $product->product_stock += $order->order_quantity;
-                $product->product_sold -= $order->order_quantity;
-                $product->save();
+                $order->productSize?->save();
+
+                $order->productColor?->save();
 
                 $data['title'] = 'Cancelled';
                 $data['type'] = 'success';
@@ -196,74 +220,126 @@ class Index extends Component
     {
         $order = Order::find($orderId);
 
-        $data = [
-            'title',
-            'type',
-            'message'
-        ];
+        try {
+            DB::transaction(function () use ($order) {
+                $data = [
+                    'title',
+                    'type',
+                    'message'
+                ];
 
-        if (!$order) {
-            $data['title'] = 'Sorry';
-            $data['type'] = 'error';
-            $data['message'] = 'The order you are trying to re-pruchase does not exist';
+                if (!$order) {
+                    throw new \Exception('The order you are trying to re-pruchase does not exist');
+                }
+
+                $product = Product::with('productSizes', 'productColors')->find($order->product_id);
+
+                if (!$product) {
+                    throw new \Exception('The product you are trying to re-pruchase does not exist');
+                }
+
+                if ($product->product_status == 'Not Available') {
+                    throw new \Exception('The product you are trying to re-pruchase is Not Available');
+                }
+
+                $availableStock = $product->productStocks();
+                $availableProductStock = $order->product->product_stock;
+                $availableProductSizeStock = $order->productSize->stock;
+                $availableProductColorStock = $order->productColor->stock;
+
+                if ($availableStock < $order->order_quantity) {
+                    throw new \Exception('The product you are trying to re-pruchase is out of stock');
+                }
+
+                if ($availableProductSizeStock < $order->order_quantity) {
+                    throw new \Exception('The product you are trying to re-pruchase is not enough size stock or out of stock');
+                }
+
+                if ($availableProductColorStock < $order->order_quantity) {
+                    throw new \Exception('The product you are trying to re-pruchase is not enough color stock or out of stock');
+                }
+
+                if ($availableProductStock < $order->order_quantity) {
+                    throw new \Exception('The product you are trying to re-pruchase is not enough stock or out of stock');
+                }
+
+                $order->order_status = 'Pending';
+                $order->created_at = now();
+
+                if ($order->hasVariation()) {
+                    if ($order->product_size_id) {
+                        $order->productSize->stock -= $order->order_quantity;
+                    }
+
+                    if ($order->product_color_id) {
+                        $order->productColor->stock -= $order->order_quantity;
+                    }
+                } else {
+                    $product->product_stock -= $order->order_quantity;
+                }
+
+                $product->save();
+
+                $order->save();
+
+                $order->productSize?->save();
+
+                $order->productColor?->save();
+
+                $data['title'] = 'Congrats';
+                $data['type'] = 'success';
+                $data['message'] = 'You re-purchased your cancelled order successfully.';
+
+                $this->dispatch('alert', alerts: [
+                    'title'         =>          $data['title'],
+                    'type'          =>          $data['type'],
+                    'message'       =>          $data['message']
+                ]);
+
+                $this->dispatch('isRefresh');
+                $adminId = User::whereHas('roles', function ($query) {
+                    $query->where('name', 'admin');
+                })->pluck('id')->first();
+
+                // event(new RepurchaseAndSubmitRating($order, $adminId));
+                RepurchaseAndSubmitRating::dispatch($order, $adminId);
+                return;
+            });
+        } catch (\Exception $e) {
+            $this->dispatch('alert', alerts: [
+                'title'         => 'Sorry',
+                'type'          => 'error',
+                'message'       => $e->getMessage()
+            ]);
+            return;
         }
-
-        $product = Product::find($order->product_id);
-
-        if (!$product) {
-            $data['title'] = 'Sorry';
-            $data['type'] = 'error';
-            $data['message'] = 'The product you are trying to re-pruchase does not exist';
-        }
-
-        if ($product->product_status == 'Not Available') {
-            $data['title'] = 'Sorry';
-            $data['type'] = 'error';
-            $data['message'] = 'The product you are trying to re-pruchase is Not Available';
-        }
-
-        $availableStock = $product->product_stock;
-
-        if ($availableStock < $order->order_quantity) {
-            $data['title'] = 'Sorry';
-            $data['type'] = 'error';
-            $data['message'] = 'The product you are trying to re-pruchase is out of stock';
-        }
-
-        $order->order_status = 'Pending';
-        $order->created_at = now();
-        $order->save();
-
-        $product->product_stock -= $order->order_quantity;
-        $product->product_sold += $order->order_quantity;
-        $product->save();
-
-        $data['title'] = 'Congrats';
-        $data['type'] = 'success';
-        $data['message'] = 'You re-purchased your cancelled order successfully.';
-
-        $this->dispatch('alert', alerts: [
-            'title'         =>          $data['title'],
-            'type'          =>          $data['type'],
-            'message'       =>          $data['message']
-        ]);
-
-        $this->dispatch('isRefresh');
-        $adminId = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->pluck('id')->first();
-
-        // event(new RepurchaseAndSubmitRating($order, $adminId));
-        RepurchaseAndSubmitRating::dispatch($order, $adminId);
-        return;
     }
 
+    public function updatedImages()
+    {
+        $this->old_images = array_merge($this->images, $this->old_images);
+
+        $this->images = [];
+    }
 
     public function submitRating()
     {
         $received = Order::where('id', $this->received)->first();
 
-        $product = Product::find($received->product_id);
+        $product = Product::with('productRatings')->find($received->product_id);
+
+        $this->validate([
+            'product_rating'          => ['required', 'max:5', 'min:1', 'numeric'],
+            'images.*'                => ['mimes:jpg,png,jpeg', 'max:2048'],
+            'review'                  => ['max:1000']
+        ], [
+            'product_rating.required' => 'Please select a rating',
+            'product_rating.max'      => 'Rating must be between 1 and 5',
+            'product_rating.min'      => 'Rating must be between 1 and 5',
+            'product_rating.numeric'  => 'Rating must be numbers only',
+        ]);
+
+        $data = [];
 
         if ($received->order_status === 'Paid') {
             $this->dispatch('alert', alerts: [
@@ -295,19 +371,39 @@ class Index extends Component
             return;
         }
 
-        $this->validate([
-            'product_rating'        =>          'required|numeric|min:1|max:5'
-        ]);
+        if (!$this->is_anonymous) {
+            $data['user_id'] = Auth::id();
+        }
 
-        $product->product_rating = ($product->product_rating * $product->product_votes + $this->product_rating) / ($product->product_votes + 1);
-        $product->product_votes += 1;
-        $product->save();
+        if ($this->review) {
+            $data['review'] = $this->review;
+        }
 
-        $received->user_rating = $this->product_rating;
-        $received->order_status = 'Complete';
-        $received->save();
+        $data['order_id'] = $received->id;
+        $data['rating'] = $this->product_rating;
+
+        DB::transaction(function () use ($product, $received, $data) {
+            $created_product_rating = $product->productRatings()->create($data);
+            $imagesPaths = [];
+
+            if (count($this->old_images) > 0) {
+                foreach ($this->old_images as $image) {
+                    $name = time() . '-' . $image->getClientOriginalName();
+                    $imagesPaths[] = [
+                        'path' => $image->storeAs('ratings/images', $name, 'public')
+                    ];
+                }
+            }
+
+            $created_product_rating->ratingImages()->createMany($imagesPaths);
+
+            $received->update([
+                'order_status' => 'Complete'
+            ]);
+        });
 
         $newRating = $this->product_rating;
+
         $this->dispatch('alert', alerts: [
             'title'         =>          'Rating Submitted',
             'type'          =>          'success',
@@ -330,6 +426,13 @@ class Index extends Component
         $this->product_rating = '';
 
         $this->resetValidation();
+    }
+
+    public function removeImage($index)
+    {
+        unset($this->old_images[$index]);
+
+        $this->old_images = array_values($this->old_images);
     }
 
     public function render()

@@ -33,7 +33,7 @@
                         @if ($orderToBuy)
                             <div wire:loading wire:target="orderPlaceOrderItem" id="buyNowProcessingOverlay">
                                 <div
-                                    class="position-absolute top-0 start-0 w-100 h-100 bg-white bg-opacity-90 d-flex align-items-center justify-content-center z-3">
+                                    class="position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-90 d-flex align-items-center justify-content-center z-3">
                                     <div class="processing-content text-center p-4 rounded-3 shadow-lg"
                                         id="buyNowProcessingContent">
                                         <div class="spinner-border text-success mb-3" style="width: 3rem; height: 3rem;"
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
 
-                            <div class="buy-now-container" id="buyNowProductContainer">
+                            <div class="buy-now-container" id="buyNowProductContainer" x-data>
                                 <div class="confirmation-section p-4 border-bottom" id="buyNowConfirmation">
                                     <div class="alert alert-success border-0 rounded-3 shadow-sm" role="alert"
                                         id="buyNowAlert">
@@ -69,12 +69,12 @@
                                 <div class="product-preview-section p-4 border-bottom" id="buyNowProductPreview">
                                     <div class="product-image-wrapper text-center mb-4 position-relative"
                                         id="buyNowImageWrapper">
-                                        @if (Storage::exists($orderToBuy->product_image))
-                                            <img src="{{ Storage::url($orderToBuy->product_image) }}"
+                                        @if (Storage::exists($orderToBuy->productImages()?->first()?->path))
+                                            <img src="{{ Storage::url($orderToBuy->productImages()?->first()?->path) }}"
                                                 alt="{{ $orderToBuy->product_name }}"
                                                 class="img-fluid rounded-3 shadow-sm" id="buyNowProductImage">
                                         @else
-                                            <img src="{{ $orderToBuy->product_image }}"
+                                            <img src="{{ $orderToBuy->productImages()?->first()?->path }}"
                                                 alt="{{ $orderToBuy->product_name }}"
                                                 class="img-fluid rounded-3 shadow-sm" id="buyNowProductImage">
                                         @endif
@@ -145,7 +145,7 @@
 
                                                 <input type="number" class="form-control text-center"
                                                     id="buyNowQuantityInput"
-                                                    wire:model.live.debounce.200ms="order_quantity" min="1"
+                                                    wire:model.live.debounce.500ms="order_quantity" min="1"
                                                     max="{{ $orderToBuy->product_stock }}"
                                                     aria-label="Order Quantity">
 
@@ -161,7 +161,7 @@
                                             <div class="stock-limit-info mt-2 text-center" id="buyNowStockLimitInfo">
                                                 <small class="text-muted" id="buyNowStockLimitText">
                                                     <i class="fas fa-info-circle me-1" id="buyNowStockInfoIcon"></i>
-                                                    Maximum: {{ number_format($orderToBuy->product_stock) }} units
+                                                    Maximum: {{ number_format($orderToBuy->productStocks()) }} units
                                                     available
                                                 </small>
                                             </div>
@@ -175,6 +175,55 @@
                                                         aria-label="Close" id="buyNowCloseErrorBtn"></button>
                                                 </div>
                                             @enderror
+
+                                            @if ($orderToBuy->productSizes->isNotEmpty())
+                                                <div class="col-12 my-3">
+                                                    <h6 class="fw-bold">Sizes</h6>
+                                                    <div class="d-flex flex-wrap gap-2">
+                                                        @foreach ($orderToBuy->productSizes as $productSize)
+                                                            <span
+                                                                @role('user') wire:click='toggleProductVariant("size", {{ $productSize->id }})' @endrole
+                                                                @style([
+                                                                    'cursor: not-allowed; background-color: #ccc; font-size: 8px;' => $productSize->stock < 1,
+                                                                ]) @class([
+                                                                    'selected-color-size' => $this->product_size_id === $productSize->id,
+                                                                    'badge flex-grow-1 text-black border p-3',
+                                                                ])
+                                                                id="color-size">
+                                                                {{ $productSize->name }}
+                                                                ({{ $productSize->stock ?: 'OUT OF STOCK' }})
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                    @error('product_size_id')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            @endif
+                                            @if ($orderToBuy->productColors->isNotEmpty())
+                                                <div class="col-12 my-3">
+                                                    <h6 class="fw-bold">Colors</h6>
+                                                    <div class="d-flex flex-wrap gap-2">
+                                                        @foreach ($orderToBuy->productColors as $productColor)
+                                                            <span
+                                                                @role('user') wire:click='toggleProductVariant("color", {{ $productColor->id }})' @endrole
+                                                                @style([
+                                                                    'cursor: not-allowed; background-color: #ccc; font-size: 8px;' => $productColor->stock < 1,
+                                                                ]) @class([
+                                                                    'selected-color-size' => $this->product_color_id === $productColor->id,
+                                                                    'badge flex-grow-1 text-black border p-3',
+                                                                ])
+                                                                id="color-size">
+                                                                {{ $productColor->name }}
+                                                                ({{ $productColor->stock ?: 'OUT OF STOCK' }})
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                    @error('product_color_id')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            @endif
 
                                             @if ($order_quantity > $orderToBuy->product_stock)
                                                 <div class="alert alert-warning alert-dismissible fade show mt-3"
@@ -209,7 +258,6 @@
                                                         @endif
                                                     </div>
                                                 </div>
-
                                                 <div class="d-flex flex-column align-items-center"
                                                     id="buyNowSummaryDetails">
                                                     <small class="text-muted" id="buyNowSummarySubtitle">Total
@@ -233,7 +281,7 @@
                             <div class="d-grid gap-2 w-100" id="buyNowActionButtons">
                                 <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm"
                                     id="buyNowConfirmBtn" wire:click="orderPlaceOrderItem"
-                                    wire:loading.attr="disabled" wire:target="orderPlaceOrderItem"
+                                    wire:loading.attr="disabled" wire:target="orderPlaceOrderItem,order_quantity,toggleProductVariant"
                                     {{ $order_quantity > $orderToBuy->product_stock ? 'disabled' : '' }}>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span wire:loading.remove wire:target="orderPlaceOrderItem"

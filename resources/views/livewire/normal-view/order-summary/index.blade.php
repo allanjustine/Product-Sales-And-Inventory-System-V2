@@ -11,14 +11,6 @@
                     and is now being processed.</p>
                 <div class="order-details d-none d-md-block">
                     <div class="detail-row">
-                        <span class="detail-label">Order Transaction Codes</span>
-                        <div class="d-flex gap-2 flex-column" style="max-height: 70px; overflow-y: auto;">
-                            @foreach ($this->order_transaction_codes as $key => $item)
-                                <span class="detail-value" wire:key='{{ $key }}'>{{ $item }}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="detail-row">
                         <span class="detail-label">Order Date</span>
                         <span class="detail-value">{{ $this->order_date }}</span>
                     </div>
@@ -28,7 +20,7 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Total Amount</span>
-                        <span class="detail-value highlight-value">₱{{ number_format($this->total_amount, 2) }}</span>
+                        <span class="detail-value highlight-value text-lg">₱{{ number_format($this->total_amount, 2) }}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Estimated Delivery</span>
@@ -80,12 +72,12 @@
                                     @foreach ($this->orderSummaries as $index => $summary)
                                         <div class="row product-row align-items-center" wire:key='{{ $index }}'>
                                             <div class="col-4 col-md-2">
-                                                @if (Storage::exists($summary->product->product_image))
-                                                    <img src="{{ Storage::url($summary->product->product_image) }}"
+                                                @if (Storage::exists($summary->product->productImages()?->first()?->path))
+                                                    <img src="{{ Storage::url($summary->product->productImages()?->first()?->path) }}"
                                                         class="product-image"
                                                         alt="{{ $summary->product->product_name }}">
                                                 @else
-                                                    <img src="{{ url($summary->product->product_image) }}"
+                                                    <img src="{{ url($summary->product->productImages()?->first()?->path) }}"
                                                         class="product-image"
                                                         alt="{{ $summary->product->product_name }}">
                                                 @endif
@@ -98,7 +90,7 @@
                                                 </h6>
                                                 <p class="text-muted mb-0 small">{{ $summary->product->product_code }}
                                                 </p>
-                                                <p class="mb-0 small">Quantity: {{ $summary->order_quantity }}</p>
+                                                <p class="mb-0 small">Quantity: x{{ $summary->order_quantity }}</p>
                                                 <p class="mb-0 small text-info">Discount:
                                                     {{ $summary->product->discount }}</p>
                                             </div>
@@ -167,7 +159,7 @@
                                     </div> --}}
                                         <div class="row pt-3 border-top">
                                             <div class="col-12 col-md-8 fw-bold">Total Amount</div>
-                                            <div class="col-12 col-md-4 text-md-end fw-semibold total-amount">
+                                            <div class="col-12 col-md-4 text-md-end fw-semibold total-amount text-lg">
                                                 ₱{{ number_format(
                                                     $this->orderSummaries->sum(function ($item) {
                                                         return $item->product->product_price * $item->order_quantity;
@@ -217,13 +209,14 @@
                                         <button class="btn btn-lg btn-primary mt-2" type="button"
                                             wire:click='placeOrderItems' wire:loading.attr="disabled"
                                             wire:target='placeOrderItems'>
-                                            <span wire:loading.remove wire:target='placeOrderItems'><i class="fa-solid fa-box-check"></i> Place Order</span>
+                                            <span wire:loading.remove wire:target='placeOrderItems'><i
+                                                    class="fa-solid fa-box-check"></i> Place Order</span>
                                             <span class="spinner-border" wire:loading
                                                 wire:target='placeOrderItems'></span>
                                         </button>
                                         <button class="btn btn-lg btn-danger" type="button"
                                             wire:click='cancelOrderItems'>
-                                           <i class="fa-solid fa-circle-xmark"></i> Cancel
+                                            <i class="fa-solid fa-circle-xmark"></i> Cancel
                                         </button>
                                     </div>
                                 </div>

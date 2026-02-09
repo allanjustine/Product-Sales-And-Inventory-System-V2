@@ -34,7 +34,8 @@
                                     <div class="alert alert-primary border-0 rounded-4 shadow-sm" role="alert"
                                         id="deliveryAddressAlert">
                                         <div class="d-flex align-items-center">
-                                            <div class="alert-icon me-3 d-none d-md-block" id="deliveryAddressAlertIcon">
+                                            <div class="alert-icon me-3 d-none d-md-block"
+                                                id="deliveryAddressAlertIcon">
                                                 <img src="images/mylogo.jpg" alt="Info Logo" class="rounded-3"
                                                     style="width: 80px;" id="deliveryAddressLogo">
                                             </div>
@@ -196,13 +197,13 @@
                                                     <div class="col-md-2" id="pendingOrderImage{{ $order->id }}">
                                                         <div class="product-image-wrapper rounded-3 overflow-hidden"
                                                             id="pendingImageWrapper{{ $order->id }}">
-                                                            @if (Storage::exists($order->product->product_image))
-                                                                <img src="{{ Storage::url($order->product->product_image) }}"
+                                                            @if (Storage::exists($order->product->productImages()?->first()?->path))
+                                                                <img src="{{ Storage::url($order->product->productImages()?->first()?->path) }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="pendingProductImage{{ $order->id }}">
                                                             @else
-                                                                <img src="{{ $order->product->product_image }}"
+                                                                <img src="{{ $order->product->productImages()?->first()?->path }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="pendingProductImage{{ $order->id }}">
@@ -241,6 +242,26 @@
                                                                 @endif
                                                             </div>
 
+                                                            @if ($order->hasVariation())
+                                                                <div class="d-flex flex-column mb-2">
+                                                                    @if ($order->productSize)
+                                                                        <div>
+                                                                            <span class="text-sm fw-bold">Size:</span>
+                                                                            <span class="badge border text-muted">
+                                                                                {{ $order->productSize->name }}
+                                                                            </span>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($order->productColor)
+                                                                        <div>
+                                                                            <span class="text-sm fw-bold">Color:</span>
+                                                                            <span class="badge border text-muted">
+                                                                                {{ $order->productColor->name }}
+                                                                            </span>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endif
                                                             <div class="order-meta"
                                                                 id="pendingOrderMeta{{ $order->id }}">
                                                                 <div class="d-flex flex-wrap gap-3 mb-2">
@@ -369,7 +390,7 @@
 
                                     <div class="grand-total-card bg-light border-0 rounded-4 p-4 mt-4 shadow-sm"
                                         id="pendingGrandTotalCard">
-                                        <div class="d-flex justify-content-between align-items-center"
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap"
                                             id="pendingGrandTotalContent">
                                             <div id="pendingTotalLeft">
                                                 <h5 class="fw-bold mb-1" id="pendingTotalTitle">
@@ -415,13 +436,13 @@
                                                     <div class="col-md-2" id="recentOrderImage{{ $order->id }}">
                                                         <div class="product-image-wrapper rounded-3 overflow-hidden"
                                                             id="recentImageWrapper{{ $order->id }}">
-                                                            @if (Storage::exists($order->product->product_image))
-                                                                <img src="{{ Storage::url($order->product->product_image) }}"
+                                                            @if (Storage::exists($order->product->productImages()?->first()?->path))
+                                                                <img src="{{ Storage::url($order->product->productImages()?->first()?->path) }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="recentProductImage{{ $order->id }}">
                                                             @else
-                                                                <img src="{{ $order->product->product_image }}"
+                                                                <img src="{{ $order->product->productImages()?->first()?->path }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="recentProductImage{{ $order->id }}">
@@ -458,6 +479,27 @@
                                                                     </span>
                                                                 @endif
                                                             </div>
+
+                                                            @if ($order->hasVariation())
+                                                                <div class="d-flex flex-column mb-2">
+                                                                    @if ($order->productSize)
+                                                                        <div>
+                                                                            <span class="text-sm fw-bold">Size:</span>
+                                                                            <span class="badge border text-muted">
+                                                                                {{ $order->productSize->name }}
+                                                                            </span>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($order->productColor)
+                                                                        <div>
+                                                                            <span class="text-sm fw-bold">Color:</span>
+                                                                            <span class="badge border text-muted">
+                                                                                {{ $order->productColor->name }}
+                                                                            </span>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endif
 
                                                             <div class="order-meta"
                                                                 id="recentOrderMeta{{ $order->id }}">
@@ -533,6 +575,11 @@
                                                                         </span>
                                                                     @endif
                                                                 </div>
+                                                                <div class="mt-2">
+                                                                    @for ($i = 1; $i <= $order->orderRating->rating; $i++)
+                                                                        <i class="fa-solid fa-star"></i>
+                                                                    @endfor
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -555,7 +602,7 @@
                                                                 <button
                                                                     class="btn btn-outline-primary btn-sm rounded-pill"
                                                                     id="settlementBtn{{ $order->id }}">
-                                                                    <i class="fas fa-sack-dollar me-1"
+                                                                    <i class="fa-solid fa-sack-dollar me-1"
                                                                         id="settlementIcon{{ $order->id }}"></i>Payment
                                                                     Settlement
                                                                 </button>
@@ -585,7 +632,7 @@
 
                                     <div class="grand-total-card bg-light border-0 rounded-4 p-4 mt-4 shadow-sm"
                                         id="recentGrandTotalCard">
-                                        <div class="d-flex justify-content-between align-items-center"
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap"
                                             id="recentGrandTotalContent">
                                             <div id="recentTotalLeft">
                                                 <h5 class="fw-bold mb-1" id="recentTotalTitle">
@@ -631,13 +678,13 @@
                                                         id="cancelledOrderImage{{ $order->id }}">
                                                         <div class="product-image-wrapper rounded-3 overflow-hidden opacity-75"
                                                             id="cancelledImageWrapper{{ $order->id }}">
-                                                            @if (Storage::exists($order->product->product_image))
-                                                                <img src="{{ Storage::url($order->product->product_image) }}"
+                                                            @if (Storage::exists($order->product->productImages()?->first()?->path))
+                                                                <img src="{{ Storage::url($order->product->productImages()?->first()?->path) }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="cancelledProductImage{{ $order->id }}">
                                                             @else
-                                                                <img src="{{ $order->product->product_image }}"
+                                                                <img src="{{ $order->product->productImages()?->first()?->path }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="cancelledProductImage{{ $order->id }}">
@@ -678,6 +725,27 @@
                                                                     </span>
                                                                 @endif
                                                             </div>
+
+                                                            @if ($order->hasVariation())
+                                                                <div class="d-flex flex-column mb-2">
+                                                                    @if ($order->productSize)
+                                                                        <div>
+                                                                            <span class="text-sm fw-bold">Size:</span>
+                                                                            <span class="badge border text-muted">
+                                                                                {{ $order->productSize->name }}
+                                                                            </span>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($order->productColor)
+                                                                        <div>
+                                                                            <span class="text-sm fw-bold">Color:</span>
+                                                                            <span class="badge border text-muted">
+                                                                                {{ $order->productColor->name }}
+                                                                            </span>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endif
 
                                                             <div class="order-meta"
                                                                 id="cancelledOrderMeta{{ $order->id }}">
@@ -746,7 +814,7 @@
 
                                     <div class="grand-total-card bg-light border-0 rounded-4 p-4 mt-4 shadow-sm"
                                         id="cancelledGrandTotalCard">
-                                        <div class="d-flex justify-content-between align-items-center"
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap"
                                             id="cancelledGrandTotalContent">
                                             <div id="cancelledTotalLeft">
                                                 <h5 class="fw-bold mb-1 text-muted" id="cancelledTotalTitle">

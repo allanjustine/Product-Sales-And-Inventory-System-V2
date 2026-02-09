@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ProductColor;
+use App\Models\ProductSize;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(ProductSize::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductColor::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->nullable();
             $table->foreignId('user_id')->nullable();
             $table->integer('order_quantity');
-            $table->decimal('order_price', 10, 2);
-            $table->decimal('order_total_amount', 10, 2);
+            $table->decimal('order_price', 15, 2);
+            $table->decimal('order_total_amount', 15, 2);
             $table->string('order_payment_method');
-            $table->string('user_rating')->default(0);
             $table->string('transaction_code');
             $table->string('order_status')->default('Pending');
             $table->text('shipping_address');
