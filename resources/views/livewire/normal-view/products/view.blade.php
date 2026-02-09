@@ -350,65 +350,37 @@
                                 </div>
 
                                 <div class="reviews-section border-top bg-white">
-                                    <div class="p-3 p-md-4 p-lg-5">
-                                        <h5 class="fw-bold mb-3 mb-md-4">
-                                            <i class="fa-solid fa-star me-2 text-warning"></i>Customer Reviews
-                                            <span class="badge bg-primary bg-opacity-10 text-primary ms-2">12
-                                                reviews</span>
-                                        </h5>
-
-                                        <div class="reviews-container">
-                                            <div class="review-item border-bottom pb-3 pb-md-4 mb-3 mb-md-4">
-                                                <div class="d-flex align-items-start mb-2 mb-md-3">
-                                                    <div class="me-2 me-md-3">
-                                                        <div class="user-avatar rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
-                                                            style="width: 40px; height: 40px;">
-                                                            <i class="fa-solid fa-user text-primary fa-sm"></i>
-                                                        </div>
+                                    @role('user')
+                                        <x-product-review-lists :reviews="$productView->productRatings" />
+                                    @else
+                                        <div class="review-login-prompt border rounded-4 bg-light-subtle my-4">
+                                            <div
+                                                class="d-flex flex-column align-items-center justify-content-center p-4 p-md-5 text-center">
+                                                <div class="login-icon-wrapper mb-4">
+                                                    <div class="icon-circle bg-opacity-10 p-4 rounded-circle">
+                                                        <i class="fa-solid fa-star fa-3x text-warning"></i>
                                                     </div>
-                                                    <div class="flex-grow-1">
-                                                        <div
-                                                            class="d-flex justify-content-between align-items-start flex-wrap">
-                                                            <div class="mb-1">
-                                                                <h6 class="fw-bold mb-0" style="font-size: 14px;">John
-                                                                    Smith</h6>
-                                                                <div class="stars mb-0" style="font-size: 11px;">
-                                                                    <i class="fa-solid fa-star text-warning"></i>
-                                                                    <i class="fa-solid fa-star text-warning"></i>
-                                                                    <i class="fa-solid fa-star text-warning"></i>
-                                                                    <i class="fa-solid fa-star text-warning"></i>
-                                                                    <i class="fa-solid fa-star text-warning"></i>
-                                                                </div>
-                                                            </div>
-                                                            <small class="text-muted" style="font-size: 11px;">2 days
-                                                                ago</small>
-                                                        </div>
-                                                        <p class="mb-1 mb-md-2"
-                                                            style="font-size: 13px; line-height: 1.4;">Excellent
-                                                            product! Exceeded my expectations. The quality is
-                                                            outstanding and it arrived earlier than expected.</p>
+                                                </div>
 
-                                                        <div class="review-images d-flex gap-1 gap-md-2 mt-1 mt-md-2">
-                                                            <img src="https://media.istockphoto.com/id/154960461/photo/red-sweat-shirt-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=Dt1h6jsUfwyJolpalOYanvF5kG6VTWhjDI1zVcbdYJY="
-                                                                class="rounded border"
-                                                                style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
-                                                                onclick="openImageModal(this.src)">
-                                                            <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fFNob2VzfGVufDB8fDB8fHww"
-                                                                class="rounded border"
-                                                                style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
-                                                                onclick="openImageModal(this.src)">
-                                                        </div>
-                                                    </div>
+                                                <div class="login-content mb-4">
+                                                    <h4 class="fw-bold mb-3" style="color: #2c3e50;">Login to View Reviews
+                                                    </h4>
+                                                    <p class="text-muted mb-0" style="max-width: 400px; margin: 0 auto;">
+                                                        Sign in to see what other customers are saying about this product
+                                                        and share your own experience.
+                                                    </p>
+                                                </div>
+
+                                                <div class="login-actions">
+                                                    <a href="/login" wire:navigate
+                                                        class="btn btn-warning btn-lg rounded-pill px-4 px-md-5 shadow-sm fw-semibold"
+                                                        style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); border: none;">
+                                                        <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In Now
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-center mt-3 mt-md-4">
-                                            <button class="btn btn-outline-primary rounded-pill px-3 px-md-4"
-                                                style="font-size: 14px;">
-                                                <i class="fa-solid fa-eye me-1 me-md-2"></i>View All 12 Reviews
-                                            </button>
-                                        </div>
-                                    </div>
+                                    @endrole
                                 </div>
                             </div>
                         @else

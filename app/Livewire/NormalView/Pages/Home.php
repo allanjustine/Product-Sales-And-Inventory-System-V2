@@ -52,7 +52,13 @@ class Home extends Component
 
     public function essentialItems()
     {
-        $topDeals = Product::with(['product_category', 'productImages', 'favorites.product'])
+        $topDeals = Product::with([
+            'product_category',
+            'productImages',
+            'favorites.product',
+            'productRatings.ratingImages',
+            'productRatings.user'
+        ])
             ->withSum([
                 'orders'
                 =>
@@ -77,7 +83,13 @@ class Home extends Component
             ->take(value: 12)
             ->get();
 
-        $popularityDeals = Product::with(['product_category', 'productImages', 'favorites.product'])
+        $popularityDeals = Product::with([
+            'product_category',
+            'productImages',
+            'favorites.product',
+            'productRatings.ratingImages',
+            'productRatings.user',
+        ])
             ->withSum([
                 'orders'
                 =>
@@ -96,7 +108,13 @@ class Home extends Component
             ->take(12)
             ->get();
 
-        $latestProducts = Product::with(['product_category', 'productImages', 'favorites.product'])
+        $latestProducts = Product::with([
+            'product_category',
+            'productImages',
+            'favorites.product',
+            'productRatings.ratingImages',
+            'productRatings.user',
+        ])
             ->withSum([
                 'orders'
                 =>

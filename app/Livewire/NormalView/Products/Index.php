@@ -307,7 +307,9 @@ class Index extends Component
                 'product_category',
                 'productSizes',
                 'productColors',
-                'productImages'
+                'productImages',
+                'productRatings.ratingImages',
+                'productRatings.user',
             ])
             ->find($id);
 
