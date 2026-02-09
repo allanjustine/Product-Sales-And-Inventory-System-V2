@@ -2,6 +2,8 @@
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,6 +21,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Cart::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductSize::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductColor::class)->nullable()->constrained()->cascadeOnDelete();
             $table->integer('order_quantity');
             $table->timestamps();
         });

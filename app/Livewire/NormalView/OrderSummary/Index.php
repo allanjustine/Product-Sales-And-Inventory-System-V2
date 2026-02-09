@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderSummary;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
@@ -19,7 +20,6 @@ class Index extends Component
 
     public $purchase_completed = false;
     public $shipping_address = '';
-    public $order_transaction_codes = [];
     public $order_date = null;
     public $payment_method = 'Cash on Delivery';
     public $total_amount = 0;
@@ -46,77 +46,143 @@ class Index extends Component
 
     public function placeOrderItems()
     {
-        $orderSummaries = OrderSummary::where('user_id', Auth::id())
-            ->get();
+        try {
+            $orderSummaries = OrderSummary::with('productSize', 'productColor')
+                ->where('user_id', Auth::id())
+                ->get();
 
-        $carts = $orderSummaries->pluck('cart_id')->filter();
-
-        $adminId = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->pluck('id')->first();
-
-        if (!Auth::user()->user_location) {
-            return $this->dispatch('toastr', data: ['type' => 'error', 'message' => 'Please set your shipping address first']);
-        }
-
-        foreach ($orderSummaries as $orderSummary) {
-            $existingOrder = Order::where([
-                ['user_id', auth()->id()],
-                ['product_id', $orderSummary->product->id],
-                ['order_status', 'Pending'],
-                ['shipping_address', Auth::user()->user_location]
-            ])->first();
-
-            if ($existingOrder) {
-                $existingOrder->update([
-                    'order_quantity'     => $existingOrder->order_quantity + $orderSummary->order_quantity,
-                    'order_total_amount' => $existingOrder->order_total_amount + ($orderSummary->order_quantity * $orderSummary->product->product_price),
-                    'created_at'         => now()
-                ]);
-
-                $this->order_transaction_codes[] = $existingOrder->transaction_code;
-                $this->total_amount += $orderSummary->order_quantity * $orderSummary->product->product_price;
-            } else {
-                $transactionCode = 'AJM-' . Str::random(10);
-
-                $order = Order::create([
-                    "user_id"              => auth()->id(),
-                    "product_id"           => $orderSummary->product->id,
-                    "order_quantity"       => $orderSummary->order_quantity,
-                    "order_price"          => $orderSummary->product->product_price,
-                    "order_total_amount"   => $orderSummary->order_quantity * $orderSummary->product->product_price,
-                    "order_payment_method" => "Cash On Delivery",
-                    "order_status"         => 'Pending',
-                    "transaction_code"     => $transactionCode,
-                    "shipping_address"     => Auth::user()->user_location
-                ]);
-
-                $this->order_transaction_codes[] = $order->transaction_code;
-                $this->total_amount += $order->order_total_amount;
+            if($orderSummaries->isEmpty()){
+                return $this->redirect('/products', navigate: true);
             }
-            $orderSummary->product->update([
-                'product_stock' => $orderSummary->product->product_stock - $orderSummary->order_quantity,
-                'product_sold'  => $orderSummary->product->product_sold + $orderSummary->order_quantity
+
+            $adminId = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+            })->pluck('id')->first();
+
+            if (!Auth::user()->user_location) {
+                return $this->dispatch('toastr', data: ['type' => 'error', 'message' => 'Please set your shipping address first']);
+            }
+
+            DB::transaction(function () use ($orderSummaries, $adminId) {
+                foreach ($orderSummaries as $orderSummary) {
+
+                    $productQuantity = $orderSummary->product->productStocks();
+                    $productStatus = $orderSummary->product->product_status;
+
+                    if ($productStatus == 'Not Available') {
+                        throw new \Exception('The product is Not Available.');
+                    }
+
+                    if ($orderSummary->product->productStocks() < $orderSummary->order_quantity) {
+                        throw new \Exception('The product is not enough stock or out of stock.');
+                    }
+
+                    if ($orderSummary->productSize?->stock < $orderSummary->order_quantity) {
+                        throw new \Exception('The selected size is not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                    }
+
+                    if ($orderSummary->productColor?->stock < $orderSummary->order_quantity) {
+                        throw new \Exception('The selected color is not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                    }
+
+                    if ($orderSummary->product?->product_stock < $orderSummary->order_quantity) {
+                        throw new \Exception('The product stock not enough stock or out of stock. Please reduce your order quantity or replace it.');
+                    }
+
+                    if ($orderSummary->order_quantity > $productQuantity) {
+                        throw new \Exception('The product stock is insufficient please reduce your order quantity or replace it.');
+                    }
+
+                    $existingOrder = Order::where([
+                        ['user_id', auth()->id()],
+                        ['product_id', $orderSummary->product->id],
+                        ['order_status', 'Pending'],
+                        ['shipping_address', Auth::user()->user_location],
+                        ['product_size_id', $orderSummary->product_size_id],
+                        ['product_color_id', $orderSummary->product_color_id],
+                    ])->first();
+
+                    if ($existingOrder) {
+                        $existingOrder->update([
+                            'order_quantity'     => $existingOrder->order_quantity + $orderSummary->order_quantity,
+                            'order_total_amount' => $existingOrder->order_total_amount + ($orderSummary->order_quantity * $orderSummary->product->product_price),
+                            'created_at'         => now()
+                        ]);
+                    } else {
+                        $transactionCode = 'AJM-' . Str::random(10);
+
+                        Order::create([
+                            "user_id"              => auth()->id(),
+                            "product_id"           => $orderSummary->product->id,
+                            "order_quantity"       => $orderSummary->order_quantity,
+                            "order_price"          => $orderSummary->product->product_price,
+                            "order_total_amount"   => $orderSummary->order_quantity * $orderSummary->product->product_price,
+                            "order_payment_method" => "Cash On Delivery",
+                            "order_status"         => 'Pending',
+                            "transaction_code"     => $transactionCode,
+                            "shipping_address"     => Auth::user()->user_location,
+                            'product_size_id'      => $orderSummary->product_size_id,
+                            'product_color_id'     => $orderSummary->product_color_id,
+                        ]);
+                    }
+
+                    if ($orderSummary->hasVariation()) {
+                        if ($orderSummary->productSize) {
+                            $orderSummary->productSize->update([
+                                'stock' => $orderSummary->productSize->stock - $orderSummary->order_quantity
+                            ]);
+                        }
+
+                        if ($orderSummary->productColor) {
+                            $orderSummary->productColor->update([
+                                'stock' => $orderSummary->productColor->stock - $orderSummary->order_quantity
+                            ]);
+                        }
+                    } else {
+                        $orderSummary->product->update([
+                            'product_stock' => $orderSummary->product->product_stock - $orderSummary->order_quantity,
+                        ]);
+                    }
+                }
+
+
+                $carts = $orderSummary?->pluck('cart_id')->filter()->toArray();
+
+                $date = now();
+
+                $this->order_date = $date->format('F j, Y');
+
+                $this->estimated_delivery_date = (clone $date)->addDays(2)->format('M d') . '-' . (clone $date)->addDays(7)->format('M d, Y');
+
+                PlaceOrder::dispatch($adminId);
+
+                Cart::whereIn('id', $carts)->delete();
+
+                $this->total_amount = $orderSummaries->map(function ($orderSummary) {
+                    return [
+                        "total_amount" => $orderSummary->order_quantity * $orderSummary->product->product_price
+
+                    ];
+                })
+                    ->values()
+                    ->sum('total_amount');
+
+                $orderSummaries->each->delete();
+
+                $this->purchase_completed = true;
+
+                $this->dispatch('success-placed-order');
+
+                return;
+            });
+        } catch (\Exception $e) {
+            $this->dispatch('toastr', data: [
+                'type' => 'error',
+                'message' => $e->getMessage()
             ]);
+
+            return;
         }
-
-        $date = now();
-
-        $this->order_date = $date->format('F j, Y');
-
-        $this->estimated_delivery_date = (clone $date)->addDays(2)->format('M d') . '-' . (clone $date)->addDays(7)->format('M d, Y');
-
-        PlaceOrder::dispatch($adminId);
-
-        Cart::whereIn('id', $carts)->delete();
-
-        $orderSummaries->each->delete();
-
-        $this->purchase_completed = true;
-
-        $this->dispatch('success-placed-order');
-
-        return;
     }
 
     public function cancelOrderItems()
