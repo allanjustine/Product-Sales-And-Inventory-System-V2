@@ -6,11 +6,14 @@ use App\Models\Cart;
 use App\Models\Favorite;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Index extends Component
@@ -27,6 +30,14 @@ class Index extends Component
     public $orderPlaceOrder;
     public $loadMore = 20;
     public $loadMorePlus = 20;
+    public $has_sizes = false;
+    public $has_colors = false;
+
+    #[Validate('required_if:has_sizes,true', message: 'Please select a product size.')]
+    public $product_size_id = null;
+
+    #[Validate('required_if:has_colors,true', message: 'Please select a product color.')]
+    public $product_color_id = null;
 
     public function loadMorePages()
     {
@@ -77,21 +88,97 @@ class Index extends Component
 
     public function view($id)
     {
-        $this->productView = Product::find($id);
+        $this->reset();
+        $this->resetErrorBag();
+
+        $this->productView = Product::withCount([
+            'productRatings',
+            'orders'
+            =>
+            fn($query)
+            => $query->where('order_status', '!=', "Cancelled")
+        ])
+            ->withSum([
+                'orders'
+                =>
+                fn($query)
+                => $query->where('order_status', '!=', "Cancelled")
+            ], 'order_quantity')
+            ->with([
+                'product_category',
+                'productSizes',
+                'productColors',
+                'productImages'
+            ])
+            ->find($id);
+
+        $this->has_sizes = $this->productView->productSizes->isNotEmpty();
+        $this->has_colors = $this->productView->productColors->isNotEmpty();
     }
 
     public function addToCart($id)
     {
-        $this->productToBeCart = Product::find($id);
+        $this->reset();
+
+        $this->productToBeCart = Product::withCount([
+            'productRatings',
+            'orders'
+            =>
+            fn($query)
+            => $query->where('order_status', '!=', "Cancelled")
+        ])
+            ->with([
+                'product_category',
+                'productSizes',
+                'productColors',
+                'productImages'
+            ])
+            ->find($id);
+
+        $this->has_sizes = $this->productToBeCart?->productSizes?->isNotEmpty();
+        $this->has_colors = $this->productToBeCart?->productColors?->isNotEmpty();
     }
+
+    public function updatedProductColorIds($value, $key)
+    {
+        Cart::where('user_id', Auth::id())
+            ->where('id', $key)
+            ->update([
+                'product_color_id' => $value
+            ]);
+
+        return $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Color updated']);
+    }
+
+    public function updatedProductSizeIds($value, $key)
+    {
+        Cart::where('user_id', Auth::id())
+            ->where('id', $key)
+            ->update([
+                'product_size_id' => $value
+            ]);
+
+        return $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Size updated']);
+    }
+
+    public function updatedQuantity($value)
+    {
+        $this->quantity = !$value ? 1 : ($value > 999 ? 999 : $value);
+    }
+
+    public function updatedOrderQuantity($value)
+    {
+        $this->order_quantity = !$value ? 1 : ($value > 999 ? 999 : $value);
+    }
+
     public function addToCartNow()
     {
-        $this->validate([
-            'quantity' => 'required|numeric|min:1',
-        ]);
+        $this->validate();
 
         $cart = Cart::where('user_id', auth()->id())
             ->where('product_id', $this->productToBeCart->id)
+            ->whereRelation('productSize', 'id', $this->product_size_id)
+            ->whereRelation('productColor', 'id', $this->product_color_id)
             ->first();
 
         if ($cart) {
@@ -103,27 +190,53 @@ class Index extends Component
                 'user_id' => auth()->id(),
                 'product_id' => $this->productToBeCart->id,
                 'quantity' => $this->quantity,
+                'product_size_id'  => $this->product_size_id,
+                'product_color_id' => $this->product_color_id
             ]);
         }
 
-        $this->dispatch('toastr', data: [
-            'type'      =>      'success',
-            'message'   =>      'Product added to cart successfully.'
-        ]);
+        $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Product added to cart successfully.']);
         $this->dispatch('closeModal');
-        $this->reset();
+        // $this->reset();
 
         // alert()->success('Success', 'Product added to cart successfully.');
 
-        // return $this->redirect('/favorites', navigate: true);
+        // return $this->redirect('/products', navigate: true);
+        $this->dispatch('addTocartRefresh');
+        $this->reset();
+
         return;
+    }
+
+    public function toggleProductVariant($title, $id)
+    {
+        if ($title == 'size') {
+            if (ProductSize::find($id)->stock === 0) {
+                $this->product_size_id = null;
+                return $this->addError('product_size_id', 'Product with this size is out of stock.');
+            }
+            $this->product_size_id = $id === $this->product_size_id ? null : $id;
+            $this->resetErrorBag('product_size_id');
+        }
+
+        if ($title == 'color') {
+            if (ProductColor::find($id)->stock === 0) {
+                $this->product_color_id = null;
+                return $this->addError('product_color_id', 'Product with this color is out of stock.');
+            }
+            $this->product_color_id = $id === $this->product_color_id ? null : $id;
+            $this->resetErrorBag('product_color_id');
+        }
     }
 
     public function addToCartNowItem($id)
     {
+        $this->validate();
 
         $cart = Cart::where('user_id', auth()->id())
             ->where('product_id', $id)
+            ->whereRelation('productSize', 'id', $this->product_size_id)
+            ->whereRelation('productColor', 'id', $this->product_color_id)
             ->first();
 
         if ($cart) {
@@ -132,19 +245,19 @@ class Index extends Component
             ]);
         } else {
             Cart::create([
-                'user_id'    => auth()->id(),
+                'user_id' => auth()->id(),
                 'product_id' => $id,
-                'quantity'   => 1,
+                'quantity' => 1,
+                'product_size_id'  => $this->product_size_id,
+                'product_color_id' => $this->product_color_id
             ]);
         }
 
-        $this->dispatch('toastr', data: [
-            'type'      =>      'success',
-            'message'   =>      'Product added to cart successfully.'
-        ]);
+        $this->dispatch('toastr', data: ['type' => 'success', 'message' => 'Product added to cart successfully.']);
         $this->dispatch('closeModal');
-
+        $this->dispatch('addTocartRefresh');
         $this->reset();
+
         return;
     }
 
@@ -156,64 +269,98 @@ class Index extends Component
 
     public function toBuyNow($productId)
     {
+        $this->reset();
+        $this->resetErrorBag();
 
-        $this->orderToBuy = Product::findOrFail($productId);
+        $this->orderToBuy = Product::withCount([
+            'productRatings',
+            'orders'
+            =>
+            fn($query)
+            => $query->where('order_status', '!=', "Cancelled")
+        ])
+            ->with([
+                'product_category',
+                'productSizes',
+                'productColors',
+                'productImages'
+            ])
+            ->find($productId);
 
         if (auth()->check()) {
             $this->user_location = auth()->user()->user_location;
         }
+
+        $this->has_sizes = $this->orderToBuy?->productSizes?->isNotEmpty();
+        $this->has_colors = $this->orderToBuy?->productColors?->isNotEmpty();
 
         $this->orderPlaceOrder = $productId;
     }
 
     public function orderPlaceOrderItem()
     {
-        $product = Product::find($this->orderPlaceOrder);
+        $this->validate();
 
-        $this->validate([
-            'order_quantity'        =>      ['required', 'numeric', 'min:1'],
-        ]);
+        $product = Product::with('productSizes', 'productColors')->find($this->orderPlaceOrder);
 
-        $productQuantity = $product->product_stock;
+        $productStock = $product->product_stock;
+        $productSizeStock = $product->productSizes()->find($this->product_size_id)?->stock ?: 0;
+        $productColorStock = $product->productColors()->find($this->product_color_id)?->stock ?: 0;
         $productStatus = $product->product_status;
 
-        if ($productStatus == 'Available' && $productQuantity >= $this->order_quantity) {
-            Auth::user()->orderSummaries()->delete();
+        if ($productStatus == 'Not Available') {
 
-            Auth::user()->orderSummaries()->create([
-                'product_id'     => $product->id,
-                'order_quantity' => $this->order_quantity
+            $this->dispatch('toastr',  data: [
+                'type' => 'error',
+                'message' => 'The product is Not Available'
             ]);
-
-            $this->dispatch('closeModal');
-
-            return $this->redirect('/order-summaries', navigate: true);
-        } else {
-
-            if ($productStatus == 'Not Available') {
-                // alert()->error('Sorry', 'The product is Not Available');
-
-                // return $this->redirect('/products', navigate: true);
-
-                $this->dispatch('toastr',  data: [
-                    'type' => 'error',
-                    'message' => 'The product is Not Available'
-                ]);
-                return;
-            } elseif ($product->product_stock == 0) {
-                // alert()->error('Sorry', 'The product is out of stock');
-
-                // return $this->redirect('/products', navigate: true);
-                $this->dispatch('toastr',  data: ['type' => 'warning', 'message' => 'The product is out of stock']);
-                return;
-            } else {
-                // alert()->error('Sorry', 'The product stock is insufficient please reduce your cart quantity');
-
-                // return $this->redirect('/products', navigate: true);
-                $this->dispatch('toastr',  data: ['type' => 'info', 'message' => 'The product stock is insufficient please reduce your cart quantity']);
-                return;
-            }
+            return;
         }
+
+        if ($product->productStocks() < $this->order_quantity) {
+            $this->dispatch('toastr',  data: ['type' => 'warning', 'message' => 'The product is out of stock']);
+            return;
+        }
+
+        if ($productSizeStock < $this->order_quantity) {
+            $this->dispatch('toastr',  data: [
+                'type' => 'error',
+                'message' => 'The product size is not enough stock or out of stock. Please reduce your order quantity to continue.'
+            ]);
+            $this->addError('product_size_id', 'The product size is not enough stock or out of stock. Please reduce your order quantity to continue.');
+            return;
+        }
+
+        if ($productColorStock < $this->order_quantity) {
+            $this->dispatch('toastr',  data: [
+                'type' => 'error',
+                'message' => 'The product color is not enough stock or out of stock. Please reduce your order quantity to continue.'
+            ]);
+            $this->addError('product_color_id', 'The product color is not enough stock or out of stock. Please reduce your order quantity to continue.');
+            return;
+        }
+
+        if ($productStock < $this->order_quantity) {
+            $this->dispatch('toastr',  data: [
+                'type' => 'error',
+                'message' => 'The product is out of stock. Please reduce your order quantity to continue.'
+            ]);
+            $this->addError('order_quantity', 'The product is out of stock. Please reduce your order quantity to continue.');
+            return;
+        }
+
+        Auth::user()->orderSummaries()->delete();
+
+        Auth::user()->orderSummaries()->create([
+            'product_id'       => $product->id,
+            'order_quantity'   => $this->order_quantity,
+            'product_size_id'  => $this->product_size_id,
+            'product_color_id' => $this->product_color_id
+        ]);
+
+        $this->dispatch('closeModal');
+
+        return $this->redirect('/order-summaries', navigate: true);
     }
 
     public function render()
