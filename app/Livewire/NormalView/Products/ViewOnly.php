@@ -28,6 +28,9 @@ class ViewOnly extends Component
     public $minPrice = 0;
     public $maxPrice = 0;
     public $inStockOnly = false;
+    public $hasDiscount = false;
+    public $product_size_id = null;
+    public $product_color_id = null;
 
     use WithPagination;
 
@@ -48,7 +51,23 @@ class ViewOnly extends Component
 
     public function displayProducts()
     {
-        $query = Product::with('product_category')->search($this->search);
+        $query = Product::with(['product_category', 'favorites', 'productImages', 'productSizes', 'productColors'])
+            ->withSum([
+                'orders'
+                =>
+                fn($query)
+                => $query->where('order_status', '!=', "Cancelled")
+
+            ], 'order_quantity')
+            ->withCount([
+                'orders'
+                =>
+                fn($query)
+                => $query->where('order_status', '!=', "Cancelled"),
+                'productRatings'
+            ])
+            ->withAvg('productRatings', 'rating')
+            ->search($this->search);
 
         $sorted_by = request('sorted_by', '');
 
@@ -59,11 +78,11 @@ class ViewOnly extends Component
         }
 
         if ($sorted_by === 'top_selling') {
-            $query->orderBy('product_sold', 'desc');
+            $query->orderBy('orders_sum_order_quantity', 'desc');
         } else if ($sorted_by === 'latest') {
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('id', 'desc');
         } elseif ($sorted_by === 'popularity') {
-            $query->orderBy('product_votes', 'desc');
+            $query->orderBy('product_ratings_count', 'desc');
         } elseif ($this->sort === 'low_to_high') {
             $query->orderBy('product_price', 'asc');
         } else {
@@ -72,17 +91,17 @@ class ViewOnly extends Component
 
         if ($this->product_rating != 'All') {
             if ($this->product_rating == 1) {
-                $query->whereBetween('product_rating', [1.0, 1.9]);
+                $query->havingBetween('product_ratings_avg_rating', [1.0, 1.9]);
             } else
             if ($this->product_rating == 2) {
-                $query->whereBetween('product_rating', [2.0, 2.9]);
+                $query->havingBetween('product_ratings_avg_rating', [2.0, 2.9]);
             } else
             if ($this->product_rating == 3) {
-                $query->whereBetween('product_rating', [3.0, 3.9]);
+                $query->havingBetween('product_ratings_avg_rating', [3.0, 3.9]);
             } else if ($this->product_rating == 4) {
-                $query->whereBetween('product_rating', [4.0, 4.9]);
+                $query->havingBetween('product_ratings_avg_rating', [4.0, 4.9]);
             } else {
-                $query->where('product_rating', $this->product_rating);
+                $query->having('product_ratings_avg_rating', $this->product_rating);
             }
         }
 
@@ -94,16 +113,39 @@ class ViewOnly extends Component
             $this->inStockOnly,
             fn($q)
             =>
-            $q->where('product_stock', '>', 0)
+            $q->whereNotNull('product_stock')
+                ->where('product_stock', '>', 0)
+                ->whereHas('productSizes', function ($item) {
+                    $item->where('stock', '>', 0);
+                })
         )
+            ->when($this->hasDiscount, fn($q) => $q->whereNotNull('product_old_price'))
             ->paginate($this->defaultPage);
-
         return compact('products');
     }
 
     public function view($id)
     {
-        $this->productView = Product::find($id);
+        $this->productView = Product::withCount([
+            'productRatings',
+            'orders'
+            =>
+            fn($query)
+            => $query->where('order_status', '!=', "Cancelled")
+        ])
+            ->withSum([
+                'orders'
+                =>
+                fn($query)
+                => $query->where('order_status', '!=', "Cancelled")
+            ], 'order_quantity')
+            ->with([
+                'product_category',
+                'productSizes',
+                'productColors',
+                'productImages'
+            ])
+            ->find($id);
     }
 
     #[On('closedModal')]
@@ -127,7 +169,9 @@ class ViewOnly extends Component
 
     public function render()
     {
-        $product_categories = ProductCategory::all();
+        $product_categories = ProductCategory::withCount(['products' => function ($q) {
+            $q->search($this->search);
+        }])->get();
 
         return view('livewire.normal-view.products.view-only', $this->displayProducts(), ['product_categories' => $product_categories]);
     }
