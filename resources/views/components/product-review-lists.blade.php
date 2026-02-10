@@ -15,7 +15,7 @@
                     <div class="me-2 me-md-3">
                         <div class="user-avatar rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
                             style="width: 40px; height: 40px;">
-                            @if ($review?->user?->profile_image && Storage::exists($review?->user?->profile_image))
+                            @if ($review?->user?->profile_image && Storage::disk('public')->exists($review?->user?->profile_image))
                                 <img src="{{ Storage::url($review?->user?->profile_image) }}" alt="">
                             @else
                                 <i class="fa-solid fa-user text-white fa-sm"></i>

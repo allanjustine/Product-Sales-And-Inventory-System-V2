@@ -3,7 +3,7 @@
         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#viewProduct"
             wire:click="view({{ $product->id }})">
             <div class="overflow-hidden" id="product-image">
-                @if (Storage::exists($product->productImages?->first()->path))
+                @if (Storage::disk('public')->exists($product->productImages?->first()->path))
                     <img src="{{ Storage::url($product->productImages?->first()->path) }}"
                         alt="{{ $product->product_name }}" class="product-image w-100 h-100">
                 @else

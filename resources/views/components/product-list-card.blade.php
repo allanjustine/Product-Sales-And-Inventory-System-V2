@@ -7,11 +7,11 @@
         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#viewProduct"
             wire:click="view({{ $product->id }})">
             <div class="product-image-container">
-                @if (Storage::exists($product->productImages?->first()?->path))
-                    <img src="{{ Storage::url($product->productImages?->first()?->path) }}"
+                @if (Storage::disk('public')->exists($product->productImages()?->first()?->path))
+                    <img src="{{ Storage::url($product->productImages()?->first()?->path) }}"
                         alt="{{ $product->product_name }}" class="product-image">
                 @else
-                    <img src="{{ url($product->productImages?->first()?->path) }}" alt="{{ $product->product_name }}"
+                    <img src="{{ url($product->productImages()?->first()?->path) }}" alt="{{ $product->product_name }}"
                         class="product-image">
                 @endif
             </div>
