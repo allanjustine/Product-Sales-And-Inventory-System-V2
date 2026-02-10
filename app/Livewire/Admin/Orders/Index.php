@@ -95,7 +95,7 @@ class Index extends Component
     {
         $orders = Order::query()
             ->select('orders.*')
-            ->with(['product', 'user'])
+            ->with(['product', 'user', 'orderRating'])
             ->join('products', 'orders.product_id', '=', 'products.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where(function ($query) {
