@@ -8,7 +8,7 @@
         <div class="row">
             @forelse ($allFavorites as $favorite)
                 <div class="col-md-6 col-lg-3 col-6 mt-2" style="padding: 0.5px;">
-                    <x-product-list-card :product="$favorite->product" />
+                    <x-product-list-card :product="$favorite->product" :page="'favorites'" :favorite_id="$favorite->id" />
                 </div>
             @empty
                 <div class="text-center py-5">

@@ -1,5 +1,7 @@
 @props([
     'product' => null,
+    'page' => 'product-list',
+    'favorite_id' => null
 ])
 
 <div class="card product-card h-100 border shadow-sm">
@@ -16,9 +18,8 @@
                 @endif
             </div>
         </a>
-
         @role('user')
-            <button type="button" class="btn favorite-btn" wire:click="addToFavorite({{ $product->id }})"
+            <button type="button" class="btn favorite-btn" @if($page === 'favorites') wire:click="removeToFavorite({{ $favorite_id }})" @else wire:click="addToFavorite({{ $product->id }})" @endif
                 title="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'Remove from favorites' : 'Add to favorites' }}">
                 <i
                     class="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'fas' : 'far' }} fa-heart text-danger"></i>
