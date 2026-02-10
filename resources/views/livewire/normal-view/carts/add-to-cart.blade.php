@@ -39,7 +39,7 @@
                                 <div class="product-preview-section p-4 border-bottom" id="cartProductPreview">
                                     <div class="product-image-wrapper text-center mb-4 position-relative"
                                         id="cartProductImageWrapper">
-                                        @if (Storage::exists($productToBeCart->productImages()?->first()?->path))
+                                        @if (Storage::disk('public')->exists($productToBeCart->productImages()?->first()?->path))
                                             <img src="{{ Storage::url($productToBeCart->productImages()?->first()?->path) }}"
                                                 alt="{{ $productToBeCart->product_name }}"
                                                 class="img-fluid rounded-3 shadow-sm" id="cartProductImage">

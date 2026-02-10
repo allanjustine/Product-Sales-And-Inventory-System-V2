@@ -72,7 +72,7 @@
                                     @foreach ($this->orderSummaries as $index => $summary)
                                         <div class="row product-row align-items-center" wire:key='{{ $index }}'>
                                             <div class="col-4 col-md-2">
-                                                @if (Storage::exists($summary->product->productImages()?->first()?->path))
+                                                @if (Storage::disk('public')->exists($summary->product->productImages()?->first()?->path))
                                                     <img src="{{ Storage::url($summary->product->productImages()?->first()?->path) }}"
                                                         class="product-image"
                                                         alt="{{ $summary->product->product_name }}">

@@ -50,7 +50,7 @@
                                             <input type="checkbox" wire:model.live='cart_ids' value="{{ $item->id }}"
                                                 @if ($item->product->product_status === 'Not Available' || $item->product->productStocks() < $item->quantity) disabled @endif
                                                 class="form-check-input mt-1">
-                                            @if (Storage::exists($item->product->productImages()?->first()?->path))
+                                            @if (Storage::disk('public')->exists($item->product->productImages()?->first()?->path))
                                                 <img class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;"
                                                     src="{{ Storage::url($item->product->productImages()?->first()?->path) }}"
                                                     alt="{{ $item->product->product_name }}">

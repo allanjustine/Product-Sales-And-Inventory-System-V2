@@ -69,7 +69,7 @@
                                 <div class="product-preview-section p-4 border-bottom" id="buyNowProductPreview">
                                     <div class="product-image-wrapper text-center mb-4 position-relative"
                                         id="buyNowImageWrapper">
-                                        @if (Storage::exists($orderToBuy->productImages()?->first()?->path))
+                                        @if (Storage::disk('public')->exists($orderToBuy->productImages()?->first()?->path))
                                             <img src="{{ Storage::url($orderToBuy->productImages()?->first()?->path) }}"
                                                 alt="{{ $orderToBuy->product_name }}"
                                                 class="img-fluid rounded-3 shadow-sm" id="buyNowProductImage">

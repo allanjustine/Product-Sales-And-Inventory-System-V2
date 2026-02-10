@@ -30,7 +30,7 @@
                             <h6 class="fw-bold mb-3">Are you sure you want to remove this item?</h6>
                             <div class="alert alert-light border mb-4">
                                 <div class="d-flex align-items-center gap-3">
-                                    @if (Storage::exists($cartItemToRemove->product->productImages()?->first()?->path))
+                                    @if (Storage::disk('public')->exists($cartItemToRemove->product->productImages()?->first()?->path))
                                         <img style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;"
                                             src="{{ Storage::url($cartItemToRemove->product->productImages()?->first()?->path) }}"
                                             alt="{{ $cartItemToRemove->product->product_name }}">
