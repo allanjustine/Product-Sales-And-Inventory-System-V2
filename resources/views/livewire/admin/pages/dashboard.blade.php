@@ -6,13 +6,13 @@
                     <div class="d-flex align-items-center">
                         <div class="icon-circle bg-white p-3 me-3">
                             @if ($morning)
-                            <i class="fas fa-sunrise text-warning fa-2x"></i>
+                            <i class="fa-solid fa-sunrise text-warning fa-2x"></i>
                             @elseif($afternoon)
-                            <i class="fas fa-sun text-warning fa-2x"></i>
+                            <i class="fa-solid fa-sun text-warning fa-2x"></i>
                             @elseif($evening)
-                            <i class="fas fa-moon-stars text-dark fa-2x"></i>
+                            <i class="fa-solid fa-moon-stars text-dark fa-2x"></i>
                             @else
-                            <i class="fas fa-star text-primary fa-2x"></i>
+                            <i class="fa-solid fa-star text-primary fa-2x"></i>
                             @endif
                         </div>
                         <div>

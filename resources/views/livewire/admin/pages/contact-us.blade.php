@@ -73,7 +73,7 @@
                     <tbody>
                         @forelse ($feedbacks as $feedback)
                             <tr id="feedbackRow{{ $feedback->id }}" class="border-bottom"
-                                style="transition: all 0.3s ease;">
+                                style="transition: all 0.3s ease;" wire:key='{{ $feedback->id }}'>
                                 <td class="py-3 px-4 align-middle">
                                     <div class="d-flex align-items-center">
                                         <div id="userAvatar{{ $feedback->id }}"
@@ -100,7 +100,8 @@
                                 </td>
                                 <td class="py-3 px-4 align-middle">
                                     <div id="messagePreview{{ $feedback->id }}" class="message-preview">
-                                        <p class="mb-0 text-dark" style="white-space: pre-wrap; word-wrap: break-word;">
+                                        <p class="mb-0 text-dark" style="white-space: pre-wrap; word-wrap: break-word;"
+                                            data-full-text="{{ $feedback->message }}">
                                             {{ Str::limit($feedback->message, 80) }}
                                         </p>
                                         @if (strlen($feedback->message) > 80)
@@ -292,14 +293,16 @@
                                     <div id="emptyState" class="empty-state" style="padding: 4rem 1rem;">
                                         <div
                                             style="width: 100px; height: 100px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
-                                            <i class="fas fa-comments-slash text-white fa-2x"></i>
+                                            <i class="fas fa-comment-slash text-white fa-2x"></i>
                                         </div>
                                         <h4 id="emptyTitle" class="text-muted mb-3">No Feedback Yet</h4>
                                         <p id="emptyMessage" class="text-muted mb-4">When users submit feedback, they
                                             will appear here.</p>
-                                        <button id="refreshBtn" class="btn btn-primary"
-                                            style="border-radius: 10px; padding: 10px 30px;">
-                                            <i class="fas fa-sync-alt me-2"></i>Refresh
+                                        <button id="refreshBtn" wire:loading.attr='disabled' wire:click='$refresh'
+                                            class="btn btn-primary" style="border-radius: 10px; padding: 10px 30px;">
+                                            <span wire:loading.remove><i
+                                                    class="fas fa-sync-alt me-2"></i>Refresh</span> <span wire:loading
+                                                class="spinner-border-sm spinner-border"></span>
                                         </button>
                                     </div>
                                 </td>
@@ -345,7 +348,7 @@
             const container = document.getElementById(`messagePreview${id}`);
             const button = container.querySelector('button');
             const paragraph = container.querySelector('p');
-            const fullText = container.getAttribute('data-full-text') || '{{ $feedback->message }}';
+            const fullText = container.getAttribute('data-full-text');
 
             if (button.innerHTML.includes('Read more')) {
                 paragraph.textContent = fullText;
