@@ -11,10 +11,16 @@
                     <x-product-list-card :product="$favorite->product" />
                 </div>
             @empty
-                <span class="text-center">
-                    <i class="fa-regular fa-xmark-to-slot mb-3 mt-5" style="font-size: 100px;"></i>
-                    <h4>You have not selected product to your favorites yet.</h4>
-                </span>
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-heart text-muted" style="font-size: 80px;"></i>
+                    </div>
+                    <h3 class="text-muted mb-3">Your favorites is empty</h3>
+                    <p class="text-muted mb-4">Add some products to get started with your shopping</p>
+                    <a wire:navigate href="/products" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-shopping-bag me-2"></i>Browse Products
+                    </a>
+                </div>
             @endforelse
         </div>
     </div>
