@@ -73,28 +73,28 @@
                                     <div class="spinner-border text-primary" role="status" style="height: 180px; width: 180px; border-radius: 50%; visibility: visible;">
                                         <span class="sr-only">Loading...</span>
                                     </div>
-                    
+
                                     <!-- Placeholder for name -->
                                     <div class="placeholder-glow my-3">
                                         <div class="placeholder col-6"></div>
                                     </div>
-                    
+
                                     <!-- Placeholder for badge -->
                                     <div class="placeholder-glow">
                                         <div class="placeholder col-4"></div>
                                     </div>
-                    
+
                                     <!-- Placeholder for role description -->
                                     <div class="placeholder-glow my-2">
                                         <div class="placeholder col-6"></div>
                                     </div>
                                     <hr>
-                    
+
                                     <!-- Placeholder for text -->
                                     <div class="placeholder-glow">
                                         <div class="placeholder col-4"></div>
                                     </div>
-                    
+
                                     <ul class="list-group list-group-flush mt-3">
                                         <!-- Placeholder for each list item -->
                                         <li class="list-group-item">
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     @endif
                 </div>
                 <div class="modal-footer">
