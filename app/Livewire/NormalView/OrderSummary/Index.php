@@ -78,11 +78,11 @@ class Index extends Component
                     }
 
                     if ($orderSummary->hasVariation()) {
-                        if ($orderSummary->productSize?->stock < $orderSummary->order_quantity) {
+                        if ($orderSummary->productSize && $orderSummary->productSize?->stock < $orderSummary->order_quantity) {
                             throw new \Exception('The selected size is not enough stock or out of stock. Please reduce your order quantity or replace it.');
                         }
 
-                        if ($orderSummary->productColor?->stock < $orderSummary->order_quantity) {
+                        if ($orderSummary->productColor && $orderSummary->productColor?->stock < $orderSummary->order_quantity) {
                             throw new \Exception('The selected color is not enough stock or out of stock. Please reduce your order quantity or replace it.');
                         }
                     } else {
