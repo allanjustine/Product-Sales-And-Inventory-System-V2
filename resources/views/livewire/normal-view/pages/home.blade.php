@@ -361,7 +361,7 @@
             }
 
             #rating-sold {
-                font-size: 8px;
+                font-size: 6px;
             }
 
             #product-image {

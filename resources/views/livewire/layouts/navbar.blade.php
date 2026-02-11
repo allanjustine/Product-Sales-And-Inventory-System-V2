@@ -1,9 +1,9 @@
 <div>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg" style="z-index: 1030;">
-        <div class="container">
+        <div class="container d-flex align-items-center justify-content-center">
             <!-- Brand / Logo -->
-            <a href="/" wire:navigate class="navbar-brand d-flex align-items-center">
+            <a href="/" wire:navigate class="navbar-brand d-flex align-items-center mx-auto">
                 <div class="brand-logo me-2">
                     <div class="logo-circle-item">
                         <img src="images/mylogo.jpg" alt="AJM Logo" class="w-100 h-100 rounded-circle">
@@ -13,7 +13,7 @@
             </a>
 
             <!-- Cart & Mobile Toggle -->
-            <div class="d-flex align-items-center order-lg-3">
+            <div class="d-flex align-items-center order-lg-3 mx-auto">
                 @if (Auth::check())
                     <livewire:normal-view.carts.cart-count />
                 @endif
@@ -25,9 +25,9 @@
                 </button>
             </div>
 
-            <div class="d-block d-md-none" data-bs-toggle="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none"
-                    id="userDropdown" aria-expanded="false">
+            <div class="d-block d-md-none mx-auto" data-bs-toggle="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none" id="userDropdown"
+                    aria-expanded="false">
                     @if (auth()->check())
                         <div class="position-relative">
                             <div class="user-avatar">
@@ -131,8 +131,8 @@
             <!-- User Profile Dropdown -->
             <div class="dropdown order-lg-4 ms-lg-3">
                 <div class="d-none d-md-block" data-bs-toggle="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none"
-                        id="userDropdown" aria-expanded="false">
+                    <a href="#" class="d-flex align-items-center text-decoration-none" id="userDropdown"
+                        aria-expanded="false">
                         @if (auth()->check())
                             <div class="position-relative">
                                 <div class="user-avatar">
