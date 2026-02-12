@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -95,7 +96,11 @@ class Index extends Component
 
     public function generateProductCode()
     {
-        $this->product_code = 'AJM-' . substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 5);
+        do {
+            $code = 'AJM-' . Str::upper(Str::random(6));
+        } while (Product::where('product_code', $code)->exists());
+
+        return $this->product_code = $code;
     }
 
     public function addProduct()
