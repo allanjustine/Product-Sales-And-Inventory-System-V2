@@ -259,7 +259,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button wire:loading.attr='disabled' wire:target='addProduct,product_images' type="button"
+                    <button wire:loading.attr='disabled' wire:target='addProduct,product_images,product_code' type="button"
                         class="btn btn-primary" wire:click="addProduct">
                         <div wire:loading wire:target='addProduct'>
                             <span class="spinner-border spinner-border-sm"></span> Adding...
