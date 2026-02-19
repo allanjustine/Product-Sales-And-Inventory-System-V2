@@ -71,8 +71,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
                     <i class="fas fa-star text-warning me-1"></i>
-                    <span
-                        class="fw-semibold mr-1">{{ (int) $product->averageRatings() === 0 ? 'No ratings yet' : $product->averageRatings() }}</span>
+                    <span class="fw-semibold mr-1">{{ $product->averageRatings() }}</span>
                     |
                     <small class="text-muted ms-1">{{ $product->shortOrderSold() }} sold</small>
                 </div>

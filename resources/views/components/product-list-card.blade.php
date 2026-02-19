@@ -1,7 +1,7 @@
 @props([
     'product' => null,
     'page' => 'product-list',
-    'favorite_id' => null
+    'favorite_id' => null,
 ])
 
 <div class="card product-card h-100 border shadow-sm">
@@ -19,7 +19,8 @@
             </div>
         </a>
         @role('user')
-            <button type="button" class="btn favorite-btn" @if($page === 'favorites') wire:click="removeToFavorite({{ $favorite_id }})" @else wire:click="addToFavorite({{ $product->id }})" @endif
+            <button type="button" class="btn favorite-btn"
+                @if ($page === 'favorites') wire:click="removeToFavorite({{ $favorite_id }})" @else wire:click="addToFavorite({{ $product->id }})" @endif
                 title="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'Remove from favorites' : 'Add to favorites' }}">
                 <i
                     class="{{ $product->favorites->contains('user_id', auth()?->user()?->id) ? 'fas' : 'far' }} fa-heart text-danger"></i>
@@ -91,8 +92,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
                     <i class="fas fa-star text-warning me-1"></i>
-                    <span><span
-                            class="fw-semibold">{{ (int) $product->averageRatings() === 0 ? 'No ratings yet' : $product->averageRatings() }}</span>
+                    <span><span class="fw-semibold">{{ $product->averageRatings() }}</span>
                         | <span class="text-muted">{{ $product->shortOrderSold() }} sold</span></span>
                 </div>
             </div>

@@ -121,6 +121,7 @@ class ViewOnly extends Component
         )
             ->when($this->hasDiscount, fn($q) => $q->whereNotNull('product_old_price'))
             ->paginate($this->defaultPage);
+
         return compact('products');
     }
 
