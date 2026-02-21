@@ -77,7 +77,7 @@ add shipping fee every location done.
 add to cart timing.
 twik
 
-This V2 is already deployed..
+This V2 is already deployed...
 
 
 
