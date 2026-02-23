@@ -76,7 +76,8 @@ add testimony and display
 add shipping fee every location done.
 add to cart timing.
 twik
-
+goods
+admin side ui needs to fix
 This V2 is already deployed...
 
 
