@@ -1,16 +1,129 @@
-User side
-in the orders add a display if the order was cancelled by the admin done
+# 🛒 Product Sales and Inventory System
 
-Admin side
-add users status for disable account, ban or restrict use a dropdown for clicks
-add in the orders a cancel button if the admin want to cancel the order of the user and reason for cancellation
-add testimony and display
-add shipping fee every location done.
-add to cart timing.
-twik
-goods
-admin side ui needs to fix
-This V2 is already deployed...
+A modern **Real-Time Product Sales and Inventory Management System** designed to streamline sales operations, inventory tracking, and order monitoring.
 
+Built using:
+- Laravel
+- Livewire
+- Pusher (for real-time communication)
 
+---
 
+## 🚀 Tech Stack
+
+- **Backend:** Laravel  
+- **Frontend:** Livewire  
+- **Real-Time Communication:** Pusher  
+
+---
+
+## ✨ Features
+
+### 📦 Inventory Management
+- Add, edit, and delete products
+- Categorize products
+- Track stock levels
+- Low stock alerts
+- Automatic stock deduction when orders are placed
+
+### 🧾 Sales Management
+- Create and manage orders
+- View order history
+- Generate invoices
+- Track sales performance
+
+### 🔄 Real-Time Order Tracking
+- Orders update instantly across all users
+- Live stock updates
+- Real-time dashboard refresh
+- No page reload required
+
+### 📊 Dashboard & Reports
+- Daily, weekly, and monthly sales reports
+- Revenue analytics
+- Inventory summaries
+- Best-selling products tracking
+
+### 👥 User Management
+- Role-based access control (Admin / Staff)
+- Secure authentication
+- Permission management
+
+---
+
+## ⚡ How Real-Time Works
+
+```text
+User Action
+    ↓
+Laravel Backend
+    ↓
+Database Update
+    ↓
+Broadcast Event
+    ↓
+Pusher Channel
+    ↓
+Livewire Updates UI in Real-Time
+```
+
+---
+
+## 🛠️ Installation Guide
+
+```bash
+# Clone repository
+git clone https://github.com/allanjustine/Product-Sales-And-Inventory-System-V2.git
+
+# Navigate into project
+cd Product-Sales-And-Inventory-System-V2
+
+# Install dependencies
+composer install
+npm install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Configure database & Pusher credentials in .env
+
+# Run migrations
+php artisan migrate
+
+# Start development server
+php artisan serve
+npm run dev
+```
+
+---
+
+## 🔐 Security
+
+- CSRF Protection
+- Input Validation
+- Secure Authentication
+- Role-Based Authorization
+- Broadcast Channel Authorization
+
+---
+
+## 📈 Use Cases
+
+- Retail stores
+- Wholesale businesses
+- Warehouses
+- SMEs
+- Multi-branch operations
+
+---
+
+## 📬 Contact
+
+Email: labya31@gmail.com 
+Portfolio: https://allanjustine.github.io/Portfolio/
+Website: https://e-commerce.smctgroup.ph  
+
+---
+
+### 🌟 Built with Laravel + Livewire + Pusher for powerful real-time performance.
