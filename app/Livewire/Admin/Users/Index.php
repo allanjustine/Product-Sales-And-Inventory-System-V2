@@ -36,6 +36,7 @@ class Index extends Component
     public $sortDirection = 'asc';
     public $profile_image_url;
     public $username;
+    public $status = "";
 
     public function sortItemBy($field)
     {
@@ -53,6 +54,24 @@ class Index extends Component
             $query->where('name', '=', 'user')
                 ->orWhere('name', '=', 'admin');
         })
+            ->when(
+                $this->status === "pending",
+                fn($query)
+                =>
+                $query->whereNull('email_verified_at')
+            )
+            ->when(
+                $this->status === "verified",
+                fn($query)
+                =>
+                $query->whereNotNull('email_verified_at')
+            )
+            ->when(
+                $this->status === "admins",
+                fn($query)
+                =>
+                $query->whereRelation('roles', 'name', 'admin')
+            )
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('email', 'like', '%' . $this->search . '%');
@@ -65,10 +84,11 @@ class Index extends Component
     }
 
     #[On('verifyUser')]
-    public function verifyUser($id) {
+    public function verifyUser($id)
+    {
         $user = User::find($id);
 
-        if(!$user) {
+        if (!$user) {
             $this->dispatch('alert', alerts: [
                 'title'     =>      'Not Found',
                 'message'   =>      'Sorry the user you\'re trying to verify does not exists.',
@@ -77,7 +97,7 @@ class Index extends Component
             return;
         }
 
-        if($user->email_verified_at !== null) {
+        if ($user->email_verified_at !== null) {
             $this->dispatch('alert', alerts: [
                 'title'     =>      'Ops.',
                 'message'   =>      'Sorry the user you\'re trying to verify is already verified.',
@@ -108,7 +128,7 @@ class Index extends Component
             'password'          =>          'required|string|min:4|confirmed',
             'gender'            =>          ['required', 'string', Rule::in('Male', 'Female')],
             'phone_number'      =>          'required|string|numeric|regex:/(0)[0-9]/|digits:11',
-            'profile_image'     =>          'nullable|image|max:10000',
+            'profile_image'     =>          'nullable|image|max:2048',
         ]);
 
         $token = Str::random(24);
@@ -128,7 +148,7 @@ class Index extends Component
 
         $user->assignRole('user');
 
-        Mail::send('pages.auth.verification-email', ['user' => $user, 'token' => $token], function ($mail) use ($user) {
+        Mail::send('mail.email-verification', ['user' => $user, 'token' => $token], function ($mail) use ($user) {
             $mail->to($user->email);
             $mail->subject('Account verification');
         });
@@ -140,6 +160,8 @@ class Index extends Component
         ]);
 
         $this->dispatch('closeModal');
+
+        $this->reset();
 
         return;
     }
@@ -165,6 +187,8 @@ class Index extends Component
 
     public function edit($id)
     {
+        $this->reset();
+
         $this->userEdit = User::find($id);
 
         $this->name = $this->userEdit->name;
@@ -179,9 +203,9 @@ class Index extends Component
 
         if (is_string($this->userEdit->profile_image)) {
             $this->profile_image_url = Storage::url($this->userEdit->profile_image);
-        } else if ($this->userEdit->profile_image !== null) {
+        } else if ($this->userEdit->profile_image === null) {
             $this->profile_image = $this->userEdit->profile_image;
-            $this->profile_image_url = $this->profile_image->temporaryUrl();
+            $this->profile_image_url = "https://cdn-icons-png.flaticon.com/512/2919/2919906.png";
         }
     }
 
@@ -271,6 +295,11 @@ class Index extends Component
     public function removeImage()
     {
         $this->profile_image = null;
+    }
+
+    public function handleStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function render()
