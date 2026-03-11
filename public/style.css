@@ -203,8 +203,8 @@ button.close:hover {
 }
 
 .product-card:hover {
-    margin-top: -7px;
-    transition: ease-in-out 0.3s all;
+    border: 1px solid black !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
 }
 
 .carousel-caption {
