@@ -41,7 +41,7 @@ class Register extends Component
             'gender'            =>          ['required', 'string', Rule::in('Male', 'Female')],
             'phone_number'      =>          'required|numeric|regex:/(0)[0-9]/|digits:11',
             'username'          =>          'required|string|max:255|unique:users|lowercase',
-            'profile_image'     =>          'required|mimes:jpeg,jpg,png,gif,ico|max:1020',
+            'profile_image'     =>          'required|image|mimes:jpeg,jpg,png,gif,ico,webp|max:1020',
         ]);
 
         $token = Str::random(24);
@@ -74,10 +74,13 @@ class Register extends Component
             'message'       =>          "We sent you a verification email. Please check your inbox for the verification."
         ]);
 
+        $this->reset();
+
         return;
     }
 
-    public function removeProfileImage() {
+    public function removeProfileImage()
+    {
         $this->profile_image = null;
     }
 
