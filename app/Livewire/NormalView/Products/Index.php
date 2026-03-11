@@ -287,7 +287,7 @@ class Index extends Component
 
     public function view($id)
     {
-        $this->reset();
+        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly']);
         $this->resetErrorBag();
 
         $this->productView = Product::withCount([
