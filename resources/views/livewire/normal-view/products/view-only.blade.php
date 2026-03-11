@@ -90,7 +90,7 @@
                                             class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === $category->category_name ? 'active' : '' }}"
                                             wire:click="$set('category_name', '{{ $category->category_name }}')">
                                             <i class="fas fa-tag me-2"></i>{{ $category->category_name }}
-                                        <span class="badge bg-info float-end">{{ $category->products_count }}</span>
+                                            <span class="badge bg-info float-end">{{ $category->products_count }}</span>
                                         </button>
                                     @endforeach
                                 </div>
@@ -325,7 +325,7 @@
         }
 
         .product-card:hover {
-            transform: translateY(-0.5px);
+            border: 1px solid black !important;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
         }
 
