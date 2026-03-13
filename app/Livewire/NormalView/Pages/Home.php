@@ -31,8 +31,11 @@ class Home extends Component
 
     public function toggleProductVariant($title, $id)
     {
+        $product_size = ProductSize::findOrFail($id);
+        $product_color = ProductColor::findOrFail($id);
+
         if ($title == 'size') {
-            if (ProductSize::find($id)->stock === 0) {
+            if ($product_size?->stock === 0) {
                 $this->product_size_id = null;
                 return $this->addError('product_size_id', 'Product with this size is out of stock.');
             }
@@ -41,7 +44,7 @@ class Home extends Component
         }
 
         if ($title == 'color') {
-            if (ProductColor::find($id)->stock === 0) {
+            if ($product_color?->stock === 0) {
                 $this->product_color_id = null;
                 return $this->addError('product_color_id', 'Product with this color is out of stock.');
             }
