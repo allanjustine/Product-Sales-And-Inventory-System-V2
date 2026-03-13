@@ -197,13 +197,13 @@
                                                     <div class="col-md-2" id="pendingOrderImage{{ $order->id }}">
                                                         <div class="product-image-wrapper rounded-3 overflow-hidden"
                                                             id="pendingImageWrapper{{ $order->id }}">
-                                                            @if (Storage::disk('public')->exists($order->product->productImages()?->first()?->path))
-                                                                <img src="{{ Storage::url($order->product->productImages()?->first()?->path) }}"
+                                                            @if (Storage::disk('public')->exists($order->product->productImages?->first()?->path))
+                                                                <img src="{{ Storage::url($order->product->productImages?->first()?->path) }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="pendingProductImage{{ $order->id }}">
                                                             @else
-                                                                <img src="{{ $order->product->productImages()?->first()?->path }}"
+                                                                <img src="{{ $order->product->productImages?->first()?->path }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="pendingProductImage{{ $order->id }}">
@@ -436,13 +436,13 @@
                                                     <div class="col-md-2" id="recentOrderImage{{ $order->id }}">
                                                         <div class="product-image-wrapper rounded-3 overflow-hidden"
                                                             id="recentImageWrapper{{ $order->id }}">
-                                                            @if (Storage::disk('public')->exists($order->product->productImages()?->first()?->path))
-                                                                <img src="{{ Storage::url($order->product->productImages()?->first()?->path) }}"
+                                                            @if (Storage::disk('public')->exists($order->product->productImages?->first()?->path))
+                                                                <img src="{{ Storage::url($order->product->productImages?->first()?->path) }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="recentProductImage{{ $order->id }}">
                                                             @else
-                                                                <img src="{{ $order->product->productImages()?->first()?->path }}"
+                                                                <img src="{{ $order->product->productImages?->first()?->path }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="recentProductImage{{ $order->id }}">
@@ -678,13 +678,13 @@
                                                         id="cancelledOrderImage{{ $order->id }}">
                                                         <div class="product-image-wrapper rounded-3 overflow-hidden opacity-75"
                                                             id="cancelledImageWrapper{{ $order->id }}">
-                                                            @if (Storage::disk('public')->exists($order->product->productImages()?->first()?->path))
-                                                                <img src="{{ Storage::url($order->product->productImages()?->first()?->path) }}"
+                                                            @if (Storage::disk('public')->exists($order->product->productImages?->first()?->path))
+                                                                <img src="{{ Storage::url($order->product->productImages?->first()?->path) }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="cancelledProductImage{{ $order->id }}">
                                                             @else
-                                                                <img src="{{ $order->product->productImages()?->first()?->path }}"
+                                                                <img src="{{ $order->product->productImages?->first()?->path }}"
                                                                     alt="{{ $order->product->product_name }}"
                                                                     class="img-fluid rounded-3"
                                                                     id="cancelledProductImage{{ $order->id }}">

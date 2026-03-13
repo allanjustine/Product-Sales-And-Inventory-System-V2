@@ -141,12 +141,12 @@
                                 <td class="align-middle"><code class="fw-bold fs-6">{{ $product->product_code }}</code>
                                 </td>
                                 <td class="align-middle">
-                                    @if (Storage::disk('public')->exists($product->productImages()?->first()?->path))
-                                        <img src="{{ Storage::url($product->productImages()?->first()?->path) }}"
+                                    @if (Storage::disk('public')->exists($product->productImages?->first()?->path))
+                                        <img src="{{ Storage::url($product->productImages?->first()?->path) }}"
                                             class="img-thumbnail" style="height: 50px; width: 60px; object-fit: cover;"
                                             alt="{{ $product->product_name }}">
                                     @else
-                                        <img src="{{ url($product->productImages()?->first()?->path ?: '') }}"
+                                        <img src="{{ url($product->productImages?->first()?->path ?: '') }}"
                                             class="img-thumbnail" style="height: 50px; width: 60px; object-fit: cover;"
                                             alt="{{ $product->product_name }}">
                                     @endif

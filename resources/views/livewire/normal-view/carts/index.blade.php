@@ -104,13 +104,13 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3 mb-md-0">
                                     <div class="position-relative">
-                                        @if (Storage::disk('public')->exists($item->product->productImages()?->first()?->path))
+                                        @if (Storage::disk('public')->exists($item->product->productImages?->first()?->path))
                                             <img class="rounded-3 w-100" style="height: 150px; object-fit: cover;"
-                                                src="{{ Storage::url($item->product->productImages()?->first()?->path) }}"
+                                                src="{{ Storage::url($item->product->productImages?->first()?->path) }}"
                                                 alt="{{ $item->product->product_name }}">
                                         @else
                                             <img class="rounded-3 w-100" style="height: 150px; object-fit: cover;"
-                                                src="{{ $item->product->productImages()?->first()?->path }}"
+                                                src="{{ $item->product->productImages?->first()?->path }}"
                                                 alt="{{ $item->product->product_name }}">
                                         @endif
                                     </div>

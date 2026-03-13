@@ -90,7 +90,6 @@ class Product extends Model
 
     public function shortOrderSold()
     {
-
         $value =  $this->orders()
             ->where('order_status', '!=', 'Cancelled')
             ->sum('order_quantity');
@@ -108,7 +107,6 @@ class Product extends Model
 
     public function shortProductStocks()
     {
-
         $value =  $this->productStocks();
 
         if ($value >= 1000000000) {
