@@ -207,13 +207,6 @@
                                 </div>
                             </a>
 
-                            <a href="https://youtube.com" target="_blank" class="social-icon youtube me-3"
-                                data-bs-toggle="tooltip" title="Subscribe on YouTube">
-                                <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
-                                    <i class="fab fa-youtube fa-lg"></i>
-                                </div>
-                            </a>
-
                             <a href="https://instagram.com" target="_blank" class="social-icon instagram me-3"
                                 data-bs-toggle="tooltip" title="Follow on Instagram">
                                 <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
@@ -221,10 +214,10 @@
                                 </div>
                             </a>
 
-                            <a href="https://gmail.com" target="_blank" class="social-icon gmail"
+                            <a href="https://tiktok.com" target="_blank" class="social-icon tiktok"
                                 data-bs-toggle="tooltip" title="Email Us">
                                 <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
-                                    <i class="fab fa-google fa-lg"></i>
+                                    <i class="fab fa-tiktok fa-lg"></i>
                                 </div>
                             </a>
                         </div>
@@ -586,8 +579,8 @@
         background: linear-gradient(135deg, #e4405f, #c13584) !important;
     }
 
-    .social-icon.gmail:hover .icon-wrapper {
-        background: linear-gradient(135deg, #ea4335, #d62516) !important;
+    .social-icon.tiktok:hover .icon-wrapper {
+        background: linear-gradient(135deg, #271f1e, #050505) !important;
     }
 
     .social-icon:hover i {
