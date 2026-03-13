@@ -23,7 +23,7 @@
                                             <img class="profile-user-img img-fluid img-circle"
                                                 src="{{ $profile_image->temporaryUrl() }}"
                                                 alt="{{ $user->name }} photo" id="photo"
-                                                style="height: auto; width: auto; border-radius: 50%;">
+                                                style="height: 100%; width: 100%; border-radius: 50%;">
                                         @else
                                             @if (!$profile_image)
                                                 <img class="profile-user-img img-fluid img-circle"
@@ -32,7 +32,7 @@
                                                                                                                                                                                                                                                                                                                                                                 https://cdn-icons-png.flaticon.com/512/2919/2919906.png"
                                                         : Storage::url(Auth::user()->profile_image) }}"
                                                     alt="{{ $user->name }} photo" id="photo"
-                                                    style="height: auto; width: auto; border-radius: 50%;">
+                                                    style="height: 100%; width: 100%; border-radius: 50%;">
                                             @endif
                                             @if ($profile_image)
                                                 <img class="profile-user-img img-fluid img-circle"
@@ -41,7 +41,7 @@
                                                                                                                                                                                                                                                                                                                                                                 https://cdn-icons-png.flaticon.com/512/2919/2919906.png"
                                                         : Storage::url(Auth::user()->profile_image) }}"
                                                     alt="{{ $user->name }} photo" id="photo"
-                                                    style="height: auto; width: auto; border-radius: 50%;"><br>
+                                                    style="height: 100%; width: 100%; border-radius: 50%;"><br>
                                                 <span
                                                     class="text-danger">*{{ $profile_image->getClientOriginalExtension() }}
                                                     is not a valid image type. Only (jpg, jpeg, png, gif) are
