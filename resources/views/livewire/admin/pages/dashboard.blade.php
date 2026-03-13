@@ -6,25 +6,25 @@
                     <div class="d-flex align-items-center">
                         <div class="icon-circle bg-white p-3 me-3">
                             @if ($morning)
-                            <i class="fa-solid fa-sunrise text-warning fa-2x"></i>
+                                <i class="fa-solid fa-sunrise text-warning fa-2x"></i>
                             @elseif($afternoon)
-                            <i class="fa-solid fa-sun text-warning fa-2x"></i>
+                                <i class="fa-solid fa-sun text-warning fa-2x"></i>
                             @elseif($evening)
-                            <i class="fa-solid fa-moon-stars text-dark fa-2x"></i>
+                                <i class="fa-solid fa-moon-stars text-dark fa-2x"></i>
                             @else
-                            <i class="fa-solid fa-star text-primary fa-2x"></i>
+                                <i class="fa-solid fa-star text-primary fa-2x"></i>
                             @endif
                         </div>
                         <div>
                             <h2 class="card-title text-white mb-1">
                                 @if ($morning)
-                                Good Morning
+                                    Good Morning
                                 @elseif($afternoon)
-                                Good Afternoon
+                                    Good Afternoon
                                 @elseif($evening)
-                                Good Evening
+                                    Good Evening
                                 @else
-                                Have a nice day
+                                    Have a nice day
                                 @endif, {{ auth()->user()->name }}
                             </h2>
                             <p class="text-white-50 mb-0">Welcome to your dashboard</p>
@@ -35,6 +35,7 @@
         </div>
     </div>
 
+    <!-- Overview Cards -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
@@ -44,7 +45,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-3 border-left-primary h-100 shadow-sm hover-shadow-lg transition-all">
+                            <div
+                                class="card border-left-3 border-left-primary h-100 shadow-sm hover-shadow-lg transition-all">
                                 <div class="d-flex align-items-center justify-content-between p-4">
                                     <div>
                                         <div class="text-muted small text-uppercase fw-bold">ADMINS</div>
@@ -58,7 +60,8 @@
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a wire:navigate href="/admin/users" class="text-decoration-none">
-                                <div class="card border-left-3 border-left-success h-100 shadow-sm hover-shadow-lg transition-all">
+                                <div
+                                    class="card border-left-3 border-left-success h-100 shadow-sm hover-shadow-lg transition-all">
                                     <div class="d-flex align-items-center justify-content-between p-4">
                                         <div>
                                             <div class="text-muted small text-uppercase fw-bold">USERS</div>
@@ -73,7 +76,8 @@
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a wire:navigate href="/admin/products" class="text-decoration-none">
-                                <div class="card border-left-3 border-left-warning h-100 shadow-sm hover-shadow-lg transition-all">
+                                <div
+                                    class="card border-left-3 border-left-warning h-100 shadow-sm hover-shadow-lg transition-all">
                                     <div class="d-flex align-items-center justify-content-between p-4">
                                         <div>
                                             <div class="text-muted small text-uppercase fw-bold">PRODUCTS</div>
@@ -88,7 +92,8 @@
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a wire:navigate href="/admin/product-categories" class="text-decoration-none">
-                                <div class="card border-left-3 border-left-info h-100 shadow-sm hover-shadow-lg transition-all">
+                                <div
+                                    class="card border-left-3 border-left-info h-100 shadow-sm hover-shadow-lg transition-all">
                                     <div class="d-flex align-items-center justify-content-between p-4">
                                         <div>
                                             <div class="text-muted small text-uppercase fw-bold">CATEGORIES</div>
@@ -103,7 +108,8 @@
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a wire:navigate href="/admin/orders" class="text-decoration-none">
-                                <div class="card border-left-3 border-left-danger h-100 shadow-sm hover-shadow-lg transition-all">
+                                <div
+                                    class="card border-left-3 border-left-danger h-100 shadow-sm hover-shadow-lg transition-all">
                                     <div class="d-flex align-items-center justify-content-between p-4">
                                         <div>
                                             <div class="text-muted small text-uppercase fw-bold">ORDERS</div>
@@ -118,7 +124,8 @@
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a wire:navigate href="/admin/product-sales" class="text-decoration-none">
-                                <div class="card border-left-3 border-left-purple h-100 shadow-sm hover-shadow-lg transition-all">
+                                <div
+                                    class="card border-left-3 border-left-purple h-100 shadow-sm hover-shadow-lg transition-all">
                                     <div class="d-flex align-items-center justify-content-between p-4">
                                         <div>
                                             <div class="text-muted small text-uppercase fw-bold">PRODUCT SALES</div>
@@ -133,7 +140,8 @@
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a wire:navigate href="/admin/feedbacks" class="text-decoration-none">
-                                <div class="card border-left-3 border-left-teal h-100 shadow-sm hover-shadow-lg transition-all">
+                                <div
+                                    class="card border-left-3 border-left-teal h-100 shadow-sm hover-shadow-lg transition-all">
                                     <div class="d-flex align-items-center justify-content-between p-4">
                                         <div>
                                             <div class="text-muted small text-uppercase fw-bold">FEED BACKS</div>
@@ -146,12 +154,138 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <a wire:navigate href="/admin/product-sales" class="text-decoration-none">
+                                <div
+                                    class="card border-left-3 border-left-primary h-100 shadow-sm hover-shadow-lg transition-all">
+                                    <div class="d-flex align-items-center justify-content-between p-4">
+                                        <div>
+                                            <div class="text-muted small text-uppercase fw-bold">TOTAL SOLDS</div>
+                                            <div class="fw-bold display-6 text-dark">{{ $productTotalSolds }}</div>
+                                        </div>
+                                        <div class="icon-circle bg-primary bg-opacity-10 p-3">
+                                            <i
+                                                class="fa-solid fa-hand-holding-dollar text-primary fa-2x text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Stock Status Cards -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h4 class="card-title mb-0 text-dark">Inventory Status</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <a href="/admin/products?status=in_stock" wire:navigate>
+                                <div class="card border-0 bg-gradient-success text-white shadow-lg h-100">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white-50 small">IN STOCK</div>
+                                                <div class="fw-bold display-6">{{ $this->stockStatus->in_stock }}</div>
+                                                <small class="text-white-50">units available</small>
+                                            </div>
+                                            <div class="icon-circle bg-white bg-opacity-20 p-3">
+                                                <i class="fa-solid fa-check-circle fa-2x"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-white-50 small">
+                                            <i class="fa-solid fa-box me-1"></i> 876 products
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+
+                            <a href="/admin/products?status=low_stock" wire:navigate>
+                                <div class="card border-0 bg-gradient-warning text-white shadow-lg h-100">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white-50 small">LOW STOCK</div>
+                                                <div class="fw-bold display-6">{{ $this->stockStatus->low_stock }}
+                                                </div>
+                                                <small class="text-white-50">products below 10 units</small>
+                                            </div>
+                                            <div class="icon-circle bg-white bg-opacity-20 p-3">
+                                                <i class="fa-solid fa-exclamation-triangle fa-2x"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-white-50 small">
+                                            <i class="fa-solid fa-clock me-1"></i> Reorder soon
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+
+                            <a href="/admin/products?status=out_of_stock" wire:navigate>
+                                <div class="card border-0 bg-gradient-danger text-white shadow-lg h-100">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white-50 small">OUT OF STOCK</div>
+                                                <div class="fw-bold display-6">{{ $this->stockStatus->out_of_stock }}
+                                                </div>
+                                                <small class="text-white-50">products unavailable</small>
+                                            </div>
+                                            <div class="icon-circle bg-white bg-opacity-20 p-3">
+                                                <i class="fa-solid fa-times-circle fa-2x"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-white-50 small">
+                                            <i class="fa-solid fa-truck me-1"></i> Need restocking
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+
+                            <a href="/admin/products?status=not_available" wire:navigate>
+                                <div class="card border-0 bg-gradient-secondary text-white shadow-lg h-100">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white-50 small">NOT AVAILABLE</div>
+                                                <div class="fw-bold display-6">{{ $this->stockStatus->not_available }}
+                                                </div>
+                                                <small class="text-white-50">discontinued items</small>
+                                            </div>
+                                            <div class="icon-circle bg-white bg-opacity-20 p-3">
+                                                <i class="fa-solid fa-ban fa-2x"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-white-50 small">
+                                            <i class="fa-solid fa-archive me-1"></i> Archived products
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Section -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
@@ -166,7 +300,8 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="text-white-50 small">TOTAL REVENUE</div>
-                                            <div class="fw-bold display-6">&#8369;{{ number_format($grandTotal, 2, '.', ',') }}</div>
+                                            <div class="fw-bold display-6">
+                                                &#8369;{{ number_format($grandTotal, 2, '.', ',') }}</div>
                                         </div>
                                         <div class="icon-circle bg-white bg-opacity-20 p-3">
                                             <i class="fa-solid fa-hand-holding-dollar fa-2x"></i>
@@ -181,7 +316,8 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="text-white-50 small">TODAY REVENUE</div>
-                                            <div class="fw-bold display-6">&#8369;{{ number_format($todaysTotal, 2, '.', ',') }}</div>
+                                            <div class="fw-bold display-6">
+                                                &#8369;{{ number_format($todaysTotal, 2, '.', ',') }}</div>
                                         </div>
                                         <div class="icon-circle bg-white bg-opacity-20 p-3">
                                             <i class="fa-solid fa-calendar-day fa-2x"></i>
@@ -196,7 +332,8 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="text-white-50 small">MONTHLY REVENUE</div>
-                                            <div class="fw-bold display-6">&#8369;{{ number_format($monthlyTotal, 2, '.', ',') }}</div>
+                                            <div class="fw-bold display-6">
+                                                &#8369;{{ number_format($monthlyTotal, 2, '.', ',') }}</div>
                                         </div>
                                         <div class="icon-circle bg-white bg-opacity-20 p-3">
                                             <i class="fa-solid fa-calendar-days fa-2x"></i>
@@ -211,7 +348,8 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="text-white-50 small">YEARLY REVENUE</div>
-                                            <div class="fw-bold display-6">&#8369;{{ number_format($yearlyTotal, 2, '.', ',') }}</div>
+                                            <div class="fw-bold display-6">
+                                                &#8369;{{ number_format($yearlyTotal, 2, '.', ',') }}</div>
                                         </div>
                                         <div class="icon-circle bg-white bg-opacity-20 p-3">
                                             <i class="fa-solid fa-calendar fa-2x"></i>
@@ -226,6 +364,75 @@
         </div>
     </div>
 
+    <!-- Category Product Sales -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h4 class="card-title mb-0 text-dark">Category Product Sales</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <div class="card border-0 h-100 shadow-sm">
+                                <div class="card-header bg-white border-0">
+                                    <h5 class="card-title mb-0">Category Performance</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Products</th>
+                                                    <th>Units Sold</th>
+                                                    <th>Revenue</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($this->categoryPerformance as $category)
+                                                    <tr wire:key="{{ $category->id }}">
+                                                        <td><span class="badge px-3 py-2"
+                                                                style="background-color: {{ $this->randomColor[array_rand($this->randomColor)] }}">{{ $category->category_name }}</span>
+                                                        </td>
+                                                        <td>{{ $category->products_count }}</td>
+                                                        <td>{{ $category->orders_sum_order_quantity }}</td>
+                                                        <td class="fw-bold text-success">
+                                                            ₱{{ number_format($category->orders_sum_order_total_amount, 2) }}
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="4">No data found</td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><span class="fw-bold">Total</span></td>
+                                                    <td><span
+                                                            class="fw-bold">{{ $this->categoryPerformance->sum('products_count') }}</span>
+                                                    </td>
+                                                    <td><span
+                                                            class="fw-bold">{{ $this->categoryPerformance->sum('orders_sum_order_quantity') }}</span>
+                                                    </td>
+                                                    <td><span
+                                                            class="fw-bold">₱{{ number_format($this->categoryPerformance->sum('orders_sum_order_total_amount', 2)) }}</span>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
@@ -268,18 +475,27 @@
         .border-left-3 {
             border-left-width: 4px !important;
         }
+
         .border-left-purple {
             border-left-color: #6f42c1 !important;
         }
+
         .border-left-teal {
             border-left-color: #20c997 !important;
         }
+
         .bg-purple {
             background-color: #6f42c1 !important;
         }
+
         .bg-teal {
             background-color: #20c997 !important;
         }
+
+        .bg-gradient-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%) !important;
+        }
+
         .icon-circle {
             border-radius: 50%;
             width: 70px;
@@ -288,36 +504,64 @@
             align-items: center;
             justify-content: center;
         }
+
         .transition-all {
             transition: all 0.3s ease;
         }
+
         .hover-shadow-lg:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
         }
+
         .bg-gradient-info {
             background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
         }
+
         .bg-gradient-primary {
             background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
         }
+
         .bg-gradient-success {
             background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%) !important;
         }
+
         .bg-gradient-warning {
             background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
         }
+
         .bg-gradient-danger {
             background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%) !important;
         }
+
+        .bg-gradient-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%) !important;
+        }
+
         .display-6 {
             font-size: 2rem;
             font-weight: 600;
+        }
+
+        .progress {
+            border-radius: 10px;
+            background-color: #e9ecef;
+        }
+
+        .badge {
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .table td,
+        .table th {
+            vertical-align: middle;
         }
     </style>
 
     <script>
         document.addEventListener('livewire:navigated', function() {
+            // Sales Overview Chart
             var canvas = document.getElementById("sales-chart");
             var salesData = @json($salesData);
             var chart = new Chart(canvas, {
@@ -335,6 +579,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             display: false
@@ -361,6 +606,7 @@
                 }
             });
 
+            // Product Sales Trend Chart
             var productSalesData = @json($productSalesData);
             var ctx = document.getElementById('product-sales-chart').getContext('2d');
             var productSalesChart = new Chart(ctx, {
@@ -383,6 +629,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             display: false
