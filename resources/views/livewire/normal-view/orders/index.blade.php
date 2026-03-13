@@ -576,7 +576,7 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="mt-2">
-                                                                    @for ($i = 1; $i <= $order->orderRating->rating; $i++)
+                                                                    @for ($i = 1; $i <= $order->orderRating?->rating; $i++)
                                                                         <i class="fa-solid fa-star"></i>
                                                                     @endfor
                                                                 </div>
