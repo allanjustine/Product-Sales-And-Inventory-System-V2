@@ -40,6 +40,7 @@ class Index extends Component
     public $color_lists = [""];
     public $product_size_id;
     public $product_color_id;
+    public $product_all_images = null;
 
     public function handleSortBy($field)
     {
@@ -70,6 +71,8 @@ class Index extends Component
 
     public function displayProducts()
     {
+        $status = request('status', '');
+
         $query = Product::with(['product_category', 'productImages', 'productSizes', 'productColors'])
             ->withSum([
                 'orders'
@@ -85,9 +88,50 @@ class Index extends Component
             });
         }
 
-        $products = $query->orderBy($this->sortBy, $this->sortDirection);
-
-        $products = $query->paginate($this->perPage);
+        $products = $query->orderBy($this->sortBy, $this->sortDirection)
+            ->when(
+                $status === 'in_stock',
+                fn($q)
+                =>
+                $q->where(
+                    fn($item)
+                    =>
+                    $item->where('product_stock', '>', 0)
+                        ->orWhereHas('productSizes', fn($size) => $size->where('stock', '>', 0))
+                        ->orWhereHas('productColors', fn($size) => $size->where('stock', '>', 0))
+                )
+            )
+            ->when(
+                $status === 'low_stock',
+                fn($q)
+                =>
+                $q->where(
+                    fn($item)
+                    =>
+                    $item->where('product_stock', '<', 20)
+                        ->orWhereHas('productSizes', fn($size) => $size->where('stock', '<', 20))
+                        ->orWhereHas('productColors', fn($size) => $size->where('stock', '<', 20))
+                )
+            )
+            ->when(
+                $status === 'out_of_stock',
+                fn($q)
+                =>
+                $q->where(
+                    fn($item)
+                    =>
+                    $item->where('product_stock', '<', 1)
+                        ->orWhereHas('productSizes', fn($size) => $size->where('stock', '<', 1))
+                        ->orWhereHas('productColors', fn($size) => $size->where('stock', '<', 1))
+                )
+            )
+            ->when(
+                $status === 'not_available',
+                fn($q)
+                =>
+                $q->where('product_status', 'Not Available')
+            )
+            ->paginate($this->perPage);
 
         $product_categories = ProductCategory::all();
 
@@ -201,7 +245,7 @@ class Index extends Component
 
     public function edit($id)
     {
-        $this->productEdit = Product::find($id);
+        $this->productEdit = Product::with('productImages')->find($id);
 
         $this->product_name = $this->productEdit->product_name;
         $this->product_description = $this->productEdit->product_description;
@@ -213,6 +257,7 @@ class Index extends Component
         $this->product_code = $this->productEdit->product_code;
         $this->is_color_selected = $this->productEdit->productColors()->exists();
         $this->is_size_selected = $this->productEdit->productSizes()->exists();
+        $this->product_all_images = $this->productEdit->productImages;
     }
 
     public function updatedIsColorSelected()
@@ -281,7 +326,9 @@ class Index extends Component
         if (count($this->product_images) > 0) {
             foreach ($this->product_images as $image) {
                 $name = time() . '.' . $image->getClientOriginalExtension();
-                $paths[] = $image->storeAs('product/images', $name, 'public');
+                $paths[] = [
+                    'path' => $image->storeAs('product/images', $name, 'public')
+                ];
             }
         }
 
@@ -312,6 +359,8 @@ class Index extends Component
     public function removeImage($id)
     {
         $this->to_remove_images[] = $id;
+
+        $this->product_all_images = $this->product_all_images->where('id', '!=', $id);
     }
 
     public function delete($id)

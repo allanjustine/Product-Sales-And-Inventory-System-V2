@@ -14,7 +14,7 @@ class Index extends Component
 
     #[Title('Product Categories')]
 
-    public $perPage = 5;
+    public $perPage = 10;
     public $search;
     public $sortBy = 'category_name';
     public $sortDirection = 'asc';
