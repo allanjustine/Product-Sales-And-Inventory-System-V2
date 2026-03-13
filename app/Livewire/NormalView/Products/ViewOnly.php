@@ -148,6 +148,9 @@ class ViewOnly extends Component
                 'productColors',
                 'productImages'
             ])
+            ->withAvg('productRatings', 'rating')
+            ->withSum('productSizes', 'stock')
+            ->withSum('productColors', 'stock')
             ->find($id);
     }
 

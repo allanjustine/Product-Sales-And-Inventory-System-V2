@@ -138,6 +138,8 @@ class Index extends Component
                 'productRatings'
             ])
             ->withAvg('productRatings', 'rating')
+            ->withSum('productSizes', 'stock')
+            ->withSum('productColors', 'stock')
             ->search($this->search);
 
         $sorted_by = request('sorted_by', '');
@@ -176,7 +178,18 @@ class Index extends Component
             }
         }
 
-        $this->carts = Cart::with('product.productImages', 'product.productSizes', 'product.productColors')
+        $this->carts = Cart::with([
+            'product'
+            =>
+            fn($q)
+            =>
+            $q->withAvg('productRatings', 'rating')
+                ->withSum('productSizes', 'stock')
+                ->withSum('productColors', 'stock'),
+            'product.productImages',
+            'product.productSizes',
+            'product.productColors'
+        ])
             ->where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -314,6 +327,9 @@ class Index extends Component
                 'productRatings.ratingImages',
                 'productRatings.user',
             ])
+            ->withAvg('productRatings', 'rating')
+            ->withSum('productSizes', 'stock')
+            ->withSum('productColors', 'stock')
             ->find($id);
 
         $this->has_sizes = $this->productView->productSizes->isNotEmpty();

@@ -48,7 +48,7 @@ class Index extends Component
     {
         $userId = auth()->id();
 
-        $this->pendings = Order::orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
+        $this->pendings = Order::with('product.productImages')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
             $query->where('order_status', 'To Deliver')
                 ->orWhere('order_status', 'Processing Order')
                 ->orWhere('order_status', 'Pending')
@@ -56,20 +56,20 @@ class Index extends Component
         })
             ->where('user_id', $userId)
             ->get();
-        $this->grandTotalPending = Order::where('user_id', auth()->id())
+        $this->grandTotalPending = Order::with('product.productImages')->where('user_id', auth()->id())
             ->whereNotIn('order_status', ['Paid'])
             ->whereNotIn('order_status', ['Complete'])
             ->whereNotIn('order_status', ['Cancelled'])
             ->sum('order_total_amount');
 
-        $this->recents = Order::with('orderRating')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
+        $this->recents = Order::with('product.productImages')->with('orderRating')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
             $query->where('order_status', 'Paid')
                 ->orWhere('order_status', 'Complete');
         })
             ->where('user_id', $userId)
             ->get();
 
-        $this->grandTotalRecent = Order::where('user_id', auth()->id())
+        $this->grandTotalRecent = Order::with('product.productImages')->where('user_id', auth()->id())
             ->whereNotIn('order_status', ['Pending'])
             ->whereNotIn('order_status', ['Processing Order'])
             ->whereNotIn('order_status', ['To Deliver'])
@@ -77,7 +77,7 @@ class Index extends Component
             ->whereNotIn('order_status', ['Cancelled'])
             ->sum('order_total_amount');
 
-        $this->cancels = Order::orderBy('created_at', 'desc')->where('order_status', 'Cancelled')
+        $this->cancels = Order::with('product.productImages')->orderBy('created_at', 'desc')->where('order_status', 'Cancelled')
             ->where('user_id', auth()->id())
             ->get();
 

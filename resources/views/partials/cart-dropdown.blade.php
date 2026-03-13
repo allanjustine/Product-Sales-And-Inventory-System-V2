@@ -48,7 +48,11 @@
                                     <div class="position-relative flex-shrink-0">
                                         <div class="d-flex align-items-center">
                                             <input type="checkbox" wire:model.live='cart_ids' value="{{ $item->id }}"
-                                                @if ($item->product->product_status === 'Not Available' || $item->product->productStocks() < $item->quantity) disabled @endif
+                                                @if (
+                                                    $item->product->product_status === 'Not Available' ||
+                                                        ($item->product->product_sizes_sum_stock ?:
+                                                        $item->product->product_colors_sum_stock ?:
+                                                            $item->product->product_stock) < $item->quantity) disabled @endif
                                                 class="form-check-input mt-1">
                                             @if (Storage::disk('public')->exists($item->product->productImages?->first()?->path))
                                                 <img class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;"
@@ -78,8 +82,10 @@
                                                 @else bg-danger @endif">
                                                 {{ $item->product->product_status }}
                                             </span>
-                                            <small class="text-muted">Stock: {{ $item->product->shortProductStocks() }}
-                                                pcs</small>
+                                            <small class="text-muted">Stock: <x-formatted-number
+                                                    :value="$item->product->product_sizes_sum_stock ?:
+                                                        $item->product->product_colors_sum_stock ?:
+                                                        $item->product->product_stock" /></small>
                                         </div>
 
                                         @if ($item->hasVariation())
@@ -183,7 +189,9 @@
                                 $carts->filter(function ($item) {
                                         return $item->product &&
                                             $item->product->product_status === 'Available' &&
-                                            $item->product->productStocks() >= $item->quantity;
+                                            ($item->product->product_sizes_sum_stock ?:
+                                            $item->product->product_colors_sum_stock ?:
+                                                $item->product->product_stock) >= $item->quantity;
                                     })->count() > 0)
                                 <div class="form-check d-flex align-items-center">
                                     <input type="checkbox" class="form-check-input" wire:model.live="select_all"

@@ -135,7 +135,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="stars me-2">
                                                         @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($i <= $productView->averageRatings())
+                                                            @if ($i <= $productView->product_ratings_avg_rating)
                                                                 <i class="fa-solid fa-star text-warning"></i>
                                                             @else
                                                                 <i class="far fa-star text-secondary"></i>
@@ -143,10 +143,10 @@
                                                         @endfor
                                                     </div>
                                                     <span class="text-muted small">
-                                                        @if ((int) $productView->averageRatings() === 0)
+                                                        @if ((int) $productView->product_ratings_avg_rating === 0)
                                                             No ratings yet
                                                         @else
-                                                            {{ $productView->averageRatings() }}
+                                                            {{ $productView->product_ratings_avg_rating }}
                                                             ({{ $productView->shortOrderSold() }} sold)
                                                         @endif
                                                     </span>
@@ -224,9 +224,12 @@
                                                             <div>
                                                                 <small class="text-muted d-block">Stock</small>
                                                                 <div class="fw-semibold" style="font-size: 10px;">
-                                                                    @if ($productView->productStocks() > 0)
-                                                                        {{ $productView->shortProductStocks() }}
-                                                                        units
+                                                                    @if (
+                                                                        ($productView->product_sizes_sum_stock ?: $productView->product_colors_sum_stock ?: $productView->product_stock) >
+                                                                            0)
+                                                                        <x-formatted-number :value="$productView->product_sizes_sum_stock ?:
+                                                                            $productView->product_colors_sum_stock ?:
+                                                                            $productView->product_stock" />
                                                                     @else
                                                                         <span
                                                                             class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">
@@ -250,8 +253,7 @@
                                                             <div x-cloak="">
                                                                 <small class="text-muted d-block">Total Sold</small>
                                                                 <div class="fw-semibold">
-                                                                    {{ $productView->shortOrderSold() }}
-                                                                    units
+                                                                    <x-formatted-number :value="$productView->orders_sum_order_quantity" />
                                                                 </div>
                                                             </div>
                                                         </div>

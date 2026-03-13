@@ -30,7 +30,15 @@ class Index extends Component
 
     public function carts()
     {
-        $cartItems = Cart::with('product')
+        $cartItems = Cart::with([
+            'product'
+            =>
+            fn($q)
+            =>
+            $q->withAvg('productRatings', 'rating')
+                ->withSum('productSizes', 'stock')
+                ->withSum('productColors', 'stock')
+        ])
             ->where('user_id', auth()->id())
             ->latest()
             ->get();

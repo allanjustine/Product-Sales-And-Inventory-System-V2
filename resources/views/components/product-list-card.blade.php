@@ -28,11 +28,11 @@
         @endrole
 
         <div class="position-absolute top-0 end-0 m-2">
-            @if ($product->productStocks() >= 20)
+            @if (($product->product_sizes_sum_stock ?: $product->product_colors_sum_stock ?: $product->product_stock) >= 20)
                 <span class="badge bg-success bg-opacity-90 text-white" id="stock-badge">
                     <i class="fas fa-check-circle me-1"></i>In Stock
                 </span>
-            @elseif ($product->productStocks() > 0)
+            @elseif (($product->product_sizes_sum_stock ?: $product->product_colors_sum_stock ?: $product->product_stock) > 0)
                 <span class="badge bg-warning bg-opacity-90 text-dark" id="stock-badge">
                     <i class="fas fa-exclamation-circle me-1"></i>Low Stock
                 </span>
@@ -92,7 +92,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
                     <i class="fas fa-star text-warning me-1"></i>
-                    <span><span class="fw-semibold">{{ $product->averageRatings() }}</span>
+                    <span><span class="fw-semibold">{{ $product->product_ratings_avg_rating }}</span>
                         | <span class="text-muted">{{ $product->shortOrderSold() }} sold</span></span>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                     <i class="fas fa-cart-plus me-2"></i>Add to Cart
                 </button>
                 @if ($product->product_status === 'Available')
-                    @if ($product->productStocks() === 0)
+                    @if (($product->product_sizes_sum_stock ?: $product->product_colors_sum_stock ?: $product->product_stock) === 0)
                         <button class="btn btn-danger" disabled id="buttons">
                             <i class="fas fa-circle-xmark me-2"></i>Out of Stock
                         </button>
