@@ -83,8 +83,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
                     <div class="position-relative">
-                        <img src="https://imgs.search.brave.com/yM-vjEOgyPmNcBYOj0wkhAyTwmgQV7n5iC5arD4h8Os/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/Nzg5MTYxNzE3Mjgt/NDY2ODZlYWM4ZDU4/P2ZtPWpwZyZxPTYw/Jnc9MzAwMCZpeGxp/Yj1yYi00LjEuMCZp/eGlkPU0zd3hNakEz/ZkRCOE1IeHpaV0Z5/WTJoOE1UQjhmSE4w/YjNKbGZHVnVmREI4/ZkRCOGZId3c" alt="Store Products"
-                            class="img-fluid rounded-3 shadow-lg about-image">
+                        <img src="https://imgs.search.brave.com/yM-vjEOgyPmNcBYOj0wkhAyTwmgQV7n5iC5arD4h8Os/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/Nzg5MTYxNzE3Mjgt/NDY2ODZlYWM4ZDU4/P2ZtPWpwZyZxPTYw/Jnc9MzAwMCZpeGxp/Yj1yYi00LjEuMCZp/eGlkPU0zd3hNakEz/ZkRCOE1IeHpaV0Z5/WTJoOE1UQjhmSE4w/YjNKbGZHVnVmREI4/ZkRCOGZId3c"
+                            alt="Store Products" class="img-fluid rounded-3 shadow-lg about-image">
                         <div class="position-absolute top-0 end-0 m-4">
                             <span class="badge bg-warning px-3 py-2 rounded-pill">
                                 <i class="fas fa-thumbs-up me-2"></i>Trusted Quality
@@ -283,21 +283,21 @@
                 <div class="col-4 mb-4">
                     <div class="stat-item">
                         <i class="fas fa-box fa-3x mb-3"></i>
-                        <h3 class="fw-bold display-6">500+</h3>
+                        <h3 class="fw-bold display-6">{{ $product_available }}+</h3>
                         <p class="mb-0">Products Available</p>
                     </div>
                 </div>
                 <div class="col-4 mb-4">
                     <div class="stat-item">
                         <i class="fas fa-users fa-3x mb-3"></i>
-                        <h3 class="fw-bold display-6">1000+</h3>
+                        <h3 class="fw-bold display-6">{{ $happy_customers }}+</h3>
                         <p class="mb-0">Happy Customers</p>
                     </div>
                 </div>
                 <div class="col-4 mb-4">
                     <div class="stat-item">
                         <i class="fas fa-shipping-fast fa-3x mb-3"></i>
-                        <h3 class="fw-bold display-6">2000+</h3>
+                        <h3 class="fw-bold display-6">{{ $orders_delivered }}+</h3>
                         <p class="mb-0">Orders Delivered</p>
                     </div>
                 </div>
