@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="deleteProductModalTitle">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <i class="fa-solid fa-exclamation-triangle me-2"></i>
                         Confirm Deletion
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
@@ -18,7 +18,7 @@
                         <!-- Warning Icon -->
                         <div class="mb-3">
                             <span class="bg-danger bg-opacity-10 d-inline-flex p-3 rounded-circle">
-                                <i class="fas fa-trash-alt fa-3x text-danger"></i>
+                                <i class="fa-solid fa-trash-alt fa-3x text-danger"></i>
                             </span>
                         </div>
 
@@ -31,16 +31,16 @@
 
                         <div class="bg-light p-3 rounded border-start border-danger border-4 mb-3 text-start">
                             <div class="d-flex align-items-center">
-                                <i class="fas fa-box text-danger me-2 fa-fw"></i>
+                                <i class="fa-solid fa-box text-danger me-2 fa-fw"></i>
                                 <span class="fw-bold text-capitalize">{{ $productToDelete->product_name }}</span>
                             </div>
                             <div class="d-flex align-items-center mt-2">
-                                <i class="fas fa-hashtag text-muted me-2 fa-fw"></i>
+                                <i class="fa-solid fa-hashtag text-muted me-2 fa-fw"></i>
                                 <span class="text-muted small">Code: {{ $productToDelete->product_code }}</span>
                             </div>
                             @if ($productToDelete->product_category)
                                 <div class="d-flex align-items-center mt-1">
-                                    <i class="fas fa-tag text-muted me-2 fa-fw"></i>
+                                    <i class="fa-solid fa-tag text-muted me-2 fa-fw"></i>
                                     <span class="text-muted small">Category:
                                         {{ $productToDelete->product_category->category_name }}</span>
                                 </div>
@@ -48,7 +48,7 @@
                         </div>
 
                         <p class="text-danger small mb-0">
-                            <i class="fas fa-info-circle me-1"></i>
+                            <i class="fa-solid fa-info-circle me-1"></i>
                             This product will be permanently removed from the database.
                         </p>
                     @else
@@ -66,14 +66,14 @@
 
                 <div class="modal-footer bg-light border-top-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-1"></i>
+                        <i class="fa-solid fa-times me-1"></i>
                         Cancel
                     </button>
 
                     <button class="btn btn-danger" wire:click="deleteProduct" wire:target="deleteProduct"
                         wire:loading.attr='disabled' @if (!$productToDelete) disabled @endif>
                         <span wire:target='deleteProduct' wire:loading.remove>
-                            <i class="fas fa-trash-alt me-1"></i>
+                            <i class="fa-solid fa-trash-alt me-1"></i>
                             Yes, Delete Permanently
                         </span>
                         <span wire:target='deleteProduct' wire:loading>

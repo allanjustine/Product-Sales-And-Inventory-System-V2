@@ -17,11 +17,11 @@
                         <div class="card-header bg-gradient-primary text-white py-4">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0">
-                                    <i class="fas fa-key me-2"></i>Reset Password
+                                    <i class="fa-solid fa-key me-2"></i>Reset Password
                                 </h4>
                                 <span class="badge bg-white bg-opacity-25 rounded-pill" data-bs-toggle="tooltip"
                                     data-bs-placement="left" title="You are resetting your password">
-                                    <i class="fas fa-question"></i>
+                                    <i class="fa-solid fa-question"></i>
                                 </span>
                             </div>
                         </div>
@@ -30,19 +30,19 @@
                             <form wire:submit="resetPassword" class="needs-validation" novalidate>
                                 <div class="mb-4">
                                     <label for="password" class="form-label fw-semibold">
-                                        <i class="fas fa-lock me-2 text-primary"></i>New Password
+                                        <i class="fa-solid fa-lock me-2 text-primary"></i>New Password
                                     </label>
                                     <div class="input-group">
                                         <input type="password" id="password" wire:model="password"
                                             class="form-control form-control-lg border-end-0"
                                             placeholder="Enter new password" required>
                                         <span class="input-group-text bg-transparent border-start-0">
-                                            <i class="fas fa-eye-slash password-toggle" data-target="password"></i>
+                                            <i class="fa-solid fa-eye-slash password-toggle" data-target="password"></i>
                                         </span>
                                     </div>
                                     @error('password')
                                         <div class="text-danger small mt-2">
-                                            <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                            <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                         </div>
                                     @enderror
                                     <div class="password-strength mt-2 d-none">
@@ -55,7 +55,7 @@
 
                                 <div class="mb-4">
                                     <label for="password_confirmation" class="form-label fw-semibold">
-                                        <i class="fas fa-lock me-2 text-primary"></i>Confirm New Password
+                                        <i class="fa-solid fa-lock me-2 text-primary"></i>Confirm New Password
                                     </label>
                                     <div class="input-group">
                                         <input type="password" id="password_confirmation"
@@ -63,13 +63,13 @@
                                             class="form-control form-control-lg border-end-0"
                                             placeholder="Confirm new password" required>
                                         <span class="input-group-text bg-transparent border-start-0">
-                                            <i class="fas fa-eye-slash password-toggle"
+                                            <i class="fa-solid fa-eye-slash password-toggle"
                                                 data-target="password_confirmation"></i>
                                         </span>
                                     </div>
                                     @error('password_confirmation')
                                         <div class="text-danger small mt-2">
-                                            <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                            <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                         </div>
                                     @enderror
                                 </div>
@@ -81,7 +81,7 @@
                                         Resetting Password...
                                     </span>
                                     <span wire:loading.remove wire:target='resetPassword'>
-                                        <i class="fas fa-redo-alt me-2"></i>Reset Password
+                                        <i class="fa-solid fa-redo-alt me-2"></i>Reset Password
                                     </span>
                                 </button>
 
@@ -90,7 +90,7 @@
                                         Remembered your password?
                                         <a href="/login" wire:navigate
                                             class="text-decoration-none fw-semibold text-primary ms-1">
-                                            <i class="fas fa-sign-in-alt me-1"></i>Back to Login
+                                            <i class="fa-solid fa-sign-in-alt me-1"></i>Back to Login
                                         </a>
                                     </p>
                                 </div>
@@ -99,7 +99,7 @@
 
                         <div class="card-footer bg-light py-3 text-center">
                             <small class="text-muted">
-                                <i class="fas fa-shield-alt me-1 text-success"></i>
+                                <i class="fa-solid fa-shield-alt me-1 text-success"></i>
                                 Your password is encrypted and securely stored
                             </small>
                         </div>
@@ -107,7 +107,7 @@
 
                     <div class="text-center mt-4">
                         <div class="alert alert-light border d-inline-flex align-items-center shadow-sm" role="alert">
-                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            <i class="fa-solid fa-lightbulb text-warning me-2"></i>
                             <small>Use a unique password that you don't use elsewhere</small>
                         </div>
                     </div>

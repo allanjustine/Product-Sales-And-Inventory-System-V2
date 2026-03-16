@@ -7,7 +7,7 @@
                     <div class="modal-header bg-gradient-warning text-white p-4 border-0" id="ratingModalHeader">
                         <div class="d-flex align-items-center w-100">
                             <div class="icon-wrapper rounded-circle p-2 me-3" id="ratingModalIcon">
-                                <i class="fas fa-star fa-lg text-white"></i>
+                                <i class="fa-solid fa-star fa-lg text-white"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <h4 class="modal-title fw-bold mb-1" id="ratingModalTitle">Rate Your Product</h4>
@@ -24,7 +24,7 @@
                             <div class="rating-intro p-4 border-bottom" id="ratingIntroSection">
                                 <div class="text-center" id="ratingIntroContent">
                                     <div class="rating-icon mb-3" id="ratingMainIcon">
-                                        <i class="fas fa-box-open fa-4x text-warning opacity-75"></i>
+                                        <i class="fa-solid fa-box-open fa-4x text-warning opacity-75"></i>
                                     </div>
                                     <h3 class="fw-bold mb-3" id="ratingQuestion">How would you rate this product?</h3>
                                     <p class="text-muted mb-4" id="ratingDescription">Your feedback helps us improve our
@@ -43,7 +43,7 @@
                                                     id="ratingInput5">
                                                 <label for="ratingStar5" title="Excellent - 5 stars" class="star-label"
                                                     id="starLabel5">
-                                                    <i class="fas fa-star fa-3x" id="starIcon5"></i>
+                                                    <i class="fa-solid fa-star fa-3x" id="starIcon5"></i>
                                                 </label>
 
                                                 <input type="radio" id="ratingStar4" name="rating" value="4"
@@ -51,7 +51,7 @@
                                                     id="ratingInput4">
                                                 <label for="ratingStar4" title="Good - 4 stars" class="star-label"
                                                     id="starLabel4">
-                                                    <i class="fas fa-star fa-3x" id="starIcon4"></i>
+                                                    <i class="fa-solid fa-star fa-3x" id="starIcon4"></i>
                                                 </label>
 
                                                 <input type="radio" id="ratingStar3" name="rating" value="3"
@@ -59,7 +59,7 @@
                                                     id="ratingInput3">
                                                 <label for="ratingStar3" title="Average - 3 stars" class="star-label"
                                                     id="starLabel3">
-                                                    <i class="fas fa-star fa-3x" id="starIcon3"></i>
+                                                    <i class="fa-solid fa-star fa-3x" id="starIcon3"></i>
                                                 </label>
 
                                                 <input type="radio" id="ratingStar2" name="rating" value="2"
@@ -67,7 +67,7 @@
                                                     id="ratingInput2">
                                                 <label for="ratingStar2" title="Fair - 2 stars" class="star-label"
                                                     id="starLabel2">
-                                                    <i class="fas fa-star fa-3x" id="starIcon2"></i>
+                                                    <i class="fa-solid fa-star fa-3x" id="starIcon2"></i>
                                                 </label>
 
                                                 <input type="radio" id="ratingStar1" name="rating" value="1"
@@ -75,7 +75,7 @@
                                                     class="rating-input" id="ratingInput1">
                                                 <label for="ratingStar1" title="Poor - 1 star" class="star-label"
                                                     id="starLabel1">
-                                                    <i class="fas fa-star fa-3x" id="starIcon1"></i>
+                                                    <i class="fa-solid fa-star fa-3x" id="starIcon1"></i>
                                                 </label>
                                             </fieldset>
                                         </div>
@@ -95,7 +95,7 @@
                                         <div class="selected-rating-badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill px-4 py-2 d-inline-flex align-items-center"
                                             id="selectedRatingBadge"
                                             style="{{ $product_rating ? '' : 'display: none;' }}">
-                                            <i class="fas fa-star me-2" id="selectedRatingIcon"></i>
+                                            <i class="fa-solid fa-star me-2" id="selectedRatingIcon"></i>
                                             <span class="fw-bold" id="selectedRatingText">
                                                 {{ $product_rating ?? 0 }} out of 5 stars
                                             </span>
@@ -107,7 +107,7 @@
                                             <div class="feedback-item text-center" id="feedback5"
                                                 style="{{ $product_rating == 5 ? '' : 'display: none;' }}">
                                                 <h6 class="text-success mb-2" id="feedbackTitle5">
-                                                    <i class="fas fa-heart me-2"></i>Excellent!
+                                                    <i class="fa-solid fa-heart me-2"></i>Excellent!
                                                 </h6>
                                                 <p class="text-muted small mb-0" id="feedbackText5">
                                                     Thank you! We're thrilled you love our product!
@@ -116,7 +116,7 @@
                                             <div class="feedback-item text-center" id="feedback4"
                                                 style="{{ $product_rating == 4 ? '' : 'display: none;' }}">
                                                 <h6 class="text-primary mb-2" id="feedbackTitle4">
-                                                    <i class="fas fa-thumbs-up me-2"></i>Great!
+                                                    <i class="fa-solid fa-thumbs-up me-2"></i>Great!
                                                 </h6>
                                                 <p class="text-muted small mb-0" id="feedbackText4">
                                                     We're glad you had a positive experience!
@@ -125,7 +125,7 @@
                                             <div class="feedback-item text-center" id="feedback3"
                                                 style="{{ $product_rating == 3 ? '' : 'display: none;' }}">
                                                 <h6 class="text-info mb-2" id="feedbackTitle3">
-                                                    <i class="fas fa-meh me-2"></i>Average
+                                                    <i class="fa-solid fa-meh me-2"></i>Average
                                                 </h6>
                                                 <p class="text-muted small mb-0" id="feedbackText3">
                                                     Thanks for your feedback. We'll strive to improve!
@@ -134,7 +134,7 @@
                                             <div class="feedback-item text-center" id="feedback2"
                                                 style="{{ $product_rating == 2 ? '' : 'display: none;' }}">
                                                 <h6 class="text-warning mb-2" id="feedbackTitle2">
-                                                    <i class="fas fa-frown me-2"></i>Fair
+                                                    <i class="fa-solid fa-frown me-2"></i>Fair
                                                 </h6>
                                                 <p class="text-muted small mb-0" id="feedbackText2">
                                                     We appreciate your honesty. We'll work to do better!
@@ -143,7 +143,7 @@
                                             <div class="feedback-item text-center" id="feedback1"
                                                 style="{{ $product_rating == 1 ? '' : 'display: none;' }}">
                                                 <h6 class="text-danger mb-2" id="feedbackTitle1">
-                                                    <i class="fas fa-sad-tear me-2"></i>Poor
+                                                    <i class="fa-solid fa-sad-tear me-2"></i>Poor
                                                 </h6>
                                                 <p class="text-muted small mb-0" id="feedbackText1">
                                                     We apologize for the experience. We'll address this.
@@ -156,7 +156,7 @@
                                         <div class="rating-error alert alert-danger alert-dismissible fade show mt-4"
                                             role="alert" id="ratingErrorAlert">
                                             <div class="d-flex align-items-center" id="ratingErrorContent">
-                                                <i class="fas fa-exclamation-circle me-2" id="ratingErrorIcon"></i>
+                                                <i class="fa-solid fa-exclamation-circle me-2" id="ratingErrorIcon"></i>
                                                 <div>
                                                     <span class="fw-semibold" id="ratingErrorMessage">Rating
                                                         Required</span>
@@ -182,7 +182,7 @@
                                     <div class="review-section mt-5" id="reviewSection">
                                         <div class="review-header mb-3" id="reviewHeader">
                                             <h5 class="fw-bold text-dark mb-2" id="reviewTitle">
-                                                <i class="fas fa-comment-alt me-2 text-warning"></i>
+                                                <i class="fa-solid fa-comment-alt me-2 text-warning"></i>
                                                 Write Your Review
                                             </h5>
                                             <p class="text-muted small mb-0" id="reviewDescription">
@@ -206,7 +206,7 @@
                                             <div class="alert alert-danger alert-dismissible fade show mt-2"
                                                 role="alert" id="reviewErrorAlert">
                                                 <div class="d-flex align-items-center" id="reviewErrorContent">
-                                                    <i class="fas fa-exclamation-circle me-2" id="reviewErrorIcon"></i>
+                                                    <i class="fa-solid fa-exclamation-circle me-2" id="reviewErrorIcon"></i>
                                                     <span class="fw-semibold"
                                                         id="reviewErrorMessage">{{ $message }}</span>
                                                 </div>
@@ -218,7 +218,7 @@
                                     <div class="image-upload-section mt-5" id="imageUploadSection">
                                         <div class="upload-header mb-3" id="uploadHeader">
                                             <h5 class="fw-bold text-dark mb-2" id="uploadTitle">
-                                                <i class="fas fa-images me-2 text-warning"></i>
+                                                <i class="fa-solid fa-images me-2 text-warning"></i>
                                                 Upload Product Photos
                                             </h5>
                                             <p class="text-muted small mb-0" id="uploadDescription">
@@ -236,7 +236,7 @@
 
                                                 <div class="upload-icon mb-3" id="uploadIcon">
                                                     <i
-                                                        class="fas fa-cloud-upload-alt fa-3x text-warning opacity-75"></i>
+                                                        class="fa-solid fa-cloud-upload-alt fa-3x text-warning opacity-75"></i>
                                                 </div>
 
                                                 <h6 class="fw-bold mb-2" id="uploadAreaTitle" wire:loading.remove
@@ -257,7 +257,7 @@
                                                 <button wire:loading.remove wire:loading.attr='disabled'
                                                     wire:target='images' type="button"
                                                     class="btn btn-warning rounded-pill px-4" id="uploadButton">
-                                                    <i class="fas fa-plus me-2"></i>Choose Files
+                                                    <i class="fa-solid fa-plus me-2"></i>Choose Files
                                                 </button>
                                             </div>
 
@@ -278,7 +278,7 @@
                                                                         class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 p-1"
                                                                         style="width: 24px; height: 24px; border-radius: 50%;"
                                                                         wire:click="removeImage({{ $index }})">
-                                                                        <i class="fas fa-times fa-xs"></i>
+                                                                        <i class="fa-solid fa-times fa-xs"></i>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -287,14 +287,14 @@
 
                                                     <div class="upload-info mt-2" id="uploadInfo">
                                                         <small class="text-success">
-                                                            <i class="fas fa-check-circle me-1"></i>
+                                                            <i class="fa-solid fa-check-circle me-1"></i>
                                                             {{ count($this->old_images) }} image(s) selected
                                                         </small>
                                                     </div>
                                                 @else
                                                     <div class="no-images text-center py-3" id="noImages"
                                                         wire:loading.remove wire:target='images'>
-                                                        <i class="fas fa-images fa-2x text-muted opacity-50 mb-2"></i>
+                                                        <i class="fa-solid fa-images fa-2x text-muted opacity-50 mb-2"></i>
                                                         <p class="text-muted small mb-0">No images selected yet</p>
                                                     </div>
                                                 @endif
@@ -304,7 +304,7 @@
                                                 <div class="alert alert-danger alert-dismissible fade show mt-2"
                                                     role="alert" id="imageErrorAlert">
                                                     <div class="d-flex align-items-center" id="imageErrorContent">
-                                                        <i class="fas fa-exclamation-circle me-2" id="imageErrorIcon"></i>
+                                                        <i class="fa-solid fa-exclamation-circle me-2" id="imageErrorIcon"></i>
                                                         <span class="fw-semibold"
                                                             id="imageErrorMessage">{{ $message }}</span>
                                                     </div>
@@ -316,7 +316,7 @@
                                                 <div class="alert alert-danger alert-dismissible fade show mt-2"
                                                     role="alert" id="fileTypeErrorAlert">
                                                     <div class="d-flex align-items-center" id="fileTypeErrorContent">
-                                                        <i class="fas fa-exclamation-circle me-2"
+                                                        <i class="fa-solid fa-exclamation-circle me-2"
                                                             id="fileTypeErrorIcon"></i>
                                                         <span class="fw-semibold"
                                                             id="fileTypeErrorMessage">{{ $message }}</span>
@@ -339,7 +339,7 @@
                                 <div class="d-flex align-items-center justify-content-center"
                                     id="submitRatingContent">
                                     <span wire:target='submitRating' wire:loading.remove id="submitRatingText">
-                                        <i class="fas fa-thumbs-up me-2" id="submitRatingIcon"></i>Submit Review
+                                        <i class="fa-solid fa-thumbs-up me-2" id="submitRatingIcon"></i>Submit Review
                                     </span>
                                     <span wire:target='submitRating' wire:loading id="submittingRatingText">
                                         <span class="spinner-border spinner-border-sm me-2"
@@ -350,13 +350,13 @@
                             </button>
                             <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill"
                                 data-bs-dismiss="modal" id="closeRatingBtn">
-                                <i class="fas fa-times me-2" id="closeRatingIcon"></i>Skip for Now
+                                <i class="fa-solid fa-times me-2" id="closeRatingIcon"></i>Skip for Now
                             </button>
                         </div>
 
                         <div class="additional-info mt-3 text-center w-100" id="ratingAdditionalInfo">
                             <small class="text-muted" id="ratingPrivacyInfo">
-                                <i class="fas fa-lock me-1"></i>
+                                <i class="fa-solid fa-lock me-1"></i>
                                 Your rating helps improve our products for everyone
                             </small>
                         </div>

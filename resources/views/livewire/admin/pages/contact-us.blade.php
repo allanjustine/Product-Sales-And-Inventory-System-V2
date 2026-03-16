@@ -6,7 +6,7 @@
                 <div class="d-flex align-items-center">
                     <div id="feedbackHeaderIcon"
                         style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                        <i class="fas fa-comments text-white fa-lg"></i>
+                        <i class="fa-solid fa-comments text-white fa-lg"></i>
                     </div>
                     <div class="d-flex flex-column">
                         <h3 id="feedbackTitle" class="card-title mb-0 text-white">Customer Feedback</h3>
@@ -28,7 +28,7 @@
                                 <div class="d-flex align-items-center">
                                     <div id="nameHeader"
                                         style="width: 36px; height: 36px; background: #e3f2fd; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
-                                        <i class="fas fa-user text-primary"></i>
+                                        <i class="fa-solid fa-user text-primary"></i>
                                     </div>
                                     <span class="fw-bold text-uppercase text-primary small">User</span>
                                 </div>
@@ -37,7 +37,7 @@
                                 <div class="d-flex align-items-center">
                                     <div id="emailHeader"
                                         style="width: 36px; height: 36px; background: #e8f5e9; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
-                                        <i class="fas fa-envelope text-success"></i>
+                                        <i class="fa-solid fa-envelope text-success"></i>
                                     </div>
                                     <span class="fw-bold text-uppercase text-success small">Email</span>
                                 </div>
@@ -46,7 +46,7 @@
                                 <div class="d-flex align-items-center">
                                     <div id="messageHeader"
                                         style="width: 36px; height: 36px; background: #fff3e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
-                                        <i class="fas fa-comment-dots text-warning"></i>
+                                        <i class="fa-solid fa-comment-dots text-warning"></i>
                                     </div>
                                     <span class="fw-bold text-uppercase text-warning small">Message</span>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="d-flex align-items-center">
                                     <div id="statusHeader"
                                         style="width: 36px; height: 36px; background: #f3e5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
-                                        <i class="fas fa-flag text-purple"></i>
+                                        <i class="fa-solid fa-flag text-purple"></i>
                                     </div>
                                     <span class="fw-bold text-uppercase text-purple small">Status</span>
                                 </div>
@@ -64,7 +64,7 @@
                                 <div class="d-flex align-items-center justify-content-end">
                                     <div id="actionHeader"
                                         style="width: 36px; height: 36px; background: #e0f7fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="fas fa-cogs text-info"></i>
+                                        <i class="fa-solid fa-cogs text-info"></i>
                                     </div>
                                 </div>
                             </th>
@@ -93,7 +93,7 @@
                                     <a href="mailto:{{ $feedback->email }}" class="text-decoration-none">
                                         <div id="userEmail{{ $feedback->id }}"
                                             class="text-dark d-flex align-items-center">
-                                            <i class="fas fa-envelope me-2 text-primary"></i>
+                                            <i class="fa-solid fa-envelope me-2 text-primary"></i>
                                             <span style="word-break: break-all;">{{ $feedback->email }}</span>
                                         </div>
                                     </a>
@@ -108,7 +108,7 @@
                                             <button
                                                 class="btn btn-link btn-sm p-0 text-decoration-none mt-1 text-primary"
                                                 onclick="toggleMessage('{{ $feedback->id }}')">
-                                                <i class="fas fa-chevron-down me-1"></i>Read more
+                                                <i class="fa-solid fa-chevron-down me-1"></i>Read more
                                             </button>
                                         @endif
                                     </div>
@@ -118,13 +118,13 @@
                                         <span id="statusBadge{{ $feedback->id }}"
                                             class="badge py-2 px-3 d-inline-flex align-items-center"
                                             style="background: rgba(40, 167, 69, 0.1); color: #28a745; border-radius: 50px; border: 1px solid rgba(40, 167, 69, 0.3);">
-                                            <i class="fas fa-check-circle me-2"></i>Published
+                                            <i class="fa-solid fa-check-circle me-2"></i>Published
                                         </span>
                                     @else
                                         <span id="statusBadge{{ $feedback->id }}"
                                             class="badge py-2 px-3 d-inline-flex align-items-center"
                                             style="background: rgba(255, 193, 7, 0.1); color: #ffc107; border-radius: 50px; border: 1px solid rgba(255, 193, 7, 0.3);">
-                                            <i class="fas fa-clock me-2"></i>Pending
+                                            <i class="fa-solid fa-clock me-2"></i>Pending
                                         </span>
                                     @endif
                                 </td>
@@ -134,7 +134,7 @@
                                             class="btn btn-sm d-flex align-items-center"
                                             style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 10px; padding: 8px 15px;"
                                             data-bs-toggle="modal" data-bs-target="#feedbackModal{{ $feedback->id }}">
-                                            <i class="fas fa-eye me-2 text-primary"></i>
+                                            <i class="fa-solid fa-eye me-2 text-primary"></i>
                                             <span>View</span>
                                         </button>
                                         @if ($feedback->is_published)
@@ -142,7 +142,7 @@
                                                 class="btn btn-sm d-flex align-items-center"
                                                 onclick="handlePublish({{ $feedback->id }})"
                                                 style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; border: none; border-radius: 10px; padding: 8px 15px;">
-                                                <i class="fas fa-times-circle me-2"></i>
+                                                <i class="fa-solid fa-times-circle me-2"></i>
                                                 <span>Unpublish</span>
                                             </button>
                                         @else
@@ -150,7 +150,7 @@
                                                 class="btn btn-sm d-flex align-items-center"
                                                 onclick="handlePublish({{ $feedback->id }})"
                                                 style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); color: white; border: none; border-radius: 10px; padding: 8px 15px;">
-                                                <i class="fas fa-check-circle me-2"></i>
+                                                <i class="fa-solid fa-check-circle me-2"></i>
                                                 <span>Publish</span>
                                             </button>
                                         @endif
@@ -167,7 +167,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div
                                                     style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                                                    <i class="fas fa-comment-alt text-white fa-lg"></i>
+                                                    <i class="fa-solid fa-comment-alt text-white fa-lg"></i>
                                                 </div>
                                                 <div>
                                                     <h5 class="modal-title text-white">Feedback Details</h5>
@@ -199,7 +199,7 @@
                                                             style="border-radius: 15px;">
                                                             <div class="card-body">
                                                                 <h6 class="card-title mb-3 text-primary">
-                                                                    <i class="fas fa-info-circle me-2"></i>Details
+                                                                    <i class="fa-solid fa-info-circle me-2"></i>Details
                                                                 </h6>
                                                                 <div class="mb-2">
                                                                     <small class="text-muted d-block">Submitted</small>
@@ -222,13 +222,13 @@
                                                                             class="badge py-2 px-3 mt-1"
                                                                             style="background: rgba(40, 167, 69, 0.1); color: #28a745; border-radius: 50px; border: 1px solid rgba(40, 167, 69, 0.3);">
                                                                             <i
-                                                                                class="fas fa-check-circle me-1"></i>Published
+                                                                                class="fa-solid fa-check-circle me-1"></i>Published
                                                                         </span>
                                                                     @else
                                                                         <span id="modalStatus{{ $feedback->id }}"
                                                                             class="badge py-2 px-3 mt-1"
                                                                             style="background: rgba(255, 193, 7, 0.1); color: #ffc107; border-radius: 50px; border: 1px solid rgba(255, 193, 7, 0.3);">
-                                                                            <i class="fas fa-clock me-1"></i>Pending
+                                                                            <i class="fa-solid fa-clock me-1"></i>Pending
                                                                         </span>
                                                                     @endif
                                                                 </div>
@@ -242,7 +242,7 @@
                                                                     class="btn btn-danger d-flex align-items-center justify-content-center"
                                                                     onclick="handlePublish({{ $feedback->id }})"
                                                                     style="border-radius: 10px; padding: 12px;">
-                                                                    <i class="fas fa-times-circle me-2"></i>
+                                                                    <i class="fa-solid fa-times-circle me-2"></i>
                                                                     <span>Unpublish Feedback</span>
                                                                 </button>
                                                             @else
@@ -251,7 +251,7 @@
                                                                     class="btn btn-success d-flex align-items-center justify-content-center"
                                                                     onclick="handlePublish({{ $feedback->id }})"
                                                                     style="border-radius: 10px; padding: 12px;">
-                                                                    <i class="fas fa-check-circle me-2"></i>
+                                                                    <i class="fa-solid fa-check-circle me-2"></i>
                                                                     <span>Publish Feedback</span>
                                                                 </button>
                                                             @endif
@@ -259,7 +259,7 @@
                                                                 class="btn btn-outline-secondary d-flex align-items-center justify-content-center"
                                                                 data-bs-dismiss="modal"
                                                                 style="border-radius: 10px; padding: 12px;">
-                                                                <i class="fas fa-times me-2"></i>
+                                                                <i class="fa-solid fa-times me-2"></i>
                                                                 <span>Close</span>
                                                             </button>
                                                         </div>
@@ -268,7 +268,7 @@
                                                 <div class="col-md-8">
                                                     <div class="p-4">
                                                         <h5 class="mb-4 text-dark">
-                                                            <i class="fas fa-comment me-2 text-primary"></i>Feedback
+                                                            <i class="fa-solid fa-comment me-2 text-primary"></i>Feedback
                                                             Message
                                                         </h5>
                                                         <div id="modalMessage{{ $feedback->id }}"
@@ -293,7 +293,7 @@
                                     <div id="emptyState" class="empty-state" style="padding: 4rem 1rem;">
                                         <div
                                             style="width: 100px; height: 100px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
-                                            <i class="fas fa-comment-slash text-white fa-2x"></i>
+                                            <i class="fa-solid fa-comment-slash text-white fa-2x"></i>
                                         </div>
                                         <h4 id="emptyTitle" class="text-muted mb-3">No Feedback Yet</h4>
                                         <p id="emptyMessage" class="text-muted mb-4">When users submit feedback, they
@@ -301,7 +301,7 @@
                                         <button id="refreshBtn" wire:loading.attr='disabled' wire:click='$refresh'
                                             class="btn btn-primary" style="border-radius: 10px; padding: 10px 30px;">
                                             <span wire:loading.remove><i
-                                                    class="fas fa-sync-alt me-2"></i>Refresh</span> <span wire:loading
+                                                    class="fa-solid fa-sync-alt me-2"></i>Refresh</span> <span wire:loading
                                                 class="spinner-border-sm spinner-border"></span>
                                         </button>
                                     </div>
@@ -352,11 +352,11 @@
 
             if (button.innerHTML.includes('Read more')) {
                 paragraph.textContent = fullText;
-                button.innerHTML = '<i class="fas fa-chevron-up me-1"></i>Show less';
+                button.innerHTML = '<i class="fa-solid fa-chevron-up me-1"></i>Show less';
                 container.setAttribute('data-full-text', fullText);
             } else {
                 paragraph.textContent = fullText.substring(0, 80) + '...';
-                button.innerHTML = '<i class="fas fa-chevron-down me-1"></i>Read more';
+                button.innerHTML = '<i class="fa-solid fa-chevron-down me-1"></i>Read more';
             }
         }
 

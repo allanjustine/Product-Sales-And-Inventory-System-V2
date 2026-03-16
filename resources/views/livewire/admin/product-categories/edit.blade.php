@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-warning text-white">
                     <h5 class="modal-title" id="editCategoryModalTitle">
-                        <i class="fas fa-edit mr-2"></i>
+                        <i class="fa-solid fa-edit mr-2"></i>
                         Edit Product Category
                     </h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -48,13 +48,13 @@
 
                 <div class="modal-footer bg-light">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id='closeModalUpdate'>
-                        <i class="fas fa-times mr-1"></i> Cancel
+                        <i class="fa-solid fa-times mr-1"></i> Cancel
                     </button>
 
                     <button type="button" class="btn btn-warning" wire:loading.attr='disabled' wire:target='update'
                         wire:click="update">
                         <span wire:loading.remove wire:target='update'>
-                            <i class="fas fa-save mr-1"></i> Update Category
+                            <i class="fa-solid fa-save mr-1"></i> Update Category
                         </span>
                         <span wire:loading wire:target='update'>
                             <span class="spinner-border spinner-border-sm mr-1"></span> Updating...

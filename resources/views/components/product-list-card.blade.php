@@ -30,15 +30,15 @@
         <div class="position-absolute top-0 end-0 m-2">
             @if (($product->product_sizes_sum_stock ?: $product->product_colors_sum_stock ?: $product->product_stock) >= 20)
                 <span class="badge bg-success bg-opacity-90 text-white" id="stock-badge">
-                    <i class="fas fa-check-circle me-1"></i>In Stock
+                    <i class="fa-solid fa-check-circle me-1"></i>In Stock
                 </span>
             @elseif (($product->product_sizes_sum_stock ?: $product->product_colors_sum_stock ?: $product->product_stock) > 0)
                 <span class="badge bg-warning bg-opacity-90 text-dark" id="stock-badge">
-                    <i class="fas fa-exclamation-circle me-1"></i>Low Stock
+                    <i class="fa-solid fa-exclamation-circle me-1"></i>Low Stock
                 </span>
             @else
                 <span class="badge bg-danger bg-opacity-90 text-white" id="stock-badge">
-                    <i class="fas fa-times-circle me-1"></i>Out of Stock
+                    <i class="fa-solid fa-times-circle me-1"></i>Out of Stock
                 </span>
             @endif
         </div>
@@ -46,7 +46,7 @@
         @if ($product->product_old_price !== null && $product->product_old_price !== $product->product_price)
             <div class="position-absolute top-0 start-0 m-2">
                 <span class="badge bg-danger bg-opacity-90 text-white" id="discount-badge">
-                    <i class="fas fa-percentage me-1"></i>{{ $product->discount }}
+                    <i class="fa-solid fa-percentage me-1"></i>{{ $product->discount }}
                 </span>
             </div>
         @endif
@@ -55,7 +55,7 @@
     <div class="card-body d-flex flex-column">
         <div class="mb-1">
             <small class="text-muted text-uppercase" id="category">
-                <i class="fas fa-tag me-1"></i>{{ $product->product_category->category_name }}
+                <i class="fa-solid fa-tag me-1"></i>{{ $product->product_category->category_name }}
             </small>
         </div>
 
@@ -80,18 +80,18 @@
         <div class="mb-1">
             @if ($product->product_status === 'Available')
                 <span class="badge bg-success bg-opacity-10 text-success" id="status">
-                    <i class="fas fa-check-circle me-1"></i>Available
+                    <i class="fa-solid fa-check-circle me-1"></i>Available
                 </span>
             @else
                 <span class="badge bg-danger bg-opacity-10 text-danger" id="status">
-                    <i class="fas fa-times-circle me-1"></i>Not Available
+                    <i class="fa-solid fa-times-circle me-1"></i>Not Available
                 </span>
             @endif
         </div>
         <div class="mb-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
-                    <i class="fas fa-star text-warning me-1"></i>
+                    <i class="fa-solid fa-star text-warning me-1"></i>
                     <span><span class="fw-semibold">{{ $product->product_ratings_avg_rating }}</span>
                         | <span class="text-muted">{{ $product->shortOrderSold() }} sold</span></span>
                 </div>
@@ -102,22 +102,22 @@
             <div class="d-grid gap-2">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addToCart" id="buttons"
                     wire:click="addToCart({{ $product->id }})">
-                    <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    <i class="fa-solid fa-cart-plus me-2"></i>Add to Cart
                 </button>
                 @if ($product->product_status === 'Available')
                     @if (($product->product_sizes_sum_stock ?: $product->product_colors_sum_stock ?: $product->product_stock) === 0)
                         <button class="btn btn-danger" disabled id="buttons">
-                            <i class="fas fa-circle-xmark me-2"></i>Out of Stock
+                            <i class="fa-solid fa-circle-xmark me-2"></i>Out of Stock
                         </button>
                     @else
                         <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#toBuyNow"
                             id="buttons" wire:click="toBuyNow({{ $product->id }})">
-                            <i class="fas fa-bolt me-2"></i>Buy Now
+                            <i class="fa-solid fa-bolt me-2"></i>Buy Now
                         </button>
                     @endif
                 @else
                     <button class="btn btn-secondary" id="buttons" disabled>
-                        <i class="fas fa-clock me-2"></i>Not Available
+                        <i class="fa-solid fa-clock me-2"></i>Not Available
                     </button>
                 @endif
             </div>
@@ -126,7 +126,7 @@
         @role('admin')
             <div class="d-grid">
                 <a wire:navigate href="/admin/products" id="buttons" class="btn btn-outline-primary">
-                    <i class="fas fa-edit me-2"></i>Update Product
+                    <i class="fa-solid fa-edit me-2"></i>Update Product
                 </a>
             </div>
         @endrole

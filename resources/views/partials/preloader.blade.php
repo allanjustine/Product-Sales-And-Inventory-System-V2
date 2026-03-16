@@ -2,7 +2,7 @@
     id="pre-loader-normal" style="position: fixed; z-index: 999999;">
     <div class="text-center">
         <div class="mb-4">
-            <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+            <i class="fa-solid fa-shopping-cart fa-3x text-primary mb-3"></i>
             <h5 class="text-primary">Store App</h5>
         </div>
 

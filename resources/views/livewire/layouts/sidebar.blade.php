@@ -48,7 +48,7 @@
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
                             <p>
                                 Order Management
-                                <i class="right fas fa-angle-left"></i>
+                                <i class="right fa-solid fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview" x-cloak x-show="open" x-transition>
@@ -85,7 +85,7 @@
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
                             <p>
                                 Product Management
-                                <i class="right fas fa-angle-left"></i>
+                                <i class="right fa-solid fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview" x-cloak x-show="open" x-transition>
@@ -135,13 +135,13 @@
                             <i class="nav-icon fa-solid fa-list"></i>
                             <p>
                                 List
-                                <i class="right fas fa-angle-left"></i>
+                                <i class="right fa-solid fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-circle"></i>
+                                    <i class="nav-icon fa-solid fa-circle"></i>
                                     <p>List</p>
                                 </a>
                             </li>

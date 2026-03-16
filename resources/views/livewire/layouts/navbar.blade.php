@@ -46,7 +46,7 @@
                         <div class="d-flex align-items-center">
                             <div class="user-avatar">
                                 <div class="avatar-placeholder rounded-circle">
-                                    <i class="fas fa-user text-white"></i>
+                                    <i class="fa-solid fa-user text-white"></i>
                                 </div>
                             </div>
                             <div class="d-none d-lg-block ms-2">
@@ -64,7 +64,7 @@
                     <!-- Home -->
                     <li class="nav-item mx-2">
                         <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3" href="/">
-                            <i class="fas fa-home fa-lg mb-1"></i>
+                            <i class="fa-solid fa-home fa-lg mb-1"></i>
                             <span class="small">Home</span>
                         </a>
                     </li>
@@ -72,7 +72,7 @@
                     <!-- About Us -->
                     <li class="nav-item mx-2">
                         <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3" href="/about-us">
-                            <i class="fas fa-info-circle fa-lg mb-1"></i>
+                            <i class="fa-solid fa-info-circle fa-lg mb-1"></i>
                             <span class="small">About</span>
                         </a>
                     </li>
@@ -82,13 +82,13 @@
                         @if (auth()->check())
                             <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3"
                                 href="/products">
-                                <i class="fas fa-box-open fa-lg mb-1"></i>
+                                <i class="fa-solid fa-box-open fa-lg mb-1"></i>
                                 <span class="small">Products</span>
                             </a>
                         @else
                             <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3"
                                 href="/product-lists">
-                                <i class="fas fa-box-open fa-lg mb-1"></i>
+                                <i class="fa-solid fa-box-open fa-lg mb-1"></i>
                                 <span class="small">Products</span>
                             </a>
                         @endif
@@ -98,21 +98,21 @@
                     @role('user')
                         <li class="nav-item mx-2">
                             <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3" href="/orders">
-                                <i class="fas fa-shopping-bag fa-lg mb-1"></i>
+                                <i class="fa-solid fa-shopping-bag fa-lg mb-1"></i>
                                 <span class="small">Orders</span>
                             </a>
                         </li>
 
                         <li class="nav-item mx-2">
                             <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3" href="/carts">
-                                <i class="fas fa-shopping-cart fa-lg mb-1"></i>
+                                <i class="fa-solid fa-shopping-cart fa-lg mb-1"></i>
                                 <span class="small">Cart</span>
                             </a>
                         </li>
 
                         <li class="nav-item mx-2">
                             <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3" href="/favorites">
-                                <i class="fas fa-heart fa-lg mb-1"></i>
+                                <i class="fa-solid fa-heart fa-lg mb-1"></i>
                                 <span class="small">Favorites</span>
                             </a>
                         </li>
@@ -121,7 +121,7 @@
                     <!-- Feedback -->
                     <li class="nav-item mx-2">
                         <a wire:navigate class="nav-link d-flex flex-column align-items-center py-3" href="/feedbacks">
-                            <i class="fas fa-comment-dots fa-lg mb-1"></i>
+                            <i class="fa-solid fa-comment-dots fa-lg mb-1"></i>
                             <span class="small">Feedback</span>
                         </a>
                     </li>
@@ -151,7 +151,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="user-avatar">
                                     <div class="avatar-placeholder rounded-circle">
-                                        <i class="fas fa-user text-white"></i>
+                                        <i class="fa-solid fa-user text-white"></i>
                                     </div>
                                 </div>
                                 <div class="d-none d-lg-block ms-2">
@@ -190,7 +190,7 @@
                         <!-- Profile Link -->
                         <li>
                             <a wire:navigate class="dropdown-item py-3" href="/profile">
-                                <i class="fas fa-user-circle me-3 text-primary"></i>
+                                <i class="fa-solid fa-user-circle me-3 text-primary"></i>
                                 <span>My Profile</span>
                             </a>
                         </li>
@@ -199,13 +199,13 @@
                         @role('admin')
                             <li>
                                 <a wire:navigate class="dropdown-item py-3" href="/admin/dashboard">
-                                    <i class="fas fa-tachometer-alt me-3 text-warning"></i>
+                                    <i class="fa-solid fa-tachometer-alt me-3 text-warning"></i>
                                     <span>Admin Dashboard</span>
                                 </a>
                             </li>
                             <li>
                                 <a wire:navigate class="dropdown-item py-3" href="/admin/orders">
-                                    <i class="fas fa-clipboard-list me-3 text-info"></i>
+                                    <i class="fa-solid fa-clipboard-list me-3 text-info"></i>
                                     <span>User Orders</span>
                                 </a>
                             </li>
@@ -215,19 +215,19 @@
                         @role('user')
                             <li>
                                 <a wire:navigate class="dropdown-item py-3" href="/carts">
-                                    <i class="fas fa-shopping-cart me-3 text-success"></i>
+                                    <i class="fa-solid fa-shopping-cart me-3 text-success"></i>
                                     <span>My Cart</span>
                                 </a>
                             </li>
                             <li>
                                 <a wire:navigate class="dropdown-item py-3" href="/orders">
-                                    <i class="fas fa-shopping-bag me-3 text-primary"></i>
+                                    <i class="fa-solid fa-shopping-bag me-3 text-primary"></i>
                                     <span>My Orders</span>
                                 </a>
                             </li>
                             <li>
                                 <a wire:navigate class="dropdown-item py-3" href="/favorites">
-                                    <i class="fas fa-heart me-3 text-danger"></i>
+                                    <i class="fa-solid fa-heart me-3 text-danger"></i>
                                     <span>My Favorites</span>
                                 </a>
                             </li>
@@ -241,7 +241,7 @@
                         <li>
                             <a class="dropdown-item py-3 text-danger" href="#" data-bs-toggle="modal"
                                 data-bs-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt me-3"></i>
+                                <i class="fa-solid fa-sign-out-alt me-3"></i>
                                 <span>Logout</span>
                             </a>
                         </li>
@@ -260,13 +260,13 @@
 
                         <li>
                             <a wire:navigate class="dropdown-item py-3" href="/login">
-                                <i class="fas fa-sign-in-alt me-3 text-primary"></i>
+                                <i class="fa-solid fa-sign-in-alt me-3 text-primary"></i>
                                 <span>Login</span>
                             </a>
                         </li>
                         <li>
                             <a wire:navigate class="dropdown-item py-3" href="/register">
-                                <i class="fas fa-user-plus me-3 text-success"></i>
+                                <i class="fa-solid fa-user-plus me-3 text-success"></i>
                                 <span>Register</span>
                             </a>
                         </li>
@@ -284,7 +284,7 @@
                 <div class="modal-header border-bottom-0 pb-0">
                     <div class="d-flex align-items-center">
                         <div class="modal-icon bg-danger bg-opacity-10 text-danger rounded-circle p-2 me-3">
-                            <i class="fas fa-sign-out-alt fa-lg"></i>
+                            <i class="fa-solid fa-sign-out-alt fa-lg"></i>
                         </div>
                         <div>
                             <h5 class="modal-title text-white fw-bold" id="logoutModalLabel">Confirm Logout</h5>
@@ -298,7 +298,7 @@
                 <div class="modal-body py-4">
                     <div class="alert alert-warning border-0">
                         <div class="d-flex align-items-center">
-                            <i class="fas fa-exclamation-triangle me-3 fa-lg"></i>
+                            <i class="fa-solid fa-exclamation-triangle me-3 fa-lg"></i>
                             <div>
                                 <p class="mb-0">You will be redirected to the login page.</p>
                                 <small class="text-muted">Make sure to save any unsaved changes.</small>
@@ -315,7 +315,7 @@
                     <button type="button" wire:click="logout" wire:loading.attr="disabled"
                         class="btn btn-danger px-4">
                         <span wire:loading.remove wire:target="logout">
-                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            <i class="fa-solid fa-sign-out-alt me-2"></i>Logout
                         </span>
                         <span wire:loading wire:target="logout">
                             <span class="spinner-border spinner-border-sm me-2"></span>

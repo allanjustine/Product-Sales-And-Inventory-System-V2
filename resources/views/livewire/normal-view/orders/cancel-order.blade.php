@@ -8,7 +8,7 @@
                         <div class="d-flex align-items-center w-100">
                             <div class="icon-wrapper rounded-circle p-2 me-3"
                                 id="cancelModalIcon">
-                                <i class="fas fa-triangle-exclamation fa-lg"></i>
+                                <i class="fa-solid fa-triangle-exclamation fa-lg"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <h4 class="modal-title fw-bold mb-1" id="cancelModalTitle">Cancel Order Confirmation
@@ -39,7 +39,7 @@
                                         id="cancelWarningAlert">
                                         <div class="d-flex align-items-center">
                                             <div class="alert-icon me-3" id="cancelAlertIcon">
-                                                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                                                <i class="fa-solid fa-exclamation-triangle fa-2x"></i>
                                             </div>
                                             <div>
                                                 <h5 class="alert-heading mb-2 fw-bold" id="cancelAlertTitle">Warning:
@@ -56,7 +56,7 @@
                                         <div class="d-flex align-items-center" id="cancelOrderInfo">
                                             <div class="order-icon bg-danger bg-opacity-10 rounded-circle p-2 me-3"
                                                 id="cancelOrderIcon">
-                                                <i class="fas fa-box text-danger"></i>
+                                                <i class="fa-solid fa-box text-danger"></i>
                                             </div>
                                             <div class="flex-grow-1" id="cancelOrderText">
                                                 <h6 class="fw-bold mb-1 text-capitalize" id="cancelProductName">
@@ -75,7 +75,7 @@
 
                                     <div class="consequences-section bg-light rounded-3 p-3" id="cancelConsequences">
                                         <div class="d-flex align-items-start mb-2" id="cancelConsequencesHeader">
-                                            <i class="fas fa-info-circle text-danger me-2 mt-1"
+                                            <i class="fa-solid fa-info-circle text-danger me-2 mt-1"
                                                 id="cancelConsequencesIcon"></i>
                                             <div>
                                                 <h6 class="fw-bold mb-1" id="cancelConsequencesTitle">Important Notice
@@ -90,13 +90,13 @@
                                         </div>
                                         <div class="mt-3 pt-2 border-top" id="cancelAdditionalInfo">
                                             <small class="text-muted d-block" id="cancelInfo1">
-                                                <i class="fas fa-clock me-1"></i> This action cannot be undone
+                                                <i class="fa-solid fa-clock me-1"></i> This action cannot be undone
                                             </small>
                                             <small class="text-muted d-block mt-1" id="cancelInfo2">
-                                                <i class="fas fa-history me-1"></i> Order history will be updated
+                                                <i class="fa-solid fa-history me-1"></i> Order history will be updated
                                             </small>
                                             <small class="text-muted d-block mt-1" id="cancelInfo3">
-                                                <i class="fas fa-box-open me-1"></i> Stock will be restored
+                                                <i class="fa-solid fa-box-open me-1"></i> Stock will be restored
                                             </small>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                 type="button">
                                 <div class="d-flex align-items-center justify-content-center">
                                     <span wire:target='cancelOrder' wire:loading.remove id="cancelBtnText">
-                                        <i class="fas fa-circle-xmark me-2" id="cancelBtnIcon"></i> Yes, Cancel Order
+                                        <i class="fa-solid fa-circle-xmark me-2" id="cancelBtnIcon"></i> Yes, Cancel Order
                                     </span>
                                     <span wire:target='cancelOrder' wire:loading id="cancellingBtnText">
                                         <span class="spinner-border spinner-border-sm me-2"
@@ -123,7 +123,7 @@
                             </button>
                             <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill"
                                 id="cancelCloseBtn" data-bs-dismiss="modal">
-                                <i class="fas fa-times me-2" id="closeBtnIcon"></i>Keep Order
+                                <i class="fa-solid fa-times me-2" id="closeBtnIcon"></i>Keep Order
                             </button>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-warning text-white">
                     <h5 class="modal-title" id="updateProductModalTitle">
-                        <i class="fas fa-edit me-2"></i>Edit Product
+                        <i class="fa-solid fa-edit me-2"></i>Edit Product
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -18,7 +18,7 @@
                         <div class="card card-outline card-warning mb-3">
                             <div class="card-header bg-light py-2">
                                 <h6 class="card-title mb-0">
-                                    <i class="fas fa-images text-warning me-2"></i>Product Images
+                                    <i class="fa-solid fa-images text-warning me-2"></i>Product Images
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -100,7 +100,7 @@
                         <div class="card card-outline card-warning mb-3">
                             <div class="card-header bg-light py-2">
                                 <h6 class="card-title mb-0">
-                                    <i class="fas fa-info-circle text-warning me-2"></i>Basic Information
+                                    <i class="fa-solid fa-info-circle text-warning me-2"></i>Basic Information
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -171,7 +171,7 @@
                         <div class="card card-outline card-warning mb-3">
                             <div class="card-header bg-light py-2">
                                 <h6 class="card-title mb-0">
-                                    <i class="fas fa-tag text-warning me-2"></i>Pricing
+                                    <i class="fa-solid fa-tag text-warning me-2"></i>Pricing
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -216,7 +216,7 @@
                         <div class="card card-outline card-warning mb-3">
                             <div class="card-header bg-light py-2">
                                 <h6 class="card-title mb-0">
-                                    <i class="fas fa-warehouse text-warning me-2"></i>Stock Management
+                                    <i class="fa-solid fa-warehouse text-warning me-2"></i>Stock Management
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -233,7 +233,7 @@
 
                                     @if ($this->is_color_selected || $this->is_size_selected)
                                         <div class="alert alert-info mt-2 mb-0 py-2 small">
-                                            <i class="fas fa-info-circle me-1"></i>
+                                            <i class="fa-solid fa-info-circle me-1"></i>
                                             Stock is managed through variants. Edit variants in the product details
                                             page.
                                         </div>
@@ -246,7 +246,7 @@
                         <div class="card card-outline card-warning mb-3">
                             <div class="card-header bg-light py-2">
                                 <h6 class="card-title mb-0">
-                                    <i class="fas fa-align-left text-warning me-2"></i>Description
+                                    <i class="fa-solid fa-align-left text-warning me-2"></i>Description
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -326,7 +326,7 @@
 
                 <div class="modal-footer bg-light">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-1"></i> Cancel
+                        <i class="fa-solid fa-times me-1"></i> Cancel
                     </button>
                     <button type="button" class="btn btn-warning" wire:target='update' wire:loading.attr='disabled'
                         wire:click="update">
@@ -334,7 +334,7 @@
                             <span class="spinner-border spinner-border-sm me-1"></span> Updating...
                         </span>
                         <span wire:loading.remove wire:target='update'>
-                            <i class="fas fa-save me-1"></i> Update Product
+                            <i class="fa-solid fa-save me-1"></i> Update Product
                         </span>
                     </button>
                 </div>

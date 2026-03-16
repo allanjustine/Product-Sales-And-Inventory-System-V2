@@ -6,7 +6,7 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
                 <h2 class="fw-bold mb-2">
-                    <i class="fas fa-shopping-cart text-primary me-2"></i>My Shopping Cart
+                    <i class="fa-solid fa-shopping-cart text-primary me-2"></i>My Shopping Cart
                 </h2>
                 <p class="text-muted mb-0">
                     @if ($cartItems->count() > 0)
@@ -23,7 +23,7 @@
                         <div class="col-md-6">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="bg-primary rounded-circle p-2">
-                                    <i class="fas fa-shopping-bag text-white"></i>
+                                    <i class="fa-solid fa-shopping-bag text-white"></i>
                                 </div>
                                 <div>
                                     <h5 class="fw-bold mb-1">Order Summary</h5>
@@ -38,7 +38,7 @@
                             </h4>
                             @if ($this->total_save > 0)
                                 <p class="text-success mb-0">
-                                    <i class="fas fa-tag me-1"></i>
+                                    <i class="fa-solid fa-tag me-1"></i>
                                     You save &#8369;{{ number_format($this->total_save, 2) }}
                                 </p>
                             @endif
@@ -91,7 +91,7 @@
                                         </span>
 
                                         <small class="text-muted">
-                                            <i class="fas fa-box ml-3"></i>
+                                            <i class="fa-solid fa-box ml-3"></i>
                                             <x-formatted-number :value="$item->product->product_sizes_sum_stock ?:
                                                 $item->product->product_colors_sum_stock ?:
                                                 $item->product->product_stock" /> pcs available
@@ -102,7 +102,7 @@
                                 <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"
                                     data-bs-toggle="modal" data-bs-target="#remove"
                                     wire:click="remove({{ $item->id }})">
-                                    <i class="fas fa-trash-alt"></i>
+                                    <i class="fa-solid fa-trash-alt"></i>
                                     <span class="d-none d-sm-inline">Remove</span>
                                 </button>
                             </div>
@@ -187,14 +187,14 @@
                                                 <button class="btn btn-outline-secondary px-3 py-2"
                                                     @if ($item->quantity === 1) onclick="toDelete({{ $item->id }})"
                                                     @else wire:click='decreaseQuantity({{ $item->id }})' @endif>
-                                                    <i class="fas fa-minus"></i>
+                                                    <i class="fa-solid fa-minus"></i>
                                                 </button>
                                                 <span class="btn btn-light px-4 py-2">
                                                     {{ $item->quantity }}
                                                 </span>
                                                 <button class="btn btn-outline-secondary px-3 py-2"
                                                     wire:click="updateCartItem({{ $item->id }})">
-                                                    <i class="fas fa-plus"></i>
+                                                    <i class="fa-solid fa-plus"></i>
                                                 </button>
                                             </div>
 
@@ -225,12 +225,12 @@
                 @empty
                     <div class="text-center py-5">
                         <div class="mb-4">
-                            <i class="fas fa-shopping-cart text-muted" style="font-size: 80px;"></i>
+                            <i class="fa-solid fa-shopping-cart text-muted" style="font-size: 80px;"></i>
                         </div>
                         <h3 class="text-muted mb-3">Your cart is empty</h3>
                         <p class="text-muted mb-4">Add some products to get started with your shopping</p>
                         <a wire:navigate href="/products" class="btn btn-primary btn-lg px-4">
-                            <i class="fas fa-shopping-bag me-2"></i>Browse Products
+                            <i class="fa-solid fa-shopping-bag me-2"></i>Browse Products
                         </a>
                     </div>
                 @endforelse
@@ -268,7 +268,7 @@
                                         wire:target='cart_ids,product_size_ids,product_color_ids' id="checkout"
                                         class="btn btn-primary btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2"
                                         data-bs-toggle="modal" data-bs-target="#checkOut">
-                                        <i class="fas fa-credit-card"></i>
+                                        <i class="fa-solid fa-credit-card"></i>
                                         <span>Proceed to Checkout ({{ count($this->cart_ids) }})</span>
                                     </button>
                                 @else
@@ -279,7 +279,7 @@
 
                                 <div class="text-center mt-3">
                                     <a wire:navigate href="/products" class="text-decoration-none text-primary">
-                                        <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                                        <i class="fa-solid fa-arrow-left me-2"></i>Continue Shopping
                                     </a>
                                 </div>
                             </div>
@@ -316,7 +316,7 @@
                                     <button wire:loading.attr="disabled" wire:target='cart_ids' id="checkout"
                                         class="btn btn-primary btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2"
                                         data-bs-toggle="modal" data-bs-target="#checkOut">
-                                        <i class="fas fa-credit-card"></i>
+                                        <i class="fa-solid fa-credit-card"></i>
                                         <span>Proceed to Checkout ({{ count($this->cart_ids) }})</span>
                                     </button>
                                 @else
@@ -327,7 +327,7 @@
 
                                 <div class="text-center mt-3">
                                     <a wire:navigate href="/products" class="text-decoration-none text-primary">
-                                        <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                                        <i class="fa-solid fa-arrow-left me-2"></i>Continue Shopping
                                     </a>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@
                     <div class="modal-header bg-gradient-primary text-white p-4 border-0" id="addToCartModalHeader">
                         <div class="d-flex align-items-center w-100">
                             <div class="icon-wrapper rounded-circle p-2 me-3" id="cartModalIcon">
-                                <i class="fas fa-cart-plus fa-lg"></i>
+                                <i class="fa-solid fa-cart-plus fa-lg"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <h4 class="modal-title fw-bold mb-1" id="addToCartModalTitle">Add to Cart</h4>
@@ -84,7 +84,7 @@
                                         <div class="stock-info mb-4" id="cartStockInfo">
                                             <div class="stock-badge d-inline-flex align-items-center bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1"
                                                 id="cartStockBadge">
-                                                <i class="fas fa-boxes me-2 fa-sm" id="stockIcon"></i>
+                                                <i class="fa-solid fa-boxes me-2 fa-sm" id="stockIcon"></i>
                                                 <span class="fw-semibold"
                                                     id="stockCount">{{ number_format($productToBeCart->product_stock) }}
                                                     in stock</span>
@@ -96,7 +96,7 @@
                                 <div class="quantity-section p-4" id="cartQuantitySection">
                                     <div class="quantity-header mb-3" id="quantityHeader">
                                         <h6 class="fw-bold mb-2" id="quantityTitle">
-                                            <i class="fas fa-hashtag me-2 text-primary" id="quantityIcon"></i>Select
+                                            <i class="fa-solid fa-hashtag me-2 text-primary" id="quantityIcon"></i>Select
                                             Quantity
                                         </h6>
                                         <p class="text-muted small mb-0" id="quantityDescription">How many would you
@@ -112,7 +112,7 @@
                                                     wire:click="$set('quantity', {{ $quantity }} - 1)"
                                                     wire:loading.attr="disabled"
                                                     {{ $quantity <= 1 ? 'disabled' : '' }}>
-                                                    <i class="fas fa-minus" id="decrementIcon"></i>
+                                                    <i class="fa-solid fa-minus" id="decrementIcon"></i>
                                                 </button>
 
                                                 <input type="number" class="form-control text-center"
@@ -125,14 +125,14 @@
                                                     wire:click="$set('quantity', {{ $quantity }} + 1)"
                                                     wire:loading.attr="disabled"
                                                     {{ $quantity >= $productToBeCart->product_stock ? 'disabled' : '' }}>
-                                                    <i class="fas fa-plus" id="incrementIcon"></i>
+                                                    <i class="fa-solid fa-plus" id="incrementIcon"></i>
                                                 </button>
                                             </div>
 
                                             @error('quantity')
                                                 <div class="alert alert-danger alert-dismissible fade show mt-3"
                                                     role="alert" id="quantityErrorAlert">
-                                                    <i class="fas fa-exclamation-circle me-2" id="errorIcon"></i>
+                                                    <i class="fa-solid fa-exclamation-circle me-2" id="errorIcon"></i>
                                                     <span id="errorMessage">{{ $message }}</span>
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                         aria-label="Close" id="closeErrorBtn"></button>
@@ -203,7 +203,7 @@
                                                             &#8369;{{ number_format($productToBeCart->product_price, 2) }}
                                                         </small>
                                                         <small class="text-success" id="savingsText">
-                                                            <i class="fas fa-save me-1" id="savingsIcon"></i>
+                                                            <i class="fa-solid fa-save me-1" id="savingsIcon"></i>
                                                             Save:
                                                             &#8369;{{ number_format(($productToBeCart->product_old_price ?? 0) - $productToBeCart->product_price * $quantity, 2) }}
                                                         </small>
@@ -225,7 +225,7 @@
                                     wire:target="addToCartNow,quantity,toggleProductVariant" wire:loading.attr="disabled">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span wire:loading.remove wire:target="addToCartNow" id="addToCartText">
-                                            <i class="fas fa-cart-plus me-2" id="addToCartIcon"></i>Add to Cart
+                                            <i class="fa-solid fa-cart-plus me-2" id="addToCartIcon"></i>Add to Cart
                                         </span>
                                         <span wire:loading wire:target="addToCartNow" id="addingToCartText">
                                             <span class="spinner-border spinner-border-sm me-2"
@@ -237,7 +237,7 @@
 
                                 <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill"
                                     id="cancelCartBtn" data-bs-dismiss="modal">
-                                    <i class="fas fa-times me-2" id="cancelIcon"></i>Cancel
+                                    <i class="fa-solid fa-times me-2" id="cancelIcon"></i>Cancel
                                 </button>
                             </div>
                         </div>
@@ -760,7 +760,7 @@
                                 const savings = (oldPrice - price) * quantity;
                                 if (savings > 0) {
                                     savingsElement.innerHTML =
-                                        `<i class="fas fa-save me-1" id="savingsIcon"></i>Save: ₱${savings.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                                        `<i class="fa-solid fa-save me-1" id="savingsIcon"></i>Save: ₱${savings.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                                 }
                             }
 

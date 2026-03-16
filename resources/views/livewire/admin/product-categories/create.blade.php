@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addCategoryModalTitle">
-                        <i class="fas fa-plus-circle mr-2"></i>
+                        <i class="fa-solid fa-plus-circle mr-2"></i>
                         Add Product Category
                     </h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -68,7 +68,7 @@
 
                 <div class="modal-footer bg-light">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id='closeModalAdd'>
-                        <i class="fas fa-times mr-1"></i> Cancel
+                        <i class="fa-solid fa-times mr-1"></i> Cancel
                     </button>
 
                     <button class="btn btn-outline-warning" wire:target='resetInputs' wire:loading.attr='disabled'
@@ -77,7 +77,7 @@
                             <span class="spinner-border spinner-border-sm mr-1"></span> Resetting...
                         </span>
                         <span wire:target='resetInputs' wire:loading.remove>
-                            <i class="fas fa-undo-alt mr-1"></i> Reset
+                            <i class="fa-solid fa-undo-alt mr-1"></i> Reset
                         </span>
                     </button>
 
@@ -87,7 +87,7 @@
                             <span class="spinner-border spinner-border-sm mr-1"></span> Adding...
                         </span>
                         <span wire:loading.remove wire:target='addProductCategory'>
-                            <i class="fas fa-save mr-1"></i> Save Category
+                            <i class="fa-solid fa-save mr-1"></i> Save Category
                         </span>
                     </button>
                 </div>

@@ -12,7 +12,7 @@
         </div>
         <div class="header-bottom">
             <div class="date-info">
-                <i class="fas fa-calendar-alt"></i>
+                <i class="fa-solid fa-calendar-alt"></i>
                 <span><strong>Date Generated:</strong> {{ now()->format('F j, Y') }}</span>
                 <span class="time"><strong>Time:</strong> {{ now()->format('g:i A') }}</span>
             </div>
@@ -25,7 +25,7 @@
     <!-- Table Card -->
     <div class="pdf-card">
         <div class="card-header">
-            <h3><i class="fas fa-chart-line"></i> Product Sales Report Details</h3>
+            <h3><i class="fa-solid fa-chart-line"></i> Product Sales Report Details</h3>
             <div class="header-actions">
                 <span class="print-date">Printed: {{ now()->format('F j, Y g:i A') }}</span>
             </div>
@@ -74,7 +74,7 @@
                                 <div class="variation-container">
                                     @if ($order->productColor)
                                         <span class="variation-item color-variation">
-                                            <i class="fas fa-palette"></i>
+                                            <i class="fa-solid fa-palette"></i>
                                             <span class="variation-label">Color:</span>
                                             <span
                                                 class="variation-value">{{ Str::upper($order->productColor->name) }}</span>
@@ -82,7 +82,7 @@
                                     @endif
                                     @if ($order->productSize)
                                         <span class="variation-item size-variation">
-                                            <i class="fas fa-ruler"></i>
+                                            <i class="fa-solid fa-ruler"></i>
                                             <span class="variation-label">Size:</span>
                                             <span
                                                 class="variation-value">{{ Str::upper($order->productSize->name) }}</span>
@@ -99,18 +99,18 @@
                         <td>
                             <span class="payment-method">
                                 <i
-                                    class="fas fa-{{ $order->order_payment_method === 'Cash on Delivery' ? 'truck' : 'credit-card' }}"></i>
+                                    class="fa-solid fa-{{ $order->order_payment_method === 'Cash on Delivery' ? 'truck' : 'credit-card' }}"></i>
                                 {{ $order->order_payment_method }}
                             </span>
                         </td>
                         <td class="status-column">
                             @if ($order->order_status === 'Pending')
                                 <span class="status-badge pending">
-                                    <i class="fas fa-clock"></i> PENDING
+                                    <i class="fa-solid fa-clock"></i> PENDING
                                 </span>
                             @else
                                 <span class="status-badge paid">
-                                    <i class="fas fa-check-circle"></i> PAID
+                                    <i class="fa-solid fa-check-circle"></i> PAID
                                 </span>
                             @endif
                         </td>
@@ -139,7 +139,7 @@
                     </td>
                     <td colspan="3" class="footer-extra">
                         <span style="font-size: 12px; color: black;">
-                            <i class="fas fa-chart-bar"></i>
+                            <i class="fa-solid fa-chart-bar"></i>
                             Avg: P{{ number_format($orders->count() > 0 ? $grandTotal / $orders->count() : 0, 2) }}
                         </span>
                     </td>
@@ -150,7 +150,7 @@
         <!-- Additional Information -->
         <div class="table-footer-info">
             <div class="info-left">
-                <p><i class="fas fa-info-circle"></i> This report includes all sales transactions from
+                <p><i class="fa-solid fa-info-circle"></i> This report includes all sales transactions from
                     {{ $orders->first() ? date_format($orders->first()->created_at, 'M d, Y') : 'N/A' }} to
                     {{ $orders->last() ? date_format($orders->last()->created_at, 'M d, Y') : 'N/A' }}</p>
             </div>

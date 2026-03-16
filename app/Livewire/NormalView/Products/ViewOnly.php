@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +14,9 @@ class ViewOnly extends Component
 {
 
     #[Title("Products")]
+
+    #[Url('sorted_by')]
+    public $sorted_by;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -69,19 +73,17 @@ class ViewOnly extends Component
             ->withAvg('productRatings', 'rating')
             ->search($this->search);
 
-        $sorted_by = request('sorted_by', '');
-
         if ($this->category_name != 'All') {
             $query->whereHas('product_category', function ($q) {
                 $q->where('category_name', $this->category_name);
             });
         }
 
-        if ($sorted_by === 'top_selling') {
+        if ($this->sorted_by === 'top_selling') {
             $query->orderBy('orders_sum_order_quantity', 'desc');
-        } else if ($sorted_by === 'latest') {
+        } else if ($this->sorted_by === 'latest') {
             $query->orderBy('id', 'desc');
-        } elseif ($sorted_by === 'popularity') {
+        } elseif ($this->sorted_by === 'popularity') {
             $query->orderBy('product_ratings_count', 'desc');
         } elseif ($this->sort === 'low_to_high') {
             $query->orderBy('product_price', 'asc');
@@ -127,7 +129,7 @@ class ViewOnly extends Component
 
     public function view($id)
     {
-        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly']);
+        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by']);
 
         $this->productView = Product::withCount([
             'productRatings',

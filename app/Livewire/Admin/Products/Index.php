@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -20,6 +21,10 @@ class Index extends Component
     use WithFileUploads;
 
     #[Title('Products')]
+
+    #[Url('status')]
+    public $status;
+
     public $category_name = 'All';
     public $perPage = 5;
     public $search;
@@ -71,8 +76,6 @@ class Index extends Component
 
     public function displayProducts()
     {
-        $status = request('status', '');
-
         $query = Product::with(['product_category', 'productImages', 'productSizes', 'productColors'])
             ->withSum([
                 'orders'
@@ -90,7 +93,7 @@ class Index extends Component
 
         $products = $query->orderBy($this->sortBy, $this->sortDirection)
             ->when(
-                $status === 'in_stock',
+                $this->status === 'in_stock',
                 fn($q)
                 =>
                 $q->where(
@@ -102,7 +105,7 @@ class Index extends Component
                 )
             )
             ->when(
-                $status === 'low_stock',
+                $this->status === 'low_stock',
                 fn($q)
                 =>
                 $q->where(
@@ -114,7 +117,7 @@ class Index extends Component
                 )
             )
             ->when(
-                $status === 'out_of_stock',
+                $this->status === 'out_of_stock',
                 fn($q)
                 =>
                 $q->where(
@@ -126,7 +129,7 @@ class Index extends Component
                 )
             )
             ->when(
-                $status === 'not_available',
+                $this->status === 'not_available',
                 fn($q)
                 =>
                 $q->where('product_status', 'Not Available')

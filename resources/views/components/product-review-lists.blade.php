@@ -54,7 +54,7 @@
             @empty
                 <div class="text-center py-5">
                     <div class="mb-4">
-                        <i class="fas fa-star text-muted" style="font-size: 80px;"></i>
+                        <i class="fa-solid fa-star text-muted" style="font-size: 80px;"></i>
                     </div>
                     <h3 class="text-muted mb-3">This product has no reviews yet.</h3>
                 </div>

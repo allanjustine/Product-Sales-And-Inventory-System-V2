@@ -21,7 +21,7 @@
                                     </div>
                                     <span id="deliveryAddressTitle">Delivery Address Information</span>
                                 </span>
-                                <i class="fas fa-chevron-down" id="deliveryAddressArrow"></i>
+                                <i class="fa-solid fa-chevron-down" id="deliveryAddressArrow"></i>
                             </button>
                         </h2>
                     </div>
@@ -43,12 +43,12 @@
                                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                                     <h4 class="alert-heading fw-bold mb-0 text-black"
                                                         id="deliveryAddressAlertTitle">
-                                                        <i class="fas fa-map-marker-alt me-2"></i>Your Delivery Address
+                                                        <i class="fa-solid fa-map-marker-alt me-2"></i>Your Delivery Address
                                                     </h4>
                                                     <a wire:navigate href="/profile"
                                                         class="btn btn-link btn-sm rounded-pill text-primary d-none d-md-block"
                                                         id="editAddressBtn">
-                                                        <i class="fas fa-pen me-1"></i>Edit
+                                                        <i class="fa-solid fa-pen me-1"></i>Edit
                                                     </a>
                                                 </div>
                                                 <hr class="my-2" id="deliveryAddressDivider">
@@ -58,22 +58,22 @@
                                                             id="addressVerified">
                                                             <div class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2 me-2"
                                                                 id="addressVerifiedBadge">
-                                                                <i class="fas fa-check-circle me-1"></i>Verified
+                                                                <i class="fa-solid fa-check-circle me-1"></i>Verified
                                                             </div>
                                                             <p class="mb-0 fw-semibold text-primary" id="addressText">
                                                                 <i
-                                                                    class="fas fa-location-dot me-2"></i>{{ auth()->user()->user_location }}
+                                                                    class="fa-solid fa-location-dot me-2"></i>{{ auth()->user()->user_location }}
                                                             </p>
                                                         </div>
                                                     @else
                                                         <div class="d-flex align-items-center mb-3" id="addressNotSet">
                                                             <div class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2 me-2"
                                                                 id="addressWarningBadge">
-                                                                <i class="fas fa-exclamation-triangle me-1"></i>Required
+                                                                <i class="fa-solid fa-exclamation-triangle me-1"></i>Required
                                                             </div>
                                                             <p class="mb-0 fw-semibold text-danger"
                                                                 id="addressWarningText">
-                                                                <i class="fas fa-circle-exclamation me-2"></i>Set up
+                                                                <i class="fa-solid fa-circle-exclamation me-2"></i>Set up
                                                                 your delivery address to ensure successful delivery
                                                             </p>
                                                         </div>
@@ -81,12 +81,12 @@
                                                     <div class="contact-info mt-3 text-black pt-3 border-top"
                                                         id="deliveryContactInfo">
                                                         <h6 class="fw-bold mb-2" id="contactInfoTitle">
-                                                            <i class="fas fa-phone me-2"></i>Contact Information
+                                                            <i class="fa-solid fa-phone me-2"></i>Contact Information
                                                         </h6>
                                                         <div class="d-flex align-items-center" id="phoneInfo">
                                                             <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-2 me-3"
                                                                 id="phoneIcon">
-                                                                <i class="fas fa-phone-alt text-white"></i>
+                                                                <i class="fa-solid fa-phone-alt text-white"></i>
                                                             </div>
                                                             <div>
                                                                 <small class="text-black d-block" id="phoneLabel">Phone
@@ -102,7 +102,7 @@
                                         <div class="d-block d-md-none mt-3">
                                             <a wire:navigate href="/profile"
                                                 class="btn btn-primary w-100 text-white btn-sm rounded-pill text-primary">
-                                                <i class="fas fa-pen me-1"></i>Edit
+                                                <i class="fa-solid fa-pen me-1"></i>Edit
                                             </a>
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
             <div class="section-header mb-4" id="ordersSectionHeader">
                 <div class="d-flex align-items-center">
                     <div class="icon-wrapperrounded-circle p-3 me-3" id="ordersSectionIcon">
-                        <i class="fas fa-shopping-bag text-primary fa-lg"></i>
+                        <i class="fa-solid fa-shopping-bag text-primary fa-lg"></i>
                     </div>
                     <div>
                         <h3 class="fw-bold mb-1" id="ordersTitle">My Orders</h3>
@@ -134,7 +134,7 @@
                                     href="#pendingTabContent" role="tab" aria-controls="pendingTabContent"
                                     aria-selected="true">
                                     <div class="d-flex align-items-center" id="pendingTabContentInner">
-                                        <i class="fas fa-clock me-2"></i>
+                                        <i class="fa-solid fa-clock me-2"></i>
                                         <span id="pendingTabText">Pending Orders</span>
                                         @if ($pendings->count() > 0)
                                             <span
@@ -151,7 +151,7 @@
                                     href="#recentTabContent" role="tab" aria-controls="recentTabContent"
                                     aria-selected="false">
                                     <div class="d-flex align-items-center" id="recentTabContentInner">
-                                        <i class="fas fa-history me-2"></i>
+                                        <i class="fa-solid fa-history me-2"></i>
                                         <span id="recentTabText">Recent Orders</span>
                                         @if ($recents->count() > 0)
                                             <span
@@ -168,7 +168,7 @@
                                     href="#cancelledTabContent" role="tab" aria-controls="cancelledTabContent"
                                     aria-selected="false">
                                     <div class="d-flex align-items-center" id="cancelledTabContentInner">
-                                        <i class="fas fa-ban me-2"></i>
+                                        <i class="fa-solid fa-ban me-2"></i>
                                         <span id="cancelledTabText">Cancelled Orders</span>
                                         @if ($cancels->count() > 0)
                                             <span
@@ -269,13 +269,13 @@
                                                                         class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25"
                                                                         id="pendingQuantity{{ $order->id }}">
                                                                         <i
-                                                                            class="fas fa-box me-1"></i>x{{ number_format($order->order_quantity) }}
+                                                                            class="fa-solid fa-box me-1"></i>x{{ number_format($order->order_quantity) }}
                                                                         PC(s)
                                                                     </span>
                                                                     <span class="badge bg-light text-dark border"
                                                                         id="pendingDate{{ $order->id }}">
                                                                         <i
-                                                                            class="far fa-calendar me-1"></i>{{ date_format($order->created_at, 'M d, Y') }}
+                                                                            class="fa-regular fa-calendar me-1"></i>{{ date_format($order->created_at, 'M d, Y') }}
                                                                     </span>
                                                                 </div>
 
@@ -292,7 +292,7 @@
                                                                             $order->product->product_old_price !== $order->product->product_price)
                                                                         <span class="text-success small ms-2"
                                                                             id="pendingSavings{{ $order->id }}">
-                                                                            <i class="fas fa-save me-1"></i>Save:
+                                                                            <i class="fa-solid fa-save me-1"></i>Save:
                                                                             &#8369;{{ number_format($order->order_quantity * $order->product->product_old_price - $order->order_quantity * $order->product->product_price, 2) }}
                                                                         </span>
                                                                     @endif
@@ -304,20 +304,20 @@
                                                                         <span
                                                                             class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25"
                                                                             id="pendingStatusBadge{{ $order->id }}">
-                                                                            <i class="fas fa-clock me-1"></i>PENDING
+                                                                            <i class="fa-solid fa-clock me-1"></i>PENDING
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Processing Order')
                                                                         <span
                                                                             class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"
                                                                             id="processingStatusBadge{{ $order->id }}">
                                                                             <i
-                                                                                class="fas fa-hourglass-half me-1"></i>PREPARING
+                                                                                class="fa-solid fa-hourglass-half me-1"></i>PREPARING
                                                                         </span>
                                                                     @elseif ($order->order_status === 'To Deliver')
                                                                         <span
                                                                             class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"
                                                                             id="deliverStatusBadge{{ $order->id }}">
-                                                                            <i class="fas fa-truck me-1"></i>OUT FOR
+                                                                            <i class="fa-solid fa-truck me-1"></i>OUT FOR
                                                                             DELIVERY
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Delivered')
@@ -325,7 +325,7 @@
                                                                             class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25"
                                                                             id="deliveredStatusBadge{{ $order->id }}">
                                                                             <i
-                                                                                class="fas fa-box-open me-1"></i>DELIVERED
+                                                                                class="fa-solid fa-box-open me-1"></i>DELIVERED
                                                                         </span>
                                                                     @endif
                                                                 </div>
@@ -343,20 +343,20 @@
                                                                     data-bs-toggle="modal" data-bs-target="#cancel"
                                                                     wire:click="toCancel({{ $order->id }})"
                                                                     id="cancelOrderBtn{{ $order->id }}">
-                                                                    <i class="fas fa-xmark me-1"
+                                                                    <i class="fa-solid fa-xmark me-1"
                                                                         id="cancelIcon{{ $order->id }}"></i>Cancel
                                                                     Order
                                                                 </button>
                                                             @elseif ($order->order_status === 'Processing Order')
                                                                 <button class="btn btn-success btn-sm rounded-pill"
                                                                     id="preparingBtn{{ $order->id }}">
-                                                                    <i class="fas fa-cart-circle-arrow-up me-1"
+                                                                    <i class="fa-solid fa-cart-circle-arrow-up me-1"
                                                                         id="preparingIcon{{ $order->id }}"></i>Preparing
                                                                 </button>
                                                             @elseif ($order->order_status === 'To Deliver')
                                                                 <button class="btn btn-primary btn-sm rounded-pill"
                                                                     id="deliveryBtn{{ $order->id }}">
-                                                                    <i class="fas fa-car-side me-1"
+                                                                    <i class="fa-solid fa-car-side me-1"
                                                                         id="deliveryIcon{{ $order->id }}"></i>Out
                                                                     for Delivery
                                                                 </button>
@@ -367,7 +367,7 @@
                                                                     data-bs-target="#order-received"
                                                                     wire:click="toReceived({{ $order->id }})"
                                                                     id="receivedBtn{{ $order->id }}">
-                                                                    <i class="fas fa-hand-holding-heart me-1"
+                                                                    <i class="fa-solid fa-hand-holding-heart me-1"
                                                                         id="receivedIcon{{ $order->id }}"></i>Order
                                                                     Received
                                                                 </button>
@@ -394,7 +394,7 @@
                                             id="pendingGrandTotalContent">
                                             <div id="pendingTotalLeft">
                                                 <h5 class="fw-bold mb-1" id="pendingTotalTitle">
-                                                    <i class="fas fa-receipt me-2 text-primary"></i>Pending Orders
+                                                    <i class="fa-solid fa-receipt me-2 text-primary"></i>Pending Orders
                                                     Total
                                                 </h5>
                                                 <p class="text-muted small mb-0" id="pendingTotalSubtitle">
@@ -410,14 +410,14 @@
                                 @else
                                     <div class="empty-state text-center py-5" id="pendingEmptyState">
                                         <div class="empty-icon mb-4" id="pendingEmptyIcon">
-                                            <i class="fas fa-clock fa-4x text-muted opacity-25"></i>
+                                            <i class="fa-solid fa-clock fa-4x text-muted opacity-25"></i>
                                         </div>
                                         <h5 class="text-muted mb-3" id="pendingEmptyTitle">No Pending Orders</h5>
                                         <p class="text-muted mb-4" id="pendingEmptyMessage">You don't have any pending
                                             orders at the moment.</p>
                                         <a wire:navigate href="/products"
                                             class="btn btn-primary btn-lg rounded-pill px-4" id="pendingShopBtn">
-                                            <i class="fas fa-shopping-cart me-2" id="pendingShopIcon"></i>Start
+                                            <i class="fa-solid fa-shopping-cart me-2" id="pendingShopIcon"></i>Start
                                             Shopping
                                         </a>
                                     </div>
@@ -508,13 +508,13 @@
                                                                         class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25"
                                                                         id="recentQuantity{{ $order->id }}">
                                                                         <i
-                                                                            class="fas fa-box me-1"></i>x{{ number_format($order->order_quantity) }}
+                                                                            class="fa-solid fa-box me-1"></i>x{{ number_format($order->order_quantity) }}
                                                                         PC(s)
                                                                     </span>
                                                                     <span class="badge bg-light text-dark border"
                                                                         id="recentDate{{ $order->id }}">
                                                                         <i
-                                                                            class="far fa-calendar me-1"></i>{{ date_format($order->created_at, 'M d, Y') }}
+                                                                            class="fa-regular fa-calendar me-1"></i>{{ date_format($order->created_at, 'M d, Y') }}
                                                                     </span>
                                                                 </div>
 
@@ -531,7 +531,7 @@
                                                                             $order->product->product_old_price !== $order->product->product_price)
                                                                         <span class="text-success small ms-2"
                                                                             id="recentSavings{{ $order->id }}">
-                                                                            <i class="fas fa-save me-1"></i>Save:
+                                                                            <i class="fa-solid fa-save me-1"></i>Save:
                                                                             &#8369;{{ number_format($order->order_quantity * $order->product->product_old_price - $order->order_quantity * $order->product->product_price, 2) }}
                                                                         </span>
                                                                     @endif
@@ -543,20 +543,20 @@
                                                                         <span
                                                                             class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"
                                                                             id="paidStatusBadge{{ $order->id }}">
-                                                                            <i class="fas fa-check me-1"></i>PAID
+                                                                            <i class="fa-solid fa-check me-1"></i>PAID
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Processing Order')
                                                                         <span
                                                                             class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"
                                                                             id="processingRecentBadge{{ $order->id }}">
                                                                             <i
-                                                                                class="fas fa-hourglass-half me-1"></i>PREPARING
+                                                                                class="fa-solid fa-hourglass-half me-1"></i>PREPARING
                                                                         </span>
                                                                     @elseif ($order->order_status === 'To Deliver')
                                                                         <span
                                                                             class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"
                                                                             id="deliverRecentBadge{{ $order->id }}">
-                                                                            <i class="fas fa-truck me-1"></i>OUT FOR
+                                                                            <i class="fa-solid fa-truck me-1"></i>OUT FOR
                                                                             DELIVERY
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Delivered')
@@ -564,14 +564,14 @@
                                                                             class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25"
                                                                             id="deliveredRecentBadge{{ $order->id }}">
                                                                             <i
-                                                                                class="fas fa-box-open me-1"></i>DELIVERED
+                                                                                class="fa-solid fa-box-open me-1"></i>DELIVERED
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Complete')
                                                                         <span
                                                                             class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"
                                                                             id="completeStatusBadge{{ $order->id }}">
                                                                             <i
-                                                                                class="fas fa-check-circle me-1"></i>COMPLETE
+                                                                                class="fa-solid fa-check-circle me-1"></i>COMPLETE
                                                                         </span>
                                                                     @endif
                                                                 </div>
@@ -594,7 +594,7 @@
                                                                     data-bs-toggle="modal" data-bs-target="#cancel"
                                                                     wire:click="toCancel({{ $order->id }})"
                                                                     id="cancelRecentBtn{{ $order->id }}">
-                                                                    <i class="fas fa-xmark me-1"
+                                                                    <i class="fa-solid fa-xmark me-1"
                                                                         id="cancelRecentIcon{{ $order->id }}"></i>Cancel
                                                                     Order
                                                                 </button>
@@ -610,7 +610,7 @@
                                                                 <button
                                                                     class="btn btn-outline-success btn-sm rounded-pill"
                                                                     id="paidBtn{{ $order->id }}">
-                                                                    <i class="fas fa-check me-1"
+                                                                    <i class="fa-solid fa-check me-1"
                                                                         id="paidIcon{{ $order->id }}"></i>Paid
                                                                 </button>
                                                             @endif
@@ -636,7 +636,7 @@
                                             id="recentGrandTotalContent">
                                             <div id="recentTotalLeft">
                                                 <h5 class="fw-bold mb-1" id="recentTotalTitle">
-                                                    <i class="fas fa-history me-2 text-info"></i>Recent Orders Total
+                                                    <i class="fa-solid fa-history me-2 text-info"></i>Recent Orders Total
                                                 </h5>
                                                 <p class="text-muted small mb-0" id="recentTotalSubtitle">
                                                     {{ $recents->count() }} order(s) completed</p>
@@ -651,14 +651,14 @@
                                 @else
                                     <div class="empty-state text-center py-5" id="recentEmptyState">
                                         <div class="empty-icon mb-4" id="recentEmptyIcon">
-                                            <i class="fas fa-history fa-4x text-muted opacity-25"></i>
+                                            <i class="fa-solid fa-history fa-4x text-muted opacity-25"></i>
                                         </div>
                                         <h5 class="text-muted mb-3" id="recentEmptyTitle">No Recent Orders</h5>
                                         <p class="text-muted mb-4" id="recentEmptyMessage">Your recent orders will
                                             appear here.</p>
                                         <a wire:navigate href="/products"
                                             class="btn btn-primary btn-lg rounded-pill px-4" id="recentShopBtn">
-                                            <i class="fas fa-shopping-cart me-2" id="recentShopIcon"></i>Browse
+                                            <i class="fa-solid fa-shopping-cart me-2" id="recentShopIcon"></i>Browse
                                             Products
                                         </a>
                                     </div>
@@ -754,13 +754,13 @@
                                                                         class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25"
                                                                         id="cancelledQuantity{{ $order->id }}">
                                                                         <i
-                                                                            class="fas fa-box me-1"></i>x{{ number_format($order->order_quantity) }}
+                                                                            class="fa-solid fa-box me-1"></i>x{{ number_format($order->order_quantity) }}
                                                                         PC(s)
                                                                     </span>
                                                                     <span class="badge bg-light text-dark border"
                                                                         id="cancelledDate{{ $order->id }}">
                                                                         <i
-                                                                            class="far fa-calendar me-1"></i>{{ date_format($order->created_at, 'M d, Y') }}
+                                                                            class="fa-regular fa-calendar me-1"></i>{{ date_format($order->created_at, 'M d, Y') }}
                                                                     </span>
                                                                 </div>
 
@@ -779,7 +779,7 @@
                                                                     <span
                                                                         class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25"
                                                                         id="cancelledStatusBadge{{ $order->id }}">
-                                                                        <i class="fas fa-ban me-1"></i>CANCELLED
+                                                                        <i class="fa-solid fa-ban me-1"></i>CANCELLED
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -793,7 +793,7 @@
                                                             <button onclick="rePurchase({{ $order->id }})"
                                                                 class="btn btn-primary btn-sm rounded-pill shadow-sm"
                                                                 id="repurchaseBtn{{ $order->id }}">
-                                                                <i class="fas fa-rotate-right me-1"
+                                                                <i class="fa-solid fa-rotate-right me-1"
                                                                     id="repurchaseIcon{{ $order->id }}"></i>Re-purchase
                                                             </button>
 
@@ -818,7 +818,7 @@
                                             id="cancelledGrandTotalContent">
                                             <div id="cancelledTotalLeft">
                                                 <h5 class="fw-bold mb-1 text-muted" id="cancelledTotalTitle">
-                                                    <i class="fas fa-ban me-2 text-danger"></i>Cancelled Orders Total
+                                                    <i class="fa-solid fa-ban me-2 text-danger"></i>Cancelled Orders Total
                                                 </h5>
                                                 <p class="text-muted small mb-0" id="cancelledTotalSubtitle">
                                                     {{ $cancels->count() }} order(s) cancelled</p>
@@ -833,7 +833,7 @@
                                 @else
                                     <div class="empty-state text-center py-5" id="cancelledEmptyState">
                                         <div class="empty-icon mb-4" id="cancelledEmptyIcon">
-                                            <i class="fas fa-ban fa-4x text-muted opacity-25"></i>
+                                            <i class="fa-solid fa-ban fa-4x text-muted opacity-25"></i>
                                         </div>
                                         <h5 class="text-muted mb-3" id="cancelledEmptyTitle">No Cancelled Orders</h5>
                                         <p class="text-muted mb-4" id="cancelledEmptyMessage">You haven't cancelled
@@ -1494,8 +1494,8 @@
                 showCancelButton: true,
                 confirmButtonColor: '#0d6efd',
                 cancelButtonColor: '#6c757d',
-                confirmButtonText: '<i class="fas fa-rotate-right me-2"></i>Yes, re-purchase',
-                cancelButtonText: '<i class="fas fa-times me-2"></i>Cancel',
+                confirmButtonText: '<i class="fa-solid fa-rotate-right me-2"></i>Yes, re-purchase',
+                cancelButtonText: '<i class="fa-solid fa-times me-2"></i>Cancel',
                 customClass: {
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-secondary'
@@ -1518,7 +1518,7 @@
 
                     setTimeout(() => {
                         if (repurchaseBtn) {
-                            repurchaseBtn.innerHTML = '<i class="fas fa-rotate-right me-1"></i>Re-purchase';
+                            repurchaseBtn.innerHTML = '<i class="fa-solid fa-rotate-right me-1"></i>Re-purchase';
                             repurchaseBtn.disabled = false;
                         }
                     }, 2000);

@@ -7,7 +7,7 @@
                 <!-- Header with gradient background -->
                 <div class="modal-header bg-gradient-primary text-white py-3 border-0 rounded-top">
                     <h4 class="modal-title font-weight-bold" id="addUserModalTitle">
-                        <i class="fas fa-user-plus mr-2"></i>Create New User
+                        <i class="fa-solid fa-user-plus mr-2"></i>Create New User
                     </h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -31,7 +31,7 @@
                                             class="btn btn-danger btn-sm position-absolute rounded-circle"
                                             style="top: 5px; right: 5px; width: 30px; height: 30px;"
                                             title="Remove image">
-                                            <i class="fas fa-times"></i>
+                                            <i class="fa-solid fa-times"></i>
                                         </button>
                                     </div>
                                 @else
@@ -39,7 +39,7 @@
                                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center border border-3 border-dashed border-primary"
                                             style="width: 120px; height: 120px; cursor: pointer;"
                                             onclick="document.getElementById('create_profile_image').click();">
-                                            <i class="fas fa-camera fa-3x text-muted"></i>
+                                            <i class="fa-solid fa-camera fa-3x text-muted"></i>
                                         </div>
                                     </div>
                                 @endif
@@ -47,7 +47,7 @@
 
                             <div class="mt-3">
                                 <label for="create_profile_image" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-upload mr-1"></i>Choose Profile Image
+                                    <i class="fa-solid fa-upload mr-1"></i>Choose Profile Image
                                 </label>
                                 <input type="file" accept=".png,.jpg,.jpeg,.gif" class="d-none"
                                     id="create_profile_image" wire:model.live="profile_image">
@@ -59,12 +59,12 @@
 
                                 @error('profile_image')
                                     <div class="text-danger small mt-2">
-                                        <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle"></i> {{ $message }}
                                     </div>
                                 @enderror
 
                                 <p class="text-muted small mt-2 mb-0">
-                                    <i class="fas fa-info-circle mr-1"></i>Allowed: JPG, JPEG, PNG, GIF (Max 2MB)
+                                    <i class="fa-solid fa-info-circle mr-1"></i>Allowed: JPG, JPEG, PNG, GIF (Max 2MB)
                                 </p>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                 <div class="card border-0 bg-light">
                                     <div class="card-body">
                                         <h6 class="card-title text-primary mb-3">
-                                            <i class="fas fa-user mr-2"></i>Personal Information
+                                            <i class="fa-solid fa-user mr-2"></i>Personal Information
                                         </h6>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -86,7 +86,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-user text-muted"></i>
+                                                                <i class="fa-solid fa-user text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="text" class="form-control h-5 border-left-0"
@@ -95,7 +95,7 @@
                                                     </div>
                                                     @error('name')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -107,7 +107,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-venus-mars text-muted"></i>
+                                                                <i class="fa-solid fa-venus-mars text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <select class="form-control h-5 border-left-0" id="gender"
@@ -120,7 +120,7 @@
                                                     </div>
                                                     @error('gender')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -132,7 +132,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-map-marker-alt text-muted"></i>
+                                                                <i class="fa-solid fa-map-marker-alt text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="text" class="form-control h-5 border-left-0"
@@ -141,7 +141,7 @@
                                                     </div>
                                                     @error('address')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -156,7 +156,7 @@
                                 <div class="card border-0 bg-light">
                                     <div class="card-body">
                                         <h6 class="card-title text-primary mb-3">
-                                            <i class="fas fa-lock mr-2"></i>Account Information
+                                            <i class="fa-solid fa-lock mr-2"></i>Account Information
                                         </h6>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -166,7 +166,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-envelope text-muted"></i>
+                                                                <i class="fa-solid fa-envelope text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="email" class="form-control h-5 border-left-0"
@@ -175,7 +175,7 @@
                                                     </div>
                                                     @error('email')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -187,7 +187,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-at text-muted"></i>
+                                                                <i class="fa-solid fa-at text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="text" class="form-control h-5 border-left-0"
@@ -196,7 +196,7 @@
                                                     </div>
                                                     @error('username')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -208,7 +208,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-key text-muted"></i>
+                                                                <i class="fa-solid fa-key text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="password"
@@ -219,13 +219,13 @@
                                                             <span class="input-group-text bg-white"
                                                                 onclick="togglePassword('password')"
                                                                 style="cursor: pointer;">
-                                                                <i class="fas fa-eye text-muted toggle-password"></i>
+                                                                <i class="fa-solid fa-eye text-muted toggle-password"></i>
                                                             </span>
                                                         </div>
                                                     </div>
                                                     @error('password')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -238,7 +238,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-check-circle text-muted"></i>
+                                                                <i class="fa-solid fa-check-circle text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="password"
@@ -250,13 +250,13 @@
                                                                 onclick="togglePassword('password_confirmation')"
                                                                 style="cursor: pointer;">
                                                                 <i
-                                                                    class="fas fa-eye text-muted toggle-confirm-password"></i>
+                                                                    class="fa-solid fa-eye text-muted toggle-confirm-password"></i>
                                                             </span>
                                                         </div>
                                                     </div>
                                                     @error('password_confirmation')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -271,7 +271,7 @@
                                 <div class="card border-0 bg-light">
                                     <div class="card-body">
                                         <h6 class="card-title text-primary mb-3">
-                                            <i class="fas fa-phone-alt mr-2"></i>Contact Information
+                                            <i class="fa-solid fa-phone-alt mr-2"></i>Contact Information
                                         </h6>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -281,7 +281,7 @@
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-white border-right-0">
-                                                                <i class="fas fa-phone text-muted"></i>
+                                                                <i class="fa-solid fa-phone text-muted"></i>
                                                             </span>
                                                         </div>
                                                         <input type="tel" class="form-control h-5 border-left-0"
@@ -290,7 +290,7 @@
                                                     </div>
                                                     @error('phone_number')
                                                         <span class="text-danger small"><i
-                                                                class="fas fa-exclamation-circle"></i>
+                                                                class="fa-solid fa-exclamation-circle"></i>
                                                             {{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -310,7 +310,7 @@
                             <button type="button" class="btn btn-outline-warning" wire:click="resetInputs"
                                 wire:loading.attr='disabled' wire:target='resetInputs'>
                                 <span wire:target='resetInputs' wire:loading.remove>
-                                    <i class="fas fa-undo-alt mr-1"></i> Reset
+                                    <i class="fa-solid fa-undo-alt mr-1"></i> Reset
                                 </span>
                                 <span wire:target='resetInputs' wire:loading>
                                     <span class="spinner-border spinner-border-sm mr-1"></span> Resetting...
@@ -320,14 +320,14 @@
                         <div>
                             <button type="button" class="btn btn-secondary mr-2" id="closeModalAdd"
                                 data-dismiss="modal">
-                                <i class="fas fa-times mr-1"></i> Cancel
+                                <i class="fa-solid fa-times mr-1"></i> Cancel
                             </button>
                             <button type="button" class="btn btn-primary" wire:click="addUser"
                                 wire:loading.attr="disabled" wire:target="addUser,profile_image">
                                 <div wire:loading class="spinner-border spinner-border-sm mr-1" wire:target="addUser">
                                 </div>
                                 <span wire:loading.remove wire:target="addUser">
-                                    <i class="fas fa-save mr-1"></i> Create User
+                                    <i class="fa-solid fa-save mr-1"></i> Create User
                                 </span>
                                 <span wire:loading wire:target="addUser">Creating...</span>
                             </button>

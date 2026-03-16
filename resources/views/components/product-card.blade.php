@@ -25,15 +25,15 @@
         <div class="product-badge">
             @if ($badgeType === 'top')
                 <span class="badge bg-primary px-3 py-2" id="badge-text">
-                    <i class="fas fa-medal me-1"></i>{{ $badgeText }}
+                    <i class="fa-solid fa-medal me-1"></i>{{ $badgeText }}
                 </span>
             @elseif($badgeType === 'popular')
                 <span class="badge bg-warning px-3 py-2" id="badge-text">
-                    <i class="fas fa-fire me-1"></i>{{ $badgeText }}
+                    <i class="fa-solid fa-fire me-1"></i>{{ $badgeText }}
                 </span>
             @elseif($badgeType === 'latest')
                 <span class="badge bg-info px-3 py-2" id="badge-text">
-                    <i class="fas fa-bolt me-1"></i>{{ $badgeText }}
+                    <i class="fa-solid fa-bolt me-1"></i>{{ $badgeText }}
                 </span>
             @endif
         </div>
@@ -47,7 +47,7 @@
 
     <div class="card-body d-flex flex-column">
         <small class="text-muted text-uppercase mb-1" id="category">
-            <i class="fas fa-tag me-1"></i>{{ $product->product_category->category_name }}
+            <i class="fa-solid fa-tag me-1"></i>{{ $product->product_category->category_name }}
         </small>
 
         <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#viewProduct"
@@ -70,7 +70,7 @@
         <div class="mt-auto">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
-                    <i class="fas fa-star text-warning me-1"></i>
+                    <i class="fa-solid fa-star text-warning me-1"></i>
                     <span class="fw-semibold mr-1">{{ $product->averageRatings() }}</span>
                     |
                     <small class="text-muted ms-1">{{ $product->shortOrderSold() }} sold</small>

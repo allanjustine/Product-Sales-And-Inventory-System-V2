@@ -6,7 +6,7 @@
                 <div class="modal-header border-bottom-0 pb-0">
                     <div class="d-flex align-items-center w-100">
                         <div class="modal-icon bg-warning bg-opacity-10 text-warning rounded-circle p-2 me-3">
-                            <i class="fas fa-envelope fa-lg"></i>
+                            <i class="fa-solid fa-envelope fa-lg"></i>
                         </div>
                         <div class="flex-grow-1">
                             <h5 class="modal-title fw-bold mb-1" id="resendVerificationModal">Resend Verification Email
@@ -21,7 +21,7 @@
                     <form wire:submit="resend" class="needs-validation" novalidate>
                         <div class="alert alert-light border mb-4">
                             <div class="d-flex align-items-start">
-                                <i class="fas fa-envelope-circle-check text-warning mt-1 me-2"></i>
+                                <i class="fa-solid fa-envelope-circle-check text-warning mt-1 me-2"></i>
                                 <div>
                                     <p class="mb-0">Didn't receive the verification email? Enter your email below and
                                         we'll send you a new verification link.</p>
@@ -32,7 +32,7 @@
                         @if (session('error'))
                             <div class="alert alert-danger border-0 mb-4" role="alert">
                                 <div class="d-flex align-items-center">
-                                    <i class="fas fa-exclamation-circle me-2"></i>
+                                    <i class="fa-solid fa-exclamation-circle me-2"></i>
                                     <div>{{ session('error') }}</div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                         @if (session('success'))
                             <div class="alert alert-success border-0 mb-4" role="alert">
                                 <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle me-2"></i>
+                                    <i class="fa-solid fa-check-circle me-2"></i>
                                     <div>{{ session('success') }}</div>
                                 </div>
                             </div>
@@ -49,11 +49,11 @@
 
                         <div class="mb-4">
                             <label for="resendEmail" class="form-label fw-semibold mb-2">
-                                <i class="fas fa-envelope me-2 text-primary"></i>Email Address
+                                <i class="fa-solid fa-envelope me-2 text-primary"></i>Email Address
                             </label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text bg-light border-end-0">
-                                    <i class="fas fa-at text-muted"></i>
+                                    <i class="fa-solid fa-at text-muted"></i>
                                 </span>
                                 <input type="email" id="resendEmail"
                                     class="form-control border-start-0 h-auto{{ $errors->has('email') ? 'is-invalid' : '' }}"
@@ -62,11 +62,11 @@
                             </div>
                             @error('email')
                                 <div class="invalid-feedback d-block mt-2">
-                                    <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                 </div>
                             @enderror
                             <small class="text-muted mt-2 d-block">
-                                <i class="fas fa-info-circle me-1"></i>Make sure this is the email you used to register
+                                <i class="fa-solid fa-info-circle me-1"></i>Make sure this is the email you used to register
                             </small>
                         </div>
 
@@ -76,7 +76,7 @@
                                     <h6 class="accordion-header">
                                         <button class="accordion-button collapsed bg-light text-dark" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#helpContent">
-                                            <i class="fas fa-question-circle me-2 text-warning"></i>
+                                            <i class="fa-solid fa-question-circle me-2 text-warning"></i>
                                             Having trouble?
                                         </button>
                                     </h6>
@@ -85,15 +85,15 @@
                                         <div class="accordion-body bg-light rounded-bottom-3">
                                             <ul class="list-unstyled mb-0">
                                                 <li class="mb-2">
-                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                    <i class="fa-solid fa-check-circle text-success me-2"></i>
                                                     <small>Check your spam/junk folder</small>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                    <i class="fa-solid fa-check-circle text-success me-2"></i>
                                                     <small>Make sure email is spelled correctly</small>
                                                 </li>
                                                 <li>
-                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                    <i class="fa-solid fa-check-circle text-success me-2"></i>
                                                     <small>Wait a few minutes before requesting again</small>
                                                 </li>
                                             </ul>
@@ -107,12 +107,12 @@
                             <button type="button"
                                 class="btn btn-outline-secondary order-sm-2 order-1 w-100 w-sm-auto px-4"
                                 data-bs-dismiss="modal">
-                                <i class="fas fa-times me-2"></i>Cancel
+                                <i class="fa-solid fa-times me-2"></i>Cancel
                             </button>
                             <button type="submit" class="btn btn-warning order-sm-1 order-2 w-100 w-sm-auto px-4"
                                 wire:loading.attr="disabled" wire:target="resend">
                                 <span wire:loading.remove wire:target="resend">
-                                    <i class="fas fa-paper-plane me-2"></i>Resend Verification
+                                    <i class="fa-solid fa-paper-plane me-2"></i>Resend Verification
                                 </span>
                                 <span wire:loading wire:target="resend">
                                     <span class="spinner-border spinner-border-sm me-2"></span>
@@ -125,12 +125,12 @@
                     <div class="mt-4 pt-3 border-top">
                         <div class="text-center">
                             <small class="text-muted">
-                                <i class="fas fa-clock me-1"></i>
+                                <i class="fa-solid fa-clock me-1"></i>
                                 Verification links expire in 24 hours
                             </small>
                             <div class="mt-1">
                                 <small class="text-muted">
-                                    <i class="fas fa-shield-alt me-1"></i>
+                                    <i class="fa-solid fa-shield-alt me-1"></i>
                                     Secure email delivery
                                 </small>
                             </div>

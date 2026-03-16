@@ -3,7 +3,7 @@
         <div class="confirmation-container">
             <div class="confirmation-card">
                 <div class="success-icon">
-                    <i class="fas fa-circle-check"></i>
+                    <i class="fa-solid fa-circle-check"></i>
                 </div>
 
                 <h1 class="confirmation-title">Order Confirmed!</h1>
@@ -55,7 +55,7 @@
                     <div class="card order-summary-card">
                         <div class="card-header bg-primary d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0" id="header"><i class="fas fa-bag-check me-2"></i>Your Order
+                                <h5 class="mb-0" id="header"><i class="fa-solid fa-bag-check me-2"></i>Your Order
                                     Details</h5>
                             </div>
                             <div class="text-end">
@@ -197,12 +197,12 @@
                                                     placing your order.</p>
                                                 <button class="btn btn-primary w-100" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#addShippingAddress">
-                                                    <i class="fas fa-plus"></i> Add Shipping Address
+                                                    <i class="fa-solid fa-plus"></i> Add Shipping Address
                                                 </button>
                                             </div>
                                         @endif
                                         <p class="mt-2">
-                                            <i class="fas fa-phone me-1"></i> {{ auth()->user()->phone_number }}
+                                            <i class="fa-solid fa-phone me-1"></i> {{ auth()->user()->phone_number }}
                                         </p>
                                     </div>
                                     <div class="d-grid gap-1 mt-4">

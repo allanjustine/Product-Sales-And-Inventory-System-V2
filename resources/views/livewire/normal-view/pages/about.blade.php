@@ -20,7 +20,7 @@
                             alt="Our Store Front" class="img-fluid rounded-3 shadow-lg about-image">
                         <div class="position-absolute bottom-0 start-0 m-4">
                             <span class="badge bg-primary px-3 py-2 rounded-pill">
-                                <i class="fas fa-store me-2"></i>Local Store
+                                <i class="fa-solid fa-store me-2"></i>Local Store
                             </span>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                 <div class="col-lg-6">
                     <div class="ps-lg-5">
                         <span class="badge bg-primary bg-opacity-10 text-primary mb-3 px-3 py-2">
-                            <i class="fas fa-history me-2"></i>Our Story
+                            <i class="fa-solid fa-history me-2"></i>Our Story
                         </span>
                         <h2 class="fw-bold mb-4">Welcome to Our Local Store</h2>
                         <div class="story-content">
@@ -39,7 +39,7 @@
                             <div class="mb-4">
                                 <div class="d-flex align-items-start mb-3">
                                     <div class="flex-shrink-0">
-                                        <i class="fas fa-tags text-success fa-lg"></i>
+                                        <i class="fa-solid fa-tags text-success fa-lg"></i>
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="fw-bold">Affordable Prices</h5>
@@ -50,7 +50,7 @@
 
                                 <div class="d-flex align-items-start mb-3">
                                     <div class="flex-shrink-0">
-                                        <i class="fas fa-check-circle text-primary fa-lg"></i>
+                                        <i class="fa-solid fa-check-circle text-primary fa-lg"></i>
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="fw-bold">Quality Products</h5>
@@ -61,7 +61,7 @@
 
                                 <div class="d-flex align-items-start">
                                     <div class="flex-shrink-0">
-                                        <i class="fas fa-bolt text-warning fa-lg"></i>
+                                        <i class="fa-solid fa-bolt text-warning fa-lg"></i>
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="fw-bold">Quick Service</h5>
@@ -87,7 +87,7 @@
                             alt="Store Products" class="img-fluid rounded-3 shadow-lg about-image">
                         <div class="position-absolute top-0 end-0 m-4">
                             <span class="badge bg-warning px-3 py-2 rounded-pill">
-                                <i class="fas fa-thumbs-up me-2"></i>Trusted Quality
+                                <i class="fa-solid fa-thumbs-up me-2"></i>Trusted Quality
                             </span>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                 <div class="col-lg-6 order-lg-1">
                     <div class="pe-lg-5">
                         <span class="badge bg-warning bg-opacity-10 text-warning mb-3 px-3 py-2">
-                            <i class="fas fa-handshake me-2"></i>Our Promise
+                            <i class="fa-solid fa-handshake me-2"></i>Our Promise
                         </span>
                         <h2 class="fw-bold mb-4">Why Shop With Us?</h2>
 
@@ -103,7 +103,7 @@
                             <div class="value-item mb-4">
                                 <div class="d-flex align-items-center mb-2">
                                     <div class="icon-circle bg-primary bg-opacity-10 text-primary me-3">
-                                        <i class="fas fa-shipping-fast fa-lg"></i>
+                                        <i class="fa-solid fa-shipping-fast fa-lg"></i>
                                     </div>
                                     <h4 class="mb-0">Fast Delivery</h4>
                                 </div>
@@ -114,7 +114,7 @@
                             <div class="value-item mb-4">
                                 <div class="d-flex align-items-center mb-2">
                                     <div class="icon-circle bg-success bg-opacity-10 text-success me-3">
-                                        <i class="fas fa-headset fa-lg"></i>
+                                        <i class="fa-solid fa-headset fa-lg"></i>
                                     </div>
                                     <h4 class="mb-0">Customer Support</h4>
                                 </div>
@@ -125,7 +125,7 @@
                             <div class="value-item mb-4">
                                 <div class="d-flex align-items-center mb-2">
                                     <div class="icon-circle bg-info bg-opacity-10 text-info me-3">
-                                        <i class="fas fa-shield-alt fa-lg"></i>
+                                        <i class="fa-solid fa-shield-alt fa-lg"></i>
                                     </div>
                                     <h4 class="mb-0">Safe Shopping</h4>
                                 </div>
@@ -136,7 +136,7 @@
 
                         <div class="mt-4">
                             <a wire:navigate href="/products" class="btn btn-primary btn-lg px-4">
-                                <i class="fas fa-shopping-cart me-2"></i>Shop Now
+                                <i class="fa-solid fa-shopping-cart me-2"></i>Shop Now
                             </a>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-info bg-opacity-10 text-info mb-3 px-3 py-2">
-                    <i class="fas fa-box-open me-2"></i>What We Offer
+                    <i class="fa-solid fa-box-open me-2"></i>What We Offer
                 </span>
                 <h2 class="fw-bold mb-3">Our Product Categories</h2>
                 <p class="text-muted">Quality products across various categories</p>
@@ -160,7 +160,7 @@
                 <div class="col-md-3 col-6">
                     <div class="category-card text-center p-4 rounded-3 bg-white shadow-sm">
                         <div class="category-icon mb-3">
-                            <i class="fas fa-utensils fa-2x text-primary"></i>
+                            <i class="fa-solid fa-utensils fa-2x text-primary"></i>
                         </div>
                         <h5 class="fw-bold">Food Items</h5>
                         <p class="text-muted small mb-0">Fresh and packaged food products</p>
@@ -169,7 +169,7 @@
                 <div class="col-md-3 col-6">
                     <div class="category-card text-center p-4 rounded-3 bg-white shadow-sm">
                         <div class="category-icon mb-3">
-                            <i class="fas fa-wine-bottle fa-2x text-success"></i>
+                            <i class="fa-solid fa-wine-bottle fa-2x text-success"></i>
                         </div>
                         <h5 class="fw-bold">Beverages</h5>
                         <p class="text-muted small mb-0">Drinks and refreshments</p>
@@ -178,7 +178,7 @@
                 <div class="col-md-3 col-6">
                     <div class="category-card text-center p-4 rounded-3 bg-white shadow-sm">
                         <div class="category-icon mb-3">
-                            <i class="fas fa-pump-soap fa-2x text-warning"></i>
+                            <i class="fa-solid fa-pump-soap fa-2x text-warning"></i>
                         </div>
                         <h5 class="fw-bold">Household</h5>
                         <p class="text-muted small mb-0">Cleaning and home essentials</p>
@@ -187,7 +187,7 @@
                 <div class="col-md-3 col-6">
                     <div class="category-card text-center p-4 rounded-3 bg-white shadow-sm">
                         <div class="category-icon mb-3">
-                            <i class="fas fa-pills fa-2x text-danger"></i>
+                            <i class="fa-solid fa-pills fa-2x text-danger"></i>
                         </div>
                         <h5 class="fw-bold">Health & Care</h5>
                         <p class="text-muted small mb-0">Personal care and wellness</p>
@@ -202,7 +202,7 @@
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-success bg-opacity-10 text-success mb-3 px-3 py-2">
-                    <i class="fas fa-comment-dots me-2"></i>Customer Reviews
+                    <i class="fa-solid fa-comment-dots me-2"></i>Customer Reviews
                 </span>
                 <h2 class="fw-bold mb-3">What Our Customers Say</h2>
                 <p class="text-muted">Real feedback from our valued shoppers</p>
@@ -217,13 +217,13 @@
                                     <!-- Rating Stars -->
                                     <div class="mb-3">
                                         @for ($i = 1; $i <= 5; $i++)
-                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fa-solid fa-star text-warning"></i>
                                         @endfor
                                     </div>
 
                                     <!-- Testimonial Text -->
                                     <div class="mb-4">
-                                        <i class="fas fa-quote-left text-primary fa-2x opacity-25 mb-3"></i>
+                                        <i class="fa-solid fa-quote-left text-primary fa-2x opacity-25 mb-3"></i>
                                         <p class="testimonial-text">"{{ $testimony->message }}"</p>
                                     </div>
 
@@ -238,12 +238,12 @@
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="fw-bold mb-0">{{ $testimony->name }}</h6>
                                             <small class="text-muted">
-                                                <i class="fas fa-clock me-1"></i>
+                                                <i class="fa-solid fa-clock me-1"></i>
                                                 {{ $testimony->created_at->diffForHumans() }}
                                             </small>
                                         </div>
                                         <div class="flex-shrink-0">
-                                            <i class="fas fa-quote-right text-primary opacity-25"></i>
+                                            <i class="fa-solid fa-quote-right text-primary opacity-25"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -255,12 +255,12 @@
                 <!-- Empty Testimonials State -->
                 <div class="text-center py-5">
                     <div class="empty-testimonials mb-4">
-                        <i class="fas fa-comments text-muted" style="font-size: 4rem;"></i>
+                        <i class="fa-solid fa-comments text-muted" style="font-size: 4rem;"></i>
                     </div>
                     <h4 class="text-muted mb-3">Be the First to Share Your Experience</h4>
                     <p class="text-muted mb-4">Your feedback helps us improve our service</p>
                     <a href="/feedbacks" wire:navigate class="btn btn-primary btn-lg px-4">
-                        <i class="fas fa-pen me-2"></i>Leave Feedback
+                        <i class="fa-solid fa-pen me-2"></i>Leave Feedback
                     </a>
                 </div>
             @endif
@@ -269,7 +269,7 @@
             @if ($testimonies->count() > 0)
                 <div class="text-center mt-5">
                     <a href="/feedbacks" wire:navigate class="btn btn-outline-primary">
-                        <i class="fas fa-plus me-2"></i>Add Your Review
+                        <i class="fa-solid fa-plus me-2"></i>Add Your Review
                     </a>
                 </div>
             @endif
@@ -282,21 +282,21 @@
             <div class="row text-center">
                 <div class="col-4 mb-4">
                     <div class="stat-item">
-                        <i class="fas fa-box fa-3x mb-3"></i>
+                        <i class="fa-solid fa-box fa-3x mb-3"></i>
                         <h3 class="fw-bold display-6">{{ $product_available }}+</h3>
                         <p class="mb-0">Products Available</p>
                     </div>
                 </div>
                 <div class="col-4 mb-4">
                     <div class="stat-item">
-                        <i class="fas fa-users fa-3x mb-3"></i>
+                        <i class="fa-solid fa-users fa-3x mb-3"></i>
                         <h3 class="fw-bold display-6">{{ $happy_customers }}+</h3>
                         <p class="mb-0">Happy Customers</p>
                     </div>
                 </div>
                 <div class="col-4 mb-4">
                     <div class="stat-item">
-                        <i class="fas fa-shipping-fast fa-3x mb-3"></i>
+                        <i class="fa-solid fa-shipping-fast fa-3x mb-3"></i>
                         <h3 class="fw-bold display-6">{{ $orders_delivered }}+</h3>
                         <p class="mb-0">Orders Delivered</p>
                     </div>

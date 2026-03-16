@@ -3,14 +3,14 @@
     <div class="card card-primary card-outline shadow-lg" id="product-table">
         <div class="card-header bg-gradient-success text-white">
             <h5 class="card-title font-weight-bold mb-0">
-                <i class="fas fa-chart-line mr-2"></i>Sales Report & Analytics
+                <i class="fa-solid fa-chart-line mr-2"></i>Sales Report & Analytics
             </h5>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus text-white"></i>
+                    <i class="fa-solid fa-minus text-white"></i>
                 </button>
                 <button type="button" class="btn btn-tool" data-card-widget="refresh" wire:click="$refresh">
-                    <i class="fas fa-sync-alt text-white"></i>
+                    <i class="fa-solid fa-sync-alt text-white"></i>
                 </button>
             </div>
         </div>
@@ -36,7 +36,7 @@
                 <div class="col-md-5">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-search"></i></span>
                         </div>
                         <input type="search" class="form-control"
                             placeholder="Search by transaction code, buyer, product..."
@@ -47,7 +47,7 @@
                     <div class="d-flex">
                         <div class="input-group mr-2" style="width: 200px;">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                <span class="input-group-text"><i class="fa-solid fa-calendar-alt"></i></span>
                             </div>
                             <select name="product_category" id="product_category" class="form-control"
                                 wire:model.live="date_filter">
@@ -63,7 +63,7 @@
                             </select>
                         </div>
                         <button class="btn btn-success flex-grow-1" wire:click="downloadPdf">
-                            <i class="fas fa-file-pdf mr-2"></i> Export PDF
+                            <i class="fa-solid fa-file-pdf mr-2"></i> Export PDF
                         </button>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                             <th class="align-middle" wire:click="handleSortBy('transaction_code')"
                                 style="cursor: pointer;">
                                 <span class="d-flex align-items-center">
-                                    <i class="fas fa-hashtag mr-2"></i>Transaction Code
+                                    <i class="fa-solid fa-hashtag mr-2"></i>Transaction Code
                                     @if ($sortBy === 'transaction_code')
                                         <i
                                             class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ml-2"></i>
@@ -88,7 +88,7 @@
                             </th>
                             <th class="align-middle" wire:click="handleSortBy('name')" style="cursor: pointer;">
                                 <span class="d-flex align-items-center">
-                                    <i class="fas fa-user mr-2"></i>Buyer
+                                    <i class="fa-solid fa-user mr-2"></i>Buyer
                                     @if ($sortBy === 'name')
                                         <i
                                             class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ml-2"></i>
@@ -100,7 +100,7 @@
                             <th class="align-middle text-capitalize" wire:click="handleSortBy('product_name')"
                                 style="cursor: pointer;">
                                 <span class="d-flex align-items-center">
-                                    <i class="fas fa-box mr-2"></i>Product
+                                    <i class="fa-solid fa-box mr-2"></i>Product
                                     @if ($sortBy === 'product_name')
                                         <i
                                             class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ml-2"></i>
@@ -149,7 +149,7 @@
                             <th class="align-middle" wire:click="handleSortBy('order_payment_method')"
                                 style="cursor: pointer;">
                                 <span class="d-flex align-items-center">
-                                    <i class="fas fa-credit-card mr-2"></i>Payment
+                                    <i class="fa-solid fa-credit-card mr-2"></i>Payment
                                     @if ($sortBy === 'order_payment_method')
                                         <i
                                             class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ml-2"></i>
@@ -162,7 +162,7 @@
                             <th class="align-middle" wire:click="handleSortBy('orders.created_at')"
                                 style="cursor: pointer;">
                                 <span class="d-flex align-items-center">
-                                    <i class="fas fa-calendar mr-2"></i>Date
+                                    <i class="fa-solid fa-calendar mr-2"></i>Date
                                     @if ($sortBy === 'orders.created_at')
                                         <i
                                             class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ml-2"></i>
@@ -231,18 +231,18 @@
                                 <td>
                                     <span class="badge badge-light">
                                         <i
-                                            class="fas fa-{{ $order->order_payment_method === 'Cash on Delivery' ? 'truck' : 'credit-card' }} mr-1"></i>
+                                            class="fa-solid fa-{{ $order->order_payment_method === 'Cash on Delivery' ? 'truck' : 'credit-card' }} mr-1"></i>
                                         {{ $order->order_payment_method }}
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     @if ($order->order_status === 'Pending')
                                         <span class="badge badge-warning p-2">
-                                            <i class="fas fa-clock mr-1"></i> PENDING
+                                            <i class="fa-solid fa-clock mr-1"></i> PENDING
                                         </span>
                                     @else
                                         <span class="badge badge-success p-2">
-                                            <i class="fas fa-check-circle mr-1"></i> PAID
+                                            <i class="fa-solid fa-check-circle mr-1"></i> PAID
                                         </span>
                                     @endif
                                 </td>
@@ -258,7 +258,7 @@
                             <tr>
                                 <td colspan="10" class="text-center py-5">
                                     <div class="empty-state">
-                                        <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
+                                        <i class="fa-solid fa-chart-line fa-4x text-muted mb-3"></i>
                                         @if (!empty($search))
                                             <h6>No sales found for "{{ $search }}"</h6>
                                             <p class="text-muted">Try adjusting your search criteria</p>
@@ -283,12 +283,12 @@
                             <td colspan="4">
                                 <div class="d-flex justify-content-end">
                                     <span class="mr-3">
-                                        <i class="fas fa-chart-bar mr-1"></i>
+                                        <i class="fa-solid fa-chart-bar mr-1"></i>
                                         Avg:
                                         ₱{{ number_format($orders->count() > 0 ? $grandTotal / $orders->count() : 0, 2) }}
                                     </span>
                                     <span>
-                                        <i class="fas fa-cubes mr-1"></i>
+                                        <i class="fa-solid fa-cubes mr-1"></i>
                                         Total Items: {{ $orders->sum('order_quantity') }}
                                     </span>
                                 </div>
@@ -302,7 +302,7 @@
             <div class="row mt-4">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info bg-light p-2 rounded">
-                        <i class="fas fa-info-circle mr-1 text-info"></i>
+                        <i class="fa-solid fa-info-circle mr-1 text-info"></i>
                         Showing {{ $orders->firstItem() ?? 0 }} to {{ $orders->lastItem() ?? 0 }} of
                         {{ $orders->total() }} entries
                     </div>

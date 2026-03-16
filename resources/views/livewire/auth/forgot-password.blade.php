@@ -6,7 +6,7 @@
                 <div class="modal-header border-bottom-0 pb-0">
                     <div class="d-flex align-items-center w-100">
                         <div class="modal-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3">
-                            <i class="fas fa-key fa-lg"></i>
+                            <i class="fa-solid fa-key fa-lg"></i>
                         </div>
                         <div class="flex-grow-1">
                             <h5 class="modal-title fw-bold mb-1" id="forgotPasswordModal">Reset Your Password</h5>
@@ -20,7 +20,7 @@
                     <form wire:submit="resetLink" class="needs-validation" novalidate>
                         <div class="alert alert-light border mb-4">
                             <div class="d-flex align-items-start">
-                                <i class="fas fa-info-circle text-primary mt-1 me-2"></i>
+                                <i class="fa-solid fa-info-circle text-primary mt-1 me-2"></i>
                                 <div>
                                     <p class="mb-0">Enter your email address below. We'll send you a link to reset
                                         your password.</p>
@@ -30,11 +30,11 @@
 
                         <div class="mb-4">
                             <label for="forgotEmail" class="form-label fw-semibold mb-2">
-                                <i class="fas fa-envelope me-2 text-primary"></i>Email Address
+                                <i class="fa-solid fa-envelope me-2 text-primary"></i>Email Address
                             </label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text bg-light border-end-0">
-                                    <i class="fas fa-at text-muted"></i>
+                                    <i class="fa-solid fa-at text-muted"></i>
                                 </span>
                                 <input type="email" id="forgotEmail"
                                     class="form-control border-start-0 h-auto {{ $errors->has('email') ? 'is-invalid' : '' }}"
@@ -42,11 +42,11 @@
                             </div>
                             @error('email')
                                 <div class="invalid-feedback d-block mt-2">
-                                    <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                 </div>
                             @enderror
                             <small class="text-muted mt-2 d-block">
-                                <i class="fas fa-shield-alt me-1"></i>We'll never share your email with anyone
+                                <i class="fa-solid fa-shield-alt me-1"></i>We'll never share your email with anyone
                             </small>
                         </div>
 
@@ -54,12 +54,12 @@
                             <button type="button"
                                 class="btn btn-outline-secondary order-sm-2 order-1 w-100 w-sm-auto px-4"
                                 data-bs-dismiss="modal">
-                                <i class="fas fa-times me-2"></i>Cancel
+                                <i class="fa-solid fa-times me-2"></i>Cancel
                             </button>
                             <button type="submit" class="btn btn-primary order-sm-1 order-2 w-100 w-sm-auto px-4"
                                 wire:loading.attr="disabled" wire:target="resetLink">
                                 <span wire:loading.remove wire:target="resetLink">
-                                    <i class="fas fa-paper-plane me-2"></i>Send Reset Link
+                                    <i class="fa-solid fa-paper-plane me-2"></i>Send Reset Link
                                 </span>
                                 <span wire:loading wire:target="resetLink">
                                     <span class="spinner-border spinner-border-sm me-2"></span>
@@ -73,12 +73,12 @@
                 <div class="modal-footer border-top-0 bg-light rounded-bottom-3">
                     <div class="w-100">
                         <div class="d-flex align-items-center justify-content-center gap-2">
-                            <i class="fas fa-lock text-success"></i>
+                            <i class="fa-solid fa-lock text-success"></i>
                             <small class="text-muted">Secure password reset process</small>
                         </div>
                         <div class="text-center mt-2">
                             <small class="text-muted">
-                                <i class="fas fa-clock me-1"></i>
+                                <i class="fa-solid fa-clock me-1"></i>
                                 Reset link expires in 24 hours
                             </small>
                         </div>

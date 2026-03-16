@@ -7,7 +7,7 @@
                     <div class="modal-header bg-gradient-success text-white p-4 border-0" id="buyNowModalHeader">
                         <div class="d-flex align-items-center w-100">
                             <div class="icon-wrapper rounded-circle p-2 me-3" id="buyNowModalIcon">
-                                <i class="fas fa-cart-shopping fa-lg"></i>
+                                <i class="fa-solid fa-cart-shopping fa-lg"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <h4 class="modal-title fw-bold mb-1" id="buyNowModalTitle">Buy Now</h4>
@@ -54,7 +54,7 @@
                                         id="buyNowAlert">
                                         <div class="d-flex align-items-center">
                                             <div class="alert-icon me-3" id="buyNowAlertIcon">
-                                                <i class="fas fa-question-circle fa-2x"></i>
+                                                <i class="fa-solid fa-question-circle fa-2x"></i>
                                             </div>
                                             <div>
                                                 <h5 class="alert-heading mb-2 fw-bold" id="buyNowAlertTitle">Ready to
@@ -111,7 +111,7 @@
                                         <div class="stock-info mb-4" id="buyNowStockInfo">
                                             <div class="stock-badge d-inline-flex align-items-center bg-info bg-opacity-10 text-info border border-info border-opacity-25 rounded-pill px-3 py-1"
                                                 id="buyNowStockBadge">
-                                                <i class="fas fa-boxes me-2 fa-sm" id="buyNowStockIcon"></i>
+                                                <i class="fa-solid fa-boxes me-2 fa-sm" id="buyNowStockIcon"></i>
                                                 <span class="fw-semibold"
                                                     id="buyNowStockCount">x{{ number_format($orderToBuy->product_stock) }}
                                                     units available</span>
@@ -123,7 +123,7 @@
                                 <div class="quantity-section p-4" id="buyNowQuantitySection">
                                     <div class="quantity-header mb-3" id="buyNowQuantityHeader">
                                         <h6 class="fw-bold mb-2" id="buyNowQuantityTitle">
-                                            <i class="fas fa-sort-amount-up me-2 text-success"
+                                            <i class="fa-solid fa-sort-amount-up me-2 text-success"
                                                 id="buyNowQuantityIcon"></i>Select Quantity
                                         </h6>
                                         <p class="text-muted small mb-0" id="buyNowQuantityDescription">How many units
@@ -140,7 +140,7 @@
                                                     wire:click="$set('order_quantity', {{ $order_quantity }} - 1)"
                                                     wire:loading.attr="disabled"
                                                     {{ $order_quantity <= 1 ? 'disabled' : '' }}>
-                                                    <i class="fas fa-minus" id="buyNowDecrementIcon"></i>
+                                                    <i class="fa-solid fa-minus" id="buyNowDecrementIcon"></i>
                                                 </button>
 
                                                 <input type="number" class="form-control text-center"
@@ -154,13 +154,13 @@
                                                     wire:click="$set('order_quantity', {{ $order_quantity }} + 1)"
                                                     wire:loading.attr="disabled"
                                                     {{ $order_quantity >= $orderToBuy->product_stock ? 'disabled' : '' }}>
-                                                    <i class="fas fa-plus" id="buyNowIncrementIcon"></i>
+                                                    <i class="fa-solid fa-plus" id="buyNowIncrementIcon"></i>
                                                 </button>
                                             </div>
 
                                             <div class="stock-limit-info mt-2 text-center" id="buyNowStockLimitInfo">
                                                 <small class="text-muted" id="buyNowStockLimitText">
-                                                    <i class="fas fa-info-circle me-1" id="buyNowStockInfoIcon"></i>
+                                                    <i class="fa-solid fa-info-circle me-1" id="buyNowStockInfoIcon"></i>
                                                     Maximum: {{ number_format($orderToBuy->productStocks()) }} units
                                                     available
                                                 </small>
@@ -169,7 +169,7 @@
                                             @error('order_quantity')
                                                 <div class="alert alert-danger alert-dismissible fade show mt-3"
                                                     role="alert" id="buyNowQuantityErrorAlert">
-                                                    <i class="fas fa-exclamation-circle me-2" id="buyNowErrorIcon"></i>
+                                                    <i class="fa-solid fa-exclamation-circle me-2" id="buyNowErrorIcon"></i>
                                                     <span id="buyNowErrorMessage">{{ $message }}</span>
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                         aria-label="Close" id="buyNowCloseErrorBtn"></button>
@@ -231,7 +231,7 @@
                                                     $order_quantity > $orderToBuy->product_stock)
                                                 <div class="alert alert-warning alert-dismissible fade show mt-3"
                                                     role="alert" id="buyNowStockWarningAlert">
-                                                    <i class="fas fa-exclamation-triangle me-2"
+                                                    <i class="fa-solid fa-exclamation-triangle me-2"
                                                         id="buyNowWarningIcon"></i>
                                                     <span id="buyNowWarningMessage">The product stock is insufficient.
                                                         Please reduce your order quantity.</span>
@@ -245,7 +245,7 @@
                                                 <div class="d-flex flex-column align-items-center mb-2"
                                                     id="buyNowSummaryHeader">
                                                     <h6 class="fw-bold mb-0" id="buyNowSummaryTitle">
-                                                        <i class="fas fa-receipt me-2 text-success"></i>Order Summary
+                                                        <i class="fa-solid fa-receipt me-2 text-success"></i>Order Summary
                                                     </h6>
                                                     <div id="buyNowSummaryLeft">
                                                         <div class="text-muted small" id="buyNowItemCount">
@@ -254,7 +254,7 @@
                                                         </div>
                                                         @if ($orderToBuy->product_old_price !== null && $orderToBuy->product_old_price !== $orderToBuy->product_price)
                                                             <div class="text-success small" id="buyNowSavingsText">
-                                                                <i class="fas fa-piggy-bank me-1"></i>
+                                                                <i class="fa-solid fa-piggy-bank me-1"></i>
                                                                 You save:
                                                                 ₱{{ number_format(($orderToBuy->product_old_price - $orderToBuy->product_price) * $order_quantity, 2) }}
                                                             </div>
@@ -294,7 +294,7 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span wire:loading.remove wire:target="orderPlaceOrderItem"
                                             id="buyNowCheckoutText">
-                                            <i class="fas fa-check-circle me-2" id="buyNowCheckoutIcon"></i>Proceed to
+                                            <i class="fa-solid fa-check-circle me-2" id="buyNowCheckoutIcon"></i>Proceed to
                                             Checkout
                                         </span>
                                         <span wire:loading wire:target="orderPlaceOrderItem"
@@ -308,7 +308,7 @@
 
                                 <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill"
                                     id="buyNowCancelBtn" data-bs-dismiss="modal">
-                                    <i class="fas fa-times me-2" id="buyNowCancelIcon"></i>Cancel Order
+                                    <i class="fa-solid fa-times me-2" id="buyNowCancelIcon"></i>Cancel Order
                                 </button>
                             </div>
                         </div>
@@ -931,7 +931,7 @@
                                 const savings = (oldPrice - price) * quantity;
                                 if (savings > 0) {
                                     savingsElement.innerHTML =
-                                        `<i class="fas fa-piggy-bank me-1"></i>You save: ₱${savings.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                                        `<i class="fa-solid fa-piggy-bank me-1"></i>You save: ₱${savings.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                                 }
                             }
                         }

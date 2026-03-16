@@ -24,11 +24,11 @@
                                             <button type="button"
                                                     class="btn-remove-profile btn btn-sm btn-danger rounded-circle"
                                                     wire:click="removeProfileImage">
-                                                <i class="fas fa-times"></i>
+                                                <i class="fa-solid fa-times"></i>
                                             </button>
                                         @else
                                             <div class="profile-placeholder rounded-circle">
-                                                <i class="fas fa-user fa-3x text-muted"></i>
+                                                <i class="fa-solid fa-user fa-3x text-muted"></i>
                                             </div>
                                         @endif
                                     </div>
@@ -40,7 +40,7 @@
                                                 wire:loading.attr="disabled"
                                                 wire:target="profile_image">
                                             <span wire:loading.remove wire:target="profile_image">
-                                                <i class="fas fa-camera me-2"></i>Upload Photo
+                                                <i class="fa-solid fa-camera me-2"></i>Upload Photo
                                             </span>
                                             <span wire:loading wire:target="profile_image">
                                                 <span class="spinner-border spinner-border-sm me-2"></span>
@@ -56,7 +56,7 @@
                                     </div>
                                     @error('profile_image')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -67,7 +67,7 @@
                                     <label for="name" class="form-label fw-semibold">Full Name</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-user text-muted"></i>
+                                            <i class="fa-solid fa-user text-muted"></i>
                                         </span>
                                         <input type="text"
                                                id="name"
@@ -78,7 +78,7 @@
                                     </div>
                                     @error('name')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -87,7 +87,7 @@
                                     <label for="email" class="form-label fw-semibold">Email Address</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-envelope text-muted"></i>
+                                            <i class="fa-solid fa-envelope text-muted"></i>
                                         </span>
                                         <input type="email"
                                                id="email"
@@ -98,7 +98,7 @@
                                     </div>
                                     @error('email')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -109,7 +109,7 @@
                                     <label for="username" class="form-label fw-semibold">Username</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-at text-muted"></i>
+                                            <i class="fa-solid fa-at text-muted"></i>
                                         </span>
                                         <input type="text"
                                                id="username"
@@ -120,7 +120,7 @@
                                     </div>
                                     @error('username')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -129,7 +129,7 @@
                                     <label for="phone_number" class="form-label fw-semibold">Phone Number</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-phone text-muted"></i>
+                                            <i class="fa-solid fa-phone text-muted"></i>
                                         </span>
                                         <input type="tel"
                                                id="phone_number"
@@ -142,7 +142,7 @@
                                     <small class="text-muted">Format: 09XXXXXXXXX (11 digits)</small>
                                     @error('phone_number')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -153,7 +153,7 @@
                                     <label for="address" class="form-label fw-semibold">Address</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-home text-muted"></i>
+                                            <i class="fa-solid fa-home text-muted"></i>
                                         </span>
                                         <input type="text"
                                                id="address"
@@ -164,7 +164,7 @@
                                     </div>
                                     @error('address')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -173,7 +173,7 @@
                                     <label for="gender" class="form-label fw-semibold">Gender</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-venus-mars text-muted"></i>
+                                            <i class="fa-solid fa-venus-mars text-muted"></i>
                                         </span>
                                         <select id="gender"
                                                 class="form-select {{ $errors->has('gender') ? 'is-invalid' : '' }}"
@@ -186,7 +186,7 @@
                                     </div>
                                     @error('gender')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -197,7 +197,7 @@
                                     <label for="password" class="form-label fw-semibold">Password</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-lock text-muted"></i>
+                                            <i class="fa-solid fa-lock text-muted"></i>
                                         </span>
                                         <input type="password"
                                                id="password"
@@ -209,12 +209,12 @@
                                                 class="input-group-text bg-light"
                                                 onclick="togglePasswordVisibility()"
                                                 id="password-toggle">
-                                            <i id="password-toggle-icon" class="fas fa-eye-slash"></i>
+                                            <i id="password-toggle-icon" class="fa-solid fa-eye-slash"></i>
                                         </button>
                                     </div>
                                     @error('password')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                     @enderror
                                 </div>
@@ -223,7 +223,7 @@
                                     <label for="password_confirmation" class="form-label fw-semibold">Confirm Password</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light">
-                                            <i class="fas fa-lock text-muted"></i>
+                                            <i class="fa-solid fa-lock text-muted"></i>
                                         </span>
                                         <input type="password"
                                                id="password_confirmation"
@@ -235,7 +235,7 @@
                                                 class="input-group-text bg-light"
                                                 onclick="toggleConfirmPasswordVisibility()"
                                                 id="password-confirm-toggle">
-                                            <i id="password-confirm-toggle-icon" class="fas fa-eye-slash"></i>
+                                            <i id="password-confirm-toggle-icon" class="fa-solid fa-eye-slash"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                                         wire:loading.attr="disabled"
                                         wire:target="register">
                                     <span wire:loading.remove wire:target="register">
-                                        <i class="fas fa-user-plus me-2"></i>Create Account
+                                        <i class="fa-solid fa-user-plus me-2"></i>Create Account
                                     </span>
                                     <span wire:loading wire:target="register">
                                         <span class="spinner-border spinner-border-sm me-2"></span>
@@ -285,7 +285,7 @@
 
                 <div class="text-center mt-4">
                     <small class="text-muted">
-                        <i class="fas fa-shield-alt me-1"></i>
+                        <i class="fa-solid fa-shield-alt me-1"></i>
                         Your information is securely encrypted
                     </small>
                 </div>

@@ -24,7 +24,7 @@
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0">
-                                        <i class="fas fa-user text-muted"></i>
+                                        <i class="fa-solid fa-user text-muted"></i>
                                     </span>
                                     <input type="text"
                                            id="username_or_email"
@@ -35,7 +35,7 @@
                                 </div>
                                 @error('username_or_email')
                                 <div class="invalid-feedback d-block mt-2">
-                                    <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                 </div>
                                 @enderror
                             </div>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0">
-                                        <i class="fas fa-lock text-muted"></i>
+                                        <i class="fa-solid fa-lock text-muted"></i>
                                     </span>
                                     <input type="password"
                                            id="password"
@@ -64,12 +64,12 @@
                                             class="input-group-text bg-light border-start-0"
                                             onclick="togglePasswordVisibility()"
                                             id="password-toggle">
-                                        <i id="password-toggle-icon" class="fas fa-eye-slash"></i>
+                                        <i id="password-toggle-icon" class="fa-solid fa-eye-slash"></i>
                                     </button>
                                 </div>
                                 @error('password')
                                 <div class="invalid-feedback d-block mt-2">
-                                    <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                 </div>
                                 @enderror
                             </div>
@@ -126,7 +126,7 @@
 
                 <div class="text-center mt-4">
                     <small class="text-muted">
-                        <i class="fas fa-shield-alt me-1"></i>
+                        <i class="fa-solid fa-shield-alt me-1"></i>
                         Secure login with encryption
                     </small>
                 </div>

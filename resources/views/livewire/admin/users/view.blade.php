@@ -46,28 +46,28 @@
                             <div class="mt-3">
                                 <h3 class="mb-1 font-weight-bold">{{ $userView->name }}</h3>
                                 <p class="text-muted mb-2">
-                                    <i class="fas fa-envelope mr-1"></i>{{ $userView->email }}
+                                    <i class="fa-solid fa-envelope mr-1"></i>{{ $userView->email }}
                                 </p>
 
                                 <!-- Role Badges -->
                                 <div class="d-flex justify-content-center gap-2">
                                     @if ($userView->isAdmin())
                                         <span class="badge badge-info px-3 py-2">
-                                            <i class="fas fa-crown mr-1"></i> ADMINISTRATOR
+                                            <i class="fa-solid fa-crown mr-1"></i> ADMINISTRATOR
                                         </span>
                                     @else
                                         <span class="badge badge-warning px-3 py-2">
-                                            <i class="fas fa-user mr-1"></i> REGULAR USER
+                                            <i class="fa-solid fa-user mr-1"></i> REGULAR USER
                                         </span>
                                     @endif
 
                                     @if ($userView->email_verified_at)
                                         <span class="badge badge-success px-3 py-2">
-                                            <i class="fas fa-check-circle mr-1"></i> VERIFIED
+                                            <i class="fa-solid fa-check-circle mr-1"></i> VERIFIED
                                         </span>
                                     @else
                                         <span class="badge badge-danger px-3 py-2">
-                                            <i class="fas fa-times-circle mr-1"></i> UNVERIFIED
+                                            <i class="fa-solid fa-times-circle mr-1"></i> UNVERIFIED
                                         </span>
                                     @endif
                                 </div>
@@ -83,7 +83,7 @@
                                         class="list-group-item bg-transparent d-flex align-items-center px-3 py-3 border-bottom">
                                         <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-2 mr-3"
                                             style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-at text-primary"></i>
+                                            <i class="fa-solid fa-at text-primary"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <small class="text-muted d-block">Username</small>
@@ -97,7 +97,7 @@
                                         class="list-group-item bg-transparent d-flex align-items-center px-3 py-3 border-bottom">
                                         <div class="icon-wrapper bg-success bg-opacity-10 rounded-circle p-2 mr-3"
                                             style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-phone-alt text-success"></i>
+                                            <i class="fa-solid fa-phone-alt text-success"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <small class="text-muted d-block">Phone Number</small>
@@ -112,7 +112,7 @@
                                         <div class="icon-wrapper bg-info bg-opacity-10 rounded-circle p-2 mr-3"
                                             style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
                                             <i
-                                                class="fas fa-{{ $userView->gender === 'Male' ? 'mars' : 'venus' }} text-info"></i>
+                                                class="fa-solid fa-{{ $userView->gender === 'Male' ? 'mars' : 'venus' }} text-info"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <small class="text-muted d-block">Gender</small>
@@ -126,7 +126,7 @@
                                         class="list-group-item bg-transparent d-flex align-items-center px-3 py-3 border-bottom">
                                         <div class="icon-wrapper bg-warning bg-opacity-10 rounded-circle p-2 mr-3"
                                             style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-map-marker-alt text-warning"></i>
+                                            <i class="fa-solid fa-map-marker-alt text-warning"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <small class="text-muted d-block">Address</small>
@@ -139,7 +139,7 @@
                                     <div class="list-group-item bg-transparent d-flex align-items-center px-3 py-3">
                                         <div class="icon-wrapper bg-secondary bg-opacity-10 rounded-circle p-2 mr-3"
                                             style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-calendar-alt text-secondary"></i>
+                                            <i class="fa-solid fa-calendar-alt text-secondary"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <small class="text-muted d-block">Member Since</small>
@@ -158,7 +158,7 @@
                             <div class="col-6">
                                 <div class="card border-0 bg-primary bg-opacity-10 text-center py-2">
                                     <div class="card-body p-2">
-                                        <i class="fas fa-clock text-primary mb-1"></i>
+                                        <i class="fa-solid fa-clock text-primary mb-1"></i>
                                         <h6 class="mb-0 font-weight-bold text-light text-dark">Last Updated</h6>
                                         <small
                                             class="text-light text-dark">{{ $userView->updated_at ? $userView->updated_at->format('M d, Y') : 'N/A' }}</small>
@@ -168,7 +168,7 @@
                             <div class="col-6">
                                 <div class="card border-0 bg-success bg-opacity-10 text-center py-2">
                                     <div class="card-body p-2">
-                                        <i class="fas fa-id-card text-success mb-1"></i>
+                                        <i class="fa-solid fa-id-card text-success mb-1"></i>
                                         <h6 class="mb-0 font-weight-bold text-light text-dark">User ID</h6>
                                         <small class="text-light text-dark">#{{ $userView->id }}</small>
                                     </div>
@@ -228,7 +228,7 @@
                 <!-- Modal Footer with Action Buttons -->
                 <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
                     <button type="button" class="btn btn-secondary px-4" data-dismiss="modal">
-                        <i class="fas fa-times mr-2"></i>Close
+                        <i class="fa-solid fa-times mr-2"></i>Close
                     </button>
                 </div>
             </div>

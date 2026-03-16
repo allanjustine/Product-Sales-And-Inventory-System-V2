@@ -8,7 +8,7 @@
                         <div class="d-flex align-items-center w-100">
                             <div class="icon-wrapper rounded-circle p-2 me-3"
                                 id="checkoutModalIcon">
-                                <i class="fas fa-shopping-bag fa-lg"></i>
+                                <i class="fa-solid fa-shopping-bag fa-lg"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <h4 class="modal-title fw-bold mb-1" id="checkoutModalTitle">Checkout Confirmation</h4>
@@ -26,7 +26,7 @@
                                     id="checkoutAlert">
                                     <div class="d-flex align-items-center">
                                         <div class="alert-icon me-3" id="checkoutAlertIcon">
-                                            <i class="fas fa-question-circle fa-2x"></i>
+                                            <i class="fa-solid fa-question-circle fa-2x"></i>
                                         </div>
                                         <div>
                                             <h5 class="alert-heading mb-2 fw-bold" id="checkoutAlertTitle">Ready to
@@ -43,7 +43,7 @@
                                     <div class="d-flex align-items-center justify-content-between mb-3"
                                         id="checkoutItemsHeader">
                                         <h6 class="fw-bold mb-0" id="checkoutItemsTitle">
-                                            <i class="fas fa-boxes me-2 text-primary"></i>Order Summary
+                                            <i class="fa-solid fa-boxes me-2 text-primary"></i>Order Summary
                                         </h6>
                                         <div class="badge bg-primary bg-opacity-10 text-white border border-primary border-opacity-25 rounded-pill px-3 py-1"
                                             id="checkoutItemsBadge">
@@ -53,7 +53,7 @@
 
                                     <div class="text-center py-3" id="checkoutItemsContent">
                                         <div class="items-icon mb-3" id="checkoutItemsIcon">
-                                            <i class="fas fa-shopping-cart fa-3x text-primary opacity-75"></i>
+                                            <i class="fa-solid fa-shopping-cart fa-3x text-primary opacity-75"></i>
                                         </div>
                                         <h5 class="fw-bold mb-2" id="checkoutSelectedItems">Selected Items</h5>
                                         <p class="text-muted mb-0" id="checkoutSelectedCount">You have selected <strong
@@ -64,7 +64,7 @@
 
                                 <div class="checkout-details bg-light-subtle rounded-3 p-3" id="checkoutDetails">
                                     <div class="d-flex align-items-start mb-3" id="checkoutDetailsHeader">
-                                        <i class="fas fa-info-circle text-primary me-2 mt-1"
+                                        <i class="fa-solid fa-info-circle text-primary me-2 mt-1"
                                             id="checkoutDetailsIcon"></i>
                                         <div>
                                             <h6 class="fw-bold mb-1" id="checkoutDetailsTitle">Checkout Process</h6>
@@ -76,13 +76,13 @@
                                     </div>
                                     <div class="mt-3 pt-2 border-top" id="checkoutStepsInfo">
                                         <small class="text-muted d-block" id="checkoutStep1">
-                                            <i class="fas fa-check-circle text-success me-1"></i> Review order details
+                                            <i class="fa-solid fa-check-circle text-success me-1"></i> Review order details
                                         </small>
                                         <small class="text-muted d-block mt-2" id="checkoutStep2">
-                                            <i class="fas fa-credit-card text-primary me-1"></i> Proceed to checkout
+                                            <i class="fa-solid fa-credit-card text-primary me-1"></i> Proceed to checkout
                                         </small>
                                         <small class="text-muted d-block mt-2" id="checkoutStep3">
-                                            <i class="fas fa-truck text-info me-1"></i> Order processing begins
+                                            <i class="fa-solid fa-truck text-info me-1"></i> Order processing begins
                                         </small>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                                 type="button">
                                 <div class="d-flex align-items-center justify-content-center">
                                     <span wire:target='placeOrder' wire:loading.remove id="checkoutBtnText">
-                                        <i class="fas fa-check-circle me-2" id="checkoutBtnIcon"></i> Proceed to
+                                        <i class="fa-solid fa-check-circle me-2" id="checkoutBtnIcon"></i> Proceed to
                                         Checkout
                                     </span>
                                     <span wire:target='placeOrder' wire:loading id="checkoutProcessingText">
@@ -109,7 +109,7 @@
                             </button>
                             <button type="button" class="btn btn-outline-secondary btn-lg rounded-pill"
                                 id="checkoutCancelBtn" data-bs-dismiss="modal">
-                                <i class="fas fa-times me-2" id="checkoutCancelIcon"></i>Continue Shopping
+                                <i class="fa-solid fa-times me-2" id="checkoutCancelIcon"></i>Continue Shopping
                             </button>
                         </div>
                     </div>

@@ -7,7 +7,7 @@
                 <!-- Header with danger gradient -->
                 <div class="modal-header bg-gradient-danger text-white py-3 border-0">
                     <h5 class="modal-title font-weight-bold" id="deleteUserModalTitle">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>Confirm Deletion
+                        <i class="fa-solid fa-exclamation-triangle mr-2"></i>Confirm Deletion
                     </h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -20,7 +20,7 @@
                         <div class="mb-4">
                             <div class="warning-animation">
                                 <span class="danger-icon-wrapper">
-                                    <i class="fas fa-user-slash fa-4x text-danger"></i>
+                                    <i class="fa-solid fa-user-slash fa-4x text-danger"></i>
                                 </span>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
 
                         <div class="alert alert-danger bg-danger-soft border-0 rounded-lg mb-4">
                             <div class="d-flex align-items-center">
-                                <i class="fas fa-info-circle fa-2x mr-3 text-danger"></i>
+                                <i class="fa-solid fa-info-circle fa-2x mr-3 text-danger"></i>
                                 <div class="text-left">
                                     <p class="mb-1 font-weight-bold text-dark">This action cannot be undone.</p>
                                     <p class="mb-0 text-muted">
@@ -48,17 +48,17 @@
                                 <div class="row text-left small">
                                     <div class="col-6">
                                         <p class="mb-1"><i
-                                                class="fas fa-envelope text-muted mr-2"></i>{{ $userToDelete->email }}
+                                                class="fa-solid fa-envelope text-muted mr-2"></i>{{ $userToDelete->email }}
                                         </p>
-                                        <p class="mb-1"><i class="fas fa-tag text-muted mr-2"></i>ID:
+                                        <p class="mb-1"><i class="fa-solid fa-tag text-muted mr-2"></i>ID:
                                             #{{ $userToDelete->id }}</p>
                                     </div>
                                     <div class="col-6">
-                                        <p class="mb-1"><i class="fas fa-calendar text-muted mr-2"></i>Joined:
+                                        <p class="mb-1"><i class="fa-solid fa-calendar text-muted mr-2"></i>Joined:
                                             {{ $userToDelete->created_at ? $userToDelete->created_at->format('M d, Y') : 'N/A' }}
                                         </p>
                                         <p class="mb-1">
-                                            <i class="fas fa-shield-alt text-muted mr-2"></i>
+                                            <i class="fa-solid fa-shield-alt text-muted mr-2"></i>
                                             Role:
                                             @if ($userToDelete->isAdmin())
                                                 <span class="badge badge-info">ADMIN</span>
@@ -73,7 +73,7 @@
 
                         <!-- Additional Warning -->
                         <div class="text-muted small">
-                            <i class="fas fa-database mr-1"></i>
+                            <i class="fa-solid fa-database mr-1"></i>
                             This will remove all associated data and cannot be reversed.
                         </div>
                     @else
@@ -94,7 +94,7 @@
                         <!-- Cancel Button -->
                         <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal"
                             id="closeModalDelete">
-                            <i class="fas fa-arrow-left mr-2"></i> No, Cancel
+                            <i class="fa-solid fa-arrow-left mr-2"></i> No, Cancel
                         </button>
 
                         <!-- Delete Button with Loading State -->
@@ -102,7 +102,7 @@
                             wire:loading.attr="disabled" wire:target="deleteUser">
                             <!-- Loading State -->
                             <span wire:loading.remove wire:target="deleteUser">
-                                <i class="fas fa-trash-alt mr-2"></i> Yes, Delete Permanently
+                                <i class="fa-solid fa-trash-alt mr-2"></i> Yes, Delete Permanently
                             </span>
                             <span wire:loading wire:target="deleteUser">
                                 <span class="spinner-border spinner-border-sm mr-2" role="status"></span>

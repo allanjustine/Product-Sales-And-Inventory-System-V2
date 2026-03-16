@@ -7,7 +7,7 @@
                 <!-- Header with gradient and icon -->
                 <div class="modal-header bg-gradient-warning text-white py-3 border-0">
                     <h4 class="modal-title font-weight-bold" id="updateUserModalTitle">
-                        <i class="fas fa-user-edit mr-2"></i>Edit User Profile
+                        <i class="fa-solid fa-user-edit mr-2"></i>Edit User Profile
                     </h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -35,7 +35,7 @@
                                                     class="btn btn-danger btn-sm position-absolute rounded-circle"
                                                     style="top: 5px; right: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;"
                                                     title="Remove new image">
-                                                    <i class="fas fa-times"></i>
+                                                    <i class="fa-solid fa-times"></i>
                                                 </button>
                                             </div>
                                         @else
@@ -48,7 +48,7 @@
                                                 <span
                                                     class="position-absolute bg-secondary text-white px-2 py-1 rounded small"
                                                     style="bottom: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap;">
-                                                    <i class="fas fa-image mr-1"></i>Current
+                                                    <i class="fa-solid fa-image mr-1"></i>Current
                                                 </span>
                                             </div>
                                         @endif
@@ -69,19 +69,19 @@
                                                 class="custom-file-input @error('profile_image') is-invalid @enderror"
                                                 id="profile_image_update" wire:model.live="profile_image">
                                             <label class="custom-file-label text-truncate" for="profile_image_update">
-                                                <i class="fas fa-cloud-upload-alt mr-1"></i>
+                                                <i class="fa-solid fa-cloud-upload-alt mr-1"></i>
                                                 {{ $profile_image ? $profile_image->getClientOriginalName() : 'Choose new image...' }}
                                             </label>
                                         </div>
 
                                         @error('profile_image')
                                             <span class="text-danger small d-block">
-                                                <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle"></i> {{ $message }}
                                             </span>
                                         @enderror
 
                                         <small class="text-muted d-block mt-1">
-                                            <i class="fas fa-info-circle mr-1"></i>Allowed: JPG, JPEG, PNG, GIF (Max
+                                            <i class="fa-solid fa-info-circle mr-1"></i>Allowed: JPG, JPEG, PNG, GIF (Max
                                             2MB)
                                         </small>
                                     </div>
@@ -95,20 +95,20 @@
                                     <div class="card border-0 bg-light">
                                         <div class="card-body">
                                             <h6 class="card-title text-warning mb-3">
-                                                <i class="fas fa-id-card mr-2"></i>Account Information
+                                                <i class="fa-solid fa-id-card mr-2"></i>Account Information
                                             </h6>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="username-edit" class="font-weight-medium">
-                                                            <i class="fas fa-at text-warning mr-1"></i>Username
+                                                            <i class="fa-solid fa-at text-warning mr-1"></i>Username
                                                         </label>
                                                         <input type="text" class="form-control h-5" id="username-edit"
                                                             placeholder="Enter username" wire:model.live="username"
                                                             required>
                                                         @error('username')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -116,14 +116,14 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="email-edit" class="font-weight-medium">
-                                                            <i class="fas fa-envelope text-warning mr-1"></i>Email
+                                                            <i class="fa-solid fa-envelope text-warning mr-1"></i>Email
                                                             Address
                                                         </label>
                                                         <input type="email" class="form-control h-5" id="email-edit"
                                                             placeholder="Enter email" wire:model.live="email" required>
                                                         @error('email')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -138,20 +138,20 @@
                                     <div class="card border-0 bg-light">
                                         <div class="card-body">
                                             <h6 class="card-title text-warning mb-3">
-                                                <i class="fas fa-user-circle mr-2"></i>Personal Information
+                                                <i class="fa-solid fa-user-circle mr-2"></i>Personal Information
                                             </h6>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="name-edit" class="font-weight-medium">
-                                                            <i class="fas fa-user text-warning mr-1"></i>Full Name
+                                                            <i class="fa-solid fa-user text-warning mr-1"></i>Full Name
                                                         </label>
                                                         <input type="text" class="form-control h-5" id="name-edit"
                                                             placeholder="Enter full name" wire:model.live="name"
                                                             required>
                                                         @error('name')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -159,7 +159,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="gender-edit" class="font-weight-medium">
-                                                            <i class="fas fa-venus-mars text-warning mr-1"></i>Gender
+                                                            <i class="fa-solid fa-venus-mars text-warning mr-1"></i>Gender
                                                         </label>
                                                         <select class="form-control h-5" id="gender-edit"
                                                             wire:model.live="gender" required>
@@ -170,7 +170,7 @@
                                                         </select>
                                                         @error('gender')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -179,13 +179,13 @@
                                                     <div class="form-group">
                                                         <label for="address-edit" class="font-weight-medium">
                                                             <i
-                                                                class="fas fa-map-marker-alt text-warning mr-1"></i>Address
+                                                                class="fa-solid fa-map-marker-alt text-warning mr-1"></i>Address
                                                         </label>
                                                         <textarea class="form-control h-5" id="address-edit" rows="2" placeholder="Enter complete address"
                                                             wire:model.live="address" required></textarea>
                                                         @error('address')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -200,13 +200,13 @@
                                     <div class="card border-0 bg-light">
                                         <div class="card-body">
                                             <h6 class="card-title text-warning mb-3">
-                                                <i class="fas fa-address-card mr-2"></i>Contact & Role
+                                                <i class="fa-solid fa-address-card mr-2"></i>Contact & Role
                                             </h6>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="phone_number-edit" class="font-weight-medium">
-                                                            <i class="fas fa-phone-alt text-warning mr-1"></i>Phone
+                                                            <i class="fa-solid fa-phone-alt text-warning mr-1"></i>Phone
                                                             Number
                                                         </label>
                                                         <input type="tel" class="form-control h-5"
@@ -214,7 +214,7 @@
                                                             wire:model.live="phone_number" required>
                                                         @error('phone_number')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -222,7 +222,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="role-edit" class="font-weight-medium">
-                                                            <i class="fas fa-shield-alt text-warning mr-1"></i>User
+                                                            <i class="fa-solid fa-shield-alt text-warning mr-1"></i>User
                                                             Role
                                                         </label>
                                                         <select class="form-control h-5" id="role-edit"
@@ -237,7 +237,7 @@
                                                         </select>
                                                         @error('role')
                                                             <span class="text-danger small"><i
-                                                                    class="fas fa-exclamation-circle"></i>
+                                                                    class="fa-solid fa-exclamation-circle"></i>
                                                                 {{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -251,7 +251,7 @@
                             <!-- Form Footer Note -->
                             <div class="alert alert-warning alert-dismissible fade show mt-3 mb-0 py-2"
                                 role="alert">
-                                <i class="fas fa-info-circle mr-2"></i>
+                                <i class="fa-solid fa-info-circle mr-2"></i>
                                 <small>Fields marked with <span class="text-danger">*</span> are required</small>
                             </div>
                         </form>
@@ -273,13 +273,13 @@
                     <div class="w-100 d-flex justify-content-between align-items-center">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
                             id="closeModalUpdate">
-                            <i class="fas fa-times mr-1"></i> Cancel
+                            <i class="fa-solid fa-times mr-1"></i> Cancel
                         </button>
                         <button type="button" class="btn btn-warning px-4" wire:click="updateUser"
                             wire:loading.attr="disabled" wire:target="updateUser,profile_image">
                             <!-- Loading State -->
                             <span wire:loading.remove wire:target="updateUser">
-                                <i class="fas fa-save mr-2"></i> Update User
+                                <i class="fa-solid fa-save mr-2"></i> Update User
                             </span>
                             <span wire:loading wire:target="updateUser">
                                 <span class="spinner-border spinner-border-sm mr-2" role="status"></span>
@@ -519,7 +519,7 @@
             // Update custom file input label with selected filename
             $(document).on('change', '#profile_image_update', function() {
                 var fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').html('<i class="fas fa-cloud-upload-alt mr-1"></i>' +
+                $(this).next('.custom-file-label').html('<i class="fa-solid fa-cloud-upload-alt mr-1"></i>' +
                     fileName);
             });
         });

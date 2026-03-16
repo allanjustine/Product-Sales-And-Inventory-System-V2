@@ -6,7 +6,7 @@
                 <div class="modal-header bg-light border-bottom-0 rounded-top-3 p-4">
                     <div class="d-flex align-items-center gap-3">
                         <div class="rounded-circle p-2">
-                            <i class="fas fa-trash-alt text-danger"></i>
+                            <i class="fa-solid fa-trash-alt text-danger"></i>
                         </div>
                         <div>
                             <h5 class="modal-title fw-bold mb-1" id="removeFromCartModal">
@@ -22,7 +22,7 @@
                     @if ($cartItemToRemove)
                         <div class="text-center mb-4">
                             <div class="d-inline-flex p-3 rounded-circle bg-warning bg-opacity-10">
-                                <i class="fas fa-triangle-exclamation text-white" style="font-size: 3rem;"></i>
+                                <i class="fa-solid fa-triangle-exclamation text-white" style="font-size: 3rem;"></i>
                             </div>
                         </div>
 
@@ -68,13 +68,13 @@
                 <div class="modal-footer border-top-0 p-4 pt-0">
                     <div class="d-flex gap-2 w-100">
                         <button type="button" class="btn btn-outline-secondary flex-fill py-2" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-2"></i>Cancel
+                            <i class="fa-solid fa-times me-2"></i>Cancel
                         </button>
 
                         <button class="btn btn-danger flex-fill py-2" wire:click="removeItemToCart" type="button"
                             wire:target='removeItemToCart' wire:loading.attr='disabled' data-bs-dismiss="modal">
                             <span wire:target='removeItemToCart' wire:loading.remove>
-                                <i class="fas fa-trash-alt me-2"></i>Remove Item
+                                <i class="fa-solid fa-trash-alt me-2"></i>Remove Item
                             </span>
                             <span wire:target='removeItemToCart' wire:loading>
                                 <span class="spinner-border spinner-border-sm me-2"></span>

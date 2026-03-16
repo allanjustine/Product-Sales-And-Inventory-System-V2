@@ -7,7 +7,7 @@
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fas fa-box text-primary mr-2"></i>
+                <i class="fa-solid fa-box text-primary mr-2"></i>
                 Product Management
             </h3>
             <div class="card-tools">
@@ -232,7 +232,7 @@
                                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                                             type="button" id="dropdownMenuButton{{ $product->id }}"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-h"></i>
+                                            <i class="fa-solid fa-ellipsis-h"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right p-2">
                                             <a href="#" class="dropdown-item btn-view" data-bs-toggle="modal"

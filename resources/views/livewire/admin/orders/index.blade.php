@@ -4,7 +4,7 @@
         <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
             <div class="d-flex align-items-center">
                 <div class="alert-icon bg-success text-white rounded-circle p-2 mr-3">
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fa-solid fa-check-circle"></i>
                 </div>
                 <div class="flex-grow-1">
                     <strong class="font-weight-bold">Success!</strong> {{ session('success') }}
@@ -20,11 +20,11 @@
     <div class="card card-primary card-outline shadow-lg" id="product-table">
         <div class="card-header bg-gradient-primary text-white">
             <h5 class="card-title font-weight-bold mb-0">
-                <i class="fas fa-clipboard-list mr-2"></i>Order Management
+                <i class="fa-solid fa-clipboard-list mr-2"></i>Order Management
             </h5>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus text-white"></i>
+                    <i class="fa-solid fa-minus text-white"></i>
                 </button>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 <div class="col-md-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-search"></i></span>
                         </div>
                         <input type="search" class="form-control"
                             placeholder="Search by transaction code, buyer, product..."
@@ -126,7 +126,7 @@
                             <tr class="align-middle">
                                 <td>
                                     <span class="badge badge-light p-2 font-weight-bold">
-                                        <i class="fas fa-hashtag mr-1"></i>{{ $order->transaction_code }}
+                                        <i class="fa-solid fa-hashtag mr-1"></i>{{ $order->transaction_code }}
                                     </span>
                                 </td>
                                 <td>
@@ -181,13 +181,13 @@
                                 <td>
                                     <span class="badge badge-light">
                                         <i
-                                            class="fas fa-{{ $order->order_payment_method === 'Cash on Delivery' ? 'truck' : 'credit-card' }} mr-1"></i>
+                                            class="fa-solid fa-{{ $order->order_payment_method === 'Cash on Delivery' ? 'truck' : 'credit-card' }} mr-1"></i>
                                         {{ $order->order_payment_method }}
                                     </span>
                                 </td>
                                 <td>
                                     <span data-toggle="tooltip" title="{{ $order->user->user_location }}">
-                                        <i class="fas fa-map-marker-alt text-danger mr-1"></i>
+                                        <i class="fa-solid fa-map-marker-alt text-danger mr-1"></i>
                                         {{ Str::limit($order->user->user_location, 15) }}
                                     </span>
                                 </td>
@@ -276,7 +276,7 @@
                             <tr>
                                 <td colspan="13" class="text-center py-5">
                                     <div class="empty-state">
-                                        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+                                        <i class="fa-solid fa-shopping-cart fa-4x text-muted mb-3"></i>
                                         @if (!empty($search))
                                             <h6>No orders found for "{{ $search }}"</h6>
                                             <p class="text-muted">Try adjusting your search criteria</p>

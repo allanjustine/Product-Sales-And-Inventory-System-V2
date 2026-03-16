@@ -138,7 +138,7 @@
                                                             @if ($i <= $productView->averageRatings())
                                                                 <i class="fa-solid fa-star text-warning"></i>
                                                             @else
-                                                                <i class="far fa-star text-secondary"></i>
+                                                                <i class="fa-regular fa-star text-secondary"></i>
                                                             @endif
                                                         @endfor
                                                     </div>
@@ -321,7 +321,7 @@
                                                             wire:click='removeToFavorite({{ $productView->favorites()->where('product_id', $productView->id)->where('user_id', auth()->user()->id)->first()->id }})'
                                                             class="btn btn-outline-danger btn-lg w-100 rounded-pill"
                                                             id="remove-to-wishlist">
-                                                            <i class="far fa-heart me-2"></i> Remove to Wishlist
+                                                            <i class="fa-regular fa-heart me-2"></i> Remove to Wishlist
                                                         </button>
                                                     @else
                                                         <button type="button" wire:loading.attr='disabled'
@@ -329,7 +329,7 @@
                                                             wire:click='addToFavorite({{ $productView->id }})'
                                                             class="btn btn-outline-primary btn-lg w-100 rounded-pill"
                                                             id="add-to-wishlist">
-                                                            <i class="far fa-heart me-2"></i> Add to Wishlist
+                                                            <i class="fa-regular fa-heart me-2"></i> Add to Wishlist
                                                         </button>
                                                     @endif
                                                 </div>

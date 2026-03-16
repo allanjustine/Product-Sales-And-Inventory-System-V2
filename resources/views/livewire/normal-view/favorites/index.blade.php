@@ -13,12 +13,12 @@
             @empty
                 <div class="text-center py-5">
                     <div class="mb-4">
-                        <i class="fas fa-heart text-muted" style="font-size: 80px;"></i>
+                        <i class="fa-solid fa-heart text-muted" style="font-size: 80px;"></i>
                     </div>
                     <h3 class="text-muted mb-3">Your favorites is empty</h3>
                     <p class="text-muted mb-4">Add some products to get started with your shopping</p>
                     <a wire:navigate href="/products" class="btn btn-primary btn-lg px-4">
-                        <i class="fas fa-shopping-bag me-2"></i>Browse Products
+                        <i class="fa-solid fa-shopping-bag me-2"></i>Browse Products
                     </a>
                 </div>
             @endforelse

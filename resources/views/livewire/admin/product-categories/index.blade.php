@@ -6,7 +6,7 @@
     <div class="card card-primary card-outline" id="category-table">
         <div class="card-header bg-white">
             <h3 class="card-title">
-                <i class="fas fa-tags text-primary mr-2"></i>
+                <i class="fa-solid fa-tags text-primary mr-2"></i>
                 Product Categories
             </h3>
         </div>
@@ -90,7 +90,7 @@
                                         <span class="badge badge-pill badge-primary py-2 px-3"
                                             id="dropdownMenuButton{{ $product_category->id }}" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                                            <i class="fas fa-ellipsis-h"></i>
+                                            <i class="fa-solid fa-ellipsis-h"></i>
                                         </span>
                                         <div class="dropdown-menu dropdown-menu-right p-2"
                                             aria-labelledby="dropdownMenuButton{{ $product_category->id }}">

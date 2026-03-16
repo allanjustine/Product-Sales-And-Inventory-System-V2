@@ -5,7 +5,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <div class="hero-icon mb-4">
-                        <i class="fas fa-comments fa-4x text-primary"></i>
+                        <i class="fa-solid fa-comments fa-4x text-primary"></i>
                     </div>
                     <h1 class="display-5 fw-bold mb-3">Share Your Feedback</h1>
                     <div class="divider mx-auto mb-4"></div>
@@ -27,7 +27,7 @@
                     <div class="card-header bg-primary text-white py-4">
                         <div class="d-flex align-items-center">
                             <div class="icon-circle bg-white text-primary me-3">
-                                <i class="fas fa-pen-fancy fa-lg"></i>
+                                <i class="fa-solid fa-pen-fancy fa-lg"></i>
                             </div>
                             <div>
                                 <h4 class="fw-bold mb-1">Share Your Thoughts</h4>
@@ -44,11 +44,11 @@
                             <!-- Name Field -->
                             <div class="mb-4">
                                 <label for="name" class="form-label fw-semibold mb-2">
-                                    <i class="fas fa-user me-2 text-primary"></i>Your Name
+                                    <i class="fa-solid fa-user me-2 text-primary"></i>Your Name
                                 </label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text bg-light border-end-0">
-                                        <i class="fas fa-user text-muted"></i>
+                                        <i class="fa-solid fa-user text-muted"></i>
                                     </span>
                                     <input type="text"
                                         class="form-control border-start-0 ps-0 h-auto {{ $errors->has('name') ? 'is-invalid' : '' }}"
@@ -56,19 +56,19 @@
                                         @if (auth()->check()) readonly @endif>
                                     @if (auth()->check())
                                         <span class="input-group-text bg-light border-start-0">
-                                            <i class="fas fa-lock text-success"
+                                            <i class="fa-solid fa-lock text-success"
                                                 title="Auto-filled from your account"></i>
                                         </span>
                                     @endif
                                 </div>
                                 @error('name')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
                                 @if (auth()->check())
                                     <small class="text-muted mt-1 d-block">
-                                        <i class="fas fa-info-circle me-1"></i>Automatically filled from your profile
+                                        <i class="fa-solid fa-info-circle me-1"></i>Automatically filled from your profile
                                     </small>
                                 @endif
                             </div>
@@ -76,11 +76,11 @@
                             <!-- Email Field -->
                             <div class="mb-4">
                                 <label for="email" class="form-label fw-semibold mb-2">
-                                    <i class="fas fa-envelope me-2 text-primary"></i>Email Address
+                                    <i class="fa-solid fa-envelope me-2 text-primary"></i>Email Address
                                 </label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text bg-light border-end-0">
-                                        <i class="fas fa-envelope text-muted"></i>
+                                        <i class="fa-solid fa-envelope text-muted"></i>
                                     </span>
                                     <input type="email"
                                         class="form-control border-start-0 ps-0 h-auto {{ $errors->has('email') ? 'is-invalid' : '' }}"
@@ -88,25 +88,25 @@
                                         @if (auth()->check()) readonly @endif>
                                     @if (auth()->check())
                                         <span class="input-group-text bg-light border-start-0">
-                                            <i class="fas fa-lock text-success"
+                                            <i class="fa-solid fa-lock text-success"
                                                 title="Auto-filled from your account"></i>
                                         </span>
                                     @endif
                                 </div>
                                 @error('email')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
                                 <small class="text-muted mt-1 d-block">
-                                    <i class="fas fa-shield-alt me-1"></i>We'll never share your email with anyone else
+                                    <i class="fa-solid fa-shield-alt me-1"></i>We'll never share your email with anyone else
                                 </small>
                             </div>
 
                             <!-- Message Field -->
                             <div class="mb-5">
                                 <label for="message" class="form-label fw-semibold mb-2">
-                                    <i class="fas fa-comment-dots me-2 text-primary"></i>Your Message
+                                    <i class="fa-solid fa-comment-dots me-2 text-primary"></i>Your Message
                                 </label>
                                 <div class="position-relative">
                                     <textarea class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" id="message" rows="6"
@@ -117,12 +117,12 @@
                                 </div>
                                 @error('message')
                                     <div class="invalid-feedback d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
                                 <div class="d-flex justify-content-between mt-2">
                                     <small class="text-muted">
-                                        <i class="fas fa-lightbulb me-1"></i>Be specific for better assistance
+                                        <i class="fa-solid fa-lightbulb me-1"></i>Be specific for better assistance
                                     </small>
                                     <small class="text-muted">Maximum 1000 characters</small>
                                 </div>
@@ -133,7 +133,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg py-3 fw-semibold"
                                     wire:loading.attr="disabled" wire:target="submit">
                                     <span wire:loading.remove wire:target="submit">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Feedback
+                                        <i class="fa-solid fa-paper-plane me-2"></i>Send Feedback
                                     </span>
                                     <span wire:loading wire:target="submit">
                                         <span class="spinner-border spinner-border-sm me-2"></span>

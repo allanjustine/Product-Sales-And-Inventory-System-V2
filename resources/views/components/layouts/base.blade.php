@@ -22,15 +22,11 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.13/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://adminlte.io/docs/3.2/assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet"
@@ -123,7 +119,7 @@
                     <div class="mb-4">
                         <div class="d-flex align-items-center mb-3">
                             <div class="company-icon bg-primary rounded-circle p-2 me-3">
-                                <i class="fas fa-building fa-lg"></i>
+                                <i class="fa-solid fa-building fa-lg"></i>
                             </div>
                             <h4 class="fw-bold mb-0">AJM Company</h4>
                         </div>
@@ -136,7 +132,7 @@
                         <div
                             class="company-tagline bg-primary bg-opacity-10 border-start border-primary border-4 ps-3 py-2 rounded-end">
                             <small class="text-white fw-semibold">
-                                <i class="fas fa-star fa-xs me-1"></i> Excellence in Every Detail
+                                <i class="fa-solid fa-star fa-xs me-1"></i> Excellence in Every Detail
                             </small>
                         </div>
                     </div>
@@ -146,14 +142,14 @@
                 <div class="col-lg-4">
                     <div class="mb-4">
                         <h5 class="fw-bold mb-4 border-bottom border-secondary pb-2 d-inline-block">
-                            <i class="fas fa-headset me-2"></i>Contact Us
+                            <i class="fa-solid fa-headset me-2"></i>Contact Us
                         </h5>
 
                         <div class="contact-list">
                             <div class="contact-item d-flex mb-3">
                                 <div
                                     class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                                    <i class="fas fa-location-dot text-white"></i>
+                                    <i class="fa-solid fa-location-dot text-white"></i>
                                 </div>
                                 <div>
                                     <h6 class="mb-1 fw-semibold">Address</h6>
@@ -164,7 +160,7 @@
                             <div class="contact-item d-flex mb-3">
                                 <div
                                     class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                                    <i class="fas fa-phone text-white"></i>
+                                    <i class="fa-solid fa-phone text-white"></i>
                                 </div>
                                 <div>
                                     <h6 class="mb-1 fw-semibold">Phone</h6>
@@ -175,7 +171,7 @@
                             <div class="contact-item d-flex">
                                 <div
                                     class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                                    <i class="fas fa-envelope text-white"></i>
+                                    <i class="fa-solid fa-envelope text-white"></i>
                                 </div>
                                 <div>
                                     <h6 class="mb-1 fw-semibold">Email</h6>
@@ -189,7 +185,7 @@
                 <div class="col-lg-4">
                     <div class="mb-5">
                         <h5 class="fw-bold mb-4 border-bottom border-secondary pb-2 d-inline-block">
-                            <i class="fas fa-share-alt me-2"></i>Follow Us
+                            <i class="fa-solid fa-share-alt me-2"></i>Follow Us
                         </h5>
 
                         <div class="social-links d-flex justify-content-lg-start justify-content-center">
@@ -225,7 +221,7 @@
 
                     <div class="time-card bg-dark bg-gradient border border-secondary rounded-3 p-3 text-center">
                         <div class="time-header mb-2">
-                            <i class="fas fa-clock me-2 text-primary"></i>
+                            <i class="fa-solid fa-clock me-2 text-primary"></i>
                             <small class="text-uppercase text-primary fw-semibold">Live Time</small>
                         </div>
                         <div class="time-display">
@@ -236,7 +232,7 @@
                                 <span id="time" class="h5 fw-bold text-primary"></span>
                             </div>
                             <div class="timezone small text-white mt-1">
-                                <i class="fas fa-globe-asia me-1"></i> Philippine Standard Time
+                                <i class="fa-solid fa-globe-asia me-1"></i> Philippine Standard Time
                             </div>
                         </div>
                     </div>
@@ -268,7 +264,7 @@
 
 <div class="back-to-top">
     <button type="button" id="button" onclick="backToTop()" class="btn">
-        <i class="fas fa-arrow-up"></i>
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
 </div>
 <script>

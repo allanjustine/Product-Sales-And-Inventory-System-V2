@@ -3,12 +3,12 @@
     <div class="card card-primary card-outline shadow-lg">
         <div class="card-header bg-gradient-primary text-white">
             <h5 class="card-title font-weight-bold mb-0">
-                <i class="fas fa-palette mr-2"></i>Sizes & Colors Management
+                <i class="fa-solid fa-palette mr-2"></i>Sizes & Colors Management
             </h5>
             <div class="card-tools">
                 <a href="/admin/products" wire:navigate class="btn btn-link"><i class="fa-solid fa-arrow-left text-white"></i></a>
                 <button type="button" class="btn btn-tool" data-card-widget="refresh" wire:click="$refresh">
-                    <i class="fas fa-sync-alt text-white"></i>
+                    <i class="fa-solid fa-sync-alt text-white"></i>
                 </button>
             </div>
         </div>
@@ -16,7 +16,7 @@
         <div class="card-body">
             <!-- Product Info Banner -->
             <div class="alert alert-info alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
-                <i class="fas fa-box-open fa-2x mr-3"></i>
+                <i class="fa-solid fa-box-open fa-2x mr-3"></i>
                 <div>
                     <strong class="font-weight-bold">Managing variations for:</strong>
                     <span class="product-name-badge">{{ $this->product->product_name }}</span>
@@ -33,7 +33,7 @@
                     <div class="card card-outline card-primary h-100 border-primary">
                         <div class="card-header bg-primary text-white py-3">
                             <h6 class="card-title font-weight-bold mb-0">
-                                <i class="fas fa-ruler mr-2"></i>Size Management
+                                <i class="fa-solid fa-ruler mr-2"></i>Size Management
                             </h6>
                             <div class="card-tools">
                                 <span class="badge badge-light">{{ count($this->product->productSizes) }} items</span>
@@ -45,7 +45,7 @@
                             @if (count($this->product->productSizes) > 0)
                                 <div class="sizes-container mb-4">
                                     <label class="font-weight-medium text-muted mb-2">
-                                        <i class="fas fa-list mr-1"></i>Current Sizes
+                                        <i class="fa-solid fa-list mr-1"></i>Current Sizes
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-sm table-hover">
@@ -66,7 +66,7 @@
                                                             <span
                                                                 class="stock-badge stock-{{ $size->stock > 0 ? 'available' : 'low' }}">
                                                                 <i
-                                                                    class="fas fa-{{ $size->stock > 0 ? 'check-circle' : 'exclamation-circle' }} mr-1"></i>
+                                                                    class="fa-solid fa-{{ $size->stock > 0 ? 'check-circle' : 'exclamation-circle' }} mr-1"></i>
                                                                 {{ number_format($size->stock) }} units
                                                             </span>
                                                         </td>
@@ -75,13 +75,13 @@
                                                                 <button type="button" class="btn btn-outline-primary"
                                                                     wire:click='editSize({{ $size->id }})'
                                                                     title="Edit size">
-                                                                    <i class="fas fa-edit"></i>
+                                                                    <i class="fa-solid fa-edit"></i>
                                                                 </button>
                                                                 <button type="button" class="btn btn-outline-danger"
                                                                     wire:click='removeSize({{ $size->id }})'
                                                                     title="Delete size"
                                                                     onclick="return confirm('Are you sure you want to delete this size?')">
-                                                                    <i class="fas fa-trash"></i>
+                                                                    <i class="fa-solid fa-trash"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
@@ -93,7 +93,7 @@
                                 </div>
                             @else
                                 <div class="empty-state-mini text-center py-4 mb-4">
-                                    <i class="fas fa-ruler fa-3x text-muted mb-3"></i>
+                                    <i class="fa-solid fa-ruler fa-3x text-muted mb-3"></i>
                                     <h6 class="text-muted">No Sizes Added Yet</h6>
                                     <p class="small text-muted">Add sizes below to manage inventory</p>
                                 </div>
@@ -102,7 +102,7 @@
                             <!-- Add/Edit Size Form -->
                             <div class="size-form-container border-top pt-4">
                                 <h6 class="font-weight-bold text-primary mb-3">
-                                    <i class="fas fa-{{ $this->is_edit_size ? 'edit' : 'plus-circle' }} mr-2"></i>
+                                    <i class="fa-solid fa-{{ $this->is_edit_size ? 'edit' : 'plus-circle' }} mr-2"></i>
                                     {{ $this->is_edit_size ? 'Edit Size' : 'Add New Size' }}
                                 </h6>
 
@@ -110,7 +110,7 @@
                                     <label for="size_name" class="font-weight-medium">Size Name</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                            <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
                                         </div>
                                         <input type="text" id="size_name"
                                             class="form-control @error('size_name') is-invalid @enderror"
@@ -118,7 +118,7 @@
                                     </div>
                                     @error('size_name')
                                         <small class="text-danger"><i
-                                                class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</small>
+                                                class="fa-solid fa-exclamation-circle mr-1"></i>{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -126,7 +126,7 @@
                                     <label for="size_stock" class="font-weight-medium">Stock Quantity</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                            <span class="input-group-text"><i class="fa-solid fa-cubes"></i></span>
                                         </div>
                                         <input type="number" id="size_stock"
                                             class="form-control @error('size_stock') is-invalid @enderror"
@@ -134,7 +134,7 @@
                                     </div>
                                     @error('size_stock')
                                         <small class="text-danger"><i
-                                                class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</small>
+                                                class="fa-solid fa-exclamation-circle mr-1"></i>{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -145,7 +145,7 @@
                                         wire:target="{{ $this->is_edit_size ? 'updateSize' : 'submitSize' }}">
                                         <span wire:loading.remove
                                             wire:target="{{ $this->is_edit_size ? 'updateSize' : 'submitSize' }}">
-                                            <i class="fas fa-{{ $this->is_edit_size ? 'save' : 'plus' }} mr-2"></i>
+                                            <i class="fa-solid fa-{{ $this->is_edit_size ? 'save' : 'plus' }} mr-2"></i>
                                             {{ $this->is_edit_size ? 'Update Size' : 'Add Size' }}
                                         </span>
                                         <span wire:loading
@@ -158,7 +158,7 @@
                                     @if ($this->is_edit_size)
                                         <button type="button" class="btn btn-outline-secondary"
                                             wire:click="cancelSizeEdit">
-                                            <i class="fas fa-times"></i>
+                                            <i class="fa-solid fa-times"></i>
                                         </button>
                                     @endif
                                 </div>
@@ -172,7 +172,7 @@
                     <div class="card card-outline card-danger h-100 border-danger">
                         <div class="card-header bg-danger text-white py-3">
                             <h6 class="card-title font-weight-bold mb-0">
-                                <i class="fas fa-palette mr-2"></i>Color Management
+                                <i class="fa-solid fa-palette mr-2"></i>Color Management
                             </h6>
                             <div class="card-tools">
                                 <span class="badge badge-light">{{ count($this->product->productColors) }}
@@ -185,7 +185,7 @@
                             @if (count($this->product->productColors) > 0)
                                 <div class="colors-container mb-4">
                                     <label class="font-weight-medium text-muted mb-2">
-                                        <i class="fas fa-list mr-1"></i>Current Colors
+                                        <i class="fa-solid fa-list mr-1"></i>Current Colors
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-sm table-hover">
@@ -210,7 +210,7 @@
                                                             <span
                                                                 class="stock-badge stock-{{ $color->stock > 0 ? 'available' : 'low' }}">
                                                                 <i
-                                                                    class="fas fa-{{ $color->stock > 0 ? 'check-circle' : 'exclamation-circle' }} mr-1"></i>
+                                                                    class="fa-solid fa-{{ $color->stock > 0 ? 'check-circle' : 'exclamation-circle' }} mr-1"></i>
                                                                 {{ number_format($color->stock) }} units
                                                             </span>
                                                         </td>
@@ -219,13 +219,13 @@
                                                                 <button type="button" class="btn btn-outline-primary"
                                                                     wire:click='editColor({{ $color->id }})'
                                                                     title="Edit color">
-                                                                    <i class="fas fa-edit"></i>
+                                                                    <i class="fa-solid fa-edit"></i>
                                                                 </button>
                                                                 <button type="button" class="btn btn-outline-danger"
                                                                     wire:click='removeColor({{ $color->id }})'
                                                                     title="Delete color"
                                                                     wire:confirm="Are you sure you want to delete this color?">
-                                                                    <i class="fas fa-trash"></i>
+                                                                    <i class="fa-solid fa-trash"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
@@ -237,7 +237,7 @@
                                 </div>
                             @else
                                 <div class="empty-state-mini text-center py-4 mb-4">
-                                    <i class="fas fa-palette fa-3x text-muted mb-3"></i>
+                                    <i class="fa-solid fa-palette fa-3x text-muted mb-3"></i>
                                     <h6 class="text-muted">No Colors Added Yet</h6>
                                     <p class="small text-muted">Add colors below to manage inventory</p>
                                 </div>
@@ -246,7 +246,7 @@
                             <!-- Add/Edit Color Form -->
                             <div class="color-form-container border-top pt-4">
                                 <h6 class="font-weight-bold text-danger mb-3">
-                                    <i class="fas fa-{{ $this->is_edit_color ? 'edit' : 'plus-circle' }} mr-2"></i>
+                                    <i class="fa-solid fa-{{ $this->is_edit_color ? 'edit' : 'plus-circle' }} mr-2"></i>
                                     {{ $this->is_edit_color ? 'Edit Color' : 'Add New Color' }}
                                 </h6>
 
@@ -254,7 +254,7 @@
                                     <label for="color_name" class="font-weight-medium">Color Name</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                            <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
                                         </div>
                                         <input type="text" id="color_name"
                                             class="form-control @error('color_name') is-invalid @enderror"
@@ -262,7 +262,7 @@
                                     </div>
                                     @error('color_name')
                                         <small class="text-danger"><i
-                                                class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</small>
+                                                class="fa-solid fa-exclamation-circle mr-1"></i>{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -281,7 +281,7 @@
                                     <label for="color_stock" class="font-weight-medium">Stock Quantity</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                            <span class="input-group-text"><i class="fa-solid fa-cubes"></i></span>
                                         </div>
                                         <input type="number" id="color_stock"
                                             class="form-control @error('color_stock') is-invalid @enderror"
@@ -290,7 +290,7 @@
                                     </div>
                                     @error('color_stock')
                                         <small class="text-danger"><i
-                                                class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</small>
+                                                class="fa-solid fa-exclamation-circle mr-1"></i>{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -301,7 +301,7 @@
                                         wire:target="{{ $this->is_edit_color ? 'updateColor' : 'submitColor' }}">
                                         <span wire:loading.remove
                                             wire:target="{{ $this->is_edit_color ? 'updateColor' : 'submitColor' }}">
-                                            <i class="fas fa-{{ $this->is_edit_color ? 'save' : 'plus' }} mr-2"></i>
+                                            <i class="fa-solid fa-{{ $this->is_edit_color ? 'save' : 'plus' }} mr-2"></i>
                                             {{ $this->is_edit_color ? 'Update Color' : 'Add Color' }}
                                         </span>
                                         <span wire:loading
@@ -314,7 +314,7 @@
                                     @if ($this->is_edit_color)
                                         <button type="button" class="btn btn-outline-secondary"
                                             wire:click="cancelColorEdit">
-                                            <i class="fas fa-times"></i>
+                                            <i class="fa-solid fa-times"></i>
                                         </button>
                                     @endif
                                 </div>
@@ -331,7 +331,7 @@
                         <div class="card-body py-2">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <i class="fas fa-info-circle text-primary mr-1"></i>
+                                    <i class="fa-solid fa-info-circle text-primary mr-1"></i>
                                     <small class="text-muted">
                                         Total Variations:
                                         <span
@@ -342,7 +342,7 @@
                                 </div>
                                 <div>
                                     <small class="text-muted">
-                                        <i class="fas fa-cubes mr-1"></i>
+                                        <i class="fa-solid fa-cubes mr-1"></i>
                                         Total Stock:
                                         <span class="font-weight-bold">
                                             {{ $this->product->productSizes->sum('stock') + $this->product->productColors->sum('stock') }}

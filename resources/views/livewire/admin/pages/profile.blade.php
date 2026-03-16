@@ -52,7 +52,7 @@
                                         <div class="profile-image-overlay rounded-circle">
                                             <label for="profile_image"
                                                 class="profile-upload-label btn btn-primary btn-sm rounded-pill shadow-sm">
-                                                <i class="fas fa-camera me-1"></i>
+                                                <i class="fa-solid fa-camera me-1"></i>
                                                 <span class="d-none d-sm-inline">Change</span>
                                             </label>
                                         </div>
@@ -86,22 +86,22 @@
                                 <h3 class="h2 fw-bold mb-2">
                                     {{ $user->name }}
                                     @if (auth()->user()->email_verified_at)
-                                        <i class="fas fa-badge-check text-primary ms-2" style="font-size: 1.25rem;"></i>
+                                        <i class="fa-solid fa-badge-check text-primary ms-2" style="font-size: 1.25rem;"></i>
                                     @endif
                                 </h3>
 
                                 <span class="badge bg-primary bg-gradient rounded-pill px-3 py-2 mb-3">
                                     @if ($user->isAdmin())
-                                        <i class="fas fa-shield-alt me-2"></i>Administrator
+                                        <i class="fa-solid fa-shield-alt me-2"></i>Administrator
                                     @else
-                                        <i class="fas fa-user me-2"></i>User
+                                        <i class="fa-solid fa-user me-2"></i>User
                                     @endif
                                 </span>
                             </div>
 
                             <div class="profile-details mt-5">
                                 <h5 class="fw-bold text-uppercase text-muted mb-4">
-                                    <i class="fas fa-id-card me-2"></i>Profile Information
+                                    <i class="fa-solid fa-id-card me-2"></i>Profile Information
                                 </h5>
 
                                 <div class="row g-4">
@@ -111,7 +111,7 @@
                                                 <div class="d-flex align-items-start">
                                                     <div
                                                         class="icon-wrapper bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                                        <i class="fas fa-map-marker-alt text-white fs-5"></i>
+                                                        <i class="fa-solid fa-map-marker-alt text-white fs-5"></i>
                                                     </div>
                                                     <div>
                                                         <h6 class="fw-semibold text-muted mb-2">Address</h6>
@@ -129,7 +129,7 @@
                                                 <div class="d-flex align-items-start">
                                                     <div
                                                         class="icon-wrapper bg-info bg-opacity-10 p-3 rounded-circle me-3">
-                                                        <i class="fas fa-envelope text-white fs-5"></i>
+                                                        <i class="fa-solid fa-envelope text-white fs-5"></i>
                                                     </div>
                                                     <div>
                                                         <h6 class="fw-semibold text-muted mb-2">Email</h6>
@@ -146,7 +146,7 @@
                                                 <div class="d-flex align-items-start">
                                                     <div
                                                         class="icon-wrapper bg-success bg-opacity-10 p-3 rounded-circle me-3">
-                                                        <i class="fas fa-phone text-white fs-5"></i>
+                                                        <i class="fa-solid fa-phone text-white fs-5"></i>
                                                     </div>
                                                     <div>
                                                         <h6 class="fw-semibold text-muted mb-2">Phone</h6>
@@ -165,9 +165,9 @@
                                                     <div
                                                         class="icon-wrapper bg-warning bg-opacity-10 p-3 rounded-circle me-3">
                                                         @if ($user->gender === 'Male')
-                                                            <i class="fas fa-mars text-white fs-5"></i>
+                                                            <i class="fa-solid fa-mars text-white fs-5"></i>
                                                         @else
-                                                            <i class="fas fa-venus text-white fs-5"></i>
+                                                            <i class="fa-solid fa-venus text-white fs-5"></i>
                                                         @endif
                                                     </div>
                                                     <div>
@@ -194,7 +194,7 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center">
                                     <div class="icon-wrapper rounded-circle p-2 me-3">
-                                        <i class="fas fa-user-circle fa-lg"></i>
+                                        <i class="fa-solid fa-user-circle fa-lg"></i>
                                     </div>
                                     <div>
                                         <h3 class="card-title mb-0 fw-bold">About Me</h3>
@@ -209,7 +209,7 @@
                                         <span class="spinner-border spinner-border-sm me-2"></span>Saving...
                                     </span>
                                     <span wire:loading.remove wire:target="updateProfile">
-                                        <i class="fas fa-save me-2"></i>Save Changes
+                                        <i class="fa-solid fa-save me-2"></i>Save Changes
                                     </span>
                                 </button>
                             </div>
@@ -222,7 +222,7 @@
                                     <div class="col-12">
                                         <div class="section-header mb-4">
                                             <h5 class="fw-semibold text-primary mb-3">
-                                                <i class="fas fa-id-card me-2"></i>Personal Information
+                                                <i class="fa-solid fa-id-card me-2"></i>Personal Information
                                             </h5>
                                         </div>
                                     </div>
@@ -233,12 +233,12 @@
                                                 id="inputName" name="name" placeholder="Full Name"
                                                 wire:model.live.debounce.200ms="name" required>
                                             <label for="inputName" class="text-muted">
-                                                <i class="fas fa-user me-2"></i>Full Name
+                                                <i class="fa-solid fa-user me-2"></i>Full Name
                                             </label>
                                         </div>
                                         @error('name')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -249,12 +249,12 @@
                                                 id="username" name="username" placeholder="Username"
                                                 wire:model.live.debounce.200ms="username" required>
                                             <label for="username" class="text-muted">
-                                                <i class="fas fa-at me-2"></i>Username
+                                                <i class="fa-solid fa-at me-2"></i>Username
                                             </label>
                                         </div>
                                         @error('username')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -265,12 +265,12 @@
                                                 id="inputAddress" name="address" placeholder="Home Address"
                                                 wire:model.live.debounce.200ms="address" required>
                                             <label for="inputAddress" class="text-muted">
-                                                <i class="fas fa-home me-2"></i>Home Address
+                                                <i class="fa-solid fa-home me-2"></i>Home Address
                                             </label>
                                         </div>
                                         @error('address')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -282,12 +282,12 @@
                                                 placeholder="Delivery Address"
                                                 wire:model.live.debounce.200ms="user_location" required>
                                             <label for="inputUser_location" class="text-muted">
-                                                <i class="fas fa-truck me-2"></i>Delivery Address
+                                                <i class="fa-solid fa-truck me-2"></i>Delivery Address
                                             </label>
                                         </div>
                                         @error('user_location')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -298,12 +298,12 @@
                                                 name="phone" id="inputPhone" placeholder="Phone Number"
                                                 wire:model.live.debounce.200ms="phone_number" required>
                                             <label for="inputPhone" class="text-muted">
-                                                <i class="fas fa-phone me-2"></i>Phone Number
+                                                <i class="fa-solid fa-phone me-2"></i>Phone Number
                                             </label>
                                         </div>
                                         @error('phone_number')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -314,12 +314,12 @@
                                                 name="email" id="inputEmail" placeholder="Email Address"
                                                 wire:model.live.debounce.200ms="email" required>
                                             <label for="inputEmail" class="text-muted">
-                                                <i class="fas fa-envelope me-2"></i>Email Address
+                                                <i class="fa-solid fa-envelope me-2"></i>Email Address
                                             </label>
                                         </div>
                                         @error('email')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -333,12 +333,12 @@
                                                 <option value="Female">Female</option>
                                             </select>
                                             <label for="inputGender" class="text-muted">
-                                                <i class="fas fa-venus-mars me-2"></i>Gender
+                                                <i class="fa-solid fa-venus-mars me-2"></i>Gender
                                             </label>
                                         </div>
                                         @error('gender')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -349,7 +349,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                     <div class="d-flex align-items-center">
                                         <div class="icon-wrapper bg-warning bg-opacity-10 rounded-circle p-2 me-3">
-                                            <i class="fas fa-key text-white"></i>
+                                            <i class="fa-solid fa-key text-white"></i>
                                         </div>
                                         <div>
                                             <h5 class="fw-semibold mb-1">Change Password</h5>
@@ -363,7 +363,7 @@
                                             <span class="spinner-border spinner-border-sm me-2"></span>Saving...
                                         </span>
                                         <span wire:loading.remove wire:target='changePassword'>
-                                            <i class="fas fa-lock me-2"></i>Update Password
+                                            <i class="fa-solid fa-lock me-2"></i>Update Password
                                         </span>
                                     </button>
                                 </div>
@@ -375,16 +375,16 @@
                                                 name="oldPass" id="oldPassword" placeholder="Old Password"
                                                 wire:model.live.debounce.200ms="oldPassword">
                                             <label for="oldPassword" class="text-muted">
-                                                <i class="fas fa-lock me-2"></i>Old Password
+                                                <i class="fa-solid fa-lock me-2"></i>Old Password
                                             </label>
                                             <button onclick="handleShowPassword('old')" type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y me-3 toggle-password">
-                                                <i class="fas fa-eye"></i>
+                                                <i class="fa-solid fa-eye"></i>
                                             </button>
                                         </div>
                                         @error('oldPassword')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -395,16 +395,16 @@
                                                 name="newpass" id="password" placeholder="New Password"
                                                 wire:model.live.debounce.200ms="password">
                                             <label for="password" class="text-muted">
-                                                <i class="fas fa-lock me-2"></i>New Password
+                                                <i class="fa-solid fa-lock me-2"></i>New Password
                                             </label>
                                             <button onclick="handleShowPassword('new')" type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y me-3 toggle-password">
-                                                <i class="fas fa-eye"></i>
+                                                <i class="fa-solid fa-eye"></i>
                                             </button>
                                         </div>
                                         @error('password')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -416,16 +416,16 @@
                                                 placeholder="Confirm Password"
                                                 wire:model.live.debounce.200ms="password_confirmation">
                                             <label for="password_confirmation" class="text-muted">
-                                                <i class="fas fa-lock me-2"></i>Confirm Password
+                                                <i class="fa-solid fa-lock me-2"></i>Confirm Password
                                             </label>
                                             <button onclick="handleShowPassword('confirm')" type="button"
                                                 class="btn btn-link position-absolute end-0 top-50 translate-middle-y me-3 toggle-password">
-                                                <i class="fas fa-eye"></i>
+                                                <i class="fa-solid fa-eye"></i>
                                             </button>
                                         </div>
                                         @error('password_confirmation')
                                             <div class="text-danger small mt-2 d-flex align-items-center">
-                                                <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                                <i class="fa-solid fa-exclamation-circle me-2"></i>{{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -443,7 +443,7 @@
                                         <span class="strength-text ms-2 small">Weak</span>
                                     </div>
                                     <div class="password-requirements small text-muted">
-                                        <i class="fas fa-info-circle me-1"></i>
+                                        <i class="fa-solid fa-info-circle me-1"></i>
                                         Use at least 8 characters with a mix of letters, numbers, and symbols
                                     </div>
                                 </div>

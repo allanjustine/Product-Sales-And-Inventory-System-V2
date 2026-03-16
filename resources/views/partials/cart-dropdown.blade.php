@@ -3,7 +3,7 @@
         <div class="position-relative d-flex justify-content-end me-4" id="main-cart" x-data="{ open: false }">
             <button type="button" class="btn bt-link p-3 rounded-circle shadow-sm position-relative" id="cart-dropdown"
                 @click="open = !open">
-                <i class="fas fa-shopping-cart fs-5"></i>
+                <i class="fa-solid fa-shopping-cart fs-5"></i>
                 @if ($carts->count() > 0)
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                         id="badge-cart">
@@ -22,13 +22,13 @@
                 <div class="sticky-top bg-white border-bottom rounded-top-3 p-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <h4 class="mb-0 fw-bold">
-                            <i class="fas fa-shopping-cart me-2"></i>My Cart
+                            <i class="fa-solid fa-shopping-cart me-2"></i>My Cart
                             @if ($carts->count() > 0)
                                 <span class="text-muted fs-6 fw-normal">({{ $carts->count() }} items)</span>
                             @endif
                         </h4>
                         <button @click="open = false" class="btn btn-sm btn-link text-muted p-0">
-                            <i class="fas fa-times fs-5"></i>
+                            <i class="fa-solid fa-times fs-5"></i>
                         </button>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     @if ($carts->count() === 0)
                         <div class="text-center py-5">
                             <div class="mb-4">
-                                <i class="fas fa-shopping-cart text-muted" style="font-size: 64px;"></i>
+                                <i class="fa-solid fa-shopping-cart text-muted" style="font-size: 64px;"></i>
                             </div>
                             <h5 class="text-muted mb-2">Your cart is empty</h5>
                             <p class="text-muted mb-0">Add items to get started</p>
@@ -72,7 +72,7 @@
                                             </h6>
                                             <button class="btn btn-sm btn-link text-danger p-0" data-bs-toggle="modal"
                                                 data-bs-target="#remove" wire:click="remove({{ $item->id }})">
-                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fa-solid fa-trash-alt"></i>
                                             </button>
                                         </div>
                                         <div class="d-flex align-items-center gap-2 mb-2">
@@ -149,13 +149,13 @@
                                                 <button class="btn btn-outline-secondary px-3"
                                                     @if ($item->quantity === 1) onclick="toDelete({{ $item->id }})"
                                                         @else wire:click='decreaseQuantity({{ $item->id }})' @endif>
-                                                    <i class="fas fa-minus"></i>
+                                                    <i class="fa-solid fa-minus"></i>
                                                 </button>
                                                 <span
                                                     class="btn btn-light px-3">{{ number_format($item->quantity) }}</span>
                                                 <button class="btn btn-outline-secondary px-3"
                                                     wire:click="increaseQuantity({{ $item->id }})">
-                                                    <i class="fas fa-plus"></i>
+                                                    <i class="fa-solid fa-plus"></i>
                                                 </button>
                                             </div>
                                             <div class="text-end">
@@ -207,7 +207,7 @@
                                     disabled @endif
                                 class="btn btn-primary btn-lg flex-grow-1 d-flex align-items-center justify-content-center gap-2 py-3"
                                 wire:loading.attr='disabled' wire:target='cart_ids'>
-                                <i class="fas fa-credit-card"></i>
+                                <i class="fa-solid fa-credit-card"></i>
                                 <span>
                                     Checkout
                                     @if (count($this->cart_ids) > 0)

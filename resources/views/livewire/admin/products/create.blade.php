@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addProductModalTitle">
-                        <i class="fas fa-box me-2"></i>Add New Product
+                        <i class="fa-solid fa-box me-2"></i>Add New Product
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -17,7 +17,7 @@
                     <div class="card card-outline card-primary mb-3">
                         <div class="card-header bg-light py-2">
                             <h6 class="card-title mb-0">
-                                <i class="fas fa-images text-primary me-2"></i>Product Images
+                                <i class="fa-solid fa-images text-primary me-2"></i>Product Images
                             </h6>
                         </div>
                         <div class="card-body">
@@ -69,7 +69,7 @@
                     <div class="card card-outline card-primary mb-3">
                         <div class="card-header bg-light py-2">
                             <h6 class="card-title mb-0">
-                                <i class="fas fa-info-circle text-primary me-2"></i>Basic Information
+                                <i class="fa-solid fa-info-circle text-primary me-2"></i>Basic Information
                             </h6>
                         </div>
                         <div class="card-body">
@@ -97,10 +97,10 @@
                                                 wire:target='generateProductCode' wire:click="generateProductCode"
                                                 class="btn btn-outline-primary" title="Generate new code">
                                                 <span wire:target='generateProductCode' wire:loading.remove>
-                                                    <i class="fas fa-sync-alt"></i>
+                                                    <i class="fa-solid fa-sync-alt"></i>
                                                 </span>
                                                 <span wire:target='generateProductCode' wire:loading>
-                                                    <i class="fas fa-sync-alt fa-spin"></i>
+                                                    <i class="fa-solid fa-sync-alt fa-spin"></i>
                                                 </span>
                                             </button>
                                         </div>
@@ -149,7 +149,7 @@
                     <div class="card card-outline card-primary mb-3">
                         <div class="card-header bg-light py-2">
                             <h6 class="card-title mb-0">
-                                <i class="fas fa-tag text-primary me-2"></i>Pricing
+                                <i class="fa-solid fa-tag text-primary me-2"></i>Pricing
                             </h6>
                         </div>
                         <div class="card-body">
@@ -193,7 +193,7 @@
                     <div class="card card-outline card-primary mb-3">
                         <div class="card-header bg-light py-2">
                             <h6 class="card-title mb-0">
-                                <i class="fas fa-warehouse text-primary me-2"></i>Stock Management
+                                <i class="fa-solid fa-warehouse text-primary me-2"></i>Stock Management
                             </h6>
                         </div>
                         <div class="card-body">
@@ -338,7 +338,7 @@
                     <div class="card card-outline card-primary mb-3">
                         <div class="card-header bg-light py-2">
                             <h6 class="card-title mb-0">
-                                <i class="fas fa-align-left text-primary me-2"></i>Description
+                                <i class="fa-solid fa-align-left text-primary me-2"></i>Description
                             </h6>
                         </div>
                         <div class="card-body">
@@ -355,7 +355,7 @@
 
                 <div class="modal-footer bg-light">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-1"></i> Cancel
+                        <i class="fa-solid fa-times me-1"></i> Cancel
                     </button>
                     <button class="btn btn-outline-warning" wire:target='resetInputs' wire:loading.attr='disabled'
                         wire:click="resetInputs">
@@ -363,7 +363,7 @@
                             <span class="spinner-border spinner-border-sm me-1"></span> Resetting...
                         </span>
                         <span wire:target='resetInputs' wire:loading.remove>
-                            <i class="fas fa-undo-alt me-1"></i> Reset
+                            <i class="fa-solid fa-undo-alt me-1"></i> Reset
                         </span>
                     </button>
                     <button wire:loading.attr='disabled' wire:target='addProduct,product_images,product_code'
@@ -372,7 +372,7 @@
                             <span class="spinner-border spinner-border-sm me-1"></span> Adding...
                         </span>
                         <span wire:loading.remove wire:target='addProduct'>
-                            <i class="fas fa-save me-1"></i> Save Product
+                            <i class="fa-solid fa-save me-1"></i> Save Product
                         </span>
                     </button>
                 </div>

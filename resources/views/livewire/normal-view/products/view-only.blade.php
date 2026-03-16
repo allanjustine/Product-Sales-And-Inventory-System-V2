@@ -29,13 +29,13 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0">
-                            <i class="fas fa-search text-muted"></i>
+                            <i class="fa-solid fa-search text-muted"></i>
                         </span>
                         <input type="search" class="form-control border-start-0 ps-0" placeholder="Search products..."
                             wire:model.live.debounce.500ms="search" style="height: 50px;">
                         @if ($search)
                             <button class="btn btn-outline-secondary border-start-0" wire:click="$set('search', '')">
-                                <i class="fas fa-times"></i>
+                                <i class="fa-solid fa-times"></i>
                             </button>
                         @endif
                     </div>
@@ -50,10 +50,10 @@
                 <div class="card border-0 shadow-sm sticky-top" style="top: 20px; z-index: 1;">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h5 class="fw-bold mb-0"><i class="fas fa-filter me-2"></i>Filters</h5>
+                            <h5 class="fw-bold mb-0"><i class="fa-solid fa-filter me-2"></i>Filters</h5>
                             <button type="button" wire:loading.attr='disabled' wire:target='clearFilters'
                                 wire:click="clearFilters" class="btn btn-sm btn-outline-secondary">
-                                <i class="fas fa-broom me-1"></i>Clear All
+                                <i class="fa-solid fa-broom me-1"></i>Clear All
                             </button>
                         </div>
 
@@ -62,7 +62,7 @@
                                 <label class="form-label fw-medium mb-2">Search Products</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0">
-                                        <i class="fas fa-search text-muted"></i>
+                                        <i class="fa-solid fa-search text-muted"></i>
                                     </span>
                                     <input type="search" class="form-control border-start-0 ps-0"
                                         placeholder="Search products..." wire:model.live.debounce.500ms="search"
@@ -70,7 +70,7 @@
                                     @if ($search)
                                         <button class="btn btn-outline-secondary border-start-0"
                                             wire:click="$set('search', '')">
-                                            <i class="fas fa-times"></i>
+                                            <i class="fa-solid fa-times"></i>
                                         </button>
                                     @endif
                                 </div>
@@ -82,14 +82,14 @@
                                     <button type="button"
                                         class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === 'All' ? 'active' : '' }}"
                                         wire:click="$set('category_name', 'All')">
-                                        <i class="fas fa-layer-group me-2"></i>All Categories
+                                        <i class="fa-solid fa-layer-group me-2"></i>All Categories
                                         <span class="badge bg-secondary float-end">{{ $products->total() }}</span>
                                     </button>
                                     @foreach ($product_categories as $category)
                                         <button type="button"
                                             class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === $category->category_name ? 'active' : '' }}"
                                             wire:click="$set('category_name', '{{ $category->category_name }}')">
-                                            <i class="fas fa-tag me-2"></i>{{ $category->category_name }}
+                                            <i class="fa-solid fa-tag me-2"></i>{{ $category->category_name }}
                                             <span class="badge bg-info float-end">{{ $category->products_count }}</span>
                                         </button>
                                     @endforeach
@@ -114,7 +114,7 @@
                                             <label class="form-check-label" for="rating{{ $rating }}">
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     <i
-                                                        class="fas fa-star {{ $i <= $rating ? 'text-warning' : 'text-gray' }}"></i>
+                                                        class="fa-solid fa-star {{ $i <= $rating ? 'text-warning' : 'text-gray' }}"></i>
                                                 @endfor
                                                 <span class="text-muted ms-2">& above</span>
                                             </label>
@@ -148,7 +148,7 @@
                                     <input class="form-check-input" type="checkbox" wire:model.live="hasDiscount"
                                         id="hasDiscount">
                                     <label class="form-check-label" for="hasDiscount">
-                                        <i class="fas fa-percentage text-danger me-1"></i>Show discounted items
+                                        <i class="fa-solid fa-percentage text-danger me-1"></i>Show discounted items
                                         only
                                     </label>
                                 </div>
@@ -160,7 +160,7 @@
                                     <input class="form-check-input" type="checkbox" wire:model.live="inStockOnly"
                                         id="inStockOnly">
                                     <label class="form-check-label" for="inStockOnly">
-                                        <i class="fas fa-check-circle text-success me-1"></i>In stock only
+                                        <i class="fa-solid fa-check-circle text-success me-1"></i>In stock only
                                     </label>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                 <div class="d-md-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h2 class="fw-bold mb-1">
-                            <i class="fas fa-box-open text-primary me-2"></i>Products
+                            <i class="fa-solid fa-box-open text-primary me-2"></i>Products
                         </h2>
                         <p class="text-muted mb-0">
                             @if ($search)
@@ -202,11 +202,11 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-outline-secondary"
                                 :class="grid === 3 ? 'active' : ''" @click="grid = 3">
-                                <i class="fas fa-th-large"></i>
+                                <i class="fa-solid fa-th-large"></i>
                             </button>
                             <button type="button" class="btn btn-outline-secondary"
                                 :class="grid === 4 ? 'active' : ''" @click="grid = 4">
-                                <i class="fas fa-list"></i>
+                                <i class="fa-solid fa-list"></i>
                             </button>
                         </div>
                     </div>
@@ -224,18 +224,18 @@
                 @if (!empty($search) && $products->count() === 0)
                     <div class="text-center py-5">
                         <div class="mb-4">
-                            <i class="fas fa-search text-muted" style="font-size: 4rem;"></i>
+                            <i class="fa-solid fa-search text-muted" style="font-size: 4rem;"></i>
                         </div>
                         <h4 class="fw-bold text-muted mb-3">No products found for "{{ $search }}"</h4>
                         <p class="text-muted mb-4">Try adjusting your search or filters</p>
                         <button wire:click="clearFilters" class="btn btn-primary">
-                            <i class="fas fa-filter me-2"></i>Clear Filters
+                            <i class="fa-solid fa-filter me-2"></i>Clear Filters
                         </button>
                     </div>
                 @elseif($products->count() === 0)
                     <div class="text-center py-5">
                         <div class="mb-4">
-                            <i class="fas fa-box-open text-muted" style="font-size: 4rem;"></i>
+                            <i class="fa-solid fa-box-open text-muted" style="font-size: 4rem;"></i>
                         </div>
                         <h4 class="fw-bold text-muted mb-3">No products available</h4>
                         <p class="text-muted mb-4">Check back soon for new arrivals</p>
@@ -251,7 +251,7 @@
                         </button>
                         <button wire:loading.remove wire:target='loadMore' wire:click="loadMore"
                             class="btn btn-primary px-5">
-                            <i class="fas fa-arrow-down me-2"></i>Load More Products
+                            <i class="fa-solid fa-arrow-down me-2"></i>Load More Products
                         </button>
                     </div>
                 @endif

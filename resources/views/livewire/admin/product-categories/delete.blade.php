@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="deleteCategoryModalTitle">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <i class="fa-solid fa-exclamation-triangle mr-2"></i>
                         Confirm Deletion
                     </h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -19,7 +19,7 @@
                         <!-- Warning Icon -->
                         <div class="mb-3">
                             <span class="bg-danger bg-opacity-10 d-inline-flex p-3 rounded-circle">
-                                <i class="fas fa-tag fa-3x text-danger"></i>
+                                <i class="fa-solid fa-tag fa-3x text-danger"></i>
                             </span>
                         </div>
 
@@ -33,14 +33,14 @@
                         <!-- Category Details Card -->
                         <div class="bg-light p-3 rounded border-left border-danger border-4 mb-3 text-left">
                             <div class="d-flex align-items-center">
-                                <i class="fas fa-tag text-danger mr-2 fa-fw"></i>
+                                <i class="fa-solid fa-tag text-danger mr-2 fa-fw"></i>
                                 <span
                                     class="font-weight-bold text-capitalize">{{ $productCategoryToDelete->category_name }}</span>
                             </div>
                             @if ($productCategoryToDelete->category_description)
                                 <div class="mt-2">
                                     <p class="text-muted small mb-0">
-                                        <i class="fas fa-align-left mr-1"></i>
+                                        <i class="fa-solid fa-align-left mr-1"></i>
                                         {{ Str::limit($productCategoryToDelete->category_description, 100) }}
                                     </p>
                                 </div>
@@ -49,7 +49,7 @@
 
                         <!-- Warning Notice -->
                         <div class="alert alert-warning py-2 small mb-0">
-                            <i class="fas fa-info-circle mr-1"></i>
+                            <i class="fa-solid fa-info-circle mr-1"></i>
                             <strong>Note:</strong> This action cannot be undone. Products in this category may be
                             affected.
                         </div>
@@ -68,13 +68,13 @@
 
                 <div class="modal-footer bg-light border-top-0">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id='closeModalDelete'>
-                        <i class="fas fa-times mr-1"></i> Cancel
+                        <i class="fa-solid fa-times mr-1"></i> Cancel
                     </button>
 
                     <button class="btn btn-danger" wire:loading.attr='disabled' wire:target='deleteProductCategory'
                         wire:click="deleteProductCategory" @if (!$productCategoryToDelete) disabled @endif>
                         <span wire:loading.remove wire:target='deleteProductCategory'>
-                            <i class="fas fa-trash-alt mr-1"></i> Yes, Delete Category
+                            <i class="fa-solid fa-trash-alt mr-1"></i> Yes, Delete Category
                         </span>
                         <span wire:loading wire:target='deleteProductCategory'>
                             <span class="spinner-border spinner-border-sm mr-1"></span> Deleting...

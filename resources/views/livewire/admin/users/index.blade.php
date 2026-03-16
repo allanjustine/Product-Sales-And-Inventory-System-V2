@@ -11,28 +11,28 @@
                     <button wire:click="handleStatus('')" class="nav-link {{ $this->status === '' ? 'active' : '' }}"
                         id="custom-tabs-three-all-tab" data-toggle="pill" role="tab"
                         aria-controls="custom-tabs-three-all" aria-selected="true">
-                        <i class="fas fa-list mr-2"></i>All Users
+                        <i class="fa-solid fa-list mr-2"></i>All Users
                     </button>
                 </li>
                 <li class="nav-item">
                     <button wire:click="handleStatus('verified')" class="nav-link {{ $this->status === 'verified' ? 'active' : '' }}" id="custom-tabs-three-verified-tab"
                         data-toggle="pill" role="tab" aria-controls="custom-tabs-three-verified"
                         aria-selected="false">
-                        <i class="fas fa-check-circle mr-2"></i>Verified
+                        <i class="fa-solid fa-check-circle mr-2"></i>Verified
                     </button>
                 </li>
                 <li class="nav-item">
                     <button wire:click="handleStatus('pending')" class="nav-link {{ $this->status === 'pending' ? 'active' : '' }}" id="custom-tabs-three-pending-tab"
                         data-toggle="pill" role="tab" aria-controls="custom-tabs-three-pending"
                         aria-selected="false">
-                        <i class="fas fa-clock mr-2"></i>Pending
+                        <i class="fa-solid fa-clock mr-2"></i>Pending
                     </button>
                 </li>
                 <li class="nav-item">
                     <button wire:click="handleStatus('admins')" class="nav-link {{ $this->status === 'admins' ? 'active' : '' }}" id="custom-tabs-three-admins-tab"
                         data-toggle="pill" role="tab" aria-controls="custom-tabs-three-admins"
                         aria-selected="false">
-                        <i class="fas fa-user-shield mr-2"></i>Admins
+                        <i class="fa-solid fa-user-shield mr-2"></i>Admins
                     </button>
                 </li>
             </ul>
@@ -59,7 +59,7 @@
                 <div class="col-md-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-search"></i></span>
                         </div>
                         <input type="search" class="form-control" placeholder="Search by name, email, or role..."
                             wire:model.live="search">
@@ -140,7 +140,7 @@
                                                 class="btn btn-sm btn-link p-0 position-absolute"
                                                 style="top: -5px; right: -5px;" title="Verify User">
                                                 <i
-                                                    class="fas fa-check-circle text-success bg-white rounded-circle"></i>
+                                                    class="fa-solid fa-check-circle text-success bg-white rounded-circle"></i>
                                             </button>
                                         @endif
                                     </div>
@@ -156,7 +156,7 @@
                                     @if ($user->gender)
                                         <span class="badge badge-light p-2">
                                             <i
-                                                class="fas fa-{{ $user->gender === 'male' ? 'mars' : ($user->gender === 'female' ? 'venus' : 'genderless') }} mr-1"></i>
+                                                class="fa-solid fa-{{ $user->gender === 'male' ? 'mars' : ($user->gender === 'female' ? 'venus' : 'genderless') }} mr-1"></i>
                                             {{ ucfirst($user->gender) }}
                                         </span>
                                     @else
@@ -166,28 +166,28 @@
                                 <td class="text-center">
                                     @if ($user->email_verified_at)
                                         <span class="badge badge-success p-2">
-                                            <i class="fas fa-check-circle mr-1"></i> VERIFIED
+                                            <i class="fa-solid fa-check-circle mr-1"></i> VERIFIED
                                         </span>
                                     @else
                                         <span class="badge badge-danger p-2">
-                                            <i class="fas fa-times-circle mr-1"></i> UNVERIFIED
+                                            <i class="fa-solid fa-times-circle mr-1"></i> UNVERIFIED
                                         </span>
                                     @endif
                                 </td>
                                 <td class="text-center">
                                     @if ($user->isAdmin())
                                         <span class="badge badge-info p-2">
-                                            <i class="fas fa-crown mr-1"></i> ADMIN
+                                            <i class="fa-solid fa-crown mr-1"></i> ADMIN
                                         </span>
                                     @else
                                         <span class="badge badge-warning p-2">
-                                            <i class="fas fa-user mr-1"></i> USER
+                                            <i class="fa-solid fa-user mr-1"></i> USER
                                         </span>
                                     @endif
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <i class="far fa-calendar-alt text-muted mr-2"></i>
+                                        <i class="fa-regular fa-calendar-alt text-muted mr-2"></i>
                                         <div>
                                             <div>{{ $user->created_at->format('M d, Y') }}</div>
                                             <small class="text-muted">{{ $user->created_at->diffForHumans() }}</small>
@@ -218,7 +218,7 @@
                             <tr>
                                 <td colspan="8" class="text-center py-5">
                                     <div class="empty-state">
-                                        <i class="fas fa-users fa-4x text-muted mb-3"></i>
+                                        <i class="fa-solid fa-users fa-4x text-muted mb-3"></i>
                                         @if (!empty($search))
                                             <h6>No results found for "{{ $search }}"</h6>
                                             <p class="text-muted">Try adjusting your search criteria</p>
