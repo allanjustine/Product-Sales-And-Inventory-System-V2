@@ -34,13 +34,13 @@
                                             class="d-inline-block bg-opacity-20 backdrop-blur rounded-pill px-4 py-2 mb-4">
                                             <div class="d-flex align-items-center gap-2" id="signin-text">
                                                 @if ($morning)
-                                                    <i class="fa-classic fa-solid fa-sunrise text-warning fa-lg"></i>
+                                                    <i class="fa-classic fa-solid fa-cloud-sun text-warning fa-lg"></i>
                                                     <span class="fw-medium text-white">Good Morning</span>
                                                 @elseif($afternoon)
                                                     <i class="fa-classic fa-solid fa-sun text-warning fa-lg"></i>
                                                     <span class="fw-medium text-white">Good Afternoon</span>
                                                 @elseif($evening)
-                                                    <i class="fa-classic fa-solid fa-moon-stars text-light fa-lg"></i>
+                                                    <i class="fa-classic fa-solid fa-moon text-light fa-lg"></i>
                                                     <span class="fw-medium text-white">Good Evening</span>
                                                 @else
                                                     <i class="fa-classic fa-solid fa-smile-beam text-light fa-lg"></i>

@@ -8,12 +8,14 @@
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img id="sidebar-img" src="{{ Auth::user()->profile_image === null ? "
-                        https://cdn-icons-png.flaticon.com/512/2919/2919906.png" :
-                        Storage::url(Auth::user()->profile_image)
-                    }}" class="img-circle elevation-2" alt="User
+                    <img id="sidebar-img"
+                        src="{{ Auth::user()->profile_image === null
+                            ? "
+                                                https://cdn-icons-png.flaticon.com/512/2919/2919906.png"
+                            : Storage::url(Auth::user()->profile_image) }}"
+                        class="img-circle elevation-2" alt="User
                     Image"
-                    style="border-radius: 50%; width: 40px; height: 40px;">
+                        style="border-radius: 50%; width: 40px; height: 40px;">
                 </div>
                 <div class="info">
                     <a wire:navigate href="/profile" class="d-block">Welcome, {{ Auth::user()->name }}</a>
@@ -23,7 +25,7 @@
                 <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" role="menu">
                     <li class="nav-item">
                         <a wire:navigate href="/admin/dashboard" class="nav-link">
-                            <i class="nav-icon fa-solid fa-gauge-max"></i>
+                            <i class="nav-icon fa-solid fa-gauge"></i>
                             <p>
                                 Dashboard
                             </p>
@@ -37,13 +39,12 @@
                             </p>
 
                             @if ($usersCount > 0)
-                            <span class="right badge badge-info">{{ $usersCount }}</span>
+                                <span class="right badge badge-info">{{ $usersCount }}</span>
                             @endif
                         </a>
                     </li>
                     <li class="nav-header">ORDERS MANAGEMENT</li>
-                    <li x-data="{ open: window.location.pathname === '/admin/orders' || window.location.pathname === '/admin/product-sales' }"
-                        class="nav-item" x-bind:class="{ 'menu-open': open }">
+                    <li x-data="{ open: window.location.pathname === '/admin/orders' || window.location.pathname === '/admin/product-sales' }" class="nav-item" x-bind:class="{ 'menu-open': open }">
                         <a href="#" @click="open = !open" class="nav-link">
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
                             <p>
@@ -60,7 +61,7 @@
                                         <span class="right badge badge-info"></span>
                                     </p>
                                     @if ($ordersCount > 0)
-                                    <span class="right badge badge-info">{{ $ordersCount }}</span>
+                                        <span class="right badge badge-info">{{ $ordersCount }}</span>
                                     @endif
                                 </a>
                             </li>
@@ -72,15 +73,14 @@
                                         <span class="right badge badge-info"></span>
                                     </p>
                                     @if ($productSalesCount > 0)
-                                    <span class="right badge badge-info">{{ $productSalesCount }}</span>
+                                        <span class="right badge badge-info">{{ $productSalesCount }}</span>
                                     @endif
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-header">PRODUCT MANAGEMENT</li>
-                    <li x-data="{ open: window.location.pathname === '/admin/products' || window.location.pathname === '/admin/product-categories' }"
-                        class="nav-item" x-bind:class="{ 'menu-open': open }">
+                    <li x-data="{ open: window.location.pathname === '/admin/products' || window.location.pathname === '/admin/product-categories' }" class="nav-item" x-bind:class="{ 'menu-open': open }">
                         <a href="#" class="nav-link" @click="open = !open">
                             <i class="nav-icon fa-solid fa-hand-pointer"></i>
                             <p>
@@ -94,7 +94,7 @@
                                     <i class="nav-icon fa-solid fa-box-open"></i>
                                     <p>Products</p>
                                     @if ($productsCount > 0)
-                                    <span class="right badge badge-info">{{ $productsCount }}</span>
+                                        <span class="right badge badge-info">{{ $productsCount }}</span>
                                     @endif
                                 </a>
                             </li>
@@ -103,7 +103,7 @@
                                     <i class="nav-icon fa-solid fa-list"></i>
                                     <p>Product Categories</p>
                                     @if ($categoriesCount)
-                                    <span class="right badge badge-info">{{ $categoriesCount }}</span>
+                                        <span class="right badge badge-info">{{ $categoriesCount }}</span>
                                     @endif
                                 </a>
                             </li>
@@ -126,7 +126,7 @@
                                 Feed Backs
                             </p>
                             @if ($feedbacks > 0)
-                            <span class="right badge badge-info">{{ $feedbacks }}</span>
+                                <span class="right badge badge-info">{{ $feedbacks }}</span>
                             @endif
                         </a>
                     </li>
@@ -200,14 +200,13 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item mr-3">
-                <a class="nav-link pr-0" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+                <a class="nav-link pr-0" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <i class="fa-solid fa-mug-hot mr-2"></i>{{ Auth::user()->name }} </a>
 
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 10px;">
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0" style="text-align: left;">Welcome! {{ Auth::user()->name
-                            }}
+                        <h6 class="text-overflow m-0" style="text-align: left;">Welcome! {{ Auth::user()->name }}
                         </h6>
                     </div>
                     <a wire:navigate href="/profile" class="dropdown-item">
@@ -223,26 +222,51 @@
             </li>
         </ul>
     </nav>
-    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Are you sure you want to logout?</h4>
-                    <span class="float-right" aria-hidden="true">&times;</span>
+    <div class="modal fade" id="logout" tabindex="-1" aria-labelledby="logoutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary border-bottom-0 pb-0">
+                    <div class="d-flex align-items-center">
+                        <div class="modal-icon bg-danger bg-opacity-10 text-danger rounded-circle p-2 me-3">
+                            <i class="fa-solid fa-sign-out-alt fa-lg"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title text-white fw-bold" id="logoutLabel">Confirm Logout</h5>
+                            <p class="text-white mb-0">Are you sure you want to sign out?</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body py-4">
+                    <div class="alert alert-warning border-0">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-exclamation-triangle me-3 fa-lg"></i>
+                            <div>
+                                <p class="mb-0">You will be redirected to the login page.</p>
+                                <small class="text-muted">Make sure to save any unsaved changes.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                        Cancel
                     </button>
-                </div>
-                <div class="modal-body">
-                    After you logout you will redirect to login page.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" wire:click="logout" class="btn btn-danger" wire:target='logout'
-                        wire:loading.attr='disabled'>
-                        <span wire:target='logout' wire:loading.remove><i
-                                class="fa-solid fa-arrow-right-from-bracket"></i>Yes, Logout</span>
-                        <span wire:target='logout' wire:loading><span class="spinner-border spinner-border-sm"></span>
-                            Logging out...</span>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" wire:click="logout" wire:loading.attr="disabled"
+                        class="btn btn-danger px-4">
+                        <span wire:loading.remove wire:target="logout">
+                            <i class="fa-solid fa-sign-out-alt me-2"></i>Logout
+                        </span>
+                        <span wire:loading wire:target="logout">
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            Logging out...
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -253,7 +277,7 @@
             const links = document.querySelectorAll('.nav-link');
 
             links.forEach(link => {
-                if(link.getAttribute('href') === window.location.pathname) {
+                if (link.getAttribute('href') === window.location.pathname) {
                     link.classList.add('active2');
                 }
             })

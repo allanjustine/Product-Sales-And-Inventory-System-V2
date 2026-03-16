@@ -92,7 +92,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center" id="rating-sold">
                     <i class="fa-solid fa-star text-warning me-1"></i>
-                    <span><span class="fw-semibold">{{ $product->product_ratings_avg_rating }}</span>
+                    <span><span class="fw-semibold">{{ number_format($product->product_ratings_avg_rating, 1) }}</span>
                         | <span class="text-muted">{{ $product->shortOrderSold() }} sold</span></span>
                 </div>
             </div>
