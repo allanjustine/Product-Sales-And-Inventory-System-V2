@@ -1,6 +1,6 @@
 <div>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg" style="z-index: 1030;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg d-none d-md-flex" style="z-index: 1030;">
         <div class="container d-flex align-items-center justify-content-center">
             <!-- Brand / Logo -->
             <a href="/" wire:navigate class="navbar-brand d-flex align-items-center mx-auto">
@@ -327,6 +327,163 @@
         </div>
     </div>
 
+    <!-- Mobile Sidebar Drawer -->
+    <div id="mobileSidebarOverlay" onclick="closeMobileSidebar()"
+        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000;"></div>
+    <div id="mobileSidebar"
+        style="position:fixed; top:0; left:-280px; width:280px; height:100%; background:#212529; z-index:2001; transition:left 0.3s ease; overflow-y:auto; padding-bottom:80px;">
+        <div class="d-flex align-items-center justify-content-between p-3 border-bottom border-secondary">
+            <div class="d-flex align-items-center gap-2">
+                <img src="/images/mylogo.jpg" alt="AJM" style="width:36px;height:36px;border-radius:50%;">
+                <span class="fw-bold text-white">AJM Store</span>
+            </div>
+            <button onclick="closeMobileSidebar()" class="btn btn-sm btn-outline-secondary text-white border-0">
+                <i class="fa-solid fa-xmark fa-lg"></i>
+            </button>
+        </div>
+
+        @if (auth()->check())
+            <div class="d-flex align-items-center gap-2 p-3 border-bottom border-secondary">
+                <img src="{{ auth()->user()->profile_image ? Storage::url(auth()->user()->profile_image) : 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png' }}"
+                    style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);">
+                <div>
+                    <div class="text-white fw-medium small">{{ auth()->user()->name }}</div>
+                    <small class="text-white-50">{{ auth()->user()->role }}</small>
+                </div>
+            </div>
+        @endif
+
+        <ul class="list-unstyled p-3 mb-0">
+            <li class="mb-1"><a wire:navigate href="/" onclick="closeMobileSidebar()"
+                    class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                    style="transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="this.style.background='transparent'"><i class="fa-solid fa-home fa-fw"></i> Home</a>
+            </li>
+            <li class="mb-1"><a wire:navigate href="/about-us" onclick="closeMobileSidebar()"
+                    class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                    style="transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="this.style.background='transparent'"><i class="fa-solid fa-info-circle fa-fw"></i>
+                    About</a></li>
+            @if (auth()->check())
+                <li class="mb-1"><a wire:navigate href="/products" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i class="fa-solid fa-box-open fa-fw"></i>
+                        Products</a></li>
+            @else
+                <li class="mb-1"><a wire:navigate href="/product-lists" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i class="fa-solid fa-box-open fa-fw"></i>
+                        Products</a></li>
+            @endif
+            @role('user')
+                <li class="mb-1"><a wire:navigate href="/orders" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i class="fa-solid fa-shopping-bag fa-fw"></i>
+                        Orders</a></li>
+                <li class="mb-1"><a wire:navigate href="/carts" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i class="fa-solid fa-shopping-cart fa-fw"></i>
+                        Cart</a></li>
+                <li class="mb-1"><a wire:navigate href="/favorites" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i class="fa-solid fa-heart fa-fw"></i>
+                        Favorites</a></li>
+            @endrole
+            <li class="mb-1"><a wire:navigate href="/feedbacks" onclick="closeMobileSidebar()"
+                    class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                    style="transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="this.style.background='transparent'"><i class="fa-solid fa-comment-dots fa-fw"></i>
+                    Feedback</a></li>
+
+            <li>
+                <hr class="border-secondary my-2">
+            </li>
+
+            @if (auth()->check())
+                <li class="mb-1"><a wire:navigate href="/profile" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i class="fa-solid fa-user-circle fa-fw"></i>
+                        My Profile</a></li>
+                @role('admin')
+                    <li class="mb-1"><a wire:navigate href="/admin/dashboard" onclick="closeMobileSidebar()"
+                            class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                            style="transition:background 0.2s;"
+                            onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                            onmouseout="this.style.background='transparent'"><i
+                                class="fa-solid fa-tachometer-alt fa-fw text-warning"></i> Admin Dashboard</a></li>
+                @endrole
+                <li class="mb-1"><a href="#" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center gap-3 text-danger text-decoration-none py-2 px-3 rounded"
+                        data-bs-toggle="modal" data-bs-target="#logoutModal" style="transition:background 0.2s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i
+                            class="fa-solid fa-sign-out-alt fa-fw"></i> Logout</a></li>
+            @else
+                <li class="mb-1"><a wire:navigate href="/login" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i
+                            class="fa-solid fa-sign-in-alt fa-fw text-primary"></i> Login</a></li>
+                <li class="mb-1"><a wire:navigate href="/register" onclick="closeMobileSidebar()"
+                        class="d-flex align-items-center nav-link gap-3 text-white text-decoration-none py-2 px-3 rounded"
+                        style="transition:background 0.2s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"><i
+                            class="fa-solid fa-user-plus fa-fw text-success"></i> Register</a></li>
+            @endif
+        </ul>
+    </div>
+
+    <!-- Mobile Bottom Navbar -->
+    <nav id="mobileBottomNav" class="d-flex d-md-none align-items-center justify-content-around bg-dark shadow p-0"
+        style="position:fixed; bottom:0; left:0; right:0; z-index:1050; border-top:1px solid rgba(255,255,255,0.1);">
+        <a wire:navigate href="/"
+            class="mobile-bottom-link nav-link w-100 p-2 d-flex flex-column align-items-center text-white text-decoration-none">
+            <i class="fa-solid fa-home"></i>
+            <span style="font-size:10px;">Home</span>
+        </a>
+        @if (auth()->check())
+            <a wire:navigate href="/products"
+                class="mobile-bottom-link nav-link w-100 p-2 d-flex flex-column align-items-center text-white text-decoration-none">
+                <i class="fa-solid fa-box-open"></i>
+                <span style="font-size:10px;">Products</span>
+            </a>
+            @role('user')
+                <a wire:navigate href="/carts"
+                    class="mobile-bottom-link nav-link w-100 p-2 d-flex flex-column align-items-center text-white text-decoration-none">
+                    <i class="fa-solid fa-shopping-cart"></i>
+                    <span style="font-size:10px;">Cart</span>
+                </a>
+                <a wire:navigate href="/orders"
+                    class="mobile-bottom-link nav-link w-100 p-2 d-flex flex-column align-items-center text-white text-decoration-none">
+                    <i class="fa-solid fa-shopping-bag"></i>
+                    <span style="font-size:10px;">Orders</span>
+                </a>
+            @endrole
+        @else
+            <a wire:navigate href="/product-lists"
+                class="mobile-bottom-link nav-link w-100 p-2 d-flex flex-column align-items-center text-white text-decoration-none">
+                <i class="fa-solid fa-box-open"></i>
+                <span style="font-size:10px;">Products</span>
+            </a>
+        @endif
+        <button onclick="openMobileSidebar()"
+            class="mobile-bottom-link nav-link w-100 p-2 d-flex flex-column align-items-center text-white bg-transparent border-0">
+            <i class="fa-solid fa-bars"></i>
+            <span style="font-size:10px;">Menu</span>
+        </button>
+    </nav>
+
     <!-- Custom CSS -->
     <style>
         /* Navigation */
@@ -491,6 +648,25 @@
             }
         }
 
+        @media (max-width: 767.98px) {
+            body {
+                padding-bottom: 60px;
+            }
+
+            .mobile-bottom-link {
+                font-size: 18px;
+                gap: 2px;
+                opacity: 0.85;
+                transition: opacity 0.2s;
+            }
+
+            .mobile-bottom-link:hover,
+            .mobile-bottom-link:focus {
+                opacity: 1;
+                color: #0d6efd !important;
+            }
+        }
+
         @media (max-width: 576px) {
             .navbar-brand h3 {
                 font-size: 1.5rem;
@@ -523,6 +699,22 @@
     </style>
 
     <!-- JavaScript -->
+    <script>
+        function openMobileSidebar() {
+            document.getElementById('mobileSidebar').style.left = '0';
+            document.getElementById('mobileSidebarOverlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebar').style.left = '-280px';
+            document.getElementById('mobileSidebarOverlay').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('livewire:navigated', function() {
+            closeMobileSidebar();
+        });
+    </script>
     <script>
         // Active link detection
         document.addEventListener('livewire:navigated', function() {

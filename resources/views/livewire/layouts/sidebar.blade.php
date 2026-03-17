@@ -10,8 +10,7 @@
                 <div class="image">
                     <img id="sidebar-img"
                         src="{{ Auth::user()->profile_image === null
-                            ? "
-                                                https://cdn-icons-png.flaticon.com/512/2919/2919906.png"
+                            ? 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png'
                             : Storage::url(Auth::user()->profile_image) }}"
                         class="img-circle elevation-2" alt="User
                     Image"

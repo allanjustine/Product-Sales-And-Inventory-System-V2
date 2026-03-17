@@ -274,7 +274,7 @@
         window.addEventListener('scroll', function() {
             if (backToTopButton) {
                 if (window.scrollY > 400) {
-                    backToTopButton.style.bottom = "30px";
+                    backToTopButton.style.bottom = window.innerWidth > 770 ? "30px" : "70px";
                 } else {
                     backToTopButton.style.bottom = "-50px";
                 }
@@ -282,7 +282,7 @@
         });
 
         if (window.pageYOffset > 400) {
-            backToTopButton.style.bottom = "30px";
+            backToTopButton.style.bottom = window.innerWidth > 770 ? "30px" : "70px";
         } else {
             backToTopButton.style.bottom = "-50px";
         }
