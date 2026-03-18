@@ -19,6 +19,12 @@ Built using:
 
 ## ✨ Features
 
+### 🔐 Authentication
+- Manual login with email & password
+- User registration (create account)
+- Social login via **Google** and **Facebook** (OAuth 2.0 via Laravel Socialite)
+- Secure session management
+
 ### 📦 Inventory Management
 - Add, edit, and delete products
 - Categorize products
@@ -69,6 +75,18 @@ Livewire Updates UI in Real-Time
 
 ---
 
+## 🔑 Authentication Flow
+
+```text
+Login Page
+    ├── Manual Login (Email + Password)
+    ├── Register (Create Account)
+    ├── Login with Google  → OAuth → Redirect → Dashboard
+    └── Login with Facebook → OAuth → Redirect → Dashboard
+```
+
+---
+
 ## 🛠️ Installation Guide
 
 ```bash
@@ -82,11 +100,14 @@ cd Product-Sales-And-Inventory-System-V2
 composer install
 npm install
 
+# Install Laravel Socialite
+composer require laravel/socialite
+
 # Setup environment
 cp .env.example .env
 php artisan key:generate
 
-# Configure database & Pusher credentials in .env
+# Configure database, Pusher, Google & Facebook credentials in .env
 
 # Run migrations
 php artisan migrate
@@ -98,11 +119,30 @@ npm run dev
 
 ---
 
+## 🌐 Social Login Setup
+
+Add the following to your `.env` file:
+
+```env
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+
+FACEBOOK_CLIENT_ID=your-facebook-app-id
+FACEBOOK_CLIENT_SECRET=your-facebook-app-secret
+FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
+```
+
+> Get Google credentials from [Google Cloud Console](https://console.cloud.google.com/)  
+> Get Facebook credentials from [Meta for Developers](https://developers.facebook.com/)
+
+---
+
 ## 🔐 Security
 
 - CSRF Protection
 - Input Validation
-- Secure Authentication
+- Secure Authentication (Manual + OAuth)
 - Role-Based Authorization
 - Broadcast Channel Authorization
 
@@ -120,8 +160,8 @@ npm run dev
 
 ## 📬 Contact
 
-Email: labya31@gmail.com 
-Portfolio: https://allanjustine.github.io/Portfolio/
+Email: labya31@gmail.com  
+Portfolio: https://allanjustine.github.io/Portfolio/  
 Website: https://e-commerce.smctgroup.ph  
 
 ---
