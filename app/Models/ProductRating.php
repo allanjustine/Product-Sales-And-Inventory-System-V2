@@ -21,6 +21,11 @@ class ProductRating extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function ratingImages()
     {
         return $this->morphMany(Image::class, 'imageable');
