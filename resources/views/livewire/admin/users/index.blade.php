@@ -15,23 +15,26 @@
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button wire:click="handleStatus('verified')" class="nav-link {{ $this->status === 'verified' ? 'active' : '' }}" id="custom-tabs-three-verified-tab"
-                        data-toggle="pill" role="tab" aria-controls="custom-tabs-three-verified"
-                        aria-selected="false">
+                    <button wire:click="handleStatus('verified')"
+                        class="nav-link {{ $this->status === 'verified' ? 'active' : '' }}"
+                        id="custom-tabs-three-verified-tab" data-toggle="pill" role="tab"
+                        aria-controls="custom-tabs-three-verified" aria-selected="false">
                         <i class="fa-solid fa-check-circle mr-2"></i>Verified
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button wire:click="handleStatus('pending')" class="nav-link {{ $this->status === 'pending' ? 'active' : '' }}" id="custom-tabs-three-pending-tab"
-                        data-toggle="pill" role="tab" aria-controls="custom-tabs-three-pending"
-                        aria-selected="false">
+                    <button wire:click="handleStatus('pending')"
+                        class="nav-link {{ $this->status === 'pending' ? 'active' : '' }}"
+                        id="custom-tabs-three-pending-tab" data-toggle="pill" role="tab"
+                        aria-controls="custom-tabs-three-pending" aria-selected="false">
                         <i class="fa-solid fa-clock mr-2"></i>Pending
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button wire:click="handleStatus('admins')" class="nav-link {{ $this->status === 'admins' ? 'active' : '' }}" id="custom-tabs-three-admins-tab"
-                        data-toggle="pill" role="tab" aria-controls="custom-tabs-three-admins"
-                        aria-selected="false">
+                    <button wire:click="handleStatus('admins')"
+                        class="nav-link {{ $this->status === 'admins' ? 'active' : '' }}"
+                        id="custom-tabs-three-admins-tab" data-toggle="pill" role="tab"
+                        aria-controls="custom-tabs-three-admins" aria-selected="false">
                         <i class="fa-solid fa-user-shield mr-2"></i>Admins
                     </button>
                 </li>
@@ -126,7 +129,7 @@
                             <th class="align-middle text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody wire:loading.remove wire:target='status,handleStatus'>
                         @forelse ($users as $user)
                             <tr class="align-middle">
                                 <td class="text-center" style="width: 80px;">
@@ -232,6 +235,15 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div wire:loading wire:target='status,handleStatus' class="w-100" style="overflow: hidden;">
+                    <div class="row">
+                        @foreach (range(1, 5) as $item)
+                            <div class="placeholder-glow mb-2" wire:key='{{ $item }}'>
+                                <div class="placeholder w-100 rounded" style="height: 50px;"></div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
             <!-- Pagination -->

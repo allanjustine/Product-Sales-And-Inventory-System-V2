@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -24,6 +25,9 @@ class Index extends Component
 
     #[Title('Users')]
 
+    #[Url('status', keep: true)]
+    public $status = "";
+
     public $perPage = 5;
     public $name, $address, $email, $password, $password_confirmation, $gender, $phone_number, $remember_token, $profile_image;
     public $userEdit;
@@ -36,7 +40,6 @@ class Index extends Component
     public $sortDirection = 'asc';
     public $profile_image_url;
     public $username;
-    public $status = "";
 
     public function sortItemBy($field)
     {
