@@ -281,7 +281,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <!-- Modal Header -->
-                <div class="modal-header border-bottom-0 pb-0">
+                <div class="modal-header border-bottom-0 pb-0 bg-primary">
                     <div class="d-flex align-items-center">
                         <div class="modal-icon bg-danger bg-opacity-10 text-danger rounded-circle p-2 me-3">
                             <i class="fa-solid fa-sign-out-alt fa-lg"></i>
