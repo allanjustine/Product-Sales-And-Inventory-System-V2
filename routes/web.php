@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\OAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Orders\Index as AdminOrdersIndex;
 use App\Livewire\Admin\Orders\ProductSales;
@@ -37,6 +38,9 @@ use App\Livewire\NormalView\Products\ViewOnly;
 |
 */
 
+
+Route::get('/auth/{provider}', [OAuthController::class, 'oauthRedirect'])->name('auth.oauth');
+Route::get('/auth/{provider}/callback', [OAuthController::class, 'oauthCallback']);
 
 Route::get('/login', Login::class)->name('login');
 Route::get('/register', Register::class);

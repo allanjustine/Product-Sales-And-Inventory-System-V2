@@ -26,17 +26,14 @@
                                     <span class="input-group-text bg-light border-end-0">
                                         <i class="fa-solid fa-user text-muted"></i>
                                     </span>
-                                    <input type="text"
-                                           id="username_or_email"
-                                           class="form-control border-start-0 {{ $errors->has('username_or_email') ? 'is-invalid' : '' }}"
-                                           placeholder="Enter username or email"
-                                           wire:model="username_or_email"
-                                           required>
+                                    <input type="text" id="username_or_email"
+                                        class="form-control border-start-0 {{ $errors->has('username_or_email') ? 'is-invalid' : '' }}"
+                                        placeholder="Enter username or email" wire:model="username_or_email" required>
                                 </div>
                                 @error('username_or_email')
-                                <div class="invalid-feedback d-block mt-2">
-                                    <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
-                                </div>
+                                    <div class="invalid-feedback d-block mt-2">
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
@@ -46,7 +43,7 @@
                                         Password
                                     </label>
                                     <a href="#" class="text-decoration-none small" data-bs-toggle="modal"
-                                       data-bs-target="#forgotPassword">
+                                        data-bs-target="#forgotPassword">
                                         Forgot Password?
                                     </a>
                                 </div>
@@ -54,30 +51,25 @@
                                     <span class="input-group-text bg-light border-end-0">
                                         <i class="fa-solid fa-lock text-muted"></i>
                                     </span>
-                                    <input type="password"
-                                           id="password"
-                                           class="form-control border-start-0 {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                           placeholder="Enter your password"
-                                           wire:model="password"
-                                           required>
-                                    <button type="button"
-                                            class="input-group-text bg-light border-start-0"
-                                            onclick="togglePasswordVisibility()"
-                                            id="password-toggle">
+                                    <input type="password" id="password"
+                                        class="form-control border-start-0 {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                        placeholder="Enter your password" wire:model="password" required>
+                                    <button type="button" class="input-group-text bg-light border-start-0"
+                                        onclick="togglePasswordVisibility()" id="password-toggle">
                                         <i id="password-toggle-icon" class="fa-solid fa-eye-slash"></i>
                                     </button>
                                 </div>
                                 @error('password')
-                                <div class="invalid-feedback d-block mt-2">
-                                    <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
-                                </div>
+                                    <div class="invalid-feedback d-block mt-2">
+                                        <i class="fa-solid fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
                             <div class="mb-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox"
-                                           id="remember" wire:model="remember">
+                                    <input class="form-check-input" type="checkbox" id="remember"
+                                        wire:model="remember">
                                     <label class="form-check-label" for="remember">
                                         Remember me
                                     </label>
@@ -85,9 +77,8 @@
                             </div>
 
                             <div class="d-grid mb-4">
-                                <button type="submit"
-                                        class="btn btn-primary btn-lg py-3 fw-semibold"
-                                        wire:loading.attr="disabled">
+                                <button type="submit" class="btn btn-primary btn-lg py-3 fw-semibold"
+                                    wire:loading.attr="disabled">
                                     <span wire:loading.remove wire:target="login">
                                         Sign In
                                     </span>
@@ -105,6 +96,23 @@
                                 </div>
                             </div>
 
+                            <div class="d-grid mb-2">
+                                <a href="{{ route('auth.oauth', 'google') }}" class="btn btn-oauth btn-lg fw-semibold">
+                                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"
+                                        width="20" height="20" class="me-2">
+                                    Login with Google
+                                </a>
+                            </div>
+
+                            <div class="d-grid mb-4">
+                                <a href="{{ route('auth.oauth', 'facebook') }}"
+                                    class="btn btn-oauth btn-lg fw-semibold">
+                                    <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook"
+                                        width="20" height="20" class="me-2">
+                                    Login with Facebook
+                                </a>
+                            </div>
+
                             <div class="text-center">
                                 <p class="mb-2">
                                     Don't have an account?
@@ -114,8 +122,8 @@
                                 </p>
                                 <p class="mb-0">
                                     Didn't receive verification?
-                                    <a href="#" class="text-decoration-none fw-semibold ms-1" data-bs-toggle="modal"
-                                       data-bs-target="#resend">
+                                    <a href="#" class="text-decoration-none fw-semibold ms-1"
+                                        data-bs-toggle="modal" data-bs-target="#resend">
                                         Resend Email
                                     </a>
                                 </p>
@@ -152,7 +160,8 @@
             border-radius: 16px !important;
         }
 
-        .form-control, .input-group-text {
+        .form-control,
+        .input-group-text {
             transition: all 0.3s ease;
             height: 50px;
         }
@@ -251,6 +260,20 @@
         .spinner-border {
             vertical-align: middle;
         }
+
+        .btn-oauth {
+            background: #fff;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            color: #444;
+            transition: all 0.3s ease;
+        }
+
+        .btn-oauth:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
     </style>
 
     <script>
@@ -271,7 +294,11 @@
 
         document.addEventListener('livewire:navigated', () => {
             Livewire.on('alert', (event) => {
-                const { title, type, message } = event.alerts;
+                const {
+                    title,
+                    type,
+                    message
+                } = event.alerts;
                 Swal.fire({
                     title: title,
                     text: message,
@@ -288,46 +315,58 @@
             });
         });
 
-        @if(session('verified'))
-        document.addEventListener('livewire:navigated', function() {
-            const { title, message, type } = @json(session('verified'));
-            Swal.fire({
-                title: title,
-                text: message,
-                icon: type,
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#0d6efd',
-                showCloseButton: true,
+        @if (session('verified'))
+            document.addEventListener('livewire:navigated', function() {
+                const {
+                    title,
+                    message,
+                    type
+                } = @json(session('verified'));
+                Swal.fire({
+                    title: title,
+                    text: message,
+                    icon: type,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0d6efd',
+                    showCloseButton: true,
+                });
             });
-        });
         @endif
 
-        @if(session('alreadyVerified'))
-        document.addEventListener('livewire:navigated', function() {
-            const { title, message, type } = @json(session('alreadyVerified'));
-            Swal.fire({
-                title: title,
-                text: message,
-                icon: type,
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#0d6efd',
-                showCloseButton: true,
+        @if (session('alreadyVerified'))
+            document.addEventListener('livewire:navigated', function() {
+                const {
+                    title,
+                    message,
+                    type
+                } = @json(session('alreadyVerified'));
+                Swal.fire({
+                    title: title,
+                    text: message,
+                    icon: type,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0d6efd',
+                    showCloseButton: true,
+                });
             });
-        });
         @endif
 
-        @if(session('invalidToken'))
-        document.addEventListener('livewire:navigated', function() {
-            const { title, message, type } = @json(session('invalidToken'));
-            Swal.fire({
-                title: title,
-                text: message,
-                icon: type,
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#0d6efd',
-                showCloseButton: true,
+        @if (session('invalidToken'))
+            document.addEventListener('livewire:navigated', function() {
+                const {
+                    title,
+                    message,
+                    type
+                } = @json(session('invalidToken'));
+                Swal.fire({
+                    title: title,
+                    text: message,
+                    icon: type,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#0d6efd',
+                    showCloseButton: true,
+                });
             });
-        });
         @endif
     </script>
 </div>
