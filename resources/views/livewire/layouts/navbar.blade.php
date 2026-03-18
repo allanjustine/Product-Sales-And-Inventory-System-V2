@@ -733,13 +733,6 @@
                     link.classList.add('active2');
                 }
             });
-
-            // Update document title based on active page
-            const activeLink = document.querySelector('.nav-link.active2');
-            if (activeLink) {
-                const pageName = activeLink.querySelector('span')?.textContent || 'AJM Store';
-                document.title = `${pageName} - AJM Store`;
-            }
         });
 
         // Close dropdown when clicking outside

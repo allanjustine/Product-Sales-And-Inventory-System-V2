@@ -7,8 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Web | {{ $title ?? 'Not Set' }}</title>
-    <meta property="og:title" content="My Web | {{ $title ?? 'Not Set' }}">
+    <title>AJM Store | {{ $title ?? 'Not Set' }}</title>
+    <meta property="og:title" content="AJM Store | {{ $title ?? 'Not Set' }}">
     <meta name="author" content="Allan Justine Mascariñas" />
     <meta property="og:description"
         content="A powerful, real-time eCommerce platform designed for simplicity and speed. Seamlessly manage products, process orders, and track inventory with instant updates. Whether you're a small business or a growing enterprise, our user-friendly interface makes online selling effortless — no technical expertise required.">
