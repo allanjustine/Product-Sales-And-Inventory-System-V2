@@ -122,7 +122,7 @@
                                 @enderror
                                 <div class="d-flex justify-content-between mt-2">
                                     <small class="text-muted">
-                                        <i class="fa-solid fa-lightbulb me-1"></i>Be specific for better assistance
+                                        <i class="fa-solid fa-solidbulb me-1"></i>Be specific for better assistance
                                     </small>
                                     <small class="text-muted">Maximum 1000 characters</small>
                                 </div>

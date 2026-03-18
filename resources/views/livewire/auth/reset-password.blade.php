@@ -107,7 +107,7 @@
 
                     <div class="text-center mt-4">
                         <div class="alert alert-light border d-inline-flex align-items-center shadow-sm" role="alert">
-                            <i class="fa-solid fa-lightbulb text-warning me-2"></i>
+                            <i class="fa-solid fa-solidbulb text-warning me-2"></i>
                             <small>Use a unique password that you don't use elsewhere</small>
                         </div>
                     </div>
