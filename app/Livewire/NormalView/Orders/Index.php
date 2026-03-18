@@ -12,12 +12,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Index extends Component
 {
     #[Title('My Orders')]
+
+    #[Url('order_status', keep: true)]
+    public $order_status = 'pending';
 
     public $recents;
     public $pendings;

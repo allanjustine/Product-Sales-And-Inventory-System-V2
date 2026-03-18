@@ -31,7 +31,7 @@
     </div>
 
     <div class="container mt-5">
-        <h3><i class="fa-light fa-box-open"></i> Products</h3>
+        <h3><i class="fa-solid fa-box-open"></i> Products</h3>
         <div class="row">
             @for ($i = 0; $i < 8; $i++)
             <div class="col-md-3 mt-2 col-sm-4 col-6">

@@ -43,7 +43,8 @@
                                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                                     <h4 class="alert-heading fw-bold mb-0 text-black"
                                                         id="deliveryAddressAlertTitle">
-                                                        <i class="fa-solid fa-map-marker-alt me-2"></i>Your Delivery Address
+                                                        <i class="fa-solid fa-map-marker-alt me-2"></i>Your Delivery
+                                                        Address
                                                     </h4>
                                                     <a wire:navigate href="/profile"
                                                         class="btn btn-link btn-sm rounded-pill text-primary d-none d-md-block"
@@ -69,11 +70,13 @@
                                                         <div class="d-flex align-items-center mb-3" id="addressNotSet">
                                                             <div class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2 me-2"
                                                                 id="addressWarningBadge">
-                                                                <i class="fa-solid fa-exclamation-triangle me-1"></i>Required
+                                                                <i
+                                                                    class="fa-solid fa-exclamation-triangle me-1"></i>Required
                                                             </div>
                                                             <p class="mb-0 fw-semibold text-danger"
                                                                 id="addressWarningText">
-                                                                <i class="fa-solid fa-circle-exclamation me-2"></i>Set up
+                                                                <i class="fa-solid fa-circle-exclamation me-2"></i>Set
+                                                                up
                                                                 your delivery address to ensure successful delivery
                                                             </p>
                                                         </div>
@@ -129,10 +132,11 @@
                 <div class="card border-0 rounded-4 shadow-lg overflow-hidden" id="ordersMainCard">
                     <div class="card-header bg-white p-0 border-bottom-0" id="ordersCardHeader">
                         <ul class="nav nav-tabs nav-tabs-custom px-3" role="tablist" id="ordersTabNav">
-                            <li class="nav-item" role="presentation" id="pendingTabItem">
-                                <a class="nav-link active rounded-top-3" id="pendingTab" data-bs-toggle="pill"
-                                    href="#pendingTabContent" role="tab" aria-controls="pendingTabContent"
-                                    aria-selected="true">
+                            <li class="nav-item" role="presentation" id="pendingTabItem"
+                                wire:click='$set("order_status", "pending")'>
+                                <a class="nav-link rounded-top-3 {{ $this->order_status === 'pending' ? 'active' : '' }}"
+                                    id="pendingTab" data-bs-toggle="pill" href="#" role="tab"
+                                    aria-controls="pendingTabContent" aria-selected="true">
                                     <div class="d-flex align-items-center" id="pendingTabContentInner">
                                         <i class="fa-solid fa-clock me-2"></i>
                                         <span id="pendingTabText">Pending Orders</span>
@@ -146,10 +150,11 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item" role="presentation" id="recentTabItem">
-                                <a class="nav-link rounded-top-3" id="recentTab" data-bs-toggle="pill"
-                                    href="#recentTabContent" role="tab" aria-controls="recentTabContent"
-                                    aria-selected="false">
+                            <li class="nav-item" role="presentation" id="recentTabItem"
+                                wire:click='$set("order_status", "recent-orders")'>
+                                <a class="nav-link rounded-top-3 {{ $this->order_status === 'recent-orders' ? 'active' : '' }}"
+                                    id="recentTab" data-bs-toggle="pill" href="#" role="tab"
+                                    aria-controls="recentTabContent" aria-selected="false">
                                     <div class="d-flex align-items-center" id="recentTabContentInner">
                                         <i class="fa-solid fa-history me-2"></i>
                                         <span id="recentTabText">Recent Orders</span>
@@ -163,10 +168,11 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item" role="presentation" id="cancelledTabItem">
-                                <a class="nav-link rounded-top-3" id="cancelledTab" data-bs-toggle="pill"
-                                    href="#cancelledTabContent" role="tab" aria-controls="cancelledTabContent"
-                                    aria-selected="false">
+                            <li class="nav-item" role="presentation" id="cancelledTabItem"
+                                wire:click='$set("order_status", "cancelled-orders")'>
+                                <a class="nav-link rounded-top-3 {{ $this->order_status === 'cancelled-orders' ? 'active' : '' }}"
+                                    id="cancelledTab" data-bs-toggle="pill" href="#" role="tab"
+                                    aria-controls="cancelledTabContent" aria-selected="false">
                                     <div class="d-flex align-items-center" id="cancelledTabContentInner">
                                         <i class="fa-solid fa-ban me-2"></i>
                                         <span id="cancelledTabText">Cancelled Orders</span>
@@ -185,9 +191,49 @@
 
                     <div class="card-body p-0" id="ordersCardBody">
                         <div class="tab-content" id="ordersTabContent">
-                            <!-- Pending Orders Tab -->
-                            <div class="tab-pane fade show active p-4" id="pendingTabContent" role="tabpanel"
-                                aria-labelledby="pendingTab">
+                            <div class="p-4 w-100" wire:loading wire:target="order_status">
+                                @foreach (range(1, 3) as $item)
+                                    <div class="order-card border rounded-4 p-3 mb-3 shadow-sm w-100">
+                                        <div class="row g-3 align-items-center w-100">
+                                            <div class="col-md-2">
+                                                <div class="placeholder-glow">
+                                                    <div class="placeholder col-12 rounded-3" style="height: 100px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="placeholder-glow mb-2">
+                                                    <span class="placeholder col-6"></span>
+                                                </div>
+                                                <div class="placeholder-glow mb-2">
+                                                    <span class="placeholder col-3"></span>
+                                                    <span class="placeholder col-2 ms-2"></span>
+                                                </div>
+                                                <div class="placeholder-glow mb-2">
+                                                    <span class="placeholder col-4"></span>
+                                                    <span class="placeholder col-3 ms-2"></span>
+                                                </div>
+                                                <div class="placeholder-glow mb-2">
+                                                    <span class="placeholder col-5"></span>
+                                                    <span class="placeholder col-3 ms-2"></span>
+                                                </div>
+                                                <div class="placeholder-glow">
+                                                    <span class="placeholder col-3"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 text-end">
+                                                <div class="d-grid gap-2 placeholder-glow">
+                                                    <span
+                                                        class="placeholder btn btn-secondary placeholder col-12 rounded-pill"></span>
+                                                    <span class="placeholder col-8 mx-auto mt-2"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="tab-pane fade show {{ $this->order_status === 'pending' ? 'active' : '' }} p-4" wire:loading.remove wire:target="order_status"
+                                id="pendingTabContent" role="tabpanel" aria-labelledby="pendingTab">
                                 @if ($pendings->count() > 0)
                                     <div class="orders-list" id="pendingOrdersList">
                                         @foreach ($pendings as $order)
@@ -304,7 +350,8 @@
                                                                         <span
                                                                             class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25"
                                                                             id="pendingStatusBadge{{ $order->id }}">
-                                                                            <i class="fa-solid fa-clock me-1"></i>PENDING
+                                                                            <i
+                                                                                class="fa-solid fa-clock me-1"></i>PENDING
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Processing Order')
                                                                         <span
@@ -317,7 +364,8 @@
                                                                         <span
                                                                             class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"
                                                                             id="deliverStatusBadge{{ $order->id }}">
-                                                                            <i class="fa-solid fa-truck me-1"></i>OUT FOR
+                                                                            <i class="fa-solid fa-truck me-1"></i>OUT
+                                                                            FOR
                                                                             DELIVERY
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Delivered')
@@ -425,8 +473,8 @@
                             </div>
 
                             <!-- Recent Orders Tab -->
-                            <div class="tab-pane fade p-4" id="recentTabContent" role="tabpanel"
-                                aria-labelledby="recentTab">
+                            <div class="tab-pane fade show {{ $this->order_status === 'recent-orders' ? 'active' : '' }} p-4" wire:loading.remove wire:target="order_status"
+                                id="recentTabContent" role="tabpanel" aria-labelledby="recentTab">
                                 @if ($recents->count() > 0)
                                     <div class="orders-list" id="recentOrdersList">
                                         @foreach ($recents as $order)
@@ -556,7 +604,8 @@
                                                                         <span
                                                                             class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"
                                                                             id="deliverRecentBadge{{ $order->id }}">
-                                                                            <i class="fa-solid fa-truck me-1"></i>OUT FOR
+                                                                            <i class="fa-solid fa-truck me-1"></i>OUT
+                                                                            FOR
                                                                             DELIVERY
                                                                         </span>
                                                                     @elseif ($order->order_status === 'Delivered')
@@ -636,7 +685,8 @@
                                             id="recentGrandTotalContent">
                                             <div id="recentTotalLeft">
                                                 <h5 class="fw-bold mb-1" id="recentTotalTitle">
-                                                    <i class="fa-solid fa-history me-2 text-info"></i>Recent Orders Total
+                                                    <i class="fa-solid fa-history me-2 text-info"></i>Recent Orders
+                                                    Total
                                                 </h5>
                                                 <p class="text-muted small mb-0" id="recentTotalSubtitle">
                                                     {{ $recents->count() }} order(s) completed</p>
@@ -666,8 +716,8 @@
                             </div>
 
                             <!-- Cancelled Orders Tab -->
-                            <div class="tab-pane fade p-4" id="cancelledTabContent" role="tabpanel"
-                                aria-labelledby="cancelledTab">
+                            <div class="tab-pane fade show {{ $this->order_status === 'cancelled-orders' ? 'active' : '' }} p-4" wire:loading.remove wire:target="order_status"
+                                id="cancelledTabContent" role="tabpanel" aria-labelledby="cancelledTab">
                                 @if ($cancels->count() > 0)
                                     <div class="orders-list" id="cancelledOrdersList">
                                         @foreach ($cancels as $order)
@@ -818,7 +868,8 @@
                                             id="cancelledGrandTotalContent">
                                             <div id="cancelledTotalLeft">
                                                 <h5 class="fw-bold mb-1 text-muted" id="cancelledTotalTitle">
-                                                    <i class="fa-solid fa-ban me-2 text-danger"></i>Cancelled Orders Total
+                                                    <i class="fa-solid fa-ban me-2 text-danger"></i>Cancelled Orders
+                                                    Total
                                                 </h5>
                                                 <p class="text-muted small mb-0" id="cancelledTotalSubtitle">
                                                     {{ $cancels->count() }} order(s) cancelled</p>
@@ -1518,7 +1569,8 @@
 
                     setTimeout(() => {
                         if (repurchaseBtn) {
-                            repurchaseBtn.innerHTML = '<i class="fa-solid fa-rotate-right me-1"></i>Re-purchase';
+                            repurchaseBtn.innerHTML =
+                                '<i class="fa-solid fa-rotate-right me-1"></i>Re-purchase';
                             repurchaseBtn.disabled = false;
                         }
                     }, 2000);

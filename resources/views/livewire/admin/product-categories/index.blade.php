@@ -97,7 +97,7 @@
                                             <a href="#" class="dropdown-item btn-edit" data-toggle="modal"
                                                 data-target="#editProductCategory"
                                                 wire:click="edit({{ $product_category->id }})">
-                                                <i class="fa-light fa-pen-to-square text-primary mr-2"></i> Update
+                                                <i class="fa-solid fa-pen-to-square text-primary mr-2"></i> Update
                                             </a>
                                             <div class="dropdown-divider"></div>
                                             <a href="#" class="dropdown-item btn-delete" data-toggle="modal"
