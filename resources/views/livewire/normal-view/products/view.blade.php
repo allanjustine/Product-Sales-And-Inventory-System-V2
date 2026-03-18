@@ -37,7 +37,7 @@
                                                     }
                                                 })">
 
-                                                <div id="productImagesCarousel" class="carousel slide carousel-fade"
+                                                <div id="productImagesCarousel" class="carousel slide carousel-fade" data-bs-touch="false"
                                                     style="height: 40vh;">
                                                     <div class="carousel-inner" style="height: 40vh;">
                                                         @foreach ($productView->productImages as $key => $image)

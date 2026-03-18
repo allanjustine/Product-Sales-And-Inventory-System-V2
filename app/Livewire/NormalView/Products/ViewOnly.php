@@ -148,7 +148,9 @@ class ViewOnly extends Component
                 'product_category',
                 'productSizes',
                 'productColors',
-                'productImages'
+                'productImages',
+                'productRatings.user',
+                'productRatings.order',
             ])
             ->withAvg('productRatings', 'rating')
             ->withSum('productSizes', 'stock')

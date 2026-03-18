@@ -328,6 +328,7 @@ class Index extends Component
                 'productImages',
                 'productRatings.ratingImages',
                 'productRatings.user',
+                'productRatings.order',
             ])
             ->withAvg('productRatings', 'rating')
             ->withSum('productSizes', 'stock')

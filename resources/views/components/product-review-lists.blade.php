@@ -4,7 +4,7 @@
     <h5 class="fw-bold mb-3 mb-md-4">
         <i class="fa-solid fa-star me-2 text-warning"></i>Customer Reviews
         @if ($reviews->count() > 0)
-            <span class="badge bg-primary bg-opacity-10 text-primary ms-2">{{ $reviews->count() }}
+            <span class="badge bg-primary bg-opacity-10 text-white ms-2">{{ $reviews->count() }}
                 reviews</span>
         @endif
     </h5>
@@ -31,6 +31,22 @@
                                     @for ($i = 1; $i <= $review->rating; $i++)
                                         <i class="fa-solid fa-star text-warning"></i>
                                     @endfor
+                                </div>
+                                <div>
+                                    @if ($review->order->hasVariation())
+                                        <div class="d-flex flex-column gap-1">
+                                            @if ($review->order->productColor)
+                                                <span class="fw-bold text-muted text-sm">Color:
+                                                    {{ Str::upper($review->order->productColor->name) }}</span>
+                                            @endif
+                                            @if ($review->order->productSize)
+                                                <span class="fw-bold text-muted text-sm">Size:
+                                                    {{ Str::upper($review->order->productSize->name) }}</span>
+                                            @endif
+                                        </div>
+                                    @else
+                                        N/A
+                                    @endif
                                 </div>
                             </div>
                             <small class="text-muted mr-5"

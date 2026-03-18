@@ -209,22 +209,22 @@
                                         $greaterZeroColor = $colorCount > 0;
                                         $greaterZeroSize = $sizeCount > 0;
                                     @endphp
-                                    @if ($greaterZeroColor || $greaterZeroSize)
-                                        <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                    <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                        @if ($greaterZeroColor || $greaterZeroSize)
                                             @if ($greaterZeroColor)
                                                 <span class="badge bg-primary badge-sm">C:{{ $colorCount }}</span>
                                             @endif
                                             @if ($greaterZeroSize)
                                                 <span class="badge bg-success badge-sm">S:{{ $sizeCount }}</span>
                                             @endif
-                                            <a href="{{ route('sizes-and-colors', $product->id) }}" wire:navigate
-                                                class="ms-1">
-                                                <i class="fa-solid fa-pen text-primary"></i>
-                                            </a>
-                                        </div>
-                                    @else
-                                        <span class="text-muted small">—</span>
-                                    @endif
+                                        @else
+                                            <span class="text-muted small">—</span>
+                                        @endif
+                                        <a href="{{ route('sizes-and-colors', $product->id) }}" wire:navigate
+                                            class="ms-1">
+                                            <i class="fa-solid fa-pen text-primary"></i>
+                                        </a>
+                                    </div>
                                 </td>
 
                                 <td class="align-middle text-center">
@@ -242,15 +242,17 @@
                                             <a href="#" class="dropdown-item btn-edit" data-bs-toggle="modal"
                                                 data-bs-target="#updateProduct"
                                                 wire:click="edit({{ $product->id }})">
-                                                <i class="fa-light fa-pen-to-square text-primary me-2"></i> Edit
+                                                <i class="fa-solid fa-pen-to-square text-primary me-2"></i> Edit
                                             </a>
                                             <a href="#" class="dropdown-item btn-delete" data-bs-toggle="modal"
                                                 data-bs-target="#deleteProduct"
                                                 wire:click="delete({{ $product->id }})">
                                                 <i class="fa-solid fa-trash text-danger me-2"></i> Remove
                                             </a>
-                                            <a href="{{ route('sizes-and-colors', $product->id) }}" wire:navigate class="dropdown-item btn-delete">
-                                                <i class="fa-solid fa-layer-group text-info me-2"></i> Color & Size Management
+                                            <a href="{{ route('sizes-and-colors', $product->id) }}" wire:navigate
+                                                class="dropdown-item btn-delete">
+                                                <i class="fa-solid fa-layer-group text-info me-2"></i> Color & Size
+                                                Management
                                             </a>
                                         </div>
                                     </div>

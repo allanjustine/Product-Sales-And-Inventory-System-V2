@@ -37,13 +37,13 @@
                                                     }
                                                 })">
 
-                                                <div id="productImagesCarousel" class="carousel slide carousel-fade"
+                                                <div id="productImagesCarousel" class="carousel slide carousel-fade" data-bs-touch="false"
                                                     style="height: 40vh;">
                                                     <div class="carousel-inner" style="height: 40vh;">
                                                         @foreach ($productView->productImages as $key => $image)
                                                             <div class="carousel-item"
                                                                 :class="active === {{ $key }} ? 'active' : ''">
-                                                                @if (Storage::exists($image->path))
+                                                                @if (Storage::disk('public')->exists($image->path))
                                                                     <img src="{{ Storage::url($image->path) }}"
                                                                         alt="{{ $image->product_name }}"
                                                                         class="d-block w-100"
@@ -80,7 +80,7 @@
                                                     @foreach ($productView->productImages as $key => $productImage)
                                                         <div style="width: 50px; height: 50px;"
                                                             @click="active = {{ $key }}">
-                                                            @if (Storage::exists($image->path))
+                                                            @if (Storage::disk('public')->exists($image->path))
                                                                 <img type="button" x-ref="thumb-{{ $key }}"
                                                                     src="{{ Storage::url($productImage->path) }}"
                                                                     :class="active === {{ $key }} ? 'active-image' :

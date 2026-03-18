@@ -42,9 +42,9 @@
                                                     @foreach ($this->product_all_images as $image)
                                                         <div class="position-relative" wire:key='{{ $image->id }}'
                                                             style="width: 90px; height: 90px;">
-                                                            <img src="{{ Storage::exists($image->path) ? Storage::url($image->path) : url($image->path) }}"
+                                                            <img src="{{ Storage::disk('public')->exists($image->path) ? Storage::url($image->path) : url($image->path) }}"
                                                                 class="img-thumbnail w-100 h-100"
-                                                                style="object-fit: cover;" alt="Product image">
+                                                                style="object-fit: cover;" alt="{{ $image->path }}">
                                                             <button type="button"
                                                                 class="btn btn-sm btn-danger position-absolute rounded-circle p-0"
                                                                 wire:click='removeImage({{ $image->id }})'
