@@ -98,7 +98,7 @@
 
                             <div class="d-grid mb-2">
                                 <a href="{{ route('auth.oauth', 'google') }}" class="btn btn-oauth btn-lg fw-semibold">
-                                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"
+                                    <img src="https://static.vecteezy.com/system/resources/previews/022/484/503/non_2x/google-lens-icon-logo-symbol-free-png.png" alt="Google"
                                         width="20" height="20" class="me-2">
                                     Login with Google
                                 </a>
