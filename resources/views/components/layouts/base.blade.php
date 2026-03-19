@@ -211,7 +211,7 @@
                             </a>
 
                             <a href="https://tiktok.com" target="_blank" class="social-icon tiktok"
-                                data-bs-toggle="tooltip" title="Email Us">
+                                data-bs-toggle="tooltip" title="Follow on TikTok">
                                 <div class="icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3">
                                     <i class="fab fa-tiktok fa-lg"></i>
                                 </div>
