@@ -37,8 +37,8 @@
                                                     }
                                                 })">
 
-                                                <div id="productImagesCarousel" class="carousel slide carousel-fade" data-bs-touch="false"
-                                                    style="height: 40vh;">
+                                                <div id="productImagesCarousel" class="carousel slide carousel-fade"
+                                                    data-bs-touch="false" style="height: 40vh;">
                                                     <div class="carousel-inner" style="height: 40vh;">
                                                         @foreach ($productView->productImages as $key => $image)
                                                             <div class="carousel-item"
@@ -344,7 +344,7 @@
                                             <i class="fa-solid fa-align-left me-2 text-primary"></i>Product Description
                                         </h5>
                                         <div class="description-content bg-white rounded-3 p-4 shadow-sm">
-                                            <p class="mb-0">{{ $productView->product_description }}</p>
+                                            <div class="ql-editor">{!! $productView->product_description !!}</div>
                                         </div>
                                     </div>
                                 </div>

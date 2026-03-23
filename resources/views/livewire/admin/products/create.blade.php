@@ -26,7 +26,7 @@
                                 <input type="file" accept=".png, .jpg, .jpeg, .webp" multiple class="form-control"
                                     id="create_product_image" wire:model="product_images" required>
 
-                                @error('product_images')
+                                @error('product_images.*')
                                     <span class="text-danger small mt-1">*{{ $message }} (jpg, jpeg, png, webp
                                         only)</span>
                                 @enderror
@@ -172,7 +172,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="product_old_price" class="form-label fw-bold">Old Price
-                                            (Optional):</label>
+                                            (<span class="text-danger">This should be same as regular price if no
+                                                discount</span>):</label>
                                         <div class="input-group">
                                             <span class="input-group-text">₱</span>
                                             <input type="number" id="product_old_price" placeholder="0.00"
@@ -343,8 +344,11 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-0">
-                                <textarea id="product_description" name="product_description" wire:model.live.debounce.200ms="product_description"
-                                    placeholder="Enter detailed product description..." class="form-control" rows="4" required></textarea>
+                                <div wire:ignore>
+                                    <div id="create_quill_editor" style="min-height: 150px;"></div>
+                                </div>
+                                <input type="hidden" id="create_product_description_input"
+                                    wire:model.live.debounce.200ms="product_description">
                                 @error('product_description')
                                     <span class="text-danger small">*{{ $message }}</span>
                                 @enderror
@@ -379,6 +383,61 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:navigated', initCreateQuill);
+        document.addEventListener('livewire:navigated', initCreateQuill);
+
+        function initCreateQuill() {
+            const editorEl = document.getElementById('create_quill_editor');
+            if (!editorEl || editorEl.__quill) return;
+
+            const quill = new Quill('#create_quill_editor', {
+                theme: 'snow',
+                placeholder: 'Enter detailed product description...',
+                modules: {
+                    toolbar: [
+                        [{
+                            font: []
+                        }, {
+                            size: ['small', false, 'large', 'huge']
+                        }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{
+                            color: []
+                        }, {
+                            background: []
+                        }],
+                        [{
+                            list: 'ordered'
+                        }, {
+                            list: 'bullet'
+                        }],
+                        [{
+                            align: []
+                        }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            editorEl.__quill = quill;
+
+            const hiddenInput = document.getElementById('create_product_description_input');
+
+            // Set initial value if Livewire already has one
+            if (hiddenInput.value) {
+                quill.root.innerHTML = hiddenInput.value;
+            }
+
+            quill.on('text-change', () => {
+                const html = quill.getSemanticHTML();
+                hiddenInput.value = html;
+                hiddenInput.dispatchEvent(new Event('input'));
+            });
+        }
+    </script>
 
     <style>
         /* Custom styles using IDs */

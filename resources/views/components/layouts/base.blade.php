@@ -35,6 +35,8 @@
     <link rel="stylesheet" href="https://adminlte.io/docs/3.2/assets/css/highlighter.css">
     <link rel="stylesheet" href="https://adminlte.io/docs/3.2/assets/css/adminlte.min.css">
     <script data-navigate-once src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
     @vite(['resources/js/app.js', 'resources/css/app.css'])
 
     @livewireStyles

@@ -31,7 +31,9 @@ class Index extends Component
     public $sortBy = 'product_name';
     public $sortDirection = 'asc';
     public $product_stock = 0;
-    public $product_category_id, $product_name, $product_description, $product_status, $product_price, $product_old_price, $product_code;
+    public $product_category_id, $product_name, $product_description, $product_status, $product_code;
+    public $product_price = 0.00;
+    public $product_old_price = 0.00;
     public $productEdit, $productToDelete, $productView;
     public $product_images = [];
     public $is_color_selected = false;
@@ -155,8 +157,8 @@ class Index extends Component
         $validatedData = $this->validate([
             'product_name'              =>          'required|string|unique:products|max:255',
             'product_description'       =>          'required|string|max:65535',
-            'product_price'             =>          'required|string|numeric|min:1|lte:product_old_price',
-            'product_old_price'         =>          'required|string|numeric|gte:product_price',
+            'product_price'             =>          'required|numeric|min:0.01|lte:product_old_price',
+            'product_old_price'         =>          'required|numeric|min:0.01|gte:product_price',
             'product_status'            =>          'required|string',
             'product_stock'             =>          'numeric',
             'product_images'            =>          'required',
@@ -223,9 +225,9 @@ class Index extends Component
 
         $product->productImages()->createMany($paths);
 
-        $this->sweetAlert('Product Added', 'success', "The product \"{$product->product_name}\" is added to list.");
+        $this->reset();
 
-        return;
+        $this->sweetAlert('Product Added', 'success', "The product \"{$product->product_name}\" is added to list.");
     }
 
     #[On('resetInputs')]
@@ -233,8 +235,8 @@ class Index extends Component
     {
         $this->product_name = '';
         $this->product_description = '';
-        $this->product_price = '';
-        $this->product_old_price = '';
+        $this->product_price = 0;
+        $this->product_old_price = 0;
         $this->product_stock = '';
         $this->product_status = '';
         $this->product_category_id = '';
@@ -261,6 +263,8 @@ class Index extends Component
         $this->is_color_selected = $this->productEdit->productColors()->exists();
         $this->is_size_selected = $this->productEdit->productSizes()->exists();
         $this->product_all_images = $this->productEdit->productImages;
+
+        $this->dispatch('quill-set-content', content: $this->product_description);
     }
 
     public function updatedIsColorSelected()
@@ -271,6 +275,11 @@ class Index extends Component
     public function updatedIsSizeSelected()
     {
         $this->product_stock = 0;
+    }
+
+    public function updatedProductPrice($value)
+    {
+        $this->product_old_price = $value;
     }
 
     public function statusChange($id)
@@ -298,8 +307,8 @@ class Index extends Component
     {
         $this->validate([
             'product_name'          => ['required', 'string', 'max:255', 'unique:products,product_name,' . $this->productEdit->id],
-            'product_price'         => 'required|string|numeric|min:1|lte:product_old_price',
-            'product_old_price'     => 'required|string|numeric|gte:product_price',
+            'product_price'         => 'required|numeric|min:0.01|lte:product_old_price',
+            'product_old_price'     => 'required|numeric|min:0.01|gte:product_price',
             'product_images.*'      => 'mimes:jpg,jpeg,png,webp|max:2040',
             'product_stock'         => 'numeric',
         ], [
@@ -314,7 +323,7 @@ class Index extends Component
             return;
         }
 
-        if (!$this->is_size_selected && !$this->is_color_selected) {
+        if (!$this->is_size_selected && !$this->is_color_selected && !$this->product_stock) {
             $this->addError('product_stock', 'Product stock is required.');
             return;
         }

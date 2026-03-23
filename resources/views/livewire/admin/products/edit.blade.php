@@ -251,9 +251,11 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group mb-0">
-                                    <textarea id="update_product_description" name="product_description"
-                                        wire:model.live.debounce.200ms="product_description" placeholder="Enter detailed product description..."
-                                        class="form-control" rows="4" required></textarea>
+                                    <div wire:ignore>
+                                        <div id="update_quill_editor" style="min-height: 150px;"></div>
+                                    </div>
+                                    <input type="hidden" id="update_product_description_input"
+                                        wire:model.live.debounce.200ms="product_description">
                                     @error('product_description')
                                         <span class="text-danger small">*{{ $message ?? '' }}</span>
                                     @enderror
@@ -341,6 +343,70 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:navigated', initUpdateQuill);
+
+        // Listen for the event dispatched by Index.php edit() to populate content
+        window.addEventListener('quill-set-content', (e) => {
+            const editorEl = document.getElementById('update_quill_editor');
+            if (!editorEl || !editorEl.__quill) {
+                initUpdateQuill();
+            }
+            if (editorEl && editorEl.__quill) {
+                editorEl.__quill.root.innerHTML = e.detail.content || '';
+            }
+        });
+
+        function initUpdateQuill() {
+            const editorEl = document.getElementById('update_quill_editor');
+            if (!editorEl || editorEl.__quill) return;
+
+            const quill = new Quill('#update_quill_editor', {
+                theme: 'snow',
+                placeholder: 'Enter detailed product description...',
+                modules: {
+                    toolbar: [
+                        [{
+                            font: []
+                        }, {
+                            size: ['small', false, 'large', 'huge']
+                        }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{
+                            color: []
+                        }, {
+                            background: []
+                        }],
+                        [{
+                            list: 'ordered'
+                        }, {
+                            list: 'bullet'
+                        }],
+                        [{
+                            align: []
+                        }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            editorEl.__quill = quill;
+
+            const hiddenInput = document.getElementById('update_product_description_input');
+
+            if (hiddenInput && hiddenInput.value) {
+                quill.root.innerHTML = hiddenInput.value;
+            }
+
+            quill.on('text-change', () => {
+                const html = quill.getSemanticHTML();
+                hiddenInput.value = html;
+                hiddenInput.dispatchEvent(new Event('input'));
+            });
+        }
+    </script>
 
     <style>
         /* Custom styles using IDs */
