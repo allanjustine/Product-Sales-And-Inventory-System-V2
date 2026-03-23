@@ -175,8 +175,8 @@ class Dashboard extends Component
             ->withSum('orders', 'order_quantity')
             ->withSum('orders', 'order_total_amount')
             ->has('products')
+            ->has('orders')
             ->orderBy('orders_sum_order_quantity', 'desc')
-            ->having('orders_sum_order_quantity', '>', 0)
             ->take(10)
             ->get();
     }
