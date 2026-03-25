@@ -131,31 +131,14 @@ class Dashboard extends Component
     #[Computed]
     public function stockStatus()
     {
-        $product = Product::query();
+        $product = Product::query()
+            ->with('productSizes', 'productColors');
 
-        $in_stock = (clone $product)->where(
-            fn($q)
-            =>
-            $q->where('product_stock', '>', 0)
-                ->orWhereHas('productSizes', fn($size) => $size->where('stock', '>', 0))
-                ->orWhereHas('productColors', fn($size) => $size->where('stock', '>', 0))
-        )->count();
+        $in_stock = (clone $product)->inStock()->count();
 
-        $low_stock = (clone $product)->where(
-            fn($q)
-            =>
-            $q->where('product_stock', '<', 20)
-                ->orWhereHas('productSizes', fn($size) => $size->where('stock', '<', 20))
-                ->orWhereHas('productColors', fn($size) => $size->where('stock', '<', 20))
-        )->count();
+        $low_stock = (clone $product)->lowStock()->count();
 
-        $out_of_stock = (clone $product)->where(
-            fn($q)
-            =>
-            $q->where('product_stock', '<', 1)
-                ->orWhereHas('productSizes', fn($size) => $size->where('stock', '<', 1))
-                ->orWhereHas('productColors', fn($size) => $size->where('stock', '<', 1))
-        )->count();
+        $out_of_stock = (clone $product)->outOfStock()->count();
 
         $not_available = (clone $product)->where('product_status', 'Not Available')->count();
 
