@@ -22,7 +22,7 @@ class Index extends Component
 
     #[Title('Products')]
 
-    #[Url('status')]
+    #[Url('status', keep: true)]
     public $status;
 
     public $category_name = 'All';
@@ -85,6 +85,8 @@ class Index extends Component
                 fn($query)
                 => $query->where('order_status', '!=', "Cancelled"),
             ], 'order_quantity')
+            ->withSum('productSizes as size_stocks', 'stock')
+            ->withSum('productColors as color_stocks', 'stock')
             ->search($this->search);
 
         if ($this->category_name != 'All') {
@@ -98,37 +100,19 @@ class Index extends Component
                 $this->status === 'in_stock',
                 fn($q)
                 =>
-                $q->where(
-                    fn($item)
-                    =>
-                    $item->where('product_stock', '>', 0)
-                        ->orWhereHas('productSizes', fn($size) => $size->where('stock', '>', 0))
-                        ->orWhereHas('productColors', fn($size) => $size->where('stock', '>', 0))
-                )
+                $q->inStock()
             )
             ->when(
                 $this->status === 'low_stock',
                 fn($q)
                 =>
-                $q->where(
-                    fn($item)
-                    =>
-                    $item->where('product_stock', '<', 20)
-                        ->orWhereHas('productSizes', fn($size) => $size->where('stock', '<', 20))
-                        ->orWhereHas('productColors', fn($size) => $size->where('stock', '<', 20))
-                )
+                $q->lowStock()
             )
             ->when(
                 $this->status === 'out_of_stock',
                 fn($q)
                 =>
-                $q->where(
-                    fn($item)
-                    =>
-                    $item->where('product_stock', '<', 1)
-                        ->orWhereHas('productSizes', fn($size) => $size->where('stock', '<', 1))
-                        ->orWhereHas('productColors', fn($size) => $size->where('stock', '<', 1))
-                )
+                $q->outOfStock()
             )
             ->when(
                 $this->status === 'not_available',
