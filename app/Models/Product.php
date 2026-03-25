@@ -119,4 +119,58 @@ class Product extends Model
             return $value;
         }
     }
+
+    public function scopeLowStock($query)
+    {
+        $query->where(function ($q) {
+            $q->whereHas('productSizes', null, '>=', 1)
+                ->whereRaw('(SELECT COALESCE(SUM(stock), 0) FROM product_sizes WHERE product_sizes.product_id = products.id) BETWEEN ? AND ?', [1, 20])
+                ->orWhere(function ($q2) {
+                    $q2->whereDoesntHave('productSizes')
+                        ->whereHas('productColors', null, '>=', 1)
+                        ->whereRaw('(SELECT COALESCE(SUM(stock), 0) FROM product_colors WHERE product_colors.product_id = products.id) BETWEEN ? AND ?', [1, 20]);
+                })
+                ->orWhere(function ($q3) {
+                    $q3->whereDoesntHave('productSizes')
+                        ->whereDoesntHave('productColors')
+                        ->whereBetween('product_stock', [1, 20]);
+                });
+        });
+    }
+
+    public function scopeInStock($query)
+    {
+        $query->where(function ($q) {
+            $q->whereHas('productSizes', null, '>=', 1)
+                ->whereRaw('(SELECT COALESCE(SUM(stock), 0) FROM product_sizes WHERE product_sizes.product_id = products.id) > 0')
+                ->orWhere(function ($q2) {
+                    $q2->whereDoesntHave('productSizes')
+                        ->whereHas('productColors', null, '>=', 1)
+                        ->whereRaw('(SELECT COALESCE(SUM(stock), 0) FROM product_colors WHERE product_colors.product_id = products.id) > 0');
+                })
+                ->orWhere(function ($q3) {
+                    $q3->whereDoesntHave('productSizes')
+                        ->whereDoesntHave('productColors')
+                        ->where('product_stock', '>', 0);
+                });
+        });
+    }
+
+    public function scopeOutOfStock($query)
+    {
+        $query->where(function ($q) {
+            $q->whereHas('productSizes', null, '>=', 1)
+                ->whereRaw('(SELECT COALESCE(SUM(stock), 0) FROM product_sizes WHERE product_sizes.product_id = products.id) < 1')
+                ->orWhere(function ($q2) {
+                    $q2->whereDoesntHave('productSizes')
+                        ->whereHas('productColors', null, '>=', 1)
+                        ->whereRaw('(SELECT COALESCE(SUM(stock), 0) FROM product_colors WHERE product_colors.product_id = products.id) < 1');
+                })
+                ->orWhere(function ($q3) {
+                    $q3->whereDoesntHave('productSizes')
+                        ->whereDoesntHave('productColors')
+                        ->where('product_stock', '<', 1);
+                });
+        });
+    }
 }
