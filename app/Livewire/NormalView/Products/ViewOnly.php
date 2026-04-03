@@ -129,7 +129,7 @@ class ViewOnly extends Component
 
     public function view($id)
     {
-        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by']);
+        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by', 'loadMorePlus', 'defaultPage']);
 
         $this->productView = Product::withCount([
             'productRatings',
