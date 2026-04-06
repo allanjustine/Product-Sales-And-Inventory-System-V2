@@ -6,7 +6,8 @@
                 <i class="fa-solid fa-palette mr-2"></i>Sizes & Colors Management
             </h5>
             <div class="card-tools">
-                <a href="/admin/products" wire:navigate class="btn btn-link"><i class="fa-solid fa-arrow-left text-white"></i></a>
+                <a href="/admin/products" wire:navigate class="btn btn-link"><i
+                        class="fa-solid fa-arrow-left text-white"></i></a>
                 <button type="button" class="btn btn-tool" data-card-widget="refresh" wire:click="$refresh">
                     <i class="fa-solid fa-sync-alt text-white"></i>
                 </button>
@@ -80,7 +81,7 @@
                                                                 <button type="button" class="btn btn-outline-danger"
                                                                     wire:click='removeSize({{ $size->id }})'
                                                                     title="Delete size"
-                                                                    onclick="return confirm('Are you sure you want to delete this size?')">
+                                                                    wire:confirm="Are you sure you want to delete this size?">
                                                                     <i class="fa-solid fa-trash"></i>
                                                                 </button>
                                                             </div>
@@ -145,7 +146,8 @@
                                         wire:target="{{ $this->is_edit_size ? 'updateSize' : 'submitSize' }}">
                                         <span wire:loading.remove
                                             wire:target="{{ $this->is_edit_size ? 'updateSize' : 'submitSize' }}">
-                                            <i class="fa-solid fa-{{ $this->is_edit_size ? 'save' : 'plus' }} mr-2"></i>
+                                            <i
+                                                class="fa-solid fa-{{ $this->is_edit_size ? 'save' : 'plus' }} mr-2"></i>
                                             {{ $this->is_edit_size ? 'Update Size' : 'Add Size' }}
                                         </span>
                                         <span wire:loading
@@ -246,7 +248,8 @@
                             <!-- Add/Edit Color Form -->
                             <div class="color-form-container border-top pt-4">
                                 <h6 class="font-weight-bold text-danger mb-3">
-                                    <i class="fa-solid fa-{{ $this->is_edit_color ? 'edit' : 'plus-circle' }} mr-2"></i>
+                                    <i
+                                        class="fa-solid fa-{{ $this->is_edit_color ? 'edit' : 'plus-circle' }} mr-2"></i>
                                     {{ $this->is_edit_color ? 'Edit Color' : 'Add New Color' }}
                                 </h6>
 
@@ -301,7 +304,8 @@
                                         wire:target="{{ $this->is_edit_color ? 'updateColor' : 'submitColor' }}">
                                         <span wire:loading.remove
                                             wire:target="{{ $this->is_edit_color ? 'updateColor' : 'submitColor' }}">
-                                            <i class="fa-solid fa-{{ $this->is_edit_color ? 'save' : 'plus' }} mr-2"></i>
+                                            <i
+                                                class="fa-solid fa-{{ $this->is_edit_color ? 'save' : 'plus' }} mr-2"></i>
                                             {{ $this->is_edit_color ? 'Update Color' : 'Add Color' }}
                                         </span>
                                         <span wire:loading
@@ -599,5 +603,31 @@
                 }, 1000);
             });
         });
+    </script>
+
+    <script>
+        document.addEventListener('livewire:navigated', () => {
+            Livewire.on('closeModal', () => {
+                document.getElementById('closeModalAdd')?.click();
+                document.getElementById('closeModalUpdate')?.click();
+                document.getElementById('closeModalDelete')?.click();
+            });
+
+            Livewire.on('alert', (event) => {
+                const {
+                    title,
+                    type,
+                    message
+                } = event.alerts;
+
+                Swal.fire({
+                    confirmButtonColor: '#007bff',
+                    confirmButtonText: 'Close',
+                    title: title,
+                    icon: type,
+                    text: message
+                });
+            });
+        })
     </script>
 </div>

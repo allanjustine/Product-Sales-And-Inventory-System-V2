@@ -80,6 +80,8 @@ class SizesAndColors extends Component
             'type'    => "success",
             'message' => "{$size->name} removed successfully"
         ]);
+
+        $this->reset('size');
     }
 
     public function removeColor(ProductColor $color)
@@ -91,6 +93,8 @@ class SizesAndColors extends Component
             'type'    => "success",
             'message' => "{$color->name} removed successfully"
         ]);
+
+        $this->reset('color');
     }
 
     public function editSize(ProductSize $size)
@@ -112,7 +116,7 @@ class SizesAndColors extends Component
     public function updateSize()
     {
         $this->validate([
-            'size_name'  => ['required', 'string', 'min:1', 'max:50', Rule::unique('product_sizes', 'name')->ignore($this->size->id)],
+            'size_name'  => ['required', 'string', 'min:1', 'max:50', Rule::unique('product_sizes', 'name')->where('product_id', $this->product->id)->ignore($this->size)],
             'size_stock' => ['required', 'numeric', 'min:1', 'max:999999'],
         ]);
 
@@ -135,7 +139,7 @@ class SizesAndColors extends Component
     public function updateColor()
     {
         $this->validate([
-            'color_name'  => ['required', 'string', 'min:1', 'max:50', Rule::unique('product_colors', 'name')->ignore($this->color->id)],
+            'color_name'  => ['required', 'string', 'min:1', 'max:50', Rule::unique('product_colors', 'name')->where('product_id', $this->product->id)->where('product_id', $this->product->id)->ignore($this->color)],
             'color_stock' => ['required', 'numeric', 'min:1', 'max:999999'],
         ]);
 
@@ -149,7 +153,7 @@ class SizesAndColors extends Component
         $this->reset(['color_name', 'color_stock']);
 
         $this->dispatch('alert', alerts: [
-            'title'   => "Color Added",
+            'title'   => "Color Updated",
             'type'    => "success",
             'message' => "Color updated successfully"
         ]);

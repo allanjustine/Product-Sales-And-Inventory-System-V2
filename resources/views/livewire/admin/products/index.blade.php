@@ -47,7 +47,19 @@
                     </select>
                 </div>
 
-                <div class="col-md-4 offset-md-3">
+                <div class="col-md-3">
+                    <label class="form-label text-muted small mb-1">Filter by stocks</label>
+                    <select name="status" id="status" class="form-select form-select-sm" wire:model.live="status">
+                        <option value="">All Status</option>
+                        @foreach (['in_stock', 'low_stock', 'out_of_stock'] as $category)
+                            <option key={{ $category }} value="{{ $category }}">
+                                {{ Str::of($category)->replace('_', ' ')->title() }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-4">
                     <label class="form-label text-muted small mb-1">Search products</label>
                     <input type="search" class="form-control form-control-sm" placeholder="Search by name, code..."
                         wire:model.live.debounce.200ms="search">
@@ -97,7 +109,8 @@
                             <th wire:click="handleSortBy('product_price')" style="cursor: pointer;"
                                 class="align-middle text-end">
                                 @if ($sortBy === 'product_price')
-                                    <i class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} mr-1"></i>
+                                    <i
+                                        class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} mr-1"></i>
                                 @else
                                     <i class="fa-solid fa-sort mr-1 text-muted"></i>
                                 @endif
@@ -106,7 +119,8 @@
                             <th wire:click="handleSortBy('product_status')" style="cursor: pointer;"
                                 class="align-middle text-center">
                                 @if ($sortBy === 'product_status')
-                                    <i class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} mr-1"></i>
+                                    <i
+                                        class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} mr-1"></i>
                                 @else
                                     <i class="fa-solid fa-sort mr-1 text-muted"></i>
                                 @endif
@@ -115,7 +129,8 @@
                             <th wire:click="handleSortBy('product_category_id')" style="cursor: pointer;"
                                 class="align-middle">
                                 @if ($sortBy === 'product_category_id')
-                                    <i class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} mr-1"></i>
+                                    <i
+                                        class="fa-solid fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} mr-1"></i>
                                 @else
                                     <i class="fa-solid fa-sort mr-1 text-muted"></i>
                                 @endif
@@ -158,7 +173,8 @@
                                             class="badge bg-info">{{ number_format($product->productStocks()) }}
                                             pcs</span></td>
                                 @else
-                                    <td class="align-middle text-center"><span class="badge bg-warning text-dark">OUT OF
+                                    <td class="align-middle text-center"><span class="badge bg-warning text-dark">OUT
+                                            OF
                                             STOCK</span></td>
                                 @endif
 
