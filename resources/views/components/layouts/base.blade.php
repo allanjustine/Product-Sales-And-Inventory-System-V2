@@ -377,8 +377,6 @@
     });
 </script>
 
-
-
 <style>
     .theme-switch {
         position: relative;
