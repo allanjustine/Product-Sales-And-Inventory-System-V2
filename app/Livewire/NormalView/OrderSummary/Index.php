@@ -28,7 +28,11 @@ class Index extends Component
     #[Computed]
     public function orderSummaries()
     {
-        return OrderSummary::with('product')
+        return OrderSummary::with([
+            'product',
+            'productSize',
+            'productColor'
+        ])
             ->where('user_id', Auth::id())
             ->get();
     }
@@ -47,7 +51,7 @@ class Index extends Component
     public function placeOrderItems()
     {
         try {
-            $orderSummaries = OrderSummary::with('productSize', 'productColor')
+            $orderSummaries = OrderSummary::with(['productSize', 'productColor', 'product'])
                 ->where('user_id', Auth::id())
                 ->get();
 
