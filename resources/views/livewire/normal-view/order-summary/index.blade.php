@@ -20,7 +20,8 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Total Amount</span>
-                        <span class="detail-value highlight-value text-lg">₱{{ number_format($this->total_amount, 2) }}</span>
+                        <span
+                            class="detail-value highlight-value text-lg">₱{{ number_format($this->total_amount, 2) }}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Estimated Delivery</span>
@@ -91,6 +92,12 @@
                                                 <p class="text-muted mb-0 small">{{ $summary->product->product_code }}
                                                 </p>
                                                 <p class="mb-0 small">Quantity: x{{ $summary->order_quantity }}</p>
+                                                @if ($summary->productSize)
+                                                    <p class="mb-0 small">Size: {{ $summary->productSize->name }}</p>
+                                                @endif
+                                                @if ($summary->productColor)
+                                                    <p class="mb-0 small">Color: {{ $summary->productColor->name }}</p>
+                                                @endif
                                                 <p class="mb-0 small text-info">Discount:
                                                     {{ $summary->product->discount }}</p>
                                             </div>
