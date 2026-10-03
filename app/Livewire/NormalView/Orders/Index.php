@@ -52,46 +52,48 @@ class Index extends Component
     {
         $userId = auth()->id();
 
-        $this->pendings = Order::with('product.productImages')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
-            $query->where('order_status', 'To Deliver')
-                ->orWhere('order_status', 'Processing Order')
-                ->orWhere('order_status', 'Pending')
-                ->orWhere('order_status', 'Delivered');
-        })
-            ->where('user_id', $userId)
-            ->get();
-        $this->grandTotalPending = Order::with('product.productImages')->where('user_id', auth()->id())
-            ->whereNotIn('order_status', ['Paid'])
-            ->whereNotIn('order_status', ['Complete'])
-            ->whereNotIn('order_status', ['Cancelled'])
-            ->sum('order_total_amount');
-
-        $this->recents = Order::with('product.productImages')->with('orderRating')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
-            $query->where('order_status', 'Paid')
-                ->orWhere('order_status', 'Complete');
+        $this->pendings = Order::with(['product.productImages', 'productSize', 'productColor'])->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
+            $query->whereIn('order_status', [
+                'To Deliver',
+                'Processing Order',
+                'Pending',
+                'Delivered'
+            ]);
         })
             ->where('user_id', $userId)
             ->get();
 
-        $this->grandTotalRecent = Order::with('product.productImages')->where('user_id', auth()->id())
-            ->whereNotIn('order_status', ['Pending'])
-            ->whereNotIn('order_status', ['Processing Order'])
-            ->whereNotIn('order_status', ['To Deliver'])
-            ->whereNotIn('order_status', ['Delivered'])
-            ->whereNotIn('order_status', ['Cancelled'])
+        $this->grandTotalPending = Order::with(['product.productImages', 'productSize', 'productColor'])->where('user_id', auth()->id())
+            ->whereIn('order_status', [
+                'To Deliver',
+                'Processing Order',
+                'Pending',
+                'Delivered'
+            ])
             ->sum('order_total_amount');
 
-        $this->cancels = Order::with('product.productImages')->orderBy('created_at', 'desc')->where('order_status', 'Cancelled')
+        $this->recents = Order::with(['product.productImages', 'productSize', 'productColor'])->with('orderRating')->orderBy('created_at', 'desc')->where(function ($query) use ($userId) {
+            $query->whereIn('order_status', [
+                'Paid',
+                'Complete'
+            ]);
+        })
+            ->where('user_id', $userId)
+            ->get();
+
+        $this->grandTotalRecent = Order::with(['product.productImages', 'productSize', 'productColor'])->where('user_id', auth()->id())
+            ->whereIn('order_status', [
+                'Paid',
+                'Complete'
+            ])
+            ->sum('order_total_amount');
+
+        $this->cancels = Order::with(['product.productImages', 'productSize', 'productColor'])->orderBy('created_at', 'desc')->where('order_status', 'Cancelled')
             ->where('user_id', auth()->id())
             ->get();
 
         $this->grandTotalCancelled = Order::where('user_id', auth()->id())
-            ->whereNotIn('order_status', ['Pending'])
-            ->whereNotIn('order_status', ['Processing Order'])
-            ->whereNotIn('order_status', ['To Deliver'])
-            ->whereNotIn('order_status', ['Delivered'])
-            ->whereNotIn('order_status', ['Complete'])
-            ->whereNotIn('order_status', ['Paid'])
+            ->where('order_status', 'Cancelled')
             ->sum('order_total_amount');
     }
 
