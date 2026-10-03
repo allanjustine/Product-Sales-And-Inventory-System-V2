@@ -213,6 +213,9 @@ class Home extends Component
                 'productColors',
                 'productImages'
             ])
+            ->withAvg('productRatings', 'rating')
+            ->withSum('productSizes', 'stock')
+            ->withSum('productColors', 'stock')
             ->find($id);
 
         $this->has_sizes = $this->productView->productSizes->isNotEmpty();
