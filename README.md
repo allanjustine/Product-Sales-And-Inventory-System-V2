@@ -154,7 +154,6 @@ FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
 - Wholesale businesses
 - Warehouses
 - SMEs
-- Multi-branch operations
 
 ---
 
