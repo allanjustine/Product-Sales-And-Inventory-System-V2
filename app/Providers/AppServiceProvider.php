@@ -64,10 +64,11 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
+        // Model::preventLazyLoading();
+        // Model::automaticallyEagerLoadRelationships();
+
         $this->app->register(BroadcastServiceProvider::class);
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
-        // Model::preventLazyLoading();
-        // Model::automaticallyEagerLoadRelationships();
     }
 }
