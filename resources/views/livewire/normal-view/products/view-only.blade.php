@@ -3,7 +3,7 @@
 
     @php
         $activeFilters = 0;
-        if ($category_name !== 'All') {
+        if (!empty($category_name)) {
             $activeFilters++;
         }
         if ($product_rating !== 'All') {
@@ -26,8 +26,15 @@
     <div class="d-md-none mb-2">
         <div class="sticky-top bg-white border-bottom py-2 px-3" style="top: 0; z-index: 1;">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="input-group">
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2"
+                        style="height: 50px;" data-bs-toggle="offcanvas" data-bs-target="#mobileProductFilters"
+                        aria-controls="mobileProductFilters">
+                        <i class="fa-solid fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+
+                    <div class="input-group flex-grow-1">
                         <span class="input-group-text bg-white border-end-0">
                             <i class="fa-solid fa-search text-muted"></i>
                         </span>
@@ -40,6 +47,124 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileProductFilters"
+        aria-labelledby="mobileProductFiltersLabel" style="height: calc(100vh - 45px);">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold" id="mobileProductFiltersLabel">
+                <i class="fa-solid fa-filter me-2"></i>Filters
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="small text-muted">{{ $activeFilters }} active filters</span>
+                <button type="button" wire:loading.attr='disabled' wire:target='clearFilters' wire:click="clearFilters"
+                    class="btn btn-sm btn-outline-secondary" data-bs-dismiss="offcanvas">
+                    <i class="fa-solid fa-broom me-1"></i>Clear All
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-medium mb-2">Categories</label>
+                <div class="d-grid gap-2" style="max-height: 350px; overflow-y: auto;">
+                    <button type="button"
+                        class="list-group-item list-group-item-action border-0 rounded mb-1 {{ empty($category_name) ? 'active' : '' }}"
+                        wire:click="$set('category_name', [])" data-bs-dismiss="offcanvas">
+                        <i class="fa-solid fa-layer-group me-2"></i>All Categories
+                        <span class="badge bg-secondary float-end">{{ $products->total() }}</span>
+                    </button>
+
+                    @foreach ($product_categories as $category)
+                        <div class="form-check m-0">
+                            <input class="btn-check" type="checkbox" id="mobileCategory{{ $category->id }}"
+                                value="{{ $category->category_name }}" wire:model="category_name">
+                            <label
+                                class="list-group-item list-group-item-action border-0 rounded mb-1 {{ is_array($category_name) && in_array($category->category_name, $category_name) ? 'active' : '' }}"
+                                for="mobileCategory{{ $category->id }}">
+                                <span class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fa-solid fa-tag me-2"></i>{{ $category->category_name }}</span>
+                                    <span class="badge bg-info">{{ $category->products_count }}</span>
+                                </span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-medium mb-2">Customer Rating</label>
+                <div class="rating-filter">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="mobile_product_rating" id="mobileRatingAll"
+                            wire:model="product_rating" value="All">
+                        <label class="form-check-label" for="mobileRatingAll">
+                            <span class="text-muted">All Ratings</span>
+                        </label>
+                    </div>
+                    @foreach ([5, 4, 3, 2, 1] as $rating)
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="mobile_product_rating"
+                                id="mobileRating{{ $rating }}" wire:model="product_rating"
+                                value="{{ $rating }}">
+                            <label class="form-check-label" for="mobileRating{{ $rating }}">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="fa-solid fa-star {{ $i <= $rating ? 'text-warning' : 'text-gray' }}"></i>
+                                @endfor
+                                <span class="text-muted ms-2">& above</span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-medium mb-2">Sort By</label>
+                <select class="form-select" wire:model="sort">
+                    <option value="low_to_high">Price: Low to High</option>
+                    <option value="high_to_low">Price: High to Low</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-medium mb-2">Price Range</label>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <small class="text-muted">₱{{ $minPrice ?? 0 }}</small>
+                    <small class="text-muted">₱{{ $maxPrice ?? 'Max' }}</small>
+                </div>
+                <div class="d-flex gap-2 align-items-center mb-3">
+                    <input type="number" class="form-control form-control-sm" placeholder="Min"
+                        wire:model="minPrice">
+                    <span class="text-muted">-</span>
+                    <input type="number" class="form-control form-control-sm" placeholder="Max"
+                        wire:model="maxPrice">
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" wire:model="hasDiscount" id="mobileHasDiscount">
+                    <label class="form-check-label" for="mobileHasDiscount">
+                        <i class="fa-solid fa-percentage text-danger me-1"></i>Show discounted items only
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-medium mb-2">Availability</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" wire:model="inStockOnly" id="mobileInStockOnly">
+                    <label class="form-check-label" for="mobileInStockOnly">
+                        <i class="fa-solid fa-check-circle text-success me-1"></i>In stock only
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-3 border-top">
+                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="offcanvas"
+                    wire:click="applyFilters" wire:target='applyFilters' wire:loading.attr='disabled'>
+                    <i class="fa-solid fa-filter me-2"></i>Apply Filters
+                </button>
             </div>
         </div>
     </div>
@@ -78,19 +203,22 @@
 
                             <div class="mb-4">
                                 <label class="form-label fw-medium mb-2">Categories</label>
-                                <div class="list-group">
+                                <div class="list-group" style="max-height: 350px; overflow-y: auto;">
                                     <button type="button"
-                                        class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === 'All' ? 'active' : '' }}"
-                                        wire:click="$set('category_name', 'All')">
+                                        class="list-group-item list-group-item-action border-0 rounded mb-1 {{ empty($category_name) ? 'active' : '' }}"
+                                        wire:click="$set('category_name', [])">
                                         <i class="fa-solid fa-layer-group me-2"></i>All Categories
                                         <span class="badge bg-secondary float-end">{{ $products->total() }}</span>
                                     </button>
                                     @foreach ($product_categories as $category)
                                         <button type="button"
-                                            class="list-group-item list-group-item-action border-0 rounded mb-1 {{ $category_name === $category->category_name ? 'active' : '' }}"
-                                            wire:click="$set('category_name', '{{ $category->category_name }}')">
+                                            class="list-group-item list-group-item-action border-0 rounded mb-1 {{ in_array($category->category_name, $category_name) ? 'active' : '' }}"
+                                            wire:click="$set('category_name', $wire.category_name.includes('{{ $category->category_name }}')
+                                                        ? $wire.category_name.filter(c => c !== '{{ $category->category_name }}')
+                                                        : [...$wire.category_name, '{{ $category->category_name }}'])">
                                             <i class="fa-solid fa-tag me-2"></i>{{ $category->category_name }}
-                                            <span class="badge bg-info float-end">{{ $category->products_count }}</span>
+                                            <span
+                                                class="badge bg-info float-end">{{ $category->products_count }}</span>
                                         </button>
                                     @endforeach
                                 </div>
@@ -191,8 +319,8 @@
                         <p class="text-muted mb-0">
                             @if ($search)
                                 Search results for "{{ $search }}"
-                            @elseif($category_name !== 'All')
-                                {{ $category_name }} products
+                            @elseif(!empty($category_name))
+                                {{ implode(', ', $category_name) }} products
                             @else
                                 Browse all products
                             @endif
