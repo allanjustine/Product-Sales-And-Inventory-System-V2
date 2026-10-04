@@ -22,7 +22,7 @@ class ViewOnly extends Component
 
     public $search = '';
     // public $perPage = 15;
-    public $category_name = 'All';
+    public $category_name = [];
     public $sort = 'low_to_high';
     public $product_rating = 'All';
     public $productView = null;
@@ -73,9 +73,9 @@ class ViewOnly extends Component
             ->withAvg('productRatings', 'rating')
             ->search($this->search);
 
-        if ($this->category_name != 'All') {
+        if (!empty($this->category_name)) {
             $query->whereHas('product_category', function ($q) {
-                $q->where('category_name', $this->category_name);
+                $q->whereIn('category_name', $this->category_name);
             });
         }
 
@@ -164,11 +164,16 @@ class ViewOnly extends Component
         $this->productView = null;
     }
 
+    public function applyFilters()
+    {
+        $this->resetPage();
+    }
+
     public function clearFilters()
     {
         $this->search = '';
         // $this->perPage = 15;
-        $this->category_name = 'All';
+        $this->category_name = [];
         $this->sort = 'low_to_high';
         $this->product_rating = 'All';
         $this->minPrice = 0;
