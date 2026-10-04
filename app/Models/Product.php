@@ -49,7 +49,9 @@ class Product extends Model
                 $term = '%' . $term . '%';
                 $query->where('product_name', 'like', $term)
                     ->orWhere('product_status', 'like', $term)
-                    ->orWhere('product_code', 'like', $term);
+                    ->orWhere('product_code', 'like', $term)
+                    ->orWhere('product_description', 'like', $term)
+                    ->orWhereRelation('product_category', 'category_name', 'like', $term);
             });
     }
 
