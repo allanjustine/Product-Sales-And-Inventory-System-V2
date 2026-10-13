@@ -161,7 +161,7 @@ FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
 
 Email: labya31@gmail.com  
 Portfolio: https://allanjustine.github.io/Portfolio/  
-Website: https://e-commerce.smctgroup.ph  
+Website: https://ajmapp.online
 
 ---
 
