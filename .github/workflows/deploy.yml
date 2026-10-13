@@ -7,8 +7,8 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
@@ -18,7 +18,7 @@ jobs:
     needs: ci
     runs-on: [self-hosted, windows]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Copy env file
         run: copy "C:\Users\labya\web\Product-Sales-And-Inventory-System-V2\.env" .env
       - name: Build and restart
