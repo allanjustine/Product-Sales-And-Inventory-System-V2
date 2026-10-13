@@ -13,6 +13,7 @@ use App\Models\ProductSize;
 use App\Models\SearchLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
@@ -35,7 +36,7 @@ class Index extends Component
     public $category_name = [];
     public $sort = 'low_to_high';
     public $product_rating = 'All';
-    public $productView = null;
+    public $productViewId = null;
     public $productToBeCart;
     public $selectedProductID, $productId, $product_name, $product_price;
 
@@ -304,12 +305,11 @@ class Index extends Component
         $this->search = $search_log->log_entry;
     }
 
-    public function view($id)
+    #[Computed]
+    public function productView()
     {
-        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by', 'loadMorePlus', 'loadMore']);
-        $this->resetErrorBag();
-
-        $this->productView = Product::withCount([
+        if ($this->productViewId == null) return null;
+        $product = Product::withCount([
             'productRatings',
             'orders'
             =>
@@ -334,17 +334,27 @@ class Index extends Component
             ->withAvg('productRatings', 'rating')
             ->withSum('productSizes', 'stock')
             ->withSum('productColors', 'stock')
-            ->find($id);
+            ->find($this->productViewId);
 
-        $this->has_sizes = $this->productView->productSizes->isNotEmpty();
-        $this->has_colors = $this->productView->productColors->isNotEmpty();
+        $this->has_sizes = $product->productSizes->isNotEmpty();
+        $this->has_colors = $product->productColors->isNotEmpty();
+
+        return $product;
+    }
+
+    public function view($id)
+    {
+        $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by', 'loadMorePlus', 'loadMore']);
+        $this->resetErrorBag();
+
+        $this->productViewId = $id;
     }
 
     #[On('closedModal')]
     #[On('closeModalCart')]
     public function closedModal()
     {
-        $this->productView = null;
+        $this->productViewId = null;
         $this->cartItemToRemove = null;
         $this->cartItemToCheckOut = null;
         $this->itemRemove = null;
