@@ -12,7 +12,7 @@
     <meta name="author" content="Allan Justine Mascariñas" />
     <meta property="og:description"
         content="A powerful, real-time eCommerce platform designed for simplicity and speed. Seamlessly manage products, process orders, and track inventory with instant updates. Whether you're a small business or a growing enterprise, our user-friendly interface makes online selling effortless — no technical expertise required.">
-    <meta property="og:image" content="https://e-commerce.smctgroup.ph/images/slide1.jpg">
+    <meta property="og:image" content="https://ajmapp.online/images/slide1.jpg">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AJM E-Commerce Web App">
