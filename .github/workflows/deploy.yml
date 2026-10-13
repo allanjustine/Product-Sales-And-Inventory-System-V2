@@ -22,6 +22,6 @@ jobs:
       - name: Copy env file
         run: copy "C:\Users\labya\web\Product-Sales-And-Inventory-System-V2\.env" .env
       - name: Build and restart
-        run: docker compose -p system up -d --build
+        run: docker compose up -d --build --no-deps web
       - name: Remove old images
         run: docker image prune -f
