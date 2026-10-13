@@ -108,7 +108,7 @@
             </div>
 
             <div class="row">
-                @forelse ($topDeals as $product)
+                @forelse ($this->essentialItems()['topDeals'] as $product)
                     <div class="col-xl-3 col-lg-4 col-6 mt-1" style="padding: 0.5px;">
                         @include('components.product-card', [
                             'product' => $product,
@@ -127,7 +127,7 @@
                 @endforelse
             </div>
 
-            @if ($topDeals->count() > 0)
+            @if ($this->essentialItems()['topDeals']->count() > 0)
                 <div class="text-center mt-5">
                     @if (auth()->check())
                         <a wire:navigate href="/products?sorted_by=top_selling"
@@ -160,7 +160,7 @@
             </div>
 
             <div class="row">
-                @forelse ($popularityDeals as $product)
+                @forelse ($this->essentialItems()['popularityDeals'] as $product)
                     <div class="col-xl-3 col-lg-4 col-6 mt-1" style="padding: 0.5px;">
                         @include('components.product-card', [
                             'product' => $product,
@@ -179,7 +179,7 @@
                 @endforelse
             </div>
 
-            @if ($popularityDeals->count() > 0)
+            @if ($this->essentialItems()['popularityDeals']->count() > 0)
                 <div class="text-center mt-5">
                     @if (auth()->check())
                         <a wire:navigate href="/products?sorted_by=popularity"
@@ -212,7 +212,7 @@
             </div>
 
             <div class="row">
-                @forelse ($latestProducts as $product)
+                @forelse ($this->essentialItems()['latestProducts'] as $product)
                     <div class="col-xl-3 col-lg-4 col-6 mt-1" style="padding: 0.5px;">
                         @include('components.product-card', [
                             'product' => $product,
@@ -231,7 +231,7 @@
                 @endforelse
             </div>
 
-            @if ($latestProducts->count() > 0)
+            @if ($this->essentialItems()['latestProducts']->count() > 0)
                 <div class="text-center mt-5">
                     @if (auth()->check())
                         <a wire:navigate href="/products?sorted_by=latest" class="btn btn-outline-info btn-lg px-5">

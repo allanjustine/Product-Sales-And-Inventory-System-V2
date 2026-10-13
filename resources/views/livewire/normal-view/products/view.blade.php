@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="modal-body p-0" style="overflow-x: hidden;">
-                        @if ($productView)
+                        @if ($this->productView)
                             <div class="product-details-container">
                                 <div class="row g-0">
                                     <div class="col-lg-6 border-end">
@@ -40,7 +40,7 @@
                                                 <div id="productImagesCarousel" class="carousel slide carousel-fade"
                                                     data-bs-touch="false" style="height: 40vh;">
                                                     <div class="carousel-inner" style="height: 40vh;">
-                                                        @foreach ($productView->productImages as $key => $image)
+                                                        @foreach ($this->productView->productImages as $key => $image)
                                                             <div class="carousel-item"
                                                                 :class="active === {{ $key }} ? 'active' : ''">
                                                                 @if (Storage::disk('public')->exists($image->path))
@@ -50,7 +50,7 @@
                                                                         style="height: 40vh; object-fit: cover;">
                                                                 @else
                                                                     <img src="{{ url($image->path) }}"
-                                                                        alt="{{ $productView->product_name }}"
+                                                                        alt="{{ $this->productView->product_name }}"
                                                                         class="d-block w-100"
                                                                         style="height: 40vh; object-fit: cover;">
                                                                 @endif
@@ -59,7 +59,7 @@
                                                     </div>
                                                     <button class="carousel-control-prev" type="button"
                                                         data-bs-target="#productImagesCarousel"
-                                                        @click="active = active === 0 ? {{ count($productView->productImages) - 1 }} : active - 1"
+                                                        @click="active = active === 0 ? {{ count($this->productView->productImages) - 1 }} : active - 1"
                                                         data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon"
                                                             aria-hidden="true"></span>
@@ -67,7 +67,7 @@
                                                     </button>
                                                     <button class="carousel-control-next" type="button"
                                                         data-bs-target="#productImagesCarousel"
-                                                        @click="active = {{ count($productView->productImages) - 1 }} === active ? 0 : active + 1"
+                                                        @click="active = {{ count($this->productView->productImages) - 1 }} === active ? 0 : active + 1"
                                                         data-bs-slide="next">
                                                         <span class="carousel-control-next-icon"
                                                             aria-hidden="true"></span>
@@ -77,7 +77,7 @@
                                                 <div class="w-100 gap-2 d-flex align-items-center mt-5"
                                                     style="overflow-x: auto; height: fit-content;"
                                                     x-bind.javascript="scrollTo()">
-                                                    @foreach ($productView->productImages as $key => $productImage)
+                                                    @foreach ($this->productView->productImages as $key => $productImage)
                                                         <div style="width: 50px; height: 50px;"
                                                             @click="active = {{ $key }}">
                                                             @if (Storage::disk('public')->exists($image->path))
@@ -107,11 +107,11 @@
                                                     @endforeach
                                                 </div>
 
-                                                @if ($productView->product_old_price !== null && $productView->product_old_price !== $productView->product_price)
+                                                @if ($this->productView->product_old_price !== null && $this->productView->product_old_price !== $this->productView->product_price)
                                                     <div
                                                         class="discount-badge-item bg-danger text-white position-absolute top-0 start-0 m-3">
                                                         <div class="p-2 text-center">
-                                                            <div class="fw-bold fs-5">{{ $productView->discount }}
+                                                            <div class="fw-bold fs-5">{{ $this->productView->discount }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -119,7 +119,7 @@
                                                 <div class="position-absolute text-sm rounded-lg px-3 py-1"
                                                     style="bottom: 75px; right: 0px; background-color: #e0dadaca;">
                                                     <span
-                                                        x-text="`${active + 1}/{{ $productView->productImages->count() }}`"></span>
+                                                        x-text="`${active + 1}/{{ $this->productView->productImages->count() }}`"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,14 +128,14 @@
                                     <div class="col-lg-6">
                                         <div class="product-info-section p-4 p-lg-5">
                                             <h2 class="product-name fw-bold mb-3" id="product_name">
-                                                {{ $productView->product_name }}
+                                                {{ $this->productView->product_name }}
                                             </h2>
 
                                             <div class="product-rating mb-4">
                                                 <div class="d-flex align-items-center">
                                                     <div class="stars me-2">
                                                         @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($i <= $productView->product_ratings_avg_rating)
+                                                            @if ($i <= $this->productView->product_ratings_avg_rating)
                                                                 <i class="fa-solid fa-star text-warning"></i>
                                                             @else
                                                                 <i class="fa-regular fa-star text-secondary"></i>
@@ -143,11 +143,11 @@
                                                         @endfor
                                                     </div>
                                                     <span class="text-muted small">
-                                                        @if ((int) $productView->product_ratings_avg_rating === 0)
+                                                        @if ((int) $this->productView->product_ratings_avg_rating === 0)
                                                             No ratings yet
                                                         @else
-                                                            {{ $productView->product_ratings_avg_rating }}
-                                                            ({{ $productView->shortOrderSold() }} sold)
+                                                            {{ $this->productView->product_ratings_avg_rating }}
+                                                            ({{ $this->productView->shortOrderSold() }} sold)
                                                         @endif
                                                     </span>
                                                 </div>
@@ -155,11 +155,11 @@
 
                                             <div class="price-section mb-4 d-flex align-items-center gap-2 flex-wrap">
                                                 <div class="current-price fw-bold fs-2 text-primary mb-1">
-                                                    &#8369;{{ number_format($productView->product_price, 2) }}
+                                                    &#8369;{{ number_format($this->productView->product_price, 2) }}
                                                 </div>
-                                                @if ($productView->product_old_price !== null && $productView->product_old_price !== $productView->product_price)
+                                                @if ($this->productView->product_old_price !== null && $this->productView->product_old_price !== $this->productView->product_price)
                                                     <div class="old-price text-muted text-decoration-line-through fs-5">
-                                                        &#8369;{{ number_format($productView->product_old_price, 2) }}
+                                                        &#8369;{{ number_format($this->productView->product_old_price, 2) }}
                                                     </div>
                                                 @endif
                                             </div>
@@ -175,7 +175,7 @@
                                                             <div>
                                                                 <small class="text-muted d-block">Category</small>
                                                                 <div class="fw-semibold">
-                                                                    {{ $productView->product_category->category_name }}
+                                                                    {{ $this->productView->product_category->category_name }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -192,7 +192,7 @@
                                                             <div>
                                                                 <small class="text-muted d-block">Status</small>
                                                                 <div style="font-size: 10px;">
-                                                                    @if ($productView->product_status === 'Available')
+                                                                    @if ($this->productView->product_status === 'Available')
                                                                         <span
                                                                             class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">
                                                                             <i
@@ -225,11 +225,11 @@
                                                                 <small class="text-muted d-block">Stock</small>
                                                                 <div class="fw-semibold" style="font-size: 10px;">
                                                                     @if (
-                                                                        ($productView->product_sizes_sum_stock ?: $productView->product_colors_sum_stock ?: $productView->product_stock) >
+                                                                        ($this->productView->product_sizes_sum_stock ?: $this->productView->product_colors_sum_stock ?: $this->productView->product_stock) >
                                                                             0)
-                                                                        <x-formatted-number :value="$productView->product_sizes_sum_stock ?:
-                                                                            $productView->product_colors_sum_stock ?:
-                                                                            $productView->product_stock" />
+                                                                        <x-formatted-number :value="$this->productView->product_sizes_sum_stock ?:
+                                                                            $this->productView->product_colors_sum_stock ?:
+                                                                            $this->productView->product_stock" />
                                                                     @else
                                                                         <span
                                                                             class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">
@@ -253,17 +253,17 @@
                                                             <div x-cloak="">
                                                                 <small class="text-muted d-block">Total Sold</small>
                                                                 <div class="fw-semibold">
-                                                                    <x-formatted-number :value="$productView->orders_sum_order_quantity" />
+                                                                    <x-formatted-number :value="$this->productView->orders_sum_order_quantity" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if ($productView->productSizes->isNotEmpty())
+                                                @if ($this->productView->productSizes->isNotEmpty())
                                                     <div class="col-12">
                                                         <h6 class="fw-bold">Sizes</h6>
                                                         <div class="d-flex flex-wrap gap-2">
-                                                            @foreach ($productView->productSizes as $productSize)
+                                                            @foreach ($this->productView->productSizes as $productSize)
                                                                 <span
                                                                     @role('user') wire:click='toggleProductVariant("size", {{ $productSize->id }})' @endrole
                                                                     @style([
@@ -283,11 +283,11 @@
                                                         @enderror
                                                     </div>
                                                 @endif
-                                                @if ($productView->productColors->isNotEmpty())
+                                                @if ($this->productView->productColors->isNotEmpty())
                                                     <div class="col-12">
                                                         <h6 class="fw-bold">Colors</h6>
                                                         <div class="d-flex flex-wrap gap-2">
-                                                            @foreach ($productView->productColors as $productColor)
+                                                            @foreach ($this->productView->productColors as $productColor)
                                                                 <span
                                                                     @role('user') wire:click='toggleProductVariant("color", {{ $productColor->id }})' @endrole
                                                                     @style([
@@ -313,14 +313,14 @@
                                                 <div class="action-buttons mt-4">
                                                     <button type="button" wire:loading.attr='disabled'
                                                         wire:target='addToCartNowItem,toggleProductVariant'
-                                                        wire:click='addToCartNowItem({{ $productView->id }})'
+                                                        wire:click='addToCartNowItem({{ $this->productView->id }})'
                                                         class="btn btn-primary btn-lg w-100 rounded-pill mb-3">
                                                         <i class="fa-solid fa-cart-plus me-2"></i> Add to Cart
                                                     </button>
-                                                    @if ($productView->favorites()->where('product_id', $productView->id)->where('user_id', auth()->user()->id)->exists())
+                                                    @if ($this->productView->favorites()->where('product_id', $this->productView->id)->where('user_id', auth()->user()->id)->exists())
                                                         <button type="button" wire:loading.attr='disabled'
                                                             wire:target='removeToFavorite'
-                                                            wire:click='removeToFavorite({{ $productView->favorites()->where('product_id', $productView->id)->where('user_id', auth()->user()->id)->first()->id }})'
+                                                            wire:click='removeToFavorite({{ $this->productView->favorites()->where('product_id', $this->productView->id)->where('user_id', auth()->user()->id)->first()->id }})'
                                                             class="btn btn-outline-danger btn-lg w-100 rounded-pill"
                                                             id="remove-to-wishlist">
                                                             <i class="fa-regular fa-heart me-2"></i> Remove to Wishlist
@@ -328,7 +328,7 @@
                                                     @else
                                                         <button type="button" wire:loading.attr='disabled'
                                                             wire:target='addToFavorite'
-                                                            wire:click='addToFavorite({{ $productView->id }})'
+                                                            wire:click='addToFavorite({{ $this->productView->id }})'
                                                             class="btn btn-outline-primary btn-lg w-100 rounded-pill"
                                                             id="add-to-wishlist">
                                                             <i class="fa-regular fa-heart me-2"></i> Add to Wishlist
@@ -347,7 +347,7 @@
                                         </h5>
                                         <div class="description-content bg-white rounded-3 p-4 shadow-sm">
                                             <div class="ql-editor">
-                                                {!! $productView->product_description !!}
+                                                {!! $this->productView->product_description !!}
                                             </div>
                                         </div>
                                     </div>
@@ -355,7 +355,7 @@
 
                                 <div class="reviews-section border-top bg-white">
                                     @role('user')
-                                        <x-product-review-lists :reviews="$productView->productRatings" />
+                                        <x-product-review-lists :reviews="$this->productView->productRatings" />
                                     @else
                                         <div class="review-login-prompt border rounded-4 bg-light-subtle my-4">
                                             <div
@@ -470,10 +470,10 @@
 
                     <div class="modal-footer border-top p-4">
                         <div class="d-flex w-100 justify-content-between align-items-center">
-                            @if ($productView)
+                            @if ($this->productView)
                                 <div class="text-muted small">
                                     <i class="fa-solid fa-info-circle me-2"></i>
-                                    Product ID: #{{ str_pad($productView->id, 6, '0', STR_PAD_LEFT) }}
+                                    Product ID: #{{ str_pad($this->productView->id, 6, '0', STR_PAD_LEFT) }}
                                 </div>
                             @endif
                             <button type="button" class="btn btn-outline-primary px-4 rounded-pill"
