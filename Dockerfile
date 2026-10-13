@@ -22,6 +22,8 @@ COPY . .
 
 RUN composer install --no-interaction --prefer-dist
 
+RUN php artisan storage:link
+
 RUN npm install
 
 EXPOSE 8002
