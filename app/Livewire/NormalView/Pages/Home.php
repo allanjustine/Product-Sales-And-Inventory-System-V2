@@ -7,6 +7,7 @@ use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -16,7 +17,7 @@ class Home extends Component
 {
     #[Title("Home")]
 
-    public $productView;
+    public $productViewId;
     public $morning;
     public $afternoon;
     public $evening;
@@ -31,10 +32,9 @@ class Home extends Component
 
     public function toggleProductVariant($title, $id)
     {
-        $product_size = ProductSize::findOrFail($id);
-        $product_color = ProductColor::findOrFail($id);
-
         if ($title == 'size') {
+            $product_size = ProductSize::findOrFail($id);
+
             if ($product_size?->stock === 0) {
                 $this->product_size_id = null;
                 return $this->addError('product_size_id', 'Product with this size is out of stock.');
@@ -44,6 +44,8 @@ class Home extends Component
         }
 
         if ($title == 'color') {
+            $product_color = ProductColor::findOrFail($id);
+
             if ($product_color?->stock === 0) {
                 $this->product_color_id = null;
                 return $this->addError('product_color_id', 'Product with this color is out of stock.');
@@ -53,6 +55,7 @@ class Home extends Component
         }
     }
 
+    #[Computed]
     public function essentialItems()
     {
         $topDeals = Product::with([
@@ -190,11 +193,12 @@ class Home extends Component
         $this->evening = $time >= 18 && $time <= 23;
     }
 
-    public function view($id)
+    #[Computed]
+    public function productView()
     {
-        $this->reset();
+        if ($this->productViewId == null) return null;
 
-        $this->productView = Product::withCount([
+        $product = Product::withCount([
             'productRatings',
             'orders'
             =>
@@ -216,16 +220,25 @@ class Home extends Component
             ->withAvg('productRatings', 'rating')
             ->withSum('productSizes', 'stock')
             ->withSum('productColors', 'stock')
-            ->find($id);
+            ->find($this->productViewId);
 
-        $this->has_sizes = $this->productView->productSizes->isNotEmpty();
-        $this->has_colors = $this->productView->productColors->isNotEmpty();
+        $this->has_sizes = $product->productSizes->isNotEmpty();
+        $this->has_colors = $product->productColors->isNotEmpty();
+
+        return $product;
+    }
+
+    public function view($id)
+    {
+        $this->resetExcept(['morning', 'afternoon', 'evening']);
+
+        $this->productViewId = $id;
     }
 
     #[On('closedModal')]
     public function closedModal()
     {
-        $this->productView = null;
+        $this->productViewId = null;
     }
 
     public function addToFavorite($id)
@@ -258,6 +271,6 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.normal-view.pages.home', $this->essentialItems());
+        return view('livewire.normal-view.pages.home');
     }
 }
