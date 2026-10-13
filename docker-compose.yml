@@ -14,8 +14,10 @@ services:
       - web
     volumes:
       - uploads:/var/www/html/storage/app/public
+      - sessions:/var/www/html/storage/framework/sessions
 networks:
   web:
     external: true
 volumes:
   uploads:
+  sessions:
