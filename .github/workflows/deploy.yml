@@ -1,0 +1,25 @@
+name: CI/CD
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+  deploy:
+    needs: ci
+    runs-on: [self-hosted, windows]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and restart
+        run: docker compose -p system up -d --build
+      - name: Remove old images
+        run: docker image prune -f
