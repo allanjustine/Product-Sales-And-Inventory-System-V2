@@ -1,4 +1,4 @@
-name: store
+name: product-sales-and-inventory-system-v2
 services:
   web:
     build:
