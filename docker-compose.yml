@@ -12,6 +12,10 @@ services:
       - .env
     networks:
       - web
+    volumes:
+      - uploads:/var/www/html/storage/app/public
 networks:
   web:
     external: true
+volumes:
+  uploads:
