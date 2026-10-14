@@ -378,6 +378,14 @@
 </script>
 
 <style>
+    html,
+    body {
+        width: 100%;
+        min-height: 100%;
+        height: 100vh !important;
+        margin: 0;
+    }
+
     .theme-switch {
         position: relative;
         width: 40px;
