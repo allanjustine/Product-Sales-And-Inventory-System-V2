@@ -343,17 +343,15 @@ class Index extends Component
         return $product;
     }
 
-    public function updatedProductViewId()
-    {
-        unset($this->productView);
-    }
-
     public function view($id)
     {
         $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by', 'loadMorePlus', 'loadMore']);
+
         $this->resetErrorBag();
 
         $this->productViewId = $id;
+
+        unset($this->productView);
     }
 
     #[On('closedModal')]

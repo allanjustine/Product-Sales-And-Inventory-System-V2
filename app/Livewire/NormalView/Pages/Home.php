@@ -228,17 +228,15 @@ class Home extends Component
         return $product;
     }
 
-    public function updatedProductViewId()
-    {
-        unset($this->productView);
-    }
-
     public function view($id)
     {
         $this->resetExcept(['morning', 'afternoon', 'evening']);
+
         $this->resetErrorBag();
 
         $this->productViewId = $id;
+
+        unset($this->productView);
     }
 
     #[On('closedModal')]
