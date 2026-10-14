@@ -196,7 +196,7 @@ class Home extends Component
     #[Computed]
     public function productView()
     {
-        if ($this->productViewId == null) return null;
+        if (!$this->productViewId) return null;
 
         $product = Product::withCount([
             'productRatings',
@@ -231,6 +231,7 @@ class Home extends Component
     public function view($id)
     {
         $this->resetExcept(['morning', 'afternoon', 'evening']);
+        $this->resetErrorBag();
 
         $this->productViewId = $id;
     }
