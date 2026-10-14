@@ -308,7 +308,8 @@ class Index extends Component
     #[Computed]
     public function productView()
     {
-        if ($this->productViewId == null) return null;
+        if (!$this->productViewId) return null;
+
         $product = Product::withCount([
             'productRatings',
             'orders'
