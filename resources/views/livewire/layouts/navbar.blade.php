@@ -776,24 +776,26 @@
     </script>
 
     <script>
-        let lastScrollPosition = window.scrollY;
-        const isMobile = window.innerWidth <= 762;
-        const navbar = document.querySelector('#mobileBottomNav');
+        document.addEventListener('livewire:navigated', function() {
+            let lastScrollPosition = window.scrollY;
+            const isMobile = window.innerWidth <= 762;
+            const navbar = document.querySelector('#mobileBottomNav');
 
-        document.addEventListener('scroll', () => {
-            if (isMobile) {
-                const currentScrollPosition = window.scrollY;
+            document.addEventListener('scroll', () => {
+                if (isMobile) {
+                    const currentScrollPosition = window.scrollY;
 
-                if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
-                    navbar.style.marginBottom = '-100px';
-                } else {
-                    navbar.style.marginBottom = '0';
+                    if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
+                        navbar.style.marginBottom = '-100px';
+                    } else {
+                        navbar.style.marginBottom = '0';
+                    }
+
+                    lastScrollPosition = currentScrollPosition;
                 }
-
-                lastScrollPosition = currentScrollPosition;
-            }
-        }, {
-            passive: true
+            }, {
+                passive: true
+            });
         });
     </script>
 </div>
