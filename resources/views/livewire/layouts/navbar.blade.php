@@ -696,6 +696,10 @@
         .nav-link:hover i {
             transform: scale(1.1);
         }
+
+        #mobileBottomNav {
+            transition: all 0.3s ease-in-out;
+        }
     </style>
 
     <!-- JavaScript -->
@@ -768,6 +772,28 @@
                 userDropdown.setAttribute('title', 'Account Menu');
                 new bootstrap.Tooltip(userDropdown);
             }
+        });
+    </script>
+
+    <script>
+        let lastScrollPosition = window.scrollY;
+        const isMobile = window.innerWidth <= 762;
+        const navbar = document.querySelector('#mobileBottomNav');
+
+        document.addEventListener('scroll', () => {
+            if (isMobile) {
+                const currentScrollPosition = window.scrollY;
+
+                if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
+                    navbar.style.marginBottom = '-100px';
+                } else {
+                    navbar.style.marginBottom = '0';
+                }
+
+                lastScrollPosition = currentScrollPosition;
+            }
+        }, {
+            passive: true
         });
     </script>
 </div>
