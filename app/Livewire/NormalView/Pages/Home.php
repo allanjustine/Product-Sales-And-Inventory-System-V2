@@ -235,14 +235,14 @@ class Home extends Component
         $this->resetErrorBag();
 
         $this->productViewId = $id;
-
-        unset($this->productView);
     }
 
     #[On('closedModal')]
     public function closedModal()
     {
         $this->productViewId = null;
+
+        unset($this->productView);
     }
 
     public function addToFavorite($id)

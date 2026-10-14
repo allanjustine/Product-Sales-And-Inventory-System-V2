@@ -350,8 +350,6 @@ class Index extends Component
         $this->resetErrorBag();
 
         $this->productViewId = $id;
-
-        unset($this->productView);
     }
 
     #[On('closedModal')]
@@ -365,6 +363,7 @@ class Index extends Component
         $this->orderToBuy = null;
         $this->orderPlaceOrder = null;
         $this->user_location = "";
+        unset($this->productView);
     }
 
     public function addToCart($id)
