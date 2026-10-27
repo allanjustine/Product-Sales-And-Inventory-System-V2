@@ -10,6 +10,7 @@ use App\Livewire\Admin\Pages\Profile as PagesProfile;
 use App\Livewire\Admin\ProductCategories\Index as ProductCategoriesIndex;
 use App\Livewire\Admin\Products\Index as AdminProductsIndex;
 use App\Livewire\Admin\Products\SizesAndColors;
+use App\Livewire\Admin\SetupWebsite\Index as SetupWebsiteIndex;
 use App\Livewire\Admin\Users\Index as UsersIndex;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -74,4 +75,5 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/orders', AdminOrdersIndex::class);
     Route::get('/admin/product-sales', ProductSales::class);
     Route::get('/edit/{product}/sizes-and-colors', SizesAndColors::class)->name('sizes-and-colors');
+    Route::get('admin/setup-website', SetupWebsiteIndex::class)->name('setup.website');
 });

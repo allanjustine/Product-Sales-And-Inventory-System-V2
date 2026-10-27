@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->text('icon')->nullable();
-            $table->string('shop_name')->nullable();
-            $table->string('shop_description')->nullable();
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->nullable();
+            $table->text('location_link')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('opening_start')->nullable();
+            $table->string('opening_end')->nullable();
             $table->json('links')->nullable();
             $table->timestamps();
         });
