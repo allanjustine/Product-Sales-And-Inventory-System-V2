@@ -124,7 +124,7 @@
                                                             <span
                                                                 class="d-block fw-medium">{{ $history->browser_address }}</span>
                                                             <small class="text-muted">
-                                                                @if (str_contains(strtolower($history->browser_address), 'mobile'))
+                                                                @if (collect(['mobile', 'android'])->contains(fn($value) => str_contains(strtolower($history->browser_address), strtolower($value))))
                                                                     <i class="fa-solid fa-mobile-screen me-1"></i>Mobile
                                                                 @else
                                                                     <i class="fa-solid fa-desktop me-1"></i>Desktop
