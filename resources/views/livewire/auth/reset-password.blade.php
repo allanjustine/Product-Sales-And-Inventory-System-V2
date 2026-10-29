@@ -6,7 +6,7 @@
                     <div class="text-center mb-4">
                         <div class="logo-container mb-3">
                             <div class="logo-wrapper mx-auto">
-                                <img src="images/mylogo.jpg" class="logo-img rounded-3 shadow-sm" alt="Company Logo">
+                                <img src="{{ App\Models\Setting::query()->first()?->icon ? Storage::url(App\Models\Setting::query()->first()?->icon) : '/images/mylogo.jpg' }}" class="logo-img rounded-3 shadow-sm" alt="Company Logo">
                             </div>
                         </div>
                         <h2 class="fw-bold text-gradient-primary mb-2">Secure Password Reset</h2>
