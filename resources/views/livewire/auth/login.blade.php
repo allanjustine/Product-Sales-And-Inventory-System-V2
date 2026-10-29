@@ -8,7 +8,8 @@
                 <div class="text-center mb-4">
                     <div class="logo-container d-inline-block mb-3">
                         <div class="logo-circle">
-                            <img src="images/mylogo.jpg" alt="Logo" class="w-100 h-100 rounded-circle">
+                            <img src="{{ App\Models\Setting::query()->first()?->icon ? Storage::url(App\Models\Setting::query()->first()?->icon) : '/images/mylogo.jpg' }}"
+                                alt="Logo" class="w-100 h-100 rounded-circle">
                         </div>
                     </div>
                     <h2 class="fw-bold mb-2">Welcome Back</h2>
@@ -98,8 +99,8 @@
 
                             <div class="d-grid mb-2">
                                 <a href="{{ route('auth.oauth', 'google') }}" class="btn btn-oauth btn-lg fw-semibold">
-                                    <img src="https://static.vecteezy.com/system/resources/previews/022/484/503/non_2x/google-lens-icon-logo-symbol-free-png.png" alt="Google"
-                                        width="20" height="20" class="me-2">
+                                    <img src="https://static.vecteezy.com/system/resources/previews/022/484/503/non_2x/google-lens-icon-logo-symbol-free-png.png"
+                                        alt="Google" width="20" height="20" class="me-2">
                                     Login with Google
                                 </a>
                             </div>
