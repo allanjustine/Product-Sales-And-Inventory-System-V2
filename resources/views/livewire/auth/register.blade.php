@@ -5,7 +5,7 @@
                 <div class="text-center mb-4">
                     <div class="logo-container mb-4">
                         <div class="logo-circle mx-auto mb-3">
-                            <img src="images/mylogo.jpg" alt="Logo" class="w-100 h-100 rounded-circle">
+                            <img src="{{ App\Models\Setting::query()->first()?->icon ? Storage::url(App\Models\Setting::query()->first()?->icon) : '/images/mylogo.jpg' }}" alt="Logo" class="w-100 h-100 rounded-circle">
                         </div>
                         <h2 class="fw-bold mb-2">Create Account</h2>
                         <p class="text-muted">Join our community today</p>
