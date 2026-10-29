@@ -2,22 +2,29 @@
 
 namespace App\Livewire\Layouts;
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
 class Navbar extends Component
 {
-    public $profile_picture;
-
     #[On('profileRefresh')]
+    #[Computed]
     public function profilePicture()
     {
-        return $this->profile_picture = Auth::user()?->profile_image;
+        return Auth::user()?->profile_image;
     }
+
+    #[Computed]
+    public function setting()
+    {
+        return Setting::query()->first();
+    }
+
     public function logout()
     {
-
         Auth::logout();
 
         session()->invalidate();
@@ -28,8 +35,6 @@ class Navbar extends Component
     }
     public function render()
     {
-        return view('livewire.layouts.navbar', [
-            $this->profilePicture()
-        ]);
+        return view('livewire.layouts.navbar');
     }
 }
