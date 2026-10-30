@@ -6,10 +6,10 @@
             <a href="/" wire:navigate class="navbar-brand d-flex align-items-center mx-auto">
                 <div class="brand-logo me-2">
                     <div class="logo-circle-item">
-                        <img src="images/mylogo.jpg" alt="AJM Logo" class="w-100 h-100 rounded-circle">
+                        <img src="{{ $this->setting ? Storage::url($this->setting->icon) : 'images/mylogo.jpg' }}" alt="Store logo" class="w-100 h-100 rounded-circle">
                     </div>
                 </div>
-                <h3 class="fw-bold mb-0 text-white">AJM</h3>
+                <h3 class="fw-bold mb-0 text-white">{{ $this->setting->name ?? 'AJM' }}</h3>
             </a>
 
             <!-- Cart & Mobile Toggle -->
@@ -344,7 +344,7 @@
 
         @if (auth()->check())
             <div class="d-flex align-items-center gap-2 p-3 border-bottom border-secondary">
-                <img src="{{ auth()->user()->profile_image ? Storage::url(auth()->user()->profile_image) : 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png' }}"
+                <img src="{{ $this->profile_picture ? Storage::url($this->profile_picture) : 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png' }}"
                     style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);">
                 <div>
                     <div class="text-white fw-medium small">{{ auth()->user()->name }}</div>
