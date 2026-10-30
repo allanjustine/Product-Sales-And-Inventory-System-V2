@@ -1,9 +1,16 @@
 <div>
+    @php
+        use App\Models\Setting;
+
+        $setting = Setting::query()->first();
+    @endphp
+
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="max-height: 100vh; overflow-y: auto;">
         <a wire:navigate href="/admin/dashboard" class="brand-link">
-            <img src="/images/mylogo.jpg" alt="AJM logo" class="brand-image img-circle elevation-0"
-                style="opacity: .8; border-radius: 50%;">
-            <span class="brand-text"><strong id="branding-ajm">AJM</strong></span>
+            <img src="{{ $setting ? Storage::url($setting->icon) : '/images/mylogo.jpg' }}" alt="Store logo"
+                class="brand-image img-circle elevation-0"
+                style="opacity: .8; border-radius: 50%; width: 35px; height: 35px; object-fit: cover;">
+            <span class="brand-text"><strong id="branding-ajm">{{ $setting->name ?? 'AJM' }}</strong></span>
         </a>
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -177,6 +184,12 @@
                                 <a wire:navigate href="/profile" class="nav-link">
                                     <i class="fa-solid fa-user nav-icon"></i>
                                     <p>My Profile</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a wire:navigate href="{{ route('setup.website') }}" class="nav-link">
+                                    <i class="fa-solid fa-globe nav-icon"></i>
+                                    <p>Manage Website</p>
                                 </a>
                             </li>
                             <li class="nav-item">
