@@ -25,7 +25,7 @@ class ViewOnly extends Component
     public $category_name = [];
     public $sort = 'low_to_high';
     public $product_rating = 'All';
-    public $productView = null;
+    public $product_view = null;
     public $allDisplayProducts;
     public $defaultPage = 20;
     public $loadMorePlus = 20;
@@ -131,7 +131,7 @@ class ViewOnly extends Component
     {
         $this->resetExcept(['category_name', 'search', 'minPrice', 'maxPrice', 'sort', 'productRating', 'inStockOnly', 'sorted_by', 'loadMorePlus', 'defaultPage']);
 
-        $this->productView = Product::withCount([
+        $this->product_view = Product::withCount([
             'productRatings',
             'orders'
             =>
@@ -161,7 +161,7 @@ class ViewOnly extends Component
     #[On('closedModal')]
     public function closedModal()
     {
-        $this->productView = null;
+        $this->product_view = null;
     }
 
     public function applyFilters()
