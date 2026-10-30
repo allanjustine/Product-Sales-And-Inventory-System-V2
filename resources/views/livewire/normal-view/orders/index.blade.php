@@ -36,7 +36,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="alert-icon me-3 d-none d-md-block"
                                                 id="deliveryAddressAlertIcon">
-                                                <img src="images/mylogo.jpg" alt="Info Logo" class="rounded-3"
+                                                <img src="{{ App\Models\Setting::query()->first()->icon ? Storage::url(App\Models\Setting::query()->first()->iconLogin Activity History) : 'images/mylogo.jpg' }}" alt="Info Logo" class="rounded-3"
                                                     style="width: 80px;" id="deliveryAddressLogo">
                                             </div>
                                             <div class="flex-grow-1">
