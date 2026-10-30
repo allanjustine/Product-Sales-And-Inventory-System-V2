@@ -21,7 +21,7 @@ class Index extends Component
     #[Title('My Favorites')]
 
     public $productToBeCart;
-    public $productView;
+    public $product_view;
     public $orderToBuy;
     public $quantity = 1;
     public $user_location;
@@ -124,7 +124,7 @@ class Index extends Component
         $this->reset();
         $this->resetErrorBag();
 
-        $this->productView = Product::withCount([
+        $this->product_view = Product::withCount([
             'productRatings',
             'orders'
             =>
@@ -147,8 +147,8 @@ class Index extends Component
             ])
             ->find($id);
 
-        $this->has_sizes = $this->productView->productSizes->isNotEmpty();
-        $this->has_colors = $this->productView->productColors->isNotEmpty();
+        $this->has_sizes = $this->product_view->productSizes->isNotEmpty();
+        $this->has_colors = $this->product_view->productColors->isNotEmpty();
     }
 
     public function addToCart($id)
@@ -302,7 +302,7 @@ class Index extends Component
     #[On('closedModal')]
     public function closedModal()
     {
-        $this->productView = null;
+        $this->product_view = null;
     }
 
     public function toBuyNow($productId)
