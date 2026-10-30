@@ -7,6 +7,7 @@ use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
+use App\Models\Setting;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -226,6 +227,12 @@ class Home extends Component
         $this->has_colors = $product->productColors->isNotEmpty();
 
         return $product;
+    }
+
+    #[Computed]
+    public function setting()
+    {
+        return Setting::query()->first();
     }
 
     public function view($id)
